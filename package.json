@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@mdx-js/loader": "^2.1.2",
         "@next/mdx": "^12.2.2",
         "daisyui": "^2.19.0",
         "next": "12.2.2",
@@ -16,6 +17,7 @@
         "react-dom": "18.2.0"
     },
     "devDependencies": {
+        "@types/mdx": "^2.0.2",
         "@types/node": "18.0.3",
         "@types/react": "18.0.15",
         "@types/react-dom": "18.0.6",
@@ -32,7 +34,6 @@
         "singleQuote": true,
         "trailingComma": "all",
         "tabWidth": 4,
-        "endOfLine": "crlf",
-        "arrowParens": "avoid"
+        "endOfLine": "crlf"
     }
 }

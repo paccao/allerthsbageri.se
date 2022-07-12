@@ -11,9 +11,10 @@ const Home: NextPage = () => {
                 <meta name="description" content="En hemsida för bagare" />
             </Head>
 
-            <div className="w-screen h-screen flex flex-col justify-center items-center p-4">
-                {SITE_NAME}
-            </div>
+            <main className="text-center">
+                <h1 className="py-8 text-">{SITE_NAME}</h1>
+                <a href="/test">go to test page</a>
+            </main>
         </>
     )
 }
