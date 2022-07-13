@@ -17,7 +17,7 @@ const CustomLink: typeof Link = forwardRef(function CustomLink(
 ) {
     return (
         <Link {...props}>
-            <a className="underline text-black bg-red-500" ref={ref}>
+            <a className="underline" ref={ref}>
                 {children}
             </a>
         </Link>
@@ -27,7 +27,6 @@ const CustomLink: typeof Link = forwardRef(function CustomLink(
 const components = {
     image: ResponsiveImage,
     a: CustomLink,
-    p: (props: any) => <p {...props} className="bg-red-200" />,
 } as unknown as MDXComponents
 
 function MyApp({ Component, pageProps }: AppProps) {
