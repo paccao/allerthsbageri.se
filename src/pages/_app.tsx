@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
-import Link, { LinkProps } from 'next/link'
+import Link from 'next/link'
 
 import '../styles/globals.css'
 
@@ -15,7 +15,6 @@ const CustomLink: typeof Link = forwardRef(function CustomLink(
     { children, ...props },
     ref,
 ) {
-    console.log('link', props, children)
     return (
         <Link {...props}>
             <a className="underline text-black bg-red-500" ref={ref}>
