@@ -6,7 +6,7 @@ export type HeaderProps = {}
 
 const Header: FC<HeaderProps> = ({}) => {
     return (
-        <header>
+        <header className="flex w-full items-center justify-center p-4">
             <nav>
                 <Link href="/">
                     <a className="bg-teal-400">{SITE_NAME}</a>
