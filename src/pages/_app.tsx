@@ -5,6 +5,7 @@ import { MDXComponents } from 'mdx/types'
 import Image, { ImageProps } from 'next/image'
 import Link from 'next/link'
 
+import '../styles/fonts.css'
 import '../styles/globals.css'
 
 const ResponsiveImage: FC<ImageProps> = (props) => (

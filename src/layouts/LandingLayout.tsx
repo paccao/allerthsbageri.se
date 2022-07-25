@@ -10,7 +10,7 @@ export type LandingLayoutProps = {
 }
 
 const heroImage = {
-    src: '/../public/textiles-and-plant.jpg',
+    src: '/../public/images/textiles-and-plant.jpg',
     alt: 'En bild på vita textilier och en liten trevlig kvist med blad.',
 }
 
