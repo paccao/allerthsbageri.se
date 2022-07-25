@@ -9,7 +9,7 @@ const Header: FC<HeaderProps> = ({}) => {
         <header className="flex w-full items-center justify-center p-4">
             <nav>
                 <Link href="/">
-                    <a className="bg-teal-400">{SITE_NAME}</a>
+                    <a className="font-display text-2xl">{SITE_NAME}</a>
                 </Link>
             </nav>
         </header>
