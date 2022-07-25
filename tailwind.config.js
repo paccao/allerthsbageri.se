@@ -8,7 +8,11 @@ module.exports = {
         ...defaultTheme.screens,
     },
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                display: ['Italianno', 'cursive'],
+            },
+        },
     },
     plugins: [require('@tailwindcss/typography')],
 }

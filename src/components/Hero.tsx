@@ -1,30 +1,35 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { FC } from 'react'
 
+import { SITE_NAME } from '../constants'
+
 type HeroProps = {
-    imagePath: string
-    imageAlt: string
-    imageWidth: number
+    image: {
+        src: string
+        alt: string
+    }
 }
 
-const Hero: FC<HeroProps> = (props) => {
+const Hero: FC<HeroProps> = ({ image }) => {
     return (
-        <section className="flex h-screen w-full items-center justify-evenly p-4">
-            <article className="prose h-2/3 flex-1 p-20 lg:prose-xl">
-                <h1>Allerths örtbageri</h1>
+        <section className="grid h-screen grid-cols-2 place-items-center gap-4 p-4">
+            <div className="prose prose-lg lg:prose-xl">
+                <div className="flex flex-col items-center">
+                    <p className="text-sm tracking-widest">Välkommen till</p>
+                    <h1 className="font-display">{SITE_NAME}</h1>
+                </div>
                 <p>Hälsan framför allt!</p>
                 <p>
                     Om den vägen så går genom örter & bakverk eller genom
                     musikens värld. Körsång på recept borde många människor
                     ordineras. Låt naturen och musiken vårda dej!{' '}
                 </p>
-            </article>
-            <div className="relative h-5/6 w-5/12">
+            </div>
+            <div className="overflow-none relative h-2/3 w-3/4 rounded-xl">
                 <Image
-                    src={props.imagePath}
+                    src={image.src}
                     layout="fill"
-                    alt={props.imageAlt}
+                    alt={image.alt}
                     objectFit="contain"
                     className="rounded-xl"
                 />
@@ -34,3 +39,4 @@ const Hero: FC<HeroProps> = (props) => {
 }
 
 export default Hero
+

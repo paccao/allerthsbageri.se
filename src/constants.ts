@@ -1,3 +1,3 @@
-export const SITE_NAME = 'Lorem ipsum'
+export const SITE_NAME = 'Allerths Örtbageri'
 export const SITE_DESCRIPTION = ''
 
