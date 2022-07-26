@@ -30,6 +30,18 @@ const images = [
         width: 300,
         height: 300,
     },
+    {
+        src: '/images/image007.jpg',
+        alt: 'Provsmakning',
+        width: 300,
+        height: 300,
+    },
+    {
+        src: '/images/image002.jpg',
+        alt: 'Föreläsning',
+        width: 300,
+        height: 300,
+    },
 ]
 
 const Hero: FC<HeroProps> = () => {
@@ -57,7 +69,8 @@ const Hero: FC<HeroProps> = () => {
                     >
                         <Image
                             src={src}
-                            layout="intrinsic"
+                            layout="fill"
+                            objectFit="cover"
                             alt={alt}
                             className="transform rounded-xl transition-transform duration-300 hover:scale-105"
                             width={width}
