@@ -9,11 +9,6 @@ export type LandingLayoutProps = {
     children: ReactNode
 }
 
-const heroImage = {
-    src: '/../public/images/textiles-and-plant.jpg',
-    alt: 'En bild på vita textilier och en liten trevlig kvist med blad.',
-}
-
 const LandingLayout: FC<LandingLayoutProps> = ({ children }) => {
     return (
         <>
@@ -23,7 +18,7 @@ const LandingLayout: FC<LandingLayoutProps> = ({ children }) => {
             </Head>
             <Header />
             <main>
-                <Hero image={heroImage} />
+                <Hero />
 
                 <article className='lg:prose-xl"> prose prose-stone mx-auto marker:text-stone-900 prose-p:leading-6 prose-p:text-stone-900 prose-strong:text-stone-900 prose-em:text-stone-900 prose-li:my-1 prose-li:text-stone-900 md:prose-lg'>
                     {children}
