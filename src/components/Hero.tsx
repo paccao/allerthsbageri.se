@@ -7,18 +7,6 @@ type HeroProps = {}
 
 const images = [
     {
-        src: '/images/herbs.jpg',
-        alt: 'Örter på ett porslinfat',
-        width: 300,
-        height: 300,
-    },
-    {
-        src: '/images/image009.jpg',
-        alt: 'Goda bakverk med örter',
-        width: 300,
-        height: 300,
-    },
-    {
         src: '/images/textiles-and-plant.jpg',
         alt: 'Vita textilier och en liten trevlig kvist med blad.',
         width: 300,
@@ -46,40 +34,64 @@ const images = [
 
 const Hero: FC<HeroProps> = () => {
     return (
-        <section className="grid grid-cols-2 items-start justify-items-center gap-4 p-4">
-            <div className="prose prose-lg lg:prose-xl">
-                <div className="flex flex-col items-center">
-                    <p className="text-sm tracking-widest">Välkommen till</p>
-                    <h1 className="font-display">{SITE_NAME}</h1>
-                </div>
-                <p>Hälsan framför allt!</p>
-                <p>
-                    Om den vägen så går genom örter & bakverk eller genom
-                    musikens värld. Körsång på recept borde många människor
-                    ordineras. Låt naturen och musiken vårda dej!{' '}
-                </p>
+        <div>
+            <div className="grid grid-cols-2 justify-items-center gap-4">
+                <Image
+                    src="/images/herbs.jpg"
+                    alt="Örter på ett porslinfat"
+                    layout="intrinsic"
+                    width={640}
+                    height={480}
+                    className="rounded-xl shadow-md"
+                />
+                <Image
+                    src="/images/image009.jpg"
+                    alt="Goda bakverk med örter"
+                    layout="intrinsic"
+                    width={640}
+                    height={480}
+                    className="rounded-xl shadow-md"
+                />
             </div>
 
-            <div className="align-start grid grid-cols-2 justify-items-center gap-4">
-                {images.map(({ src, alt, width, height }) => (
-                    <div
-                        className="relative overflow-hidden rounded-xl shadow-md"
-                        style={{ height, width }}
-                        key={src}
-                    >
-                        <Image
-                            src={src}
-                            layout="fill"
-                            objectFit="cover"
-                            alt={alt}
-                            className="transform rounded-xl transition-transform duration-300 hover:scale-105"
-                            width={width}
-                            height={height}
-                        />
+            <section className="grid grid-cols-2 items-start justify-items-center gap-4 p-4">
+                <div className="prose prose-lg lg:prose-xl">
+                    <div className="flex flex-col items-center">
+                        <p className="text-sm tracking-widest">
+                            Välkommen till
+                        </p>
+                        <h1 className="font-display">{SITE_NAME}</h1>
                     </div>
-                ))}
-            </div>
-        </section>
+                    <p>Hälsan framför allt!</p>
+                    <p>
+                        Om den vägen så går genom örter & bakverk eller genom
+                        musikens värld. Körsång på recept borde många människor
+                        ordineras. Låt naturen och musiken vårda dej!{' '}
+                    </p>
+                </div>
+
+                <div className="align-start grid grid-cols-2 justify-items-center gap-4">
+                    {images.map(({ src, alt, width, height }) => (
+                        <div
+                            className="relative overflow-hidden rounded-xl shadow-md"
+                            style={{ height, width }}
+                            key={src}
+                        >
+                            {/* NOTE: The fill layout here prevents the image size from being optimized, meaning the full 900x900 image is loaded when only 200x200 is shown anyway */}
+                            <Image
+                                src={src}
+                                layout="fill"
+                                objectFit="cover"
+                                alt={alt}
+                                className="transform rounded-xl transition-transform duration-300 hover:scale-105"
+                                width={width}
+                                height={height}
+                            />
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </div>
     )
 }
 
