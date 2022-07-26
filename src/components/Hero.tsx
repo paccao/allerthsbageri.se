@@ -46,7 +46,7 @@ const images = [
 
 const Hero: FC<HeroProps> = () => {
     return (
-        <section className="grid h-screen grid-cols-2 place-items-center gap-4 p-4">
+        <section className="grid grid-cols-2 items-start justify-items-center gap-4 p-4">
             <div className="prose prose-lg lg:prose-xl">
                 <div className="flex flex-col items-center">
                     <p className="text-sm tracking-widest">Välkommen till</p>
@@ -60,7 +60,7 @@ const Hero: FC<HeroProps> = () => {
                 </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="align-start grid grid-cols-2 justify-items-center gap-4">
                 {images.map(({ src, alt, width, height }) => (
                     <div
                         className="relative overflow-hidden rounded-xl shadow-md"
