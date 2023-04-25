@@ -39,7 +39,6 @@ const Hero: FC<HeroProps> = () => {
                 <Image
                     src="/images/herbs.jpg"
                     alt="Örter på ett porslinfat"
-                    layout="intrinsic"
                     width={640}
                     height={480}
                     className="rounded-xl shadow-md"
@@ -47,7 +46,6 @@ const Hero: FC<HeroProps> = () => {
                 <Image
                     src="/images/image009.jpg"
                     alt="Goda bakverk med örter"
-                    layout="intrinsic"
                     width={640}
                     height={480}
                     className="rounded-xl shadow-md"
@@ -80,20 +78,19 @@ const Hero: FC<HeroProps> = () => {
                             {/* NOTE: The fill layout here prevents the image size from being optimized, meaning the full 900x900 image is loaded when only 200x200 is shown anyway */}
                             <Image
                                 src={src}
-                                layout="fill"
-                                objectFit="cover"
                                 alt={alt}
                                 className="transform rounded-xl transition-transform duration-300 hover:scale-105"
                                 width={width}
                                 height={height}
-                            />
+                                style={{
+                                    objectFit: "cover"
+                                }} />
                         </div>
                     ))}
                 </div>
             </section>
         </div>
-    )
+    );
 }
 
 export default Hero
-
