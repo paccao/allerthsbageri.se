@@ -17,12 +17,12 @@ const CustomLink: typeof Link = forwardRef(function CustomLink(
     ref,
 ) {
     return (
-        <Link {...props}>
-            <a className="underline" ref={ref}>
-                {children}
-            </a>
-        </Link>
-    )
+        (<Link {...props} className="underline" ref={ref}>
+
+            {children}
+
+        </Link>)
+    );
 })
 
 const components = {
