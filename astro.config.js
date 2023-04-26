@@ -3,12 +3,12 @@ import tailwind from '@astrojs/tailwind'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://allerthsbageri.se',
-	integrations: [tailwind()],
-	experimental: {
-		assets: true,
-	},
-	image: {
-		service: 'astro/assets/services/sharp',
-	},
+  site: 'https://allerthsbageri.se',
+  integrations: [tailwind()],
+  experimental: {
+    assets: true,
+  },
+  image: {
+    service: 'astro/assets/services/sharp',
+  },
 })
