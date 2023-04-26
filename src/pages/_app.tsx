@@ -9,7 +9,11 @@ import '../styles/fonts.css'
 import '../styles/globals.css'
 
 const ResponsiveImage: FC<ImageProps> = (props) => (
-    <Image {...props} layout="responsive" alt={props.alt} />
+    <Image
+        {...props}
+        alt={props.alt}
+        sizes="100vw"
+    />
 )
 
 const CustomLink: typeof Link = forwardRef(function CustomLink(
@@ -17,12 +21,12 @@ const CustomLink: typeof Link = forwardRef(function CustomLink(
     ref,
 ) {
     return (
-        <Link {...props}>
-            <a className="underline" ref={ref}>
-                {children}
-            </a>
-        </Link>
-    )
+        (<Link {...props} className="underline" ref={ref}>
+
+            {children}
+
+        </Link>)
+    );
 })
 
 const components = {
