@@ -1,41 +1,23 @@
 {
-    "name": "allerthsbageri.se",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "@mdx-js/loader": "^2.3.0",
-        "@mdx-js/react": "^2.3.0",
-        "@next/mdx": "^13.3.1",
-        "daisyui": "^2.51.6",
-        "next": "^13.3.1",
-        "react": "18.2.0",
-        "react-dom": "18.2.0"
-    },
-    "devDependencies": {
-        "@tailwindcss/typography": "^0.5.9",
-        "@types/node": "18.16.0",
-        "@types/react": "18.2.0",
-        "@types/react-dom": "18.2.0",
-        "autoprefixer": "^10.4.14",
-        "eslint": "8.39.0",
-        "eslint-config-next": "13.3.1",
-        "postcss": "^8.4.23",
-        "prettier": "^2.8.8",
-        "prettier-plugin-tailwindcss": "^0.2.7",
-        "tailwindcss": "^3.3.1",
-        "typescript": "5.0.4"
-    },
-    "prettier": {
-        "semi": false,
-        "singleQuote": true,
-        "trailingComma": "all",
-        "tabWidth": 4,
-        "endOfLine": "crlf"
-    }
+  "name": "allerthsbageri.se",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "astro": "^2.3.1",
+    "@astrojs/tailwind": "^3.1.1",
+    "prettier": "^2.8.8",
+    "prettier-plugin-tailwindcss": "^0.2.7",
+    "tailwindcss": "^3.3.2"
+  },
+  "devDependencies": {
+    "sharp": "^0.32.0"
+  }
 }
