@@ -12,7 +12,7 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ['Italianno', 'cursive'],
-        sans: ['Quattrocento', 'serif'],
+        serif: ['Quattrocento', 'serif'],
       },
     },
   },
