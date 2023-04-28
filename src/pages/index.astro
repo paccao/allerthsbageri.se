@@ -4,6 +4,7 @@ import { SITE_NAME } from '../constants'
 
 import herbs from '../assets/herbs.jpg'
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
+import magganAndMaria from '../assets/maggan-maria.jpg'
 ---
 
 <Layout>
@@ -66,44 +67,76 @@ import boxWithGoodies from '../assets/box-med-bakat.jpg'
               <h2 class="text-center font-display text-3xl font-bold">
                 Historia
               </h2>
-              <p>
-                Min mormor och morfar hade ett fantastiskt väldoftande och
-                välfyllt bageri som skapade minnen för livet. Det var fyllt med
-                generationer av kunskap och engagemang. Så nu kommer morfars
-                brödkakor till användning igen, fyllda med örter från naturen,
+              <p class="mt-4">
+                Min mormor och morfar, Sven och <span class="whitespace-nowrap"
+                  >Maj-Britt</span
+                > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som
+                skapade minnen för livet. Det var fyllt med generationer av kunskap
+                och engagemang.
+              </p>
+              <p class="mt-4">
+                Så nu kommer morfars brödlådor med telefonnummer 14 komma till
+                användning igen. Med glädje och kärlek har Allerths bageri åter
+                startat, det ska fyllas med örter och bakverk från naturen,
                 kombinerat med musik i olika former.
               </p>
-              <!-- <p class="mt-4">
-                Min mormor och morfar hade ett fantastiskt väldoftande och
-                välfyllt bageri och med barndomsminnen därifrån och flera
-                generationers kunskap och engagemang. Så kommer nu morfars
-                brödkakor till användning igen-nu fyllda med örter, bakverk &
-                musik i olika former.
-              </p> -->
             </article>
 
             <article class="grid grid-cols-2 gap-2">
               <div class="object-cover" id="image-container">
                 <img
-                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md shadow-md object-cover"
-                  src="src/assets/sax.jpeg"
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md"
+                  src="src/assets/herb-bowl-portrait2.jpg"
                   alt="your image"
                 />
               </div>
               <div class="mt-4 pr-4">
                 <h2 class="text-center font-display text-3xl font-bold">
-                  What's in it for me?
+                  Örter & bakverk
                 </h2>
                 <p class="mt-4 text-center">
                   I naturen finns mängder av läkeörter som förbättra vår hälsa
                   på ett hållbart sätt.
                 </p>
               </div>
-              <p class="col-span-2 px-4">
+              <p class="2xs:hidden col-span-2 pt-8 px-4">
                 Ta vara på det som naturen ger både som mat och stödjande för
                 vissa symptom. Något annat som främjar din hälsa är också
-                körsång.
+                <a href="#evenemang">körsång</a>.
               </p>
+            </article>
+
+            <span class="flex justify-center">
+              <hr class="my-12 w-7 text-center text-gray-700" />
+            </span>
+
+            <div class="my-4">
+              <img
+                class="xs:rounded-md w-full object-cover shadow-md"
+                src={magganAndMaria.src}
+                height={magganAndMaria.height}
+                width={magganAndMaria.width}
+                alt="Örter"
+              />
+            </div>
+
+            <article class="my-4 w-full px-4" id="historia">
+              <h3 class="font-display text-2xl">Kommande event:</h3>
+              <h2 class="mb-4 text-center font-display text-4xl font-bold">
+                Örtvandring med <span class="whitespace-nowrap"
+                  >Maggan & Maria</span
+                >
+              </h2>
+              <p>
+                Kom med och lär dej om våra vanligaste örter/läkeväxter. Hur
+                bereds de? Hur använder du dem på bästa sätt i din matlagning
+                eller som läkeväxt. (Bilden på Maria när hon mixar) Nästa
+                vandring är den 17/5 kl 17.30. Vi möts vid Elljusspåret i
+                Nitta/Gingri bygdegård. Kläder efter väder och sittunderlag
+                medtages. Ni bjuds på örtte och kaka efteråt. Pris 350kr.
+                Betalas på plats. Anmälan till maggan@allerthsbageri.se
+              </p>
+              <p class="mt-2"></p>
             </article>
 
             <!-- <article class="grid">
