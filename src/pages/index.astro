@@ -21,30 +21,47 @@ import herbs from '../assets/herbs.jpg'
     <!-- TODO: kontakt i header och i footer -->
     <!-- box med allerths bageri sektion i mitten -->
     <!-- Call to action längst upp och längst ner -->
-    <section class="relative">
-      <img
-        class="xs:rounded-md w-full shadow-md"
-        src={herbs.src}
-        height={herbs.height}
-        width={herbs.src}
-        alt="Örter"
-      />
+    <img
+      class="xs:rounded-md w-full shadow-md"
+      src={herbs.src}
+      height={herbs.height}
+      width={herbs.src}
+      alt="Örter"
+    />
+    <section class="relative px-4">
       <section id="main-content">
         <section class="flex items-center justify-center">
           <div class="my-500 mx-auto w-full">
-            <div class="flex justify-between gap-2 p-4">
-              <div class="w-2/3 object-cover">
+
+            <span class="flex justify-center">
+              <hr class="my-8 w-7 text-center text-gray-700" />
+            </span>
+            <article class="text-center">
+              <p>Örter, bakverk och musik</p>
+              <p>Ogräs för någon - guld för andra</p>
+              <p>Gör ditt ogräs till en guldgruva</p>
+            </article>
+            <span class="flex justify-center">
+              <hr class="my-8 w-7 text-center text-gray-700" />
+            </span>
+
+            <div class="flex justify-between gap-2">
+              <div class="w-3/5 object-cover">
                 <img
-                  class="h-auto min-h-[300px] max-h-[500px] w-full max-w-[300px] items-center rounded-md object-cover"
+                  class="h-auto max-h-[500px] min-h-[300px] w-full max-w-[300px] items-center rounded-md object-cover"
                   src="src/assets/sax.jpeg"
                   alt="your image"
                 />
               </div>
-              <div class="w-1/3 object-cover mt-auto">
-                <img class="max-w-[150px] rounded-md h-auto w-full" src="src/assets/klover.jpg" alt="En närbild på klöver">
-              </div>
+              <!-- <div class="mt-auto w-1/3 object-cover">
+                <img
+                  class="h-auto w-full max-w-[150px] rounded-md"
+                  src="src/assets/klover.jpg"
+                  alt="En närbild på klöver"
+                />
+              </div> -->
             </div>
-            <article class="w-full bg-green-200 px-4">
+            <article class="w-full bg-green-200">
               <h4 class="">Kommande event</h4>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
@@ -58,32 +75,6 @@ import herbs from '../assets/herbs.jpg'
             </article>
           </div>
         </section>
-      </section>
-    </section>
-        <section class="relative">
-      <img
-        class="w-full rounded-md shadow-md"
-        src={herbs.src}
-        height={herbs.height}
-        width={herbs.src}
-        alt="Örter"
-      />
-
-      <section class="mx-4 h-64 rounded-md bg-red-400">
-      Örter, bakverk och musik - sååååå gott
-
-    	Ogräs för någon - guld för andra
-
-    	Gör ditt ogräs till en guldgruva
-
-    	## Historia
-
-    	Min mormor och morfar hade ett fantastiskt väldoftande och välfyllt bageri och med barndomsminnen därifrån och flera generationers kunskap och engagemang. Nu kommer morfars brödlådor till användning igen - fyllda med örter, bakverk och musik i olika former.
-
-    	[What's in it for me?]
-
-    	I naturen finns mängder av läkeörter som förbättra vår hälsa på ett hållbart sätt. Ta vara på det som naturen ger både som mat och stödjande för vissa symptom. Något annat som främjar din hälsa är också körsång.
-
       </section>
     </section>
   </main>
