@@ -9,5 +9,8 @@ A website made with Astrojs and tailwind CSS.
 Install Node.js 18.16.0 64-bit
 
 ```sh
-git clone https://github.com/paccao/allerthsbageri.se.git && cd allerthsbageri.se/ && npm i && npm run dev
+git clone https://github.com/paccao/allerthsbageri.se.git && \
+cd allerthsbageri.se/ && \
+npm i && \
+npm run dev
 ```
