@@ -13,7 +13,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
     <h1 class="pt-4 font-display text-4xl font-bold">{SITE_NAME}</h1>
   </header>
 
-  <main class="max-w-screen-md mx-auto w-full xs:px-4">
+  <main class="mx-auto w-full max-w-screen-md xs:px-4">
     <img
       class="w-full object-cover shadow-md xs:rounded-md"
       src={plantWall.src}
@@ -98,7 +98,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                   I naturen finns mängder av läkeörter som förbättrar vår hälsa
                   på ett hållbart sätt.
                 </p>
-                <p class="col-span-2 px-4 pt-8 hidden xs:block">
+                <p class="col-span-2 hidden px-4 pt-8 xs:block">
                   Ta vara på det naturen ger, både som mat och stödjande för
                   vissa symptom. Något annat som främjar din hälsa är också
                   <a
@@ -133,7 +133,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
               />
             </div>
 
-            <span class="md:flex sm:flex hidden justify-center">
+            <span class="hidden justify-center sm:flex">
               <hr class="my-8 w-7 text-center text-gray-700" />
             </span>
 
@@ -282,8 +282,8 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
   <hr class="border-gray-400" />
 
   <footer class="px-4 py-8">
-    <div class="max-w-screen-lg mx-auto flex flex-wrap justify-between">
-      <div class="sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
+    <div class="mx-auto flex max-w-screen-lg flex-wrap justify-between">
+      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
         <h3 class="mb-4 text-lg font-bold text-green-500">Sidolänkar</h3>
         <ul class="mb-4 list-none">
           <li class="mb-2">
@@ -309,7 +309,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
           </li>
         </ul>
       </div>
-      <div class="sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
+      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
         <h3 class="mb-4 text-lg font-bold text-green-500">
           Följ mig på Instagram
         </h3>
@@ -329,19 +329,19 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
           </li>
         </ul>
       </div>
-      <div class="sm:mb-0 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
+      <div class="mb-8 w-full text-center sm:mb-0 md:w-1/4 lg:w-1/5">
         <h3 class="mb-4 text-lg font-bold text-green-500">Kontakta mig</h3>
-        <a href="mailto:maggan@allerthsbageri.se" class="inline-block font-medium hover:text-green-500
-              hover:underline hover:underline-offset-2 focus:text-green-500
-              focus:underline focus:underline-offset-2"
+        <a
+          href="mailto:maggan@allerthsbageri.se"
+          class="inline-block font-medium hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
           >maggan@allerthsbageri.se</a
         >
       </div>
     </div>
     <div
-      class="max-w-screen-lg mx-auto mt-8 border-t border-gray-700 pt-4 text-center"
+      class="mx-auto mt-8 max-w-screen-lg border-t border-gray-700 pt-4 text-center"
     >
-      <p>&copy; 2023 Maggan Allerth.</p>
+      <p>&copy; 2023 Maggan Allerth</p>
     </div>
   </footer>
 </Layout>
