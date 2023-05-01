@@ -50,14 +50,14 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
             <section class="mb-8 flex flex-col gap-5">
               <a
                 href="#event"
-                class="px-6 py-2 text-center font-display text-4xl text-green-500"
+                class="px-6 py-2 text-center font-display text-4xl text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
                 >Hoppa till <span class="whitespace-nowrap">kommande event</span
                 ></a
               >
               <p class="text-center text-2xl text-gray-200">♫</p>
               <a
                 href="mailto:maggan@allerthsbageri.se"
-                class="text-center text-base underline underline-offset-2"
+                class="text-center text-base hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
                 >maggan@allerthsbageri.se</a
               >
             </section>
@@ -111,7 +111,11 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
               <p class="col-span-2 px-4 pt-8 2xs:hidden">
                 Ta vara på det naturen ger, både som mat och stödjande för vissa
                 symptom. Något annat som främjar din hälsa är också
-                <a href="#friskvård">körsång.</a>
+                <a
+                  href="#friskvård"
+                  class="underline underline-offset-2 hover:text-green-500 focus:text-green-500"
+                  >körsång.</a
+                >
               </p>
             </article>
 
@@ -168,14 +172,15 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                 <p class="text-center">
                   <a
                     href="mailto:maggan@allerthsbageri.se"
-                    class="underline underline-offset-2"
+                    class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
                     >maggan@allerthsbageri.se</a
                   >
                 </p>
                 <p class="text-center">
                   <a
                     href="mailto:halsorum@gmail.com"
-                    class="underline underline-offset-2">halsorum@gmail.com</a
+                    class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+                    >halsorum@gmail.com</a
                   >
                 </p>
                 <p class="my-2 text-center">Välkommen!</p>
@@ -201,7 +206,8 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                     Jag börjar nu leverera nyplockade örter till <a
                       href="https://www.instagram.com/sasongsbagarn/"
                       target="_blank"
-                      class="text-green-500">@sasongsbagarn</a
+                      class="text-green-500 hover:text-green-500 hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2"
+                      >@sasongsbagarn</a
                     > i Dalsjöfors.
                   </li>
                   <p>Köp hennes goda bröd, bullar med mera.</p>
@@ -209,7 +215,8 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                   <li class="my-2">
                     Kören FREKVENS träffas varannan måndag kl 18.00-19.30. <a
                       href="#frekvens"
-                      class="text-green-500">Läs mer</a
+                      class="text-green-500 hover:text-green-500 hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2"
+                      >Läs mer</a
                     >
                   </li>
                   <p>Kontakta Maggan för mer information.</p>
@@ -256,7 +263,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
               <p class="px-4 py-2 text-center">
                 Kontakta Maggan för mer information. <a
                   href="mailto:maggan@allerthsbageri.se"
-                  class="text-center underline underline-offset-2"
+                  class="text-center hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
                   >maggan@allerthsbageri.se</a
                 >
               </p>
@@ -273,15 +280,27 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
     <div class="max-w-screen-lg mx-auto flex flex-wrap justify-between">
       <div class="sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
         <h3 class="mb-4 text-lg font-bold text-green-500">Sidolänkar</h3>
-        <ul class="mb-4 list-none underline underline-offset-2">
+        <ul class="mb-4 list-none">
           <li class="mb-2">
-            <a href="#" class="hover:text-green-500">Upp till toppen</a>
+            <a
+              href="#"
+              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+              >Upp till toppen</a
+            >
           </li>
           <li class="mb-2">
-            <a href="#historia" class="hover:text-green-500">Historia</a>
+            <a
+              href="#historia"
+              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+              >Historia</a
+            >
           </li>
           <li class="mb-2">
-            <a href="#event" class="">Kommande event</a>
+            <a
+              href="#event"
+              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+              >Kommande event</a
+            >
           </li>
         </ul>
       </div>
@@ -291,29 +310,27 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
         </h3>
         <ul class="mb-4 list-none">
           <li>
-            <a href="https://www.instagram.com/allerthsbageri/">
-              <img
-                src={boxWithGoodies.src}
-                alt="Instagram profilbild"
-                class="mr-2 inline-block h-8 w-8 rounded-full"
-              />
-              <span class="inline-block font-medium hover:text-green-500"
-                >@allerthsbageri</span
-              >
+            <img
+              src={boxWithGoodies.src}
+              alt="Instagram profilbild"
+              class="mr-2 inline-block h-8 w-8 rounded-full"
+            />
+            <a
+              href="https://www.instagram.com/allerthsbageri/"
+              class="inline-block font-medium hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+            >
+              @allerthsbageri
             </a>
           </li>
         </ul>
       </div>
       <div class="sm:mb-0 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
-        <h3 class="mb-4 text-lg font-bold text-green-500">Kontakta Maggan</h3>
-        <ul class="mb-4 list-none">
-          <li class="mb-2">
-            <a
-              href="mailto:maggan@allerthsbageri.se"
-              class="hover:text-green-500">maggan@allerthsbageri.se</a
-            >
-          </li>
-        </ul>
+        <h3 class="mb-4 text-lg font-bold text-green-500">Kontakta mig</h3>
+        <a href="mailto:maggan@allerthsbageri.se" class="inline-block font-medium hover:text-green-500
+              hover:underline hover:underline-offset-2 focus:text-green-500
+              focus:underline focus:underline-offset-2"
+          >maggan@allerthsbageri.se</a
+        >
       </div>
     </div>
     <div
