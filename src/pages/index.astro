@@ -19,12 +19,12 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
     <h1 class="pt-4 font-display text-4xl font-bold">{SITE_NAME}</h1>
   </header>
 
-  <main class="xs:px-4 mx-auto w-full max-w-screen-md">
+  <main class="max-w-screen-md mx-auto w-full xs:px-4">
     <!-- TODO: kontakt i header och i footer -->
     <!-- box med allerths bageri sektion i mitten -->
     <!-- Call to action längst upp och längst ner -->
     <img
-      class="xs:rounded-md w-full object-cover shadow-md"
+      class="w-full object-cover shadow-md xs:rounded-md"
       src={plantWall.src}
       height={plantWall.height}
       width={plantWall.width}
@@ -64,7 +64,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
 
             <div class="mx-4" id="historia">
               <img
-                class="xs:rounded-md w-full rounded-md object-cover shadow-md"
+                class="w-full rounded-md object-cover shadow-md xs:rounded-md"
                 src={boxWithGoodies.src}
                 height={boxWithGoodies.height}
                 width={boxWithGoodies.width}
@@ -108,7 +108,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                   på ett hållbart sätt.
                 </p>
               </div>
-              <p class="2xs:hidden col-span-2 px-4 pt-8">
+              <p class="col-span-2 px-4 pt-8 2xs:hidden">
                 Ta vara på det naturen ger, både som mat och stödjande för vissa
                 symptom. Något annat som främjar din hälsa är också
                 <a href="#friskvård">körsång.</a>
@@ -121,7 +121,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
 
             <div class="my-4" id="event">
               <img
-                class="xs:rounded-md w-full object-cover shadow-md"
+                class="w-full object-cover shadow-md xs:rounded-md"
                 src={magganAndMaria.src}
                 height={magganAndMaria.height}
                 width={magganAndMaria.width}
@@ -129,7 +129,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
               />
             </div>
 
-            <span class="hidden justify-center md:flex">
+            <span class="md:flex sm:flex hidden justify-center">
               <hr class="my-8 w-7 text-center text-gray-700" />
             </span>
 
@@ -232,7 +232,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                   alt="your image"
                 />
               </div>
-              <p class="p-4 text-center">
+              <p class="p-4 text-center" id="friskvård">
                 Maggan Allerth heter jag och är utbildad musiklärare,
                 kyrkomusiker och örtpedagog. Älskar körmusik och örter. Glädjen
                 över att få människor att må bra via musik och/eller läkeväxter
@@ -270,8 +270,8 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
   <hr class="border-gray-400" />
 
   <footer class="px-4 py-8">
-    <div class="mx-auto flex max-w-screen-lg flex-wrap justify-between">
-      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
+    <div class="max-w-screen-lg mx-auto flex flex-wrap justify-between">
+      <div class="sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
         <h3 class="mb-4 text-lg font-bold text-green-500">Sidolänkar</h3>
         <ul class="mb-4 list-none underline underline-offset-2">
           <li class="mb-2">
@@ -285,7 +285,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
           </li>
         </ul>
       </div>
-      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
+      <div class="sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
         <h3 class="mb-4 text-lg font-bold text-green-500">
           Följ mig på Instagram
         </h3>
@@ -304,7 +304,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
           </li>
         </ul>
       </div>
-      <div class="mb-8 w-full text-center sm:mb-0 md:w-1/4 lg:w-1/5">
+      <div class="sm:mb-0 md:w-1/4 lg:w-1/5 mb-8 w-full text-center">
         <h3 class="mb-4 text-lg font-bold text-green-500">Kontakta Maggan</h3>
         <ul class="mb-4 list-none">
           <li class="mb-2">
@@ -317,7 +317,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
       </div>
     </div>
     <div
-      class="mx-auto mt-8 max-w-screen-lg border-t border-gray-700 pt-4 text-center"
+      class="max-w-screen-lg mx-auto mt-8 border-t border-gray-700 pt-4 text-center"
     >
       <p>&copy; 2023 My Website. All rights reserved.</p>
     </div>
