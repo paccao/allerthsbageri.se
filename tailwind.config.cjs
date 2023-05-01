@@ -14,6 +14,7 @@ module.exports = {
       '3xs': '300px',
       '2xs': '375px',
       xs: '475px',
+      ...defaultTheme.screens,
     },
   },
   plugins: [require('@tailwindcss/typography')],
