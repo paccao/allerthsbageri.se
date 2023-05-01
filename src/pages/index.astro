@@ -5,6 +5,11 @@ import { SITE_NAME } from '../constants'
 import plantWall from '../assets/plant-wall.jpg'
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
 import magganAndMaria from '../assets/maggan-maria.jpg'
+import herbBowl from '../assets/herb-bowl-portrait2.jpg'
+import vitsippor from '../assets/vitsippor-vandring.jpg'
+import mariaBlender from '../assets/maria-blender.jpg'
+import fika from '../assets/fika.jpg'
+import sax from '../assets/sax.jpg'
 ---
 
 <Layout>
@@ -40,9 +45,8 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
             <section class="mb-8 flex flex-col gap-5">
               <a
                 href="#event"
-                class="px-6 py-2 text-center font-display text-4xl text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-                >Hoppa till <span class="whitespace-nowrap">kommande event</span
-                ></a
+                class="px-6 py-2 text-center font-display text-4xl text-green-500 underline hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
+                >Se <span class="whitespace-nowrap">kommande event</span></a
               >
               <p class="text-center text-2xl text-gray-200">♫</p>
               <a
@@ -82,7 +86,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
             <article class="grid grid-cols-2 gap-2 xs:px-4">
               <img
                 class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
-                src="src/assets/herb-bowl-portrait2.jpg"
+                src={herbBowl.src}
                 alt="Bunke med örter."
               />
               <div class="mt-4 pr-4">
@@ -150,12 +154,12 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                   <div class="flex justify-center">
                     <img
                       class="w-1/2 max-w-[250px] items-center rounded-l-md object-cover shadow-md"
-                      src="src/assets/maria-blender.jpg"
+                      src={mariaBlender.src}
                       alt="Maria mixar ört-smoothie."
                     />
                     <img
                       class="w-1/2 max-w-[250px] items-center rounded-r-md object-cover shadow-md"
-                      src="src/assets/vitsippor-vandring.jpg"
+                      src={vitsippor.src}
                       alt="Vandring bland vitsippor."
                     />
                   </div>
@@ -190,7 +194,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
                 <div class="my-4 flex justify-center">
                   <img
                     class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                    src="src/assets/fika.jpg"
+                    src={fika.src}
                     alt="Fika och smoothie-provning på ett event."
                   />
                 </div>
@@ -239,7 +243,7 @@ import magganAndMaria from '../assets/maggan-maria.jpg'
               <div class="my-4 flex justify-center 1xs:px-4">
                 <img
                   class="h-auto max-h-[500px] w-auto object-cover shadow-md 1xs:rounded-md"
-                  src="src/assets/sax.jpeg"
+                  src={sax.src}
                   alt="Maggan spelar saxofon i trädgården."
                 />
               </div>
