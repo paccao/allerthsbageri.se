@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://www.allerthsbageri.se/sitemap-index.xml
