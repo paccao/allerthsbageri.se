@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Italianno', 'cursive'],
+        display: ['Italianno', 'sans-serif'],
         serif: ['Quattrocento', 'serif'],
       },
     },
