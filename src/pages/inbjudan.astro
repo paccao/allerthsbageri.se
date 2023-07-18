@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro'
+import InviteLayout from '../layouts/InviteLayout.astro'
 
 import moj from '../assets/inbjudan/1-1.jpg'
 import kyrka from '../assets/inbjudan/Målsryd1.jpg'
@@ -9,15 +9,16 @@ import barn2 from '../assets/inbjudan/3-3.jpeg'
 import barn3 from '../assets/inbjudan/3-4.jpeg'
 import barn4 from '../assets/inbjudan/3-5.jpeg'
 import bus from '../assets/inbjudan/5-1.jpeg'
+import leaves from '../assets/inbjudan/leaves.png'
 ---
 
-<Layout>
+<InviteLayout title="Vigsel 2 september 2023">
   <header class="py-8 text-center">
     <span class="text-sm font-light tracking-widest">Välkommen till</span>
-    <h1 class="pt-4 font-display text-4xl font-bold">Vigsel mellan <span class="whitespace-nowrap">Maggan & &nbsp;&nbsp;Johan</span></h1>
+    <h1 class="pt-4 font-display text-4xl font-bold">Vigsel mellan <span class="whitespace-nowrap">&nbsp;Johan & &nbsp;Maggan</span></h1>
   </header>
 
-  <main class="mx-auto w-full max-w-screen-xs xs:px-4">
+  <main class="mx-auto w-full max-w-screen-xs px-4">
     <img
       class="w-full object-cover shadow-md xs:rounded-md aspect-square"
       src={moj.src}
@@ -30,27 +31,25 @@ import bus from '../assets/inbjudan/5-1.jpeg'
         <section class="flex items-center justify-center">
           <div class="my-500 mx-auto w-full">
             <article class="text-center mt-8" id="intro">
-              <p class="px-4 flex items-center space-x-2">
+              <p class="flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>                          
+                </svg>
                 <span>Klockan 15:00 den 2 september 2023</span>
               </p>
-              <p class="px-4 mt-4 flex items-center space-x-2">
+              <p class="mt-4 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>                
                 <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Målsryds kyrka</a>
               </p>
-
-              <div class="flex justify-center text-gray-300 my-8">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
-                </svg>                
-              </div>
             </article>
 
+            <div class="flex justify-center">
+              <img src={leaves.src} alt="leaves frame" class="transform rotate-90 w-16 -ml-8"/>
+            </div>
+            
             <div class="flex justify-center" id="historia">
               <img
                 class="h-auto w-full max-w-screen-xs rounded-md object-cover shadow-md xs:rounded-md"
@@ -77,13 +76,15 @@ import bus from '../assets/inbjudan/5-1.jpeg'
                 <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
               </p>
               <p class="mt-4">
-                Valfri klädsel. OSA till <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> eller <a class="text-green-500 underline underline-offset-2" href="tel:0707565307">Johan</a> senast den 20 augusti. Hör av dig om du vill samåka från t.ex. Borås centralstation.
+                Valfri klädsel. OSA till <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> eller <a class="text-green-500 underline underline-offset-2" href="tel:0707565307">Johan</a> senast den 20 augusti. Hör av dig om du vill samåka från t.ex. Borås centralstation (buss och tåg).
               </p>
             </article>
 
-            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
+            <div class="flex justify-center">
+              <img src={leaves.src} alt="leaves frame" class="transform rotate-90 w-16 -ml-8"/>
+            </div>
 
-            <article class="grid grid-cols-2 gap-2 xs:px-4">
+            <article class="grid grid-cols-2 gap-2 px-4">
               <h2 class="text-center font-display text-5xl font-bold col-span-2">
                 Fest i Dannike
               </h2>
@@ -92,7 +93,7 @@ import bus from '../assets/inbjudan/5-1.jpeg'
                 src={dannike.src}
                 alt="Dannike församlingshem"
               />
-              <div class="mt-4 pr-4">
+              <div class="pr-4">
                 <p class="mt-4 flex items-center space-x-2 px-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -100,9 +101,9 @@ import bus from '../assets/inbjudan/5-1.jpeg'
                   </svg>
                   <a href="https://www.google.com/maps/dir//Länghemsvägen+30,+516+94+Dannike/@57.6905274,13.1754194,13z" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
                 </p>
-                <p class="px-4 pt-4">Brudparet önskar buffébord med knytis istället för presenter.</p>
+                <p class="pl-5 pt-4">Brudparet önskar buffébord med knytis.</p>
 
-                <p class="mt-2 flex items-center space-x-2 px-4">
+                <p class="mt-4 flex items-center space-x-2 px-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
                   </svg>
@@ -110,28 +111,32 @@ import bus from '../assets/inbjudan/5-1.jpeg'
                 </p>
               </div>
 
-              <div class="col-span-2 px-4">
-                <p class="mt-4">Till buffébordet väljer du själv vad du vill bidra med. Mingel, snittar, paj eller efterrätt. Helst växtbaserat och utan nötter. Vi står för dryck.</p>
+              <div class="col-span-2">
+                <p class="mt-4">Till buffébordet väljer du själv vad du vill bidra med. Mingel, snittar, paj eller efterrätt. Helst växtbaserat och utan nötter.</p>
                 <p class="mt-4">Gärna spex och musik samt många och korta tal!</p>
                 <p class="mt-4">Ta med röst och instrument för spontant jammande.</p>
                 <p class="mt-4">Vi avstår gärna bröllopspresenter. Däremot ett stort ja till pengagåva till bröllopsresan.</p>
               </div>
             </article>
 
-            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
+            <div class="flex justify-center">
+              <img src={leaves.src} alt="leaves frame" class="transform rotate-90 w-16 -ml-8"/>
+            </div>
 
-            <article class="grid grid-cols-2 gap-1 xs:px-4" id="barn">
+            <article class="grid grid-cols-2 gap-1 px-4" id="barn">
               <h2 class="text-center font-display text-5xl font-bold col-span-2">Barnvänligt</h2>
 
-              <p class="mt-4 pb-2 col-span-2 px-4">På nedre plan har barnen en hel våning för lek och bus:</p>
+              <p class="mt-4 pb-2 col-span-2">På nedre plan har barnen en hel våning för lek och bus:</p>
 
-              <img src={barn1.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
-              <img src={barn2.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
-              <img src={barn3.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
-              <img src={barn4.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn1.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn2.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn3.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn4.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
             </article>
 
-            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
+            <div class="flex justify-center">
+              <img src={leaves.src} alt="leaves frame" class="transform rotate-90 w-16 -ml-8"/>
+            </div>
 
             <article class="pb-16 px-4">
               <h2 class="text-center font-display text-5xl font-bold">Tips</h2>
@@ -154,10 +159,14 @@ import bus from '../assets/inbjudan/5-1.jpeg'
 
             <p class="px-4 pt-8 pb-3 font-bold">Oj! Maggan hälsar att frisyren ska fixas till bröllopet! 😉</p>
 
-            <img src={bus.src} alt="Maggan och Johan" />
+            <img src={bus.src} class="rounded-md" alt="Maggan och Johan" />
+
+            <div class="flex justify-center">
+              <img src={leaves.src} alt="leaves frame" class="transform rotate-90 w-16 -ml-8"/>
+            </div>
           </div>
         </section>
       </section>
     </section>
   </main>
-</Layout>
+</ILayout>
