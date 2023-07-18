@@ -4,19 +4,17 @@ import Layout from '../layouts/Layout.astro'
 import moj from '../assets/inbjudan/1-1.jpg'
 import kyrka from '../assets/inbjudan/Målsryd1.jpg'
 import dannike from '../assets/inbjudan/dannike.png'
-import boxWithGoodies from '../assets/box-med-bakat.jpg'
-import magganAndMaria from '../assets/maggan-maria.jpg'
-import herbBowl from '../assets/herb-bowl-portrait2.jpg'
-import vitsippor from '../assets/vitsippor-vandring.jpg'
-import mariaBlender from '../assets/maria-blender.jpg'
-import fika from '../assets/fika.jpg'
-import sax from '../assets/sax.jpg'
+import barn1 from '../assets/inbjudan/3-2.jpeg'
+import barn2 from '../assets/inbjudan/3-3.jpeg'
+import barn3 from '../assets/inbjudan/3-4.jpeg'
+import barn4 from '../assets/inbjudan/3-5.jpeg'
+import bus from '../assets/inbjudan/5-1.jpeg'
 ---
 
 <Layout>
   <header class="py-8 text-center">
     <span class="text-sm font-light tracking-widest">Välkommen till</span>
-    <h1 class="pt-4 font-display text-4xl font-bold">Vigsel mellan <span class="whitespace-nowrap">Maggan och Johan</span></h1>
+    <h1 class="pt-4 font-display text-4xl font-bold">Vigsel mellan <span class="whitespace-nowrap">Maggan & &nbsp;&nbsp;Johan</span></h1>
   </header>
 
   <main class="mx-auto w-full max-w-screen-xs xs:px-4">
@@ -31,55 +29,40 @@ import sax from '../assets/sax.jpg'
       <section id="main-content">
         <section class="flex items-center justify-center">
           <div class="my-500 mx-auto w-full">
-            <span class="flex justify-center">
-              <hr class="my-8 w-7 text-center text-gray-700" />
-            </span>
-            <article class="text-center" id="intro">
-              <p class="flex items-center space-x-2">
+            <article class="text-center mt-8" id="intro">
+              <p class="px-4 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>                          
                 <span>Klockan 15:00 den 2 september 2023</span>
               </p>
-              <p class="mt-4 flex items-center space-x-2">
+              <p class="px-4 mt-4 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>                
-                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2">Målsryds kyrka</a>
+                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Målsryds kyrka</a>
               </p>
 
-              <div class="flex justify-center text-gray-300 mt-4">
+              <div class="flex justify-center text-gray-300 my-8">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5" />
                 </svg>                
               </div>
             </article>
-            <span class="flex justify-center">
-              <hr class="my-8 w-7 text-center text-gray-700" />
-            </span>
-            
-            <section class="mb-8 flex flex-col gap-5">
-              <a
-                href="#event"
-                class="px-6 py-2 text-center font-display text-4xl text-green-500 underline hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-                >Se <span class="whitespace-nowrap">kommande event</span></a
-              >
-              <p class="text-center text-2xl text-gray-400">♫</p>
-            </section>
 
-            <div class="mx-4 flex justify-center" id="historia">
+            <div class="flex justify-center" id="historia">
               <img
-                class="h-auto w-full max-w-[400px] rounded-md object-cover shadow-md xs:rounded-md"
+                class="h-auto w-full max-w-screen-xs rounded-md object-cover shadow-md xs:rounded-md"
                 src={kyrka.src}
                 alt="Målsryds kyrka"
               />
             </div>
 
             <article class="my-8 w-full px-4">
-              <h3 class="text-center font-display text-3xl font-bold">
+              <h2 class="text-center font-display text-5xl font-bold">
                 Vigsel i Målsryds kyrka
-              </h3>
+              </h2>
               <p class="mt-4 flex items-center space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -91,31 +74,31 @@ import sax from '../assets/sax.jpg'
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>                
-                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2">Vägbeskrivning</a>
+                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
               </p>
               <p class="mt-4">
                 Valfri klädsel. OSA till <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> eller <a class="text-green-500 underline underline-offset-2" href="tel:0707565307">Johan</a> senast den 20 augusti. Hör av dig om du vill samåka från t.ex. Borås centralstation.
               </p>
             </article>
 
-            <p class="text-center text-2xl text-gray-400 my-8">♫</p>
+            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
 
             <article class="grid grid-cols-2 gap-2 xs:px-4">
+              <h2 class="text-center font-display text-5xl font-bold col-span-2">
+                Fest i Dannike
+              </h2>
               <img
                 class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
                 src={dannike.src}
                 alt="Dannike församlingshem"
               />
               <div class="mt-4 pr-4">
-                <h3 class="text-center font-display text-3xl font-bold">
-                  Fest i Dannike
-                </h3>
                 <p class="mt-4 flex items-center space-x-2 px-4">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                   </svg>
-                  <a href="https://www.google.com/maps/dir//Länghemsvägen+30,+516+94+Dannike/@57.6905274,13.1754194,13z" class="text-base hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2">Vägbeskrivning</a>
+                  <a href="https://www.google.com/maps/dir//Länghemsvägen+30,+516+94+Dannike/@57.6905274,13.1754194,13z" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
                 </p>
                 <p class="px-4 pt-4">Brudparet önskar buffébord med knytis istället för presenter.</p>
 
@@ -127,260 +110,54 @@ import sax from '../assets/sax.jpg'
                 </p>
               </div>
 
-              <div class="col-span-2">
-                <p class="mt-4">Till buffébordet väljer du själv vad du vill bidra med. Mingel, snittar, paj eller efterrätt. Helst växtbaserat och utan nötter.</p>
+              <div class="col-span-2 px-4">
+                <p class="mt-4">Till buffébordet väljer du själv vad du vill bidra med. Mingel, snittar, paj eller efterrätt. Helst växtbaserat och utan nötter. Vi står för dryck.</p>
                 <p class="mt-4">Gärna spex och musik samt många och korta tal!</p>
-                <p class="mt-4">Ta med instrument för spontant jammande.</p>
-                <p class="mt-4">Valfri gåva om ni vill (kontant eller kryptovalutor)</p>
+                <p class="mt-4">Ta med röst och instrument för spontant jammande.</p>
+                <p class="mt-4">Vi avstår gärna bröllopspresenter. Däremot ett stort ja till pengagåva till bröllopsresan.</p>
               </div>
             </article>
 
+            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
 
+            <article class="grid grid-cols-2 gap-1 xs:px-4" id="barn">
+              <h2 class="text-center font-display text-5xl font-bold col-span-2">Barnvänligt</h2>
 
-            <!-- TODO: barnvänligt, image grid  -->
+              <p class="mt-4 pb-2 col-span-2 px-4">På nedre plan har barnen en hel våning för lek och bus:</p>
 
-            <article class="grid grid-cols-2 gap-2 xs:px-4">
-              <h3 class="text-center font-display text-3xl font-bold">Barnvänligt</h3>
-              <img src="" alt="">
+              <img src={barn1.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn2.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn3.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn4.src} class="shadow-lg" alt="Barnvänligt, bild från Dannike församlingshem">
             </article>
 
-            <span class="flex justify-center">
-              <hr class="my-12 w-7 text-center text-gray-700" />
-            </span>
+            <p class="text-center text-2xl text-gray-300 my-8">♫</p>
 
-            <div class="mx-4 flex justify-center" id="event">
-              <img
-                class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                src={magganAndMaria.src}
-                alt="Maggan och Maria på en sommardag."
-              />
-            </div>
+            <article class="pb-16 px-4">
+              <h2 class="text-center font-display text-5xl font-bold">Tips</h2>
 
-            <span class="hidden justify-center sm:flex">
-              <hr class="my-8 w-7 text-center text-gray-700" />
-            </span>
-
-            <article class="my-4 w-full px-4">
-              <section>
-                <h4 class="mb-4 text-center font-display text-2xl">
-                  Kommande event:
-                </h4>
-                <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                  Örtvandring med <span class="whitespace-nowrap"
-                    >Maggan & Maria</span
-                  >
-                </h2>
-                <div class="flex justify-center text-center">
-                  <p class="max-w-md">
-                    Kom med och lär dej om våra vanligaste örter/läkeväxter. Hur
-                    bereds de? Hur använder du dem på bästa sätt i din
-                    matlagning eller som läkeväxt.
-                  </p>
-                </div>
-
-                <div class="my-4">
-                  <div class="flex justify-center">
-                    <img
-                      class="w-1/2 max-w-[250px] items-center rounded-l-md object-cover shadow-md"
-                      src={mariaBlender.src}
-                      alt="Maria mixar ört-smoothie."
-                    />
-                    <img
-                      class="w-1/2 max-w-[250px] items-center rounded-r-md object-cover shadow-md"
-                      src={vitsippor.src}
-                      alt="Vandring bland vitsippor."
-                    />
-                  </div>
-                </div>
-                <div class="flex justify-center text-center">
-                  <p class="max-w-md">
-                    Nästa örtvandring är den 28/8 kl 17.30. Samling vid
-                    parkeringen bakom hembygdsgården i Algutstorp, Rångedala.
-                    Kläder efter väder och sittunderlag medtages. Ni bjuds på örtte och hembakat bröd fyllt med örter och ost.
-                  </p>
-                </div>
-                <p class="my-2 text-center">Pris 350kr. Betalas på plats.</p>
-                <p class="text-center">Anmälan sker till</p>
-                <section class="flex justify-center gap-2 text-center">
-                  <p>Maggan:</p>
-                  <a
-                    href="mailto:maggan@allerthsbageri.se"
-                    class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-                    >maggan@allerthsbageri.se</a
-                  >
-                </section>
-                <section class="flex justify-center gap-2 text-center">
-                  <p>Maria:</p>
-                  <a
-                    href="mailto:halsorum@gmail.com"
-                    class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-                    >halsorum@gmail.com</a
-                  >
-                </section>
-                <p class="my-2 text-center text-lg">Välkommen!</p>
-
-                <div class="my-4 flex justify-center">
-                  <img
-                    class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                    src={fika.src}
-                    alt="Fika och smoothie-provning på ett event."
-                  />
-                </div>
-              </section>
-
-              <span class="flex justify-center">
-                <hr class="my-12 w-7 text-center text-gray-700" />
-              </span>
-
-              <section>
-                <h3 class="mb-4 text-center font-display text-3xl font-bold">
-                  Övrigt smått & gott
-                </h3>
-                <ul class="list-inside list-disc">
-                  <li>
-                    Jag börjar nu leverera nyplockade örter till <a
-                      href="https://www.sasongsbagarn.se/"
-                      target="_blank"
-                      class="text-green-500 hover:text-green-500 hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2"
-                      >@sasongsbagarn</a
-                    > i Dalsjöfors. Köp hennes goda bröd, bullar med mera.
-                  </li>
-                  <li class="my-2">
-                    Leverans av örter och bröd till Grovare Evenemang & café,
-                    Marie Arturéns härliga och mysiga café i Grovare.
-                  </li>
-                  <li class="my-2">
-                    Kören FREKVENS träffas varannan måndag kl 18.00-19.30. <a
-                      href="#frekvens"
-                      class="text-green-500 hover:text-green-500 hover:underline hover:underline-offset-2 focus:underline focus:underline-offset-2"
-                      ><span class="whitespace-nowrap">Läs mer</span></a
-                    >
-                  </li>
-                </ul>
-              </section>
-            </article>
-
-            <span class="flex justify-center">
-              <hr class="my-8 w-7 text-center text-gray-700" />
-            </span>
-
-            <article class="my-4" id="om-mig">
-              <h3 class="mb-4 text-center font-display text-3xl font-bold">
-                Om mig
-              </h3>
-              <div class="my-4 flex justify-center 1xs:px-4">
-                <img
-                  class="h-auto max-h-[500px] w-auto object-cover shadow-md 1xs:rounded-md"
-                  src={sax.src}
-                  alt="Maggan spelar saxofon i trädgården."
-                />
+              <h3 class="mt-8 mb-2 font-bold text-xl">Förslag på boende: </h3>
+              
+              <div class="grid gap-2">
+                <p><a href="https://goo.gl/maps/XD4bzdTC5nMj4vy76" class="text-green-500 underline underline-offset-2">Bed & Breakfast i Dalsjöförs</a></p>
+                <p><a href="https://borascamping.se" class="text-green-500 underline underline-offset-2">Borås Camping</a></p>
               </div>
-              <div class="flex justify-center">
-                <p class="max-w-md p-4 text-center" id="friskvård">
-                  Maggan Allerth heter jag och är utbildad musiklärare,
-                  kyrkomusiker och örtpedagog. Älskar körmusik och örter.
-                  Glädjen över att få människor att må bra via musik och/eller
-                  läkeväxter är min drivkraft.
-                </p>
+
+              <h3 class="mt-8 mb-2 font-bold text-xl">Att se och göra</h3>
+
+              <div class="grid gap-2">
+                <p><a href="https://www.borasdjurpark.se" class="text-green-500 underline underline-offset-2">Borås Djurpark</a></p>
+                <p><a href="https://www.abecitakonst.se/" class="text-green-500 underline underline-offset-2">Abecita Popkonst och Foto</a></p>
+                <p><a href="https://www.svenskakyrkan.se/filer/568294/KyrkBladet%20nr%202-2023.pdf" class="text-green-500 underline underline-offset-2">Filling station den 5/9 i Gånghester kyrka (sid. 7)</a>. Även den 31/8 i Göteborg. Kontakta <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> för mer info.</p>
               </div>
             </article>
 
-            <article class="my-4" id="frekvens">
-              <h3 class="mb-4 text-center font-display text-3xl font-bold">
-                Friskvårdskör
-              </h3>
-              <div class="flex justify-center">
-                <p class="max-w-md px-4 text-center">
-                  Körsång på recept borde många ordineras. När du jobbar med
-                  andning och rörelse främjar det hela din kropps energisystem.
-                  Du mår bra när endorfiner släpps lös genom körsång. I kören
-                  FREKVENS träffar du andra likasinnade.
-                </p>
-              </div>
-              <div class="flex justify-center">
-                <p class="max-w-md px-4 py-2 text-center">
-                  Kören FREKVENS träffas varannan måndag kl 18.00-19.30.
-                </p>
-              </div>
-              <div class="flex justify-center">
-                <p class="max-w-md px-4 py-2 text-center">
-                  Kontakta Maggan för mer information. <a
-                    href="mailto:maggan@allerthsbageri.se"
-                    class="text-center hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-                    >maggan@allerthsbageri.se</a
-                  >
-                </p>
-              </div>
-            </article>
+            <p class="px-4 pt-8 pb-3 font-bold">Oj! Maggan hälsar att frisyren ska fixas till bröllopet! 😉</p>
+
+            <img src={bus.src} alt="Maggan och Johan" />
           </div>
         </section>
       </section>
     </section>
   </main>
-
-  <hr class="border-gray-400" />
-
-  <footer class="px-4 py-8">
-    <div class="mx-auto flex max-w-screen-lg flex-wrap justify-between">
-      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
-        <h3 class="mb-4 text-lg font-bold text-green-500">Sidolänkar</h3>
-        <ul class="mb-4 list-none">
-          <li class="mb-2">
-            <a
-              href="#"
-              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-              >Upp till toppen</a
-            >
-          </li>
-          <li class="mb-2">
-            <a
-              href="#historia"
-              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-              >Historia</a
-            >
-          </li>
-          <li class="mb-2">
-            <a
-              href="#event"
-              class="hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-              >Kommande event</a
-            >
-          </li>
-        </ul>
-      </div>
-      <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
-        <h3 class="mb-4 text-lg font-bold text-green-500">
-          Följ mig på Instagram
-        </h3>
-        <ul class="mb-4 list-none">
-          <li>
-            <img
-              src={boxWithGoodies.src}
-              alt="Instagram profilbild på låda med bakverk, örter och växter."
-              class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
-            />
-            <a
-              href="https://www.instagram.com/allerthsbageri/"
-              class="inline-block font-medium hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-            >
-              @allerthsbageri
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="mb-8 w-full text-center sm:mb-0 md:w-1/4 lg:w-1/5">
-        <h3 class="mb-4 text-lg font-bold text-green-500">Kontakta mig</h3>
-        <a
-          href="mailto:maggan@allerthsbageri.se"
-          class="inline-block font-medium hover:text-green-500 hover:underline hover:underline-offset-2 focus:text-green-500 focus:underline focus:underline-offset-2"
-          >maggan@allerthsbageri.se</a
-        >
-      </div>
-    </div>
-    <div
-      class="mx-auto mt-8 max-w-screen-lg border-t border-gray-700 pt-4 text-center"
-    >
-      <p>&copy; 2023 Maggan Allerth</p>
-    </div>
-  </footer>
 </Layout>
