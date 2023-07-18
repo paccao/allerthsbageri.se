@@ -1,0 +1,180 @@
+---
+import InviteLayout from '../layouts/InviteLayout.astro'
+
+import moj from '../assets/inbjudan/1-1.jpg'
+import kyrka from '../assets/inbjudan/Målsryd1.jpg'
+import dannike from '../assets/inbjudan/dannike.png'
+import barn1 from '../assets/inbjudan/3-2.jpeg'
+import barn2 from '../assets/inbjudan/3-3.jpeg'
+import barn3 from '../assets/inbjudan/3-4.jpeg'
+import barn4 from '../assets/inbjudan/3-5.jpeg'
+import bus from '../assets/inbjudan/5-1.jpeg'
+import leaves from '../assets/inbjudan/leaves.png'
+---
+
+<InviteLayout title="Vigsel 2 september 2023">
+  <header class="py-8 text-center">
+    <span class="text-sm font-light tracking-widest">Välkommen till</span>
+    <h1 class="pt-4 font-display text-4xl font-bold">Vigsel mellan <span class="whitespace-nowrap">&nbsp;Johan & &nbsp;Maggan</span></h1>
+  </header>
+
+  <main class="mx-auto w-full max-w-screen-xs px-4">
+    <img
+      class="w-full object-cover shadow-md xs:rounded-md aspect-square"
+      src={moj.src}
+      height={moj.height}
+      width={moj.width}
+      alt="Maggan och Johan"
+    />
+    <section class="relative">
+      <section id="main-content">
+        <section class="flex items-center justify-center">
+          <div class="my-500 mx-auto w-full">
+            <article class="text-center mt-8" id="intro">
+              <p class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span>Klockan 15:00 den 2 september 2023</span>
+              </p>
+              <p class="mt-4 flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>                
+                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Målsryds kyrka</a>
+              </p>
+            </article>
+
+            <div class="grid grid-cols-2">
+              <img src={leaves.src} alt="leaves frame" class="ml-20 w-16 transform rotate-90 scale-y-[-1]" />
+              <img src={leaves.src} alt="leaves frame" class="ml-20 transform rotate-90 w-16" />
+            </div>
+            
+            <div class="flex justify-center" id="historia">
+              <img
+                class="h-auto w-full max-w-screen-xs rounded-md object-cover shadow-md xs:rounded-md"
+                src={kyrka.src}
+                alt="Målsryds kyrka"
+              />
+            </div>
+
+            <article class="my-8 w-full px-4">
+              <h2 class="text-center font-display text-5xl font-bold">
+                Vigsel i Målsryds kyrka
+              </h2>
+              <p class="mt-4 flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>                          
+                <span>Klockan 15:00 den 2 september 2023</span>
+              </p>
+              <p class="mt-4 flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>                
+                <a href="https://www.google.com/maps/dir//Målsryds+kyrka,+Kyrkvägen+2,+516+77+Målsryd/@57.6984581,13.0122148,13z/" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
+              </p>
+              <p class="mt-4">
+                Valfri klädsel. OSA till <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> eller <a class="text-green-500 underline underline-offset-2" href="tel:0707565307">Johan</a> senast den 20 augusti. Hör av dig om du vill samåka från t.ex. Borås centralstation (buss och tåg).
+              </p>
+            </article>
+
+            <div class="grid grid-cols-2">
+              <img src={leaves.src} alt="leaves frame" class="ml-20 w-16 transform rotate-90 scale-y-[-1]" />
+              <img src={leaves.src} alt="leaves frame" class="ml-20 transform rotate-90 w-16" />
+            </div>
+
+            <article class="grid grid-cols-2 gap-2 px-4">
+              <h2 class="text-center font-display text-5xl font-bold col-span-2">
+                Fest i Dannike
+              </h2>
+              <img
+                class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                src={dannike.src}
+                alt="Dannike församlingshem"
+              />
+              <div class="pr-4">
+                <p class="mt-4 flex items-center space-x-2 px-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                  </svg>
+                  <a href="https://www.google.com/maps/dir//Länghemsvägen+30,+516+94+Dannike/@57.6905274,13.1754194,13z" class="text-base text-green-500 underline underline-offset-2">Vägbeskrivning</a>
+                </p>
+                <p class="pl-5 pt-4">Brudparet önskar buffébord med knytis.</p>
+
+                <p class="mt-4 flex items-center space-x-2 px-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+                  </svg>
+                  <a href="#barn" class="text-base block text-green-500 underline underline-offset-2">Barnvänligt!</a>
+                </p>
+              </div>
+
+              <div class="col-span-2">
+                <p class="mt-4">Till buffébordet väljer du själv vad du vill bidra med. Mingel, snittar, paj eller efterrätt. Helst växtbaserat och utan nötter.</p>
+                <p class="mt-4">Gärna spex och musik samt många och korta tal!</p>
+                <p class="mt-4">Ta med röst och instrument för spontant jammande.</p>
+                <p class="mt-4">Vi avstår gärna bröllopspresenter. Däremot ett stort ja till pengagåva till bröllopsresan.</p>
+              </div>
+            </article>
+
+            <div class="grid grid-cols-2">
+              <img src={leaves.src} alt="leaves frame" class="ml-20 w-16 transform rotate-90 scale-y-[-1]" />
+              <img src={leaves.src} alt="leaves frame" class="ml-20 transform rotate-90 w-16" />
+            </div>
+
+            <article class="grid grid-cols-2 gap-1 px-4" id="barn">
+              <h2 class="text-center font-display text-5xl font-bold col-span-2">Barnvänligt</h2>
+
+              <p class="mt-4 pb-2 col-span-2">På nedre plan har barnen en hel våning för lek och bus:</p>
+
+              <img src={barn1.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn2.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn3.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+              <img src={barn4.src} class="shadow-lg rounded-md" alt="Barnvänligt, bild från Dannike församlingshem">
+            </article>
+
+            <div class="grid grid-cols-2">
+              <img src={leaves.src} alt="leaves frame" class="ml-20 w-16 transform rotate-90 scale-y-[-1]" />
+              <img src={leaves.src} alt="leaves frame" class="ml-20 transform rotate-90 w-16" />
+            </div>
+
+            <article class="pb-16 px-4">
+              <h2 class="text-center font-display text-5xl font-bold">Tips</h2>
+
+              <h3 class="mt-8 mb-2 font-bold text-xl">Förslag på boende: </h3>
+              
+              <div class="grid gap-2">
+                <p><a href="https://goo.gl/maps/XD4bzdTC5nMj4vy76" class="text-green-500 underline underline-offset-2">Bed & Breakfast i Dalsjöförs</a></p>
+                <p><a href="https://borascamping.se" class="text-green-500 underline underline-offset-2">Borås Camping</a></p>
+              </div>
+
+              <h3 class="mt-8 mb-2 font-bold text-xl">Att se och göra</h3>
+
+              <div class="grid gap-2">
+                <p><a href="https://www.borasdjurpark.se" class="text-green-500 underline underline-offset-2">Borås Djurpark</a></p>
+                <p><a href="https://www.abecitakonst.se/" class="text-green-500 underline underline-offset-2">Abecita Popkonst och Foto</a></p>
+                <p><a href="https://www.svenskakyrkan.se/filer/568294/KyrkBladet%20nr%202-2023.pdf" class="text-green-500 underline underline-offset-2">Filling station den 5/9 i Gånghester kyrka (sid. 7)</a>. Även den 31/8 i Göteborg. Kontakta <a class="text-green-500 underline underline-offset-2" href="tel:0702992689">Maggan</a> för mer info.</p>
+              </div>
+            </article>
+
+            <p class="px-4 pt-8 pb-3 font-bold">Oj! Maggan hälsar att frisyren ska fixas till bröllopet! 😉</p>
+
+            <img src={bus.src} class="rounded-md" alt="Maggan och Johan" />
+
+            <p class="pt-8 font-display text-3xl text-center font-bold">Välkommen!</p>
+
+            <div class="grid grid-cols-2">
+              <img src={leaves.src} alt="leaves frame" class="ml-20 w-16 transform rotate-90 scale-y-[-1]" />
+              <img src={leaves.src} alt="leaves frame" class="ml-20 transform rotate-90 w-16" />
+            </div>
+
+          </div>
+        </section>
+      </section>
+    </section>
+  </main>
+</ILayout>
