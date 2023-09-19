@@ -6,9 +6,6 @@ import sitemap from '@astrojs/sitemap'
 export default defineConfig({
   site: 'https://www.allerthsbageri.se',
   integrations: [tailwind(), sitemap()],
-  experimental: {
-    assets: true,
-  },
   image: {
     service: {
       entrypoint: 'astro/assets/services/sharp',
