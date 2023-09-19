@@ -28,9 +28,6 @@ dependencies:
     version: 3.3.3
 
 devDependencies:
-  pagecrypt:
-    specifier: ^6.1.1
-    version: 6.1.1
   prettier:
     specifier: ^3.0.3
     version: 3.0.3
@@ -2554,6 +2551,7 @@ packages:
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
+    dev: false
 
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
@@ -2721,15 +2719,6 @@ packages:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
     dev: false
-
-  /pagecrypt@6.1.1:
-    resolution: {integrity: sha512-ai5VtSxJDWPRJrkWe8IVEPPLMd9OZM6DdmtNNwOxmq/M6Fm/XXuygdlDeSr6T0XTBAk5LQHIGGkHBjR6tfr9iQ==}
-    engines: {node: '>= 16.0.0'}
-    hasBin: true
-    dependencies:
-      rfc4648: 1.5.2
-      sade: 1.8.1
-    dev: true
 
   /parse-latin@5.0.1:
     resolution: {integrity: sha512-b/K8ExXaWC9t34kKeDV8kGXBkXZ1HCSAZRYE7HR14eA1GlXX5L8iWhs8USJNhQU9q5ci413jCKF0gOyovvyRBg==}
@@ -3200,10 +3189,6 @@ packages:
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
     dev: false
 
-  /rfc4648@1.5.2:
-    resolution: {integrity: sha512-tLOizhR6YGovrEBLatX1sdcuhoSCXddw3mqNVAcKxGJ+J0hFeJ+SjeWCv5UPA/WU3YzWPPuCVYgXBKZUPGpKtg==}
-    dev: true
-
   /rollup@3.29.2:
     resolution: {integrity: sha512-CJouHoZ27v6siztc21eEQGo0kIcE5D1gVPA571ez0mMYb25LGYGKnVNXpEj5MGlepmDWGXNjDB5q7uNiPHC11A==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
@@ -3223,6 +3208,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       mri: 1.2.0
+    dev: false
 
   /safe-buffer@5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
