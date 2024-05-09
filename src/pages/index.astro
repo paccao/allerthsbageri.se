@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets'
+
 import Layout from '../layouts/Layout.astro'
 import { SITE_NAME } from '../constants'
 
@@ -19,11 +21,9 @@ import sax from '../assets/sax.jpg'
   </header>
 
   <main class="mx-auto w-full max-w-screen-md xs:px-4">
-    <img
+    <Image
       class="w-full object-cover shadow-md xs:rounded-md"
-      src={plantWall.src}
-      height={plantWall.height}
-      width={plantWall.width}
+      src={plantWall}
       alt="Vägg med lite växter och en bok."
     />
     <section class="relative">
@@ -57,9 +57,9 @@ import sax from '../assets/sax.jpg'
             </section>
 
             <div class="mx-4 flex justify-center" id="historia">
-              <img
+              <Image
                 class="h-auto w-full max-w-[400px] rounded-md object-cover shadow-md xs:rounded-md"
-                src={boxWithGoodies.src}
+                src={boxWithGoodies}
                 alt="Låda med bakverk, örter och växter."
               />
             </div>
@@ -84,9 +84,9 @@ import sax from '../assets/sax.jpg'
             </article>
 
             <article class="grid grid-cols-2 gap-2 xs:px-4">
-              <img
+              <Image
                 class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
-                src={herbBowl.src}
+                src={herbBowl}
                 alt="Bunke med örter."
               />
               <div class="mt-4 pr-4">
@@ -123,9 +123,9 @@ import sax from '../assets/sax.jpg'
             </span>
 
             <div class="mx-4 flex justify-center" id="event">
-              <img
+              <Image
                 class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                src={magganAndMaria.src}
+                src={magganAndMaria}
                 alt="Maggan och Maria på en sommardag."
               />
             </div>
@@ -154,14 +154,14 @@ import sax from '../assets/sax.jpg'
 
                 <div class="my-4">
                   <div class="flex justify-center">
-                    <img
+                    <Image
                       class="w-1/2 max-w-[250px] items-center rounded-l-md object-cover shadow-md"
-                      src={mariaBlender.src}
+                      src={mariaBlender}
                       alt="Maria mixar ört-smoothie."
                     />
-                    <img
+                    <Image
                       class="w-1/2 max-w-[250px] items-center rounded-r-md object-cover shadow-md"
-                      src={vitsippor.src}
+                      src={vitsippor}
                       alt="Vandring bland vitsippor."
                     />
                   </div>
@@ -195,9 +195,9 @@ import sax from '../assets/sax.jpg'
                 <p class="my-2 text-center text-lg">Välkommen!</p>
 
                 <div class="my-4 flex justify-center">
-                  <img
+                  <Image
                     class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                    src={fika.src}
+                    src={fika}
                     alt="Fika och smoothie-provning på ett event."
                   />
                 </div>
@@ -244,9 +244,9 @@ import sax from '../assets/sax.jpg'
                 Om mig
               </h3>
               <div class="my-4 flex justify-center 1xs:px-4">
-                <img
+                <Image
                   class="h-auto max-h-[500px] w-auto object-cover shadow-md 1xs:rounded-md"
-                  src={sax.src}
+                  src={sax}
                   alt="Maggan spelar saxofon i trädgården."
                 />
               </div>
@@ -329,8 +329,8 @@ import sax from '../assets/sax.jpg'
         </h3>
         <ul class="mb-4 list-none">
           <li>
-            <img
-              src={boxWithGoodies.src}
+            <Image
+              src={boxWithGoodies}
               alt="Instagram profilbild på låda med bakverk, örter och växter."
               class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
             />
