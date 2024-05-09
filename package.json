@@ -10,18 +10,18 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.0.0",
-    "@astrojs/tailwind": "^5.0.0",
-    "@fontsource/italianno": "^5.0.9",
-    "@fontsource/quattrocento": "^5.0.9",
-    "@tailwindcss/typography": "^0.5.9",
-    "astro": "^3.1.1",
-    "tailwindcss": "^3.3.3"
+    "@astrojs/sitemap": "^3.1.4",
+    "@astrojs/tailwind": "^5.1.0",
+    "@fontsource/italianno": "^5.0.20",
+    "@fontsource/quattrocento": "^5.0.21",
+    "@tailwindcss/typography": "^0.5.13",
+    "astro": "^4.8.1",
+    "tailwindcss": "^3.4.3"
   },
   "devDependencies": {
-    "prettier": "^3.0.3",
-    "prettier-plugin-astro-organize-imports": "0.3.0",
-    "prettier-plugin-tailwindcss": "^0.5.3"
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro-organize-imports": "0.4.7",
+    "prettier-plugin-tailwindcss": "^0.5.14"
   },
   "prettier": {
     "tabWidth": 2,
