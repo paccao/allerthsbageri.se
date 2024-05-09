@@ -16,6 +16,7 @@
     "@fontsource/quattrocento": "^5.0.21",
     "@tailwindcss/typography": "^0.5.13",
     "astro": "^4.8.1",
+    "sharp": "^0.33.3",
     "tailwindcss": "^3.4.3"
   },
   "devDependencies": {
