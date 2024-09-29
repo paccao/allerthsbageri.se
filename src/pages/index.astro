@@ -6,14 +6,15 @@ import { SITE_NAME } from '../constants'
 
 import plantWall from '../assets/plant-wall.jpg'
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
-import magganAndMaria from '../assets/maggan-maria.jpg'
 import herbBowl from '../assets/herb-bowl-portrait2.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
 import mariaBlender from '../assets/maria-blender.jpg'
 import fika from '../assets/fika.jpg'
 import sax from '../assets/sax.jpg'
 import firstHantverksbrod from '../assets/hantverksbrod1.jpg'
-import fourthHantverksbrod from '../assets/hantverksbrod4.png'
+import seventhHantverksbrod from '../assets/hantverksbrod7.jpeg'
+import fifthHantverksbrod from '../assets/hantverksbrod5.jpeg'
+import sixthHantverksbrod from '../assets/hantverksbrod6.jpg'
 ---
 
 <Layout>
@@ -57,6 +58,21 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
                 class="text-center text-base hover:text-green-500 hover:underline underline-offset-2 focus:text-green-500 focus:underline"
                 >maggan@allerthsbageri.se</a
               >
+              <ul class="flex justify-center">
+                <li>
+                  <Image
+                    src={boxWithGoodies}
+                    alt="Profilbild"
+                    class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
+                  />
+                  <a
+                    href="https://www.instagram.com/allerthsbageri/"
+                    class="inline-block font-medium hover:text-green-500 hover:underline underline-offset-2 focus:text-green-500 focus:underline"
+                  >
+                    @allerthsbageri
+                  </a>
+                </li>
+              </ul>
             </section>
 
             <div class="mx-4 flex justify-center" id="historia">
@@ -126,7 +142,7 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
               <div class="flex justify-center">
                 <Image
                   class="w-1/2 max-w-[250px] items-center rounded-l-md object-cover shadow-md"
-                  src={fourthHantverksbrod}
+                  src={seventhHantverksbrod}
                   alt="Hantverksbröd bakat på kultursäd."
                 />
                 <Image
@@ -138,16 +154,14 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
             </div>
 
             <article class="flex justify-center text-center">
-              <p class="my-4">
-                Hantverksbröd bakat på kultursäd.
-              </p>
+              <p class="my-4">Hantverksbröd bakat på kultursäd.</p>
             </article>
 
             <div class="mx-4 flex justify-center" id="event">
               <Image
-                class="h-auto w-full max-w-[600px] object-cover shadow-md xs:rounded-md"
-                src={magganAndMaria}
-                alt="Maggan och Maria på en sommardag."
+                class="h-auto w-full max-w-[350px] object-cover shadow-md xs:rounded-md"
+                src={sixthHantverksbrod}
+                alt="Hantverksbröd."
               />
             </div>
 
@@ -157,8 +171,74 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
                   Kommande event:
                 </h4>
                 <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                  Håll utkik efter nästa örtevent
+                  Nu kan du anmäla dig till kurs i surdegsbakning >
+                </h2>
+                <div class="flex justify-center">
+                  <p class="max-w-md my-2">
+                    Lördag den 23:e november blir det kurs i hur du bakar
+                    surdegsbröd på enbart ekologiskt och kravmärkt mjöl. Vi lär
+                    oss mata surdegen, snitta och baka av färdigjästa bröd.
+                    Sätta en ny deg som du kan grädda hemma nästa dag.
+                  </p>
+                </div>
+
+                <span class="flex justify-center">
+                  <hr class="my-5 w-7 text-center text-gray-700" />
+                </span>
+
+                <div class="flex justify-center">
+                  <p class="max-w-md my-2">
+                    Till lunch blir du bjuden på surdegspizza. Kaffe/te, kaka,
+                    färskpressad juice ingår också i priset samt en snittkniv.
+                    Om du vill får du även med en liten surdegsstarter hem.
+                  </p>
+                </div>
+
+                <div class="flex justify-center">
+                  <p class="max-w-md justify-center">
+                    Du behöver ta med två tunna kökshanddukar, förkläde och
+                    en brödform att ta hem brödet i som ska jäsa innan gräddning.
+                  </p>
+                </div>
+
+                <span class="flex justify-center">
+                  <hr class="my-5 w-7 text-center text-gray-700" />
+                </span>
+
+                <p class="my-2">
+                  <span class="font-bold">När:</span> Lördag 23 november kl 09.00
+                  - ca 14.30 eller tills vi känner oss klara.
+                </p>
+                <p class="my-2">
+                  <span class="font-bold">Kursavgift: </span>1400 kr, betalas
+                  via Swish i samband med anmälan. Vid överenskommelse kontant
+                  betalning på plats.
+                </p>
+                <p class="my-2">
+                  <span class="font-bold">Var: </span>Sämsjöborg Equmeniakyrkan,
+                  Örum Sämsjöborg 1, 524 96 Ljung
+                </p>
+                <p class="text-center font-bold">Anmälan & frågor:</p>
+                <section class="flex justify-center text-center">
+                  <a
+                    href="mailto:maggan@allerthsbageri.se"
+                    class="hover:text-green-500 hover:underline underline-offset-2 focus:text-green-500 focus:underline"
+                    >maggan@allerthsbageri.se</a
                   >
+                </section>
+                <p class="my-2 text-center text-lg">Välkommen!</p>
+
+                <div class="my-8 flex justify-center">
+                  <Image
+                    class="h-auto w-full max-w-[500px] object-cover shadow-md xs:rounded-md"
+                    src={fifthHantverksbrod}
+                    alt="Kulturbröd uppställt för försäljning"
+                  />
+                </div>
+              </section>
+              <section>
+                <h2 class="mb-4 text-center font-display text-4xl font-bold">
+                  Håll utkik efter nästa örtevent >
                 </h2>
                 <div class="flex justify-center text-center">
                   <p class="max-w-md">
@@ -184,9 +264,10 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
                 </div>
                 <div class="flex justify-center text-center">
                   <p class="max-w-md">
-                    Nya örtvandringar planeras framöver. Hembygdsgården i Algutstorp, Rångedala.
-                    Kläder efter väder och sittunderlag medtages. Ni bjuds på
-                    örtte och hembakat bröd fyllt med örter och ost.
+                    Nya örtvandringar planeras framöver. Hembygdsgården i
+                    Algutstorp, Rångedala. Kläder efter väder och sittunderlag
+                    medtages. Ni bjuds på örtte och hembakat bröd fyllt med
+                    örter och ost.
                   </p>
                 </div>
                 <p class="my-2 text-center">Pris 350kr. Betalas på plats.</p>
@@ -207,15 +288,6 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
                     >halsorum@gmail.com</a
                   >
                 </section>
-                <div class="flex justify-center text-center">
-                  <p class="max-w-md my-2">
-                    Anmälan går också bra via direktmeddelanden på Instagram: <a
-                    href="https://www.instagram.com/allerthsbageri/"
-                    class="hover:text-green-500 hover:underline underline-offset-2 focus:text-green-500 focus:underline"
-                    >@allerthsbageri</a
-                  >
-                  </p>
-                </div>
                 <p class="my-2 text-center text-lg">Välkommen!</p>
 
                 <div class="my-4 flex justify-center">
@@ -237,11 +309,17 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
                 </h3>
                 <ul class="list-inside list-disc space-y-2">
                   <li>
-                    Just nu säljs mitt hantverksbröd vid Ådalens café & mat i Nitta. Ett surdegsbröd bakat på kultursäd, så som Emmer och vetemjöl special.
-                  </li>
-                  <li>
                     Levererar örter och bröd till Grovare Evenemang & café,
                     Marie Arturéns härliga och mysiga café i Grovare.
+                  </li>
+                  <li>
+                    Vissa lördagar säljer jag mitt hantverksbröd direkt vid
+                    bageriet. Ett surdegsbröd bakat på kultursäd, så som Emmer
+                    och vetemjöl special. Du kan förhandsboka via <a
+                      href="mailto:maggan@allerthsbageri.se"
+                      class="hover:text-green-500 hover:underline underline-offset-2 focus:text-green-500 focus:underline"
+                      >maggan@allerthsbageri.se</a
+                    >
                   </li>
                   <li>
                     Jag levererar nyplockade örter till <a
@@ -280,9 +358,9 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
               <div class="flex justify-center">
                 <p class="max-w-md p-4 text-center" id="friskvård">
                   Maggan Allerth heter jag och är utbildad musiklärare,
-                  kyrkomusiker och örtpedagog. Älskar körmusik, surdegsbröd och örter.
-                  Glädjen över att få människor att må bra via musik och/eller
-                  läkeväxter är min drivkraft.
+                  kyrkomusiker och örtpedagog. Älskar körmusik, surdegsbröd och
+                  örter. Glädjen över att få människor att må bra via musik
+                  och/eller läkeväxter är min drivkraft.
                 </p>
               </div>
             </article>
@@ -358,7 +436,7 @@ import fourthHantverksbrod from '../assets/hantverksbrod4.png'
           <li>
             <Image
               src={boxWithGoodies}
-              alt="Instagram profilbild på låda med bakverk, örter och växter."
+              alt="Profilbild"
               class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
             />
             <a
