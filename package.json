@@ -10,17 +10,17 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.1.4",
-    "@astrojs/tailwind": "^5.1.0",
-    "@fontsource/italianno": "^5.0.20",
-    "@fontsource/quattrocento": "^5.0.21",
-    "@tailwindcss/typography": "^0.5.13",
-    "astro": "^4.8.1",
-    "sharp": "^0.33.3",
-    "tailwindcss": "^3.4.3"
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.2",
+    "@fontsource/italianno": "^5.1.0",
+    "@fontsource/quattrocento": "^5.1.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "astro": "^4.16.6",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.3",
     "prettier-plugin-astro-organize-imports": "0.4.7",
     "prettier-plugin-tailwindcss": "^0.5.14"
   },
