@@ -11,25 +11,55 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^5.7.2",
     "@astrojs/tailwind": "^5.1.2",
     "@fontsource/italianno": "^5.1.0",
     "@fontsource/quattrocento": "^5.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "astro": "^4.16.6",
     "sharp": "^0.33.5",
-    "tailwindcss": "^3.4.14"
+    "tailwindcss": "^3.4.14",
+    "svelte": "^5.0.0-next.270",
+    "rfc4648": "^1.5.3"
   },
   "devDependencies": {
     "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "0.4.7",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-svelte": "^3.2.7",
     "prettier-plugin-tailwindcss": "^0.5.14"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sveltejs/vite-plugin-svelte": "^4.0.0-next.8"
+    }
   },
   "prettier": {
     "tabWidth": 2,
     "singleQuote": true,
-    "trailingComma": "all",
     "semi": false,
-    "endOfLine": "lf"
+    "endOfLine": "lf",
+    "plugins": [
+      "prettier-plugin-tailwindcss",
+      "prettier-plugin-astro",
+      "prettier-plugin-svelte",
+      "prettier-plugin-astro-organize-imports"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      },
+      {
+        "files": "*.svelte",
+        "options": {
+          "parser": "svelte"
+        }
+      }
+    ]
   },
   "engines": {
     "node": ">= 22",
