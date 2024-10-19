@@ -15,6 +15,7 @@ import mariaBlender from '../assets/maria-blender.jpg'
 import plantWall from '../assets/plant-wall.jpg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
+import EncryptedEmail from '../components/EncryptedEmail.svelte'
 ---
 
 <Layout>
@@ -53,11 +54,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                 >Se <span class="whitespace-nowrap">kommande event</span></a
               >
               <p class="text-center text-2xl text-gray-200">♫</p>
-              <a
-                href="mailto:maggan@allerthsbageri.se"
-                class="text-center text-base underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                >maggan@allerthsbageri.se</a
-              >
+              <EncryptedEmail client:load />
               <ul class="flex justify-center">
                 <li>
                   <Image
@@ -220,11 +217,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                 </p>
                 <p class="text-center font-bold">Anmälan & frågor:</p>
                 <section class="flex justify-center text-center">
-                  <a
-                    href="mailto:maggan@allerthsbageri.se"
-                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                    >maggan@allerthsbageri.se</a
-                  >
+                  <EncryptedEmail client:load />
                 </section>
                 <p class="my-2 text-center text-lg">Välkommen!</p>
 
@@ -274,11 +267,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                 <p class="text-center">Anmälan sker till</p>
                 <section class="flex justify-center gap-2 text-center">
                   <p>Maggan:</p>
-                  <a
-                    href="mailto:maggan@allerthsbageri.se"
-                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                    >maggan@allerthsbageri.se</a
-                  >
+                  <EncryptedEmail client:load />
                 </section>
                 <section class="flex justify-center gap-2 text-center">
                   <p>Maria:</p>
@@ -315,11 +304,9 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                   <li>
                     Vissa lördagar säljer jag mitt hantverksbröd direkt vid
                     bageriet. Ett surdegsbröd bakat på kultursäd, så som Emmer
-                    och vetemjöl special. Du kan förhandsboka via <a
-                      href="mailto:maggan@allerthsbageri.se"
-                      class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                      >maggan@allerthsbageri.se</a
-                    >
+                    och vetemjöl special. Du kan förhandsboka via <EncryptedEmail
+                      client:load
+                    />
                   </li>
                   <li>
                     Jag levererar nyplockade örter till <a
@@ -384,11 +371,8 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
               </div>
               <div class="flex justify-center">
                 <p class="max-w-md px-4 py-2 text-center">
-                  Kontakta Maggan för mer information. <a
-                    href="mailto:maggan@allerthsbageri.se"
-                    class="text-center text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                    >maggan@allerthsbageri.se</a
-                  >
+                  Kontakta Maggan för mer information.
+                  <EncryptedEmail client:load />
                 </p>
               </div>
             </article>
@@ -448,11 +432,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
       </div>
       <div class="mb-8 w-full text-center sm:mb-0 md:w-1/4 lg:w-1/5">
         <h3 class="mb-4 text-lg font-bold">Kontakta mig</h3>
-        <a
-          href="mailto:maggan@allerthsbageri.se"
-          class="inline-block font-medium underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-          >maggan@allerthsbageri.se</a
-        >
+        <EncryptedEmail client:load />
       </div>
     </div>
     <div

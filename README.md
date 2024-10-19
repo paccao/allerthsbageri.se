@@ -14,3 +14,11 @@ cd allerthsbageri.se/ && \
 pnpm i && \
 pnpm dev
 ```
+
+## Email Spam Protection
+
+1. Make a copy of `.env.example` and name it `.env`.
+2. Add your email to `PUBLIC_EMAIL` in `.env`.
+3. Add a strong random password to encrypt/decrypt your email to `PUBLIC_PASSWORD` in `.env`.
+4. Open a terminal and run `pnpm encrypt:email`. Then copy the output (make sure you get every character) and add it to `PUBLIC_PAYLOAD` in `.env`.
+5. Now, the email should be accessible in the `<EncryptedEmail />` component. Easily available for users, but most basic spam bots will not be able to extract the email.
