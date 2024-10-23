@@ -1,4 +1,4 @@
-# Allerths örtbageri
+# Allerths bageri
 
 A website made with Astro and Tailwind CSS.
 
