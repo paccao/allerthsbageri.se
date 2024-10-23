@@ -27,8 +27,6 @@
     "@types/node": "^22.7.9",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-astro-organize-imports": "0.4.7",
-    "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-svelte": "^3.2.7",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "tsx": "^4.19.1"
@@ -46,8 +44,7 @@
     "plugins": [
       "prettier-plugin-tailwindcss",
       "prettier-plugin-astro",
-      "prettier-plugin-svelte",
-      "prettier-plugin-astro-organize-imports"
+      "prettier-plugin-svelte"
     ],
     "overrides": [
       {

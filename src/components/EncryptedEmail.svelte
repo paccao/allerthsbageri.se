@@ -86,6 +86,7 @@
   onpointerenter={handler}
   onfocusin={handler}
   onpointermove={handler}
+  onpointerdown={handler}
 />
 
 <a
