@@ -17,14 +17,14 @@
     "@fontsource/italianno": "^5.1.0",
     "@fontsource/quattrocento": "^5.1.0",
     "@tailwindcss/typography": "^0.5.15",
-    "astro": "^4.16.6",
+    "astro": "^4.16.7",
     "rfc4648": "^1.5.3",
     "sharp": "^0.33.5",
-    "svelte": "^5.0.0-next.270",
+    "svelte": "^5.1.0",
     "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
-    "@types/node": "^22.7.7",
+    "@types/node": "^22.7.9",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "0.4.7",
