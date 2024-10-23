@@ -5,6 +5,7 @@ import EncryptedEmail from '../components/EncryptedEmail.svelte'
 import { SITE_NAME } from '../constants'
 import Layout from '../layouts/Layout.astro'
 
+import kursinbjudan20241123 from '../assets/2024-11-23-inbjudan-surdegskurs.png'
 import allerthsBageriLogo from '../assets/allerths-bageri-logo.jpeg'
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
 import breadMarketPlace from '../assets/brod-i-lada.jpeg'
@@ -36,7 +37,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
 
   <main class="mx-auto w-full max-w-screen-md xs:px-4">
     <Image
-      class="max-h-[400px] w-full rounded-md object-cover shadow-md"
+      class="max-h-[400px] w-full object-cover shadow-md sm:rounded-md"
       src={breadMarketPlace}
       loading="eager"
       alt="Surdegsbröd från Allerths Bageri"
@@ -48,17 +49,12 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
             <span class="flex justify-center">
               <hr class="my-8 w-7 text-center text-gray-700" />
             </span>
-            <div
-              class="mx-auto max-w-sm text-balance text-center text-xl"
-              id="intro"
-            >
-              <p class="font-black">
-                Hantverksbröd bakat på ekologiskt, kravmärkt kultursäd.
-              </p>
+            <div class="mx-auto max-w-sm text-balance text-center" id="intro">
+              <p class="font-display text-3xl font-bold">Hantverksbröd</p>
               <p class="pt-4">
-                Jag bakar med färskmalet emmer eller purpurvete. Emmer började
-                odlas för 8000 år sedan och är en korsning mellan enkorn och
-                vildgräs.
+                Jag bakar med färskmalet ekologisk kultursäd - exempelvis emmer
+                eller purpurvete. Emmer började odlas för 8000 år sedan och är
+                en korsning mellan enkorn och vildgräs.
               </p>
             </div>
             <span class="flex justify-center">
@@ -137,11 +133,11 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
               <p class="my-4">Hantverksbröd bakat på kultursäd.</p>
             </article>
 
-            <div class="mx-4 flex justify-center" id="event">
+            <div class="my-8 flex justify-center">
               <Image
-                class="h-auto w-full max-w-[350px] rounded-md object-cover shadow-md"
-                src={sixthHantverksbrod}
-                alt="Hantverksbröd."
+                class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                src={kursinbjudan20241123}
+                alt="Inbjudan till kurs"
               />
             </div>
 
@@ -186,24 +182,26 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                   <hr class="my-5 w-7 text-center text-gray-700" />
                 </span>
 
-                <p class="my-2">
-                  <span class="font-bold">När:</span> Lördag 23 november kl 09.00
-                  - ca 14.30 eller tills vi känner oss klara.
-                </p>
-                <p class="my-2">
-                  <span class="font-bold">Kursavgift: </span>1400 kr, betalas
-                  via Swish i samband med anmälan. Vid överenskommelse kontant
-                  betalning på plats.
-                </p>
-                <p class="my-2">
-                  <span class="font-bold">Var: </span>Sämsjöborg Equmeniakyrkan,
-                  Örum Sämsjöborg 1, 524 96 Ljung
-                </p>
-                <p class="text-center font-bold">Anmälan & frågor:</p>
-                <div class="flex justify-center text-center">
-                  <EncryptedEmail client:load />
+                <div class="mx-auto max-w-screen-sm">
+                  <p class="my-2">
+                    <span class="font-bold">När:</span> Lördag 23 november kl 09.00
+                    - ca 14.30 eller tills vi känner oss klara.
+                  </p>
+                  <p class="my-2">
+                    <span class="font-bold">Kursavgift: </span>1400 kr, betalas
+                    via Swish i samband med anmälan. Vid överenskommelse kontant
+                    betalning på plats.
+                  </p>
+                  <p class="my-2">
+                    <span class="font-bold">Var: </span>Sämsjöborg
+                    Equmeniakyrkan, Örum Sämsjöborg 1, 524 96 Ljung
+                  </p>
+                  <p class="text-center font-bold">Anmälan & frågor:</p>
+                  <div class="flex justify-center text-center">
+                    <EncryptedEmail client:load />
+                  </div>
+                  <p class="my-2 text-center text-lg">Välkommen!</p>
                 </div>
-                <p class="my-2 text-center text-lg">Välkommen!</p>
 
                 <div class="my-8 flex justify-center">
                   <Image
@@ -397,25 +395,12 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                   I naturen finns mängder av läkeörter som förbättrar vår hälsa
                   på ett hållbart sätt.
                 </p>
-                <p class="col-span-2 hidden px-4 pt-8 xs:block xs:text-center">
+                <p class="col-span-2 px-4 pt-8 xs:text-center">
                   Ta vara på det naturen ger, både som mat och stödjande för
                   vissa symptom. Något annat som främjar din hälsa är också
-                  <a
-                    href="#friskvård"
-                    class="text-green-500 underline-offset-2 hover:underline focus:text-green-500"
-                    >körsång.</a
-                  >
+                  körsång.
                 </p>
               </div>
-              <p class="col-span-2 px-4 pt-8 xs:hidden">
-                Ta vara på det naturen ger, både som mat och stödjande för vissa
-                symptom. Något annat som främjar din hälsa är också
-                <a
-                  href="#friskvård"
-                  class="text-green-500 underline-offset-2 hover:underline focus:text-green-500"
-                  >körsång.</a
-                >
-              </p>
             </article>
 
             <span class="flex justify-center">
