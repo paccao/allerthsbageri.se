@@ -1,21 +1,22 @@
 ---
 import { Image } from 'astro:assets'
 
+import EncryptedEmail from '../components/EncryptedEmail.svelte'
 import { SITE_NAME } from '../constants'
 import Layout from '../layouts/Layout.astro'
 
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
+import breadMarketPlace from '../assets/brod-i-lada.jpeg'
 import fika from '../assets/fika.jpg'
 import firstHantverksbrod from '../assets/hantverksbrod1.jpg'
 import fifthHantverksbrod from '../assets/hantverksbrod5.jpeg'
 import sixthHantverksbrod from '../assets/hantverksbrod6.jpg'
-import seventhHantverksbrod from '../assets/hantverksbrod7.jpeg'
 import herbBowl from '../assets/herb-bowl-portrait2.jpg'
 import mariaBlender from '../assets/maria-blender.jpg'
 import plantWall from '../assets/plant-wall.jpg'
+import pumpabrod from '../assets/pumpabrod.jpeg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
-import EncryptedEmail from '../components/EncryptedEmail.svelte'
 ---
 
 <Layout>
@@ -229,6 +230,36 @@ import EncryptedEmail from '../components/EncryptedEmail.svelte'
                   />
                 </div>
               </section>
+
+              <span class="flex justify-center">
+                <hr class="my-12 w-7 text-center text-gray-700" />
+              </span>
+
+              <section>
+                <h2 class="mb-4 text-center font-display text-4xl font-bold">
+                  Försäljning vid Handelsplats Od
+                </h2>
+                <div class="flex justify-center">
+                  <p class="my-2 max-w-screen-sm">
+                    Följande lördagar finns Allerths bageri med vid Handelsplats
+                    Od, där vi erbjuder hantverksbröd bakat på enbart ekologisk,
+                    kravmärkt kultursäd.
+                  </p>
+                </div>
+
+                <div class="my-8 flex justify-center">
+                  <Image
+                    class="h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                    src={breadMarketPlace}
+                    alt="Kulturbröd uppställt för försäljning"
+                  />
+                </div>
+              </section>
+
+              <span class="flex justify-center">
+                <hr class="my-12 w-7 text-center text-gray-700" />
+              </span>
+
               <section>
                 <h2 class="mb-4 text-center font-display text-4xl font-bold">
                   Håll utkik efter nästa örtevent >
