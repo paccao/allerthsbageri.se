@@ -1,16 +1,24 @@
 # Allerths örtbageri
 
-A website made with Astrojs and tailwind CSS.
+A website made with Astro and Tailwind CSS.
 
 ![Allerths herb bakery](src/assets/box-med-bakat.jpg)
 
 ## Development
 
-Install Node.js 18.16.0 64-bit
+Install [Node.js 22](https://nodejs.org/) and [pnpm 9](https://pnpm.io/).
 
 ```sh
 git clone https://github.com/paccao/allerthsbageri.se.git && \
 cd allerthsbageri.se/ && \
-npm i && \
-npm run dev
+pnpm i && \
+pnpm dev
 ```
+
+## Email Spam Protection
+
+1. Make a copy of `.env.example` and name it `.env`.
+2. Add your email to `PUBLIC_EMAIL` in `.env`.
+3. Add a strong random password to encrypt/decrypt your email to `PUBLIC_PASSWORD` in `.env`.
+4. Open a terminal and run `pnpm encrypt:email`. Then copy the output (make sure you get every character) and add it to `PUBLIC_PAYLOAD` in `.env`.
+5. Now, the email should be accessible in the `<EncryptedEmail />` component. Easily available for users, but most basic spam bots will not be able to extract the email.

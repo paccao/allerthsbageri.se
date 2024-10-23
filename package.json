@@ -7,28 +7,65 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "encrypt:email": "node --import=tsx --env-file .env scripts/encrypt-email.ts"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.1.4",
-    "@astrojs/tailwind": "^5.1.0",
-    "@fontsource/italianno": "^5.0.20",
-    "@fontsource/quattrocento": "^5.0.21",
-    "@tailwindcss/typography": "^0.5.13",
-    "astro": "^4.8.1",
-    "sharp": "^0.33.3",
-    "tailwindcss": "^3.4.3"
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^5.7.2",
+    "@astrojs/tailwind": "^5.1.2",
+    "@fontsource/italianno": "^5.1.0",
+    "@fontsource/quattrocento": "^5.1.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "astro": "^4.16.7",
+    "rfc4648": "^1.5.3",
+    "sharp": "^0.33.5",
+    "svelte": "^5.1.0",
+    "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "@types/node": "^22.7.9",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-astro-organize-imports": "0.4.7",
-    "prettier-plugin-tailwindcss": "^0.5.14"
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-svelte": "^3.2.7",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tsx": "^4.19.1"
+  },
+  "pnpm": {
+    "overrides": {
+      "@sveltejs/vite-plugin-svelte": "^4.0.0-next.8"
+    }
   },
   "prettier": {
     "tabWidth": 2,
     "singleQuote": true,
-    "trailingComma": "all",
     "semi": false,
-    "endOfLine": "lf"
+    "endOfLine": "lf",
+    "plugins": [
+      "prettier-plugin-tailwindcss",
+      "prettier-plugin-astro",
+      "prettier-plugin-svelte",
+      "prettier-plugin-astro-organize-imports"
+    ],
+    "overrides": [
+      {
+        "files": "*.astro",
+        "options": {
+          "parser": "astro"
+        }
+      },
+      {
+        "files": "*.svelte",
+        "options": {
+          "parser": "svelte"
+        }
+      }
+    ]
+  },
+  "engines": {
+    "node": ">= 20",
+    "pnpm": ">= 9"
   }
 }
