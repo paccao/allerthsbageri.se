@@ -50,6 +50,7 @@
   }
 
   let email = $state('')
+  let label = $state('Visa mail')
 </script>
 
 <script lang="ts">
@@ -62,7 +63,6 @@
   const { class: className = '' }: Props = $props()
 
   let href = $state('#')
-  let label = $state('Visa mail')
 
   function showEmail(event: PointerEvent) {
     event.preventDefault()
@@ -82,15 +82,16 @@
   let handler = once(showEmail)
 </script>
 
-<svelte:body
-  onpointerenter={handler}
-  onfocusin={handler}
+<svelte:window
+  onscroll={handler}
   onpointermove={handler}
-  onpointerdown={handler}
+  onpointerenter={handler}
 />
 
 <a
   {href}
+  onpointerenter={handler}
+  onfocusin={handler}
   class="text-center text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline {className}"
 >
   <span class="whitespace-nowrap">
