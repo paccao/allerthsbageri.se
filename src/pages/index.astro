@@ -10,7 +10,8 @@ import allerthsBageriLogo from '../assets/allerths-bageri-logo.jpeg'
 import boxWithGoodies from '../assets/box-med-bakat.jpg'
 import breadMarketPlace from '../assets/brod-i-lada.jpeg'
 import fika from '../assets/fika.jpg'
-import firstHantverksbrod from '../assets/hantverksbrod1.jpg'
+import kakaobrod from '../assets/kakaobrod.jpg'
+import kladdkakekakor from '../assets/kladdkakekakor.jpg'
 import fifthHantverksbrod from '../assets/hantverksbrod5.jpeg'
 import sixthHantverksbrod from '../assets/hantverksbrod6.jpg'
 import herbBowl from '../assets/herb-bowl-portrait2.jpg'
@@ -114,26 +115,34 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
               </p>
             </article>
 
-            <div class="mt-4">
-              <div class="flex justify-center">
-                <Image
-                  class="w-1/2 max-w-[250px] items-center object-cover shadow-md xs:rounded-l-md"
-                  src={pumpabrod}
-                  alt="Hantverksbröd bakat på kultursäd."
-                />
-                <Image
-                  class="w-1/2 max-w-[250px] items-center object-cover shadow-md xs:rounded-r-md"
-                  src={firstHantverksbrod}
-                  alt="Hantverksbröd bakat på kultursäd."
-                />
-              </div>
+            <div class="gap my-8 grid columns-2 grid-cols-2 grid-rows-2 gap-2">
+              <Image
+                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                src={allerthsBageriLogo}
+                alt="Kulturbröd uppställt för försäljning"
+              />
+              <Image
+                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                src={sixthHantverksbrod}
+                alt="Kulturbröd uppställt för försäljning"
+              />
+              <Image
+                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                src={pumpabrod}
+                alt="Kulturbröd uppställt för försäljning"
+              />
+              <Image
+                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                src={breadMarketPlace}
+                alt="Kulturbröd uppställt för försäljning"
+              />
             </div>
 
             <article class="flex justify-center text-center">
               <p class="my-4">Hantverksbröd bakat på kultursäd.</p>
             </article>
 
-            <div class="my-8 flex justify-center">
+            <div class="my-8 flex justify-center" id="event">
               <Image
                 class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
                 src={kursinbjudan20241123}
@@ -203,7 +212,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                   <p class="my-2 text-center text-lg">Välkommen!</p>
                 </div>
 
-                <div class="my-8 flex justify-center">
+                <div class="mt-8 flex justify-center">
                   <Image
                     class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
                     src={fifthHantverksbrod}
@@ -218,40 +227,54 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
 
               <section>
                 <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                  Försäljning vid Handelsplats Od
+                  Nu kan du boka surdegsbröd och kladdkakekakor
                 </h2>
                 <div class="flex justify-center">
                   <p class="my-2 max-w-screen-sm">
-                    Lördagen 26/11, 2/11 och 30/11 finns Allerths bageri med vid
-                    Handelsplats Od, där vi erbjuder hantverksbröd bakat på
-                    enbart ekologisk, kravmärkt kultursäd.
+                    Om du vill ha bröd den 16:e november, boka <span
+                      class="font-bold">senast den 13:e.</span
+                    > Brödet på bilden är dekorerat med ekologiskt svart kakao.
                   </p>
                 </div>
 
-                <div
-                  class="gap my-8 grid columns-2 grid-cols-2 grid-rows-2 gap-2"
-                >
+                <div class="mx-auto max-w-screen-sm">
+                  <p class="text-center font-bold">
+                    Boka via mail eller instagram:
+                  </p>
+                  <div class="flex justify-center text-center my-1">
+                    <EncryptedEmail client:load />
+                  </div>
+                  <ul class="flex justify-center">
+                    <li>
+                      <Image
+                        src={boxWithGoodies}
+                        alt="Profilbild"
+                        class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
+                      />
+                      <a
+                        href="https://www.instagram.com/allerthsbageri/"
+                        class="inline-block font-medium underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
+                      >
+                        @allerthsbageri
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="flex justify-center mt-8">
                   <Image
-                    class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={allerthsBageriLogo}
-                    alt="Kulturbröd uppställt för försäljning"
+                    class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                    src={kakaobrod}
+                    alt="Surdegsbröd med kakao som dekoration för halloween."
                   />
                   <Image
                     class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={sixthHantverksbrod}
-                    alt="Kulturbröd uppställt för försäljning"
-                  />
-                  <Image
-                    class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={pumpabrod}
-                    alt="Kulturbröd uppställt för försäljning"
-                  />
-                  <Image
-                    class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={breadMarketPlace}
-                    alt="Kulturbröd uppställt för försäljning"
+                    src={kladdkakekakor}
+                    alt="Kakor gjorda på kladdkaka"
                   />
                 </div>
+
+                <div class="flex justify-center"></div>
               </section>
 
               <span class="flex justify-center">
