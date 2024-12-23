@@ -1,7 +1,7 @@
 {
-  "name": "allerthsbageri.se",
+  "name": "backend",
+  "version": "1.0.0",
   "type": "module",
-  "version": "2.0.0",
   "private": true,
   "devDependencies": {
     "prettier": "^3.4.2"
@@ -9,9 +9,5 @@
   "prettier": {
     "singleQuote": true,
     "semi": false
-  },
-  "engines": {
-    "node": ">= 22",
-    "pnpm": ">= 9"
   }
 }
