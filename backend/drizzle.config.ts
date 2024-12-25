@@ -7,4 +7,5 @@ export default defineConfig({
   schema: './src/db/schema.ts',
   dbCredentials: { url: apiConfig.dbConnection },
   breakpoints: false,
+  casing: 'snake_case',
 })
