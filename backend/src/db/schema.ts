@@ -3,7 +3,7 @@ import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
 const ISO_DATE_LENGTH = 30
 const dateField = text({ length: ISO_DATE_LENGTH })
 
-export const users = sqliteTable('users', {
+export const user = sqliteTable('user', {
   id: int().primaryKey(),
   name: text({ length: 200 }).notNull(),
   username: text({ length: 30 }).notNull().unique(),
@@ -76,4 +76,12 @@ export const orderItem = sqliteTable('order_item', {
   orderId: int()
     .notNull()
     .references(() => order.id, { onDelete: 'cascade' }),
+})
+
+export const session = sqliteTable('session', {
+  id: text().primaryKey(),
+  userId: int()
+    .notNull()
+    .references(() => user.id),
+  expiresAt: int({ mode: 'timestamp' }).notNull(),
 })

@@ -15,6 +15,13 @@
       "when": 1735128553647,
       "tag": "0001_allow-deleting-data",
       "breakpoints": false
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1735129907126,
+      "tag": "0002_user-sessions",
+      "breakpoints": false
     }
   ]
 }
