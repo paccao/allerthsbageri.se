@@ -1,3 +1,4 @@
+import { InferSelectModel } from 'drizzle-orm'
 import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
 
 const ISO_DATE_LENGTH = 30
@@ -9,6 +10,8 @@ export const user = sqliteTable('user', {
   username: text({ length: 30 }).notNull().unique(),
   password: text({ length: 100 }).notNull(),
 })
+
+export type User = InferSelectModel<typeof user>
 
 export const customer = sqliteTable('customer', {
   id: int().primaryKey(),
@@ -85,3 +88,5 @@ export const session = sqliteTable('session', {
     .references(() => user.id),
   expiresAt: int({ mode: 'timestamp' }).notNull(),
 })
+
+export type Session = InferSelectModel<typeof session>
