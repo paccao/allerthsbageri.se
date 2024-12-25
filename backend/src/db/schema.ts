@@ -57,7 +57,7 @@ export const order = sqliteTable('pickup_order', {
   createdAt: dateField.notNull(),
   customerId: int()
     .notNull()
-    .references(() => customer.id),
+    .references(() => customer.id, { onDelete: 'cascade' }),
   pickupOccasionId: int()
     .notNull()
     .references(() => pickupOccasion.id),
@@ -75,5 +75,5 @@ export const orderItem = sqliteTable('order_item', {
     .references(() => product.id),
   orderId: int()
     .notNull()
-    .references(() => order.id),
+    .references(() => order.id, { onDelete: 'cascade' }),
 })
