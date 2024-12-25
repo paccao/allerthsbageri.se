@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --import=tsx --env-file=.env --watch src/index.ts",
     "lint": "prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "db": "drizzle-kit"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
