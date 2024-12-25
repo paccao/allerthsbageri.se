@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "noEmit": true,
     "skipLibCheck": true,
@@ -18,6 +20,9 @@
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "strictBuiltinIteratorReturn": true,
-    "noImplicitThis": true
+    "noImplicitThis": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

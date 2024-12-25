@@ -1,12 +1,12 @@
 import { eq } from 'drizzle-orm'
-import { db } from '../db/index'
+import { db } from '@/db/index.ts'
 import {
-  user as userTable,
-  session as sessionTable,
+  userTable as userTable,
+  sessionTable as sessionTable,
   User,
   Session,
-} from '../db/schema'
-import { getSHA256Hash } from './crypto'
+} from '@/db/schema.ts'
+import { getSHA256Hash } from './crypto.ts'
 
 const ONE_DAY = 1000 * 60 * 60 * 24
 
