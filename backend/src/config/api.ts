@@ -43,6 +43,12 @@ const apiConfig = {
   dbConnection: env.DATABASE_URL,
   sessionCookieName: env.SESSION_COOKIE_NAME,
   openAPIPrefix: env.OPENAPI_PREFIX,
+  openAPITags: {
+    auth: {
+      name: 'auth',
+      description: 'Authentication and user account',
+    },
+  },
 }
 
 export default apiConfig

@@ -31,13 +31,7 @@ export default async function developmentContext(server: FastifyInstance) {
         description: 'OpenAPI docs',
         version: apiVersion,
       },
-      tags: [
-        // IDEA: Maybe keep tags in a central place to both register them here, and reference tags in routes
-        {
-          name: 'auth',
-          description: 'Authentication and user account',
-        },
-      ],
+      tags: Object.values(apiConfig.openAPITags),
     },
     transform: jsonSchemaTransform,
   })
