@@ -6,9 +6,11 @@ import {
   User,
   Session,
 } from '@/db/schema.ts'
+import apiConfig from '@/config/api.ts'
 import { getSHA256Hash } from './crypto.ts'
+import { FastifyReply } from 'fastify'
 
-const ONE_DAY = 1000 * 60 * 60 * 24
+const DAY = 1000 * 60 * 60 * 24
 
 export function generateSessionToken() {
   return crypto.randomUUID()
@@ -22,7 +24,7 @@ export async function createSession(
   const session: Session = {
     id: sessionId,
     userId,
-    expiresAt: new Date(Date.now() + 30 * ONE_DAY),
+    expiresAt: new Date(Date.now() + 30 * DAY),
   }
   await db.insert(sessionTable).values(session)
   return session
@@ -47,8 +49,8 @@ export async function validateSessionToken(
     await db.delete(sessionTable).where(eq(sessionTable.id, session.id))
     return { session: null, user: null }
   }
-  if (Date.now() >= session.expiresAt.getTime() - 15 * ONE_DAY) {
-    session.expiresAt = new Date(Date.now() + 30 * ONE_DAY)
+  if (Date.now() >= session.expiresAt.getTime() - 15 * DAY) {
+    session.expiresAt = new Date(Date.now() + 30 * DAY)
     await db
       .update(sessionTable)
       .set({ expiresAt: session.expiresAt })
@@ -59,6 +61,22 @@ export async function validateSessionToken(
 
 export async function invalidateSession(sessionId: string): Promise<void> {
   await db.delete(sessionTable).where(eq(sessionTable.id, sessionId))
+}
+
+export function setSessionTokenCookie(
+  reply: FastifyReply,
+  token: string,
+  expiresAt: Date,
+): void {
+  const cookie = `session=${token}; HttpOnly; SameSite=Strict; Expires=${expiresAt.toISOString()}; Path=/;`
+
+  reply.header('Set-Cookie', apiConfig.env.DEV ? cookie : cookie + ' Secure;')
+}
+
+export function deleteSessionTokenCookie(reply: FastifyReply): void {
+  const cookie = `session=; HttpOnly; SameSite=Strict; Max-Age=0; Path=/;`
+
+  reply.header('Set-Cookie', apiConfig.env.DEV ? cookie : cookie + ' Secure;')
 }
 
 export type SessionValidationResult =

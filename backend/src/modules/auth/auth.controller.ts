@@ -2,7 +2,11 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { SignUpBody } from './auth.schemas.ts'
 import { signUpUser } from './auth.service.ts'
-import { lucia } from '@/utils/session.ts'
+import {
+  createSession,
+  generateSessionToken,
+  setSessionTokenCookie,
+} from '@/utils/session.ts'
 
 // TODO: improve the boundary between controller and service
 // Let the service perform DB operations, one at a time
@@ -12,22 +16,26 @@ export async function signUpHandler(
   request: FastifyRequest<{ Body: SignUpBody }>,
   reply: FastifyReply,
 ) {
+  // No need to sign up if already authenticated
   if (request.user) return reply.code(400)
 
   const { name, username, password } = request.body
   try {
-    const { sessionCookie, error, status } = await signUpUser(
+    const { user, error, status } = await signUpUser({
       username,
       password,
-    )
-    if (!sessionCookie) {
-      return reply.code(status ?? 500).send(error)
+      name,
+    })
+    if (!user) {
+      return reply.code(status ?? 500).send({ message: error })
     }
 
-    reply.header('Set-Cookie', sessionCookie.serialize())
+    const token = generateSessionToken()
+    const session = await createSession(token, user.id)
+    setSessionTokenCookie(reply, token, session.expiresAt)
   } catch (e: any) {
     request.log.error(e, e?.message)
-    reply.code(500)
+    reply.code(500).send({ message: 'Failed to create user' })
   }
 }
 

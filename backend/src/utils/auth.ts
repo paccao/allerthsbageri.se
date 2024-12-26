@@ -3,6 +3,7 @@ import fp from 'fastify-plugin'
 
 import { User } from '@/db/schema.ts'
 import { db } from '@/db/index.ts'
+import apiConfig from '@/config/api.ts'
 
 declare module 'fastify' {
   export interface FastifyRequest {
@@ -15,6 +16,14 @@ declare module 'fastify' {
  */
 export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
   server.addHook('onRequest', async (request, reply) => {
+    if (request.method !== 'GET') {
+      const origin = request.headers['Origin'] as string | undefined
+      // You can also compare it against the Host or X-Forwarded-Host header.
+      if (!origin || !apiConfig.allowedOrigins.includes(origin)) {
+        return reply.status(403)
+      }
+    }
+
     const sessionId = lucia.readSessionCookie(request.headers.cookie ?? '')
     if (!sessionId) return
 

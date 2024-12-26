@@ -20,7 +20,7 @@ async function initServer() {
 
   server.register(sessionPlugin)
 
-  if (apiConfig.env === 'development') {
+  if (apiConfig.env.DEV) {
     const developmentContext = await import('./utils/developmentContext.ts')
 
     server.register(fp(developmentContext.default))

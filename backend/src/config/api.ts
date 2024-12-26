@@ -17,11 +17,20 @@ const baseLoggerOptions: FastifyServerOptions['logger'] = {
   redact: ['DATABASE_URL', 'SESSION_SECRET'],
 }
 
-export default {
+const DEV = env.NODE_ENV === 'development'
+const PROD = env.NODE_ENV === 'production'
+
+const apiConfig = {
   port: env.PORT,
   host: env.HOST,
-  env: env.NODE_ENV,
-  logger: (env.NODE_ENV === 'development' && process.stdout.isTTY
+  env: {
+    DEV,
+    PROD,
+  },
+  allowedOrigins: DEV
+    ? ['http://localhost:4321']
+    : ['https://allerthsbageri.se'],
+  logger: (DEV && process.stdout.isTTY
     ? {
         level: 'trace',
         transport: { target: 'pino-pretty' },
@@ -35,3 +44,5 @@ export default {
   sessionSecret: env.SESSION_SECRET,
   openAPIPrefix: env.OPENAPI_PREFIX,
 }
+
+export default apiConfig

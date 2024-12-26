@@ -1,6 +1,5 @@
 import { hash, verify, Options } from '@node-rs/argon2'
 
-import { createSession, generateSessionToken } from '@/utils/session.ts'
 import { db } from '@/db/index.ts'
 import { userTable } from '@/db/schema.ts'
 import { eq } from 'drizzle-orm'
@@ -16,11 +15,11 @@ const hashConfig: Options = {
   parallelism: 1,
 }
 
-export async function signUpUser(
-  username: string,
-  password: string,
-  name: string,
-) {
+export async function signUpUser({
+  username,
+  password,
+  name,
+}: typeof userTable.$inferInsert) {
   const [existingUser] = await db
     .select()
     .from(userTable)
@@ -34,18 +33,18 @@ export async function signUpUser(
 
   const [newUser] = await db
     .insert(userTable)
-    .values({ username, password: hashedPassword, name })
+    .values({
+      username,
+      password: hashedPassword,
+      name,
+    })
     .returning({ id: userTable.id })
 
   if (!newUser) {
-    // NOTE: Log error here
     return { error: 'Failed creating user', status: 500 }
   }
 
-  const token = generateSessionToken()
-  const session = createSession(token, newUser.id)
-
-  return { sessionCookie: lucia.createSessionCookie(session.id) }
+  return { user: newUser }
 }
 
 // export async function signInUser(username: string, password: string) {

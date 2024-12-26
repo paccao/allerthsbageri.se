@@ -12,7 +12,7 @@ async function main() {
       port: apiConfig.port,
     })
 
-    if (apiConfig.env === 'development') {
+    if (apiConfig.env.DEV) {
       app.log.info(
         `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${apiConfig.openAPIPrefix}`,
       )
