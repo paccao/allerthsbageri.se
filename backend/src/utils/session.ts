@@ -34,29 +34,41 @@ export async function validateSessionToken(
   token: string,
 ): Promise<SessionValidationResult> {
   const sessionId = await getSHA256Hash(token)
+  let refreshed = false
+
   const result = await db
-    .select({ user: userTable, session: sessionTable })
+    .select({
+      user: {
+        id: userTable.id,
+        name: userTable.name,
+        username: userTable.username,
+      },
+      session: sessionTable,
+    })
     .from(sessionTable)
     .innerJoin(userTable, eq(sessionTable.userId, userTable.id))
     .where(eq(sessionTable.id, sessionId))
 
   if (result[0] === undefined) {
-    return { session: null, user: null }
+    return { session: null, user: null, refreshed }
   }
   const { user, session } = result[0]
 
   if (Date.now() >= session.expiresAt.getTime()) {
     await db.delete(sessionTable).where(eq(sessionTable.id, session.id))
-    return { session: null, user: null }
+    return { session: null, user: null, refreshed }
   }
+
+  // Renew session if it's getting close to expiration
   if (Date.now() >= session.expiresAt.getTime() - 15 * DAY) {
     session.expiresAt = new Date(Date.now() + 30 * DAY)
     await db
       .update(sessionTable)
       .set({ expiresAt: session.expiresAt })
       .where(eq(sessionTable.id, session.id))
+    refreshed = true
   }
-  return { session, user }
+  return { session, user, refreshed }
 }
 
 export async function invalidateSession(sessionId: string): Promise<void> {
@@ -68,17 +80,17 @@ export function setSessionTokenCookie(
   token: string,
   expiresAt: Date,
 ): void {
-  const cookie = `session=${token}; HttpOnly; SameSite=Strict; Expires=${expiresAt.toISOString()}; Path=/;`
+  const cookie = `${apiConfig.sessionCookieName}=${token}; HttpOnly; SameSite=Strict; Expires=${expiresAt.toISOString()}; Path=/;`
 
   reply.header('Set-Cookie', apiConfig.env.DEV ? cookie : cookie + ' Secure;')
 }
 
 export function deleteSessionTokenCookie(reply: FastifyReply): void {
-  const cookie = `session=; HttpOnly; SameSite=Strict; Max-Age=0; Path=/;`
+  const cookie = `${apiConfig.sessionCookieName}=; HttpOnly; SameSite=Strict; Max-Age=0; Path=/;`
 
   reply.header('Set-Cookie', apiConfig.env.DEV ? cookie : cookie + ' Secure;')
 }
 
 export type SessionValidationResult =
-  | { session: Session; user: User }
-  | { session: null; user: null }
+  | { session: Session; user: Omit<User, 'password'>; refreshed: boolean }
+  | { session: null; user: null; refreshed: false }
