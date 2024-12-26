@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 
-import { SignUpBody } from './auth.schemas.ts'
-import { signUpUser } from './auth.service.ts'
+import { SignInBody, SignUpBody } from './auth.schemas.ts'
+import { signInUser, signUpUser } from './auth.service.ts'
 import {
   createSession,
   generateSessionToken,
@@ -39,29 +39,28 @@ export async function signUpHandler(
   }
 }
 
-// export async function signInHandler(
-//   request: FastifyRequest<{ Body: SignInBody }>,
-//   reply: FastifyReply,
-// ) {
-//   if (request.user) return reply.code(400)
+export async function signInHandler(
+  request: FastifyRequest<{ Body: SignInBody }>,
+  reply: FastifyReply,
+) {
+  if (request.user) return reply.code(400)
 
-//   const { username, password } = request.body
+  const { username, password } = request.body
 
-//   try {
-//     const { sessionCookie, error, status } = await signInUser(
-//       username,
-//       password,
-//     )
-//     if (!sessionCookie) {
-//       return reply.code(status).send(error)
-//     }
+  try {
+    const { user, error, status } = await signInUser(username, password)
+    if (!user) {
+      return reply.code(status).send(error)
+    }
 
-//     reply.header('Set-Cookie', sessionCookie.serialize())
-//   } catch (e: any) {
-//     request.log.error(e, e?.message)
-//     reply.code(500)
-//   }
-// }
+    const token = generateSessionToken()
+    const session = await createSession(token, user.id)
+    setSessionTokenCookie(reply, token, session.expiresAt)
+  } catch (e: any) {
+    request.log.error(e, e?.message)
+    reply.code(500)
+  }
+}
 
 // export async function signOutHandler(
 //   request: FastifyRequest,

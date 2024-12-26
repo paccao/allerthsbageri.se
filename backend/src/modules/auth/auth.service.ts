@@ -41,34 +41,27 @@ export async function signUpUser({
     .returning({ id: userTable.id })
 
   if (!newUser) {
-    return { error: 'Failed creating user', status: 500 }
+    return { error: 'Failed to create user', status: 500 }
   }
 
   return { user: newUser }
 }
 
-// export async function signInUser(username: string, password: string) {
-//   const existingUser = await prisma.user.findUnique({
-//     where: { username },
-//   })
-//   if (!existingUser) {
-//     return { error: 'Invalid username or password', status: 422 }
-//   }
+export async function signInUser(username: string, password: string) {
+  const [existingUser] = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.username, username))
 
-//   const isValidPassword = await verify(
-//     existingUser.hashedPassword,
-//     password,
-//     hashConfig,
-//   )
-//   if (!isValidPassword) {
-//     return { error: 'Invalid username or password', status: 422 }
-//   }
+  const isValidPassword =
+    existingUser && (await verify(existingUser.password, password, hashConfig))
 
-//   // TODO: Check if a valid session exists before creating a new one
+  if (!existingUser || !isValidPassword) {
+    return { error: 'Invalid username or password', status: 422 }
+  }
 
-//   const session = await lucia.createSession(existingUser.id, {})
-//   return { sessionCookie: lucia.createSessionCookie(session.id) }
-// }
+  return { user: existingUser }
+}
 
 // export async function signOutUser(sessionId: string) {
 //   await lucia.invalidateSession(sessionId)
