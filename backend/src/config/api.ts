@@ -6,7 +6,7 @@ const envSchema = z.object({
   HOST: z.string().default('localhost'),
   NODE_ENV: z.enum(['development', 'production']).default('production'),
   DATABASE_URL: z.string(),
-  SESSION_SECRET: z.string().min(48),
+  SESSION_COOKIE_NAME: z.string().default('session'),
   OPENAPI_PREFIX: z.string().min(1).default('api/docs'),
 })
 
@@ -41,7 +41,7 @@ const apiConfig = {
         ...baseLoggerOptions,
       }) as FastifyServerOptions['logger'],
   dbConnection: env.DATABASE_URL,
-  sessionSecret: env.SESSION_SECRET,
+  sessionCookieName: env.SESSION_COOKIE_NAME,
   openAPIPrefix: env.OPENAPI_PREFIX,
 }
 

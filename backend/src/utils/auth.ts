@@ -1,9 +1,14 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
+import cookie from 'cookie'
 
 import { User } from '@/db/schema.ts'
-import { db } from '@/db/index.ts'
 import apiConfig from '@/config/api.ts'
+import {
+  validateSessionToken,
+  deleteSessionTokenCookie,
+  setSessionTokenCookie,
+} from '@/utils/session.ts'
 
 declare module 'fastify' {
   export interface FastifyRequest {
@@ -16,26 +21,31 @@ declare module 'fastify' {
  */
 export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
   server.addHook('onRequest', async (request, reply) => {
+    // CSRF protection
     if (request.method !== 'GET') {
       const origin = request.headers['Origin'] as string | undefined
-      // You can also compare it against the Host or X-Forwarded-Host header.
+      // The Origin could also be compared against the Host or X-Forwarded-Host header.
       if (!origin || !apiConfig.allowedOrigins.includes(origin)) {
-        return reply.status(403)
+        return reply.code(403)
       }
     }
 
-    const sessionId = lucia.readSessionCookie(request.headers.cookie ?? '')
-    if (!sessionId) return
+    // Validate session
+    const cookies = cookie.parse(
+      (request.headers['Cookie'] as string | undefined) ?? '',
+    )
+    const token = cookies[apiConfig.sessionCookieName]
 
-    const { session, user } = await lucia.validateSession(sessionId)
-    if (session) {
-      request.user = user
+    if (token) {
+      const { session, user, refreshed } = await validateSessionToken(token)
+      if (session) {
+        request.user = user
 
-      if (session.fresh) {
-        reply.header(
-          'Set-Cookie',
-          lucia.createSessionCookie(session.id).serialize(),
-        )
+        if (refreshed) {
+          setSessionTokenCookie(reply, token, session.expiresAt)
+        }
+      } else {
+        deleteSessionTokenCookie(reply)
       }
     }
   })

@@ -10,9 +10,9 @@
     "db": "drizzle-kit"
   },
   "dependencies": {
-    "@fastify/session": "^11.0.2",
     "@node-rs/argon2": "^2.0.2",
     "better-sqlite3": "^11.7.0",
+    "cookie": "^1.0.2",
     "drizzle-orm": "^0.38.3",
     "fastify": "^5.2.0",
     "fastify-plugin": "^5.0.1",
