@@ -48,6 +48,11 @@ const apiConfig = {
       name: 'auth',
       description: 'Authentication and user account',
     },
+    pickup: {
+      name: 'pickup',
+      description:
+        'Pickup occasions, where customers receive their ordered products',
+    },
   },
 }
 
