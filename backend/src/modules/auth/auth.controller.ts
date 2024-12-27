@@ -17,7 +17,8 @@ export async function signUpHandler(
   reply: FastifyReply,
 ) {
   // No need to sign up if already authenticated
-  if (request.user) return reply.code(400)
+  if (request.user)
+    return reply.code(400).send({ message: 'Already signed in' })
 
   const { name, username, password } = request.body
   try {
@@ -43,14 +44,16 @@ export async function signInHandler(
   request: FastifyRequest<{ Body: SignInBody }>,
   reply: FastifyReply,
 ) {
-  if (request.user) return reply.code(400)
+  if (request.user)
+    return reply.code(400).send({ message: 'Already signed in' })
 
   const { username, password } = request.body
 
   try {
     const { user, error, status } = await signInUser(username, password)
     if (!user) {
-      return reply.code(status).send(error)
+      request.log.error(error)
+      return reply.code(status).send({ message: error })
     }
 
     const token = generateSessionToken()
@@ -58,7 +61,7 @@ export async function signInHandler(
     setSessionTokenCookie(reply, token, session.expiresAt)
   } catch (e: any) {
     request.log.error(e, e?.message)
-    reply.code(500)
+    reply.code(500).send({ message: 'Failed to log in' })
   }
 }
 
@@ -68,7 +71,7 @@ export async function signInHandler(
 // ) {
 //   const sessionId = lucia.readSessionCookie(request.headers.cookie ?? '')
 //   if (!sessionId) {
-//     return reply.code(401)
+//     return reply.code(401).send({ message: 'Already signed out' })
 //   }
 
 //   try {
@@ -76,6 +79,6 @@ export async function signInHandler(
 //     reply.header('Set-Cookie', sessionCookie.serialize())
 //   } catch (e: any) {
 //     request.log.error(e, e?.message)
-//     reply.code(500)
+//     reply.code(500).send({ message: 'Failed to sign out' })
 //   }
 // }

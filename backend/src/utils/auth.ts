@@ -26,7 +26,7 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
       const origin = request.headers['Origin'] as string | undefined
       // The Origin could also be compared against the Host or X-Forwarded-Host header.
       if (!origin || !apiConfig.allowedOrigins.includes(origin)) {
-        return reply.code(403)
+        return reply.code(403).send({ message: 'Unexpected origin' })
       }
     }
 
