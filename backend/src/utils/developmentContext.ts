@@ -26,11 +26,24 @@ export default async function developmentContext(server: FastifyInstance) {
 
   server.register(fastifySwagger, {
     openapi: {
+      openapi: '3.1.1',
       info: {
         title: swaggerUITitle,
         description: 'OpenAPI docs',
         version: apiVersion,
       },
+      // IDEA: Maybe document how the session cookie works?
+      // However, since it's HttpOnly, it doesn't make sense to test it out via the UI anyway
+      // components: {
+      //   securitySchemes: {
+      //     cookieAuth: {
+      //       type: 'apiKey',
+      //       in: 'cookie',
+      //       name: apiConfig.sessionCookieName,
+      //     },
+      //   },
+      // },
+
       tags: Object.values(apiConfig.openAPITags),
     },
     transform: jsonSchemaTransform,
