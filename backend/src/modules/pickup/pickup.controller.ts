@@ -15,14 +15,18 @@ export async function createPickupHandler(
     pickupCloses,
   } = request.body
 
-  const role = await createPickup({
-    name,
-    description,
-    bookingOpens,
-    bookingCloses,
-    pickupOpens,
-    pickupCloses,
-  })
-
-  return role
+  try {
+    const pickup = await createPickup({
+      name,
+      description,
+      bookingOpens,
+      bookingCloses,
+      pickupOpens,
+      pickupCloses,
+    })
+    return pickup
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to create pickup' })
+  }
 }

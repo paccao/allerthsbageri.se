@@ -53,6 +53,10 @@ const apiConfig = {
       description:
         'Pickup occasions, where customers receive their ordered products',
     },
+    customer: {
+      name: 'customer',
+      description: 'Customers who order products or activities',
+    },
   },
 }
 
