@@ -1,8 +1,8 @@
-import { drizzle } from 'drizzle-orm/better-sqlite3'
+import { drizzle } from 'drizzle-orm/libsql'
 
 import apiConfig from '../config/api.ts'
 
 export const db = drizzle({
-  connection: apiConfig.dbConnection,
+  connection: { url: apiConfig.dbConnection },
   casing: 'snake_case',
 })

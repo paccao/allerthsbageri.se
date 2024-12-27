@@ -10,8 +10,8 @@
     "db": "drizzle-kit"
   },
   "dependencies": {
+    "@libsql/client": "^0.14.0",
     "@node-rs/argon2": "^2.0.2",
-    "better-sqlite3": "^11.7.0",
     "cookie": "^1.0.2",
     "drizzle-orm": "^0.38.3",
     "fastify": "^5.2.0",
