@@ -22,7 +22,7 @@ declare module 'fastify' {
 export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
   server.addHook('onRequest', async (request, reply) => {
     // CSRF protection
-    if (request.method !== 'GET') {
+    if (!apiConfig.env.DEV && request.method !== 'GET') {
       const origin = request.headers['Origin'] as string | undefined
       // The Origin could also be compared against the Host or X-Forwarded-Host header.
       if (!origin || !apiConfig.allowedOrigins.includes(origin)) {
