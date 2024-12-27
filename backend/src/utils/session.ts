@@ -1,4 +1,5 @@
 import { eq } from 'drizzle-orm'
+import cookie from 'cookie'
 import { db } from '@/db/index.ts'
 import {
   userTable as userTable,
@@ -8,7 +9,7 @@ import {
 } from '@/db/schema.ts'
 import apiConfig from '@/config/api.ts'
 import { getSHA256Hash } from './crypto.ts'
-import { FastifyReply } from 'fastify'
+import { FastifyReply, FastifyRequest } from 'fastify'
 
 const DAY = 1000 * 60 * 60 * 24
 
@@ -28,6 +29,13 @@ export async function createSession(
   }
   await db.insert(sessionTable).values(session)
   return session
+}
+
+export function parseSessionTokenFromCookie(request: FastifyRequest) {
+  const cookies = cookie.parse(
+    (request.headers['Cookie'] as string | undefined) ?? '',
+  )
+  return cookies[apiConfig.sessionCookieName]
 }
 
 export async function validateSessionToken(

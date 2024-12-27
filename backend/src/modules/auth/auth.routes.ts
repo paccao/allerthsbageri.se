@@ -1,7 +1,13 @@
 import { FastifyInstance } from 'fastify'
 import { signInBodySchema, signUpBodySchema } from './auth.schemas.ts'
-import { signInHandler, signUpHandler } from './auth.controller.ts'
-import { tags } from '@/utils/openAPI.ts'
+import {
+  signInHandler,
+  signOutHandler,
+  signUpHandler,
+} from './auth.controller.ts'
+import { getTags } from '@/utils/openAPI.ts'
+
+const tags = getTags('auth')
 
 export async function authRoutes(app: FastifyInstance) {
   app.post(
@@ -9,7 +15,7 @@ export async function authRoutes(app: FastifyInstance) {
     {
       schema: {
         body: signUpBodySchema,
-        tags: tags('auth'),
+        tags,
       },
     },
     signUpHandler,
@@ -20,11 +26,19 @@ export async function authRoutes(app: FastifyInstance) {
     {
       schema: {
         body: signInBodySchema,
-        tags: tags('auth'),
+        tags,
       },
     },
     signInHandler,
   )
 
-  //   app.post('/logout', { schema: logoutJSONSchema }, logoutHandler)
+  app.post(
+    '/sign-out',
+    {
+      schema: {
+        tags,
+      },
+    },
+    signOutHandler,
+  )
 }

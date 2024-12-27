@@ -45,8 +45,6 @@ async function publicContext(server: FastifyInstance) {
  */
 async function authenticatedContext(server: FastifyInstance) {
   server.register(authenticationRequiredPlugin)
-
-  // server.register(signOutRoute, { prefix: 'api/auth' })
 }
 
 export default initServer

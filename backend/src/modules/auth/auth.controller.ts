@@ -4,9 +4,13 @@ import { SignInBody, SignUpBody } from './auth.schemas.ts'
 import { signInUser, signUpUser } from './auth.service.ts'
 import {
   createSession,
+  deleteSessionTokenCookie,
   generateSessionToken,
+  invalidateSession,
+  parseSessionTokenFromCookie,
   setSessionTokenCookie,
 } from '@/utils/session.ts'
+import { getSHA256Hash } from '@/utils/crypto.ts'
 
 // TODO: improve the boundary between controller and service
 // Let the service perform DB operations, one at a time
@@ -61,24 +65,23 @@ export async function signInHandler(
     setSessionTokenCookie(reply, token, session.expiresAt)
   } catch (e: any) {
     request.log.error(e, e?.message)
-    reply.code(500).send({ message: 'Failed to log in' })
+    reply.code(500).send({ message: 'Failed to sign in' })
   }
 }
 
-// export async function signOutHandler(
-//   request: FastifyRequest,
-//   reply: FastifyReply,
-// ) {
-//   const sessionId = lucia.readSessionCookie(request.headers.cookie ?? '')
-//   if (!sessionId) {
-//     return reply.code(401).send({ message: 'Already signed out' })
-//   }
-
-//   try {
-//     const sessionCookie = await signOutUser(sessionId)
-//     reply.header('Set-Cookie', sessionCookie.serialize())
-//   } catch (e: any) {
-//     request.log.error(e, e?.message)
-//     reply.code(500).send({ message: 'Failed to sign out' })
-//   }
-// }
+export async function signOutHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  const token = parseSessionTokenFromCookie(request)
+  if (token) {
+    try {
+      const sessionId = await getSHA256Hash(token)
+      await invalidateSession(sessionId)
+      deleteSessionTokenCookie(reply)
+    } catch (e: any) {
+      request.log.error(e, e?.message)
+      reply.code(500).send({ message: 'Failed to sign out' })
+    }
+  }
+}

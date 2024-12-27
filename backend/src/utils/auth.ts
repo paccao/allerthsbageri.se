@@ -1,6 +1,5 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import cookie from 'cookie'
 
 import { User } from '@/db/schema.ts'
 import apiConfig from '@/config/api.ts'
@@ -8,6 +7,7 @@ import {
   validateSessionToken,
   deleteSessionTokenCookie,
   setSessionTokenCookie,
+  parseSessionTokenFromCookie,
 } from '@/utils/session.ts'
 
 declare module 'fastify' {
@@ -31,10 +31,7 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
     }
 
     // Validate session
-    const cookies = cookie.parse(
-      (request.headers['Cookie'] as string | undefined) ?? '',
-    )
-    const token = cookies[apiConfig.sessionCookieName]
+    const token = parseSessionTokenFromCookie(request)
 
     if (token) {
       const { session, user, refreshed } = await validateSessionToken(token)
