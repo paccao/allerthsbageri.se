@@ -1,5 +1,4 @@
 import initServer from './server.ts'
-import { db } from '@/db/index.ts'
 import apiConfig from './config/api.ts'
 
 const app = await initServer()
@@ -23,8 +22,4 @@ async function main() {
   }
 }
 
-main()
-  .catch(app.log.error)
-  .finally(() => {
-    db.$client.close()
-  })
+await main()
