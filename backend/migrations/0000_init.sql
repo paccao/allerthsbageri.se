@@ -56,13 +56,6 @@ CREATE TABLE `product` (
 	FOREIGN KEY (`product_details_id`) REFERENCES `product_details`(`id`) ON UPDATE no action ON DELETE no action
 );
 
-CREATE TABLE `session` (
-	`id` text PRIMARY KEY NOT NULL,
-	`user_id` integer NOT NULL,
-	`expires_at` integer NOT NULL,
-	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
-);
-
 CREATE TABLE `user` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`name` text(200) NOT NULL,
@@ -71,3 +64,10 @@ CREATE TABLE `user` (
 );
 
 CREATE UNIQUE INDEX `user_username_unique` ON `user` (`username`);
+
+CREATE TABLE `session` (
+	`id` text PRIMARY KEY NOT NULL,
+	`user_id` integer NOT NULL,
+	`expires_at` integer NOT NULL,
+	FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE no action ON DELETE no action
+);
