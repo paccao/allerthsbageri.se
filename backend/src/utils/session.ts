@@ -33,7 +33,7 @@ export async function createSession(
 
 export function parseSessionTokenFromCookie(request: FastifyRequest) {
   const cookies = cookie.parse(
-    (request.headers['Cookie'] as string | undefined) ?? '',
+    (request.headers['cookie'] as string | undefined) ?? '',
   )
   return cookies[apiConfig.sessionCookieName]
 }

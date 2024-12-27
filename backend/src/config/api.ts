@@ -28,7 +28,7 @@ const apiConfig = {
     PROD,
   },
   allowedOrigins: DEV
-    ? ['http://localhost:4321']
+    ? ['http://localhost:4321', 'http://localhost:3000']
     : ['https://allerthsbageri.se'],
   logger: (DEV && process.stdout.isTTY
     ? {
