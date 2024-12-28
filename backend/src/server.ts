@@ -11,6 +11,7 @@ import { sessionPlugin, authenticationRequiredPlugin } from './utils/auth.ts'
 import { authRoutes } from './modules/auth/auth.routes.ts'
 import { pickupRoutes } from './modules/pickup/pickup.routes.ts'
 import { customerRoutes } from './modules/customer/customer.routes.ts'
+import { orderRoutes } from './modules/order/order.routes.ts'
 
 const server = Fastify({
   logger: apiConfig.logger,
@@ -49,6 +50,7 @@ async function authenticatedContext(server: FastifyInstance) {
   server.register(authenticationRequiredPlugin)
   server.register(pickupRoutes, { prefix: 'api/pickups' })
   server.register(customerRoutes, { prefix: 'api/customers' })
+  server.register(orderRoutes, { prefix: 'api/orders' })
 }
 
 export default initServer

@@ -6,7 +6,7 @@ import {
 } from './customer.schemas.ts'
 import { getTags } from '@/utils/openAPI.ts'
 
-const tags = getTags('customer')
+const tags = getTags('customers')
 
 export async function customerRoutes(app: FastifyInstance) {
   app.post<{ Body: CreateCustomerBody }>(

@@ -3,7 +3,7 @@ import { createPickupHandler } from './pickup.controller.ts'
 import { CreatePickupBody, createPickupBodySchema } from './pickup.schemas.ts'
 import { getTags } from '@/utils/openAPI.ts'
 
-const tags = getTags('pickup')
+const tags = getTags('pickups')
 
 export async function pickupRoutes(app: FastifyInstance) {
   app.post<{ Body: CreatePickupBody }>(

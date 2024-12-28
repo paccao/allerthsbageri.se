@@ -20,6 +20,25 @@ const baseLoggerOptions: FastifyServerOptions['logger'] = {
 const DEV = env.NODE_ENV === 'development'
 const PROD = env.NODE_ENV === 'production'
 
+const openAPITags = {
+  auth: {
+    description: 'Authentication and user account',
+  },
+  pickups: {
+    description:
+      'Pickup occasions, where customers receive their ordered products',
+  },
+  customers: {
+    description: 'Customers who order products or activities',
+  },
+  orders: {
+    description: 'Customer orders',
+  },
+} as const
+
+type TagName = keyof typeof openAPITags
+type Tag = (typeof openAPITags)[TagName] & { name: TagName }
+
 const apiConfig = {
   port: env.PORT,
   host: env.HOST,
@@ -42,26 +61,16 @@ const apiConfig = {
       }) as FastifyServerOptions['logger'],
   dbConnection: env.DATABASE_URL,
   sessionCookieName: env.SESSION_COOKIE_NAME,
+
   openAPIPrefix: env.OPENAPI_PREFIX,
-  openAPITags: {
-    auth: {
-      name: 'auth',
-      description: 'Authentication and user account',
+  openAPITags: Object.entries(openAPITags).reduce(
+    (tags, [name, tag]) => {
+      const tagName = name as unknown as TagName
+      tags[tagName] = { name: tagName, ...tag }
+      return tags
     },
-    pickup: {
-      name: 'pickup',
-      description:
-        'Pickup occasions, where customers receive their ordered products',
-    },
-    customer: {
-      name: 'customer',
-      description: 'Customers who order products or activities',
-    },
-    order: {
-      name: 'order',
-      description: 'Customer orders',
-    },
-  },
+    {} as Record<TagName, Tag>,
+  ),
 }
 
 export default apiConfig
