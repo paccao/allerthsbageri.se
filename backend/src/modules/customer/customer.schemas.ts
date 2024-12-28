@@ -1,5 +1,6 @@
-import { zPhone } from '@/utils/zod.ts'
 import { z } from 'zod'
+
+import { zPhone } from '@/utils/zod.ts'
 
 export const createCustomerBodySchema = z.object({
   name: z.string().max(200),

@@ -9,11 +9,11 @@ export async function createCustomerHandler(
   const { name, phone } = request.body
 
   try {
-    const pickup = await createCustomer({
+    const customer = await createCustomer({
       name,
       phone,
     })
-    return pickup
+    return customer
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create customer' })

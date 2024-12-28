@@ -57,6 +57,10 @@ const apiConfig = {
       name: 'customer',
       description: 'Customers who order products or activities',
     },
+    order: {
+      name: 'order',
+      description: 'Customer orders',
+    },
   },
 }
 

@@ -55,9 +55,9 @@ export const orderStatusTable = sqliteTable('order_status', {
   color: text({ length: 50 }),
 })
 
-export const order = sqliteTable('pickup_order', {
+export const orderTable = sqliteTable('pickup_order', {
   id: int().primaryKey(),
-  createdAt: dateField.notNull(),
+  createdAt: dateField.notNull().$defaultFn(() => new Date().toISOString()),
   customerId: int()
     .notNull()
     .references(() => customerTable.id, { onDelete: 'cascade' }),
@@ -78,7 +78,7 @@ export const orderItemTable = sqliteTable('order_item', {
     .references(() => productTable.id),
   orderId: int()
     .notNull()
-    .references(() => order.id, { onDelete: 'cascade' }),
+    .references(() => orderTable.id, { onDelete: 'cascade' }),
 })
 
 export const sessionTable = sqliteTable('session', {
