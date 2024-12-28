@@ -55,7 +55,15 @@ export const orderStatusTable = sqliteTable('order_status', {
   color: text({ length: 50 }),
 })
 
-export const orderTable = sqliteTable('pickup_order', {
+// IDEA: customer_orders could be used for both products and activities.
+// If the products and activities themselves refer to the pickup date or the activity date,
+// then we could remove the pickupOccasionId from the customer_order.
+// However, we should only create one order per pickup occasion, and activity
+// to allow us to set the order's statusId to highlight that the products were delivered or that the course was delivered
+// IDEA: Maybe the order and product concept could be generalized to be reused
+// Or, it might be better to keep two distinct tables since they represent very different things
+// Two separate tables make it easier to change
+export const orderTable = sqliteTable('customer_order', {
   id: int().primaryKey(),
   createdAt: dateField.notNull().$defaultFn(() => new Date().toISOString()),
   customerId: int()
