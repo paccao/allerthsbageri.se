@@ -1,7 +1,11 @@
-import { db } from './index.ts'
-import { orderStatusTable } from './schema.ts'
+import { SQLiteTableWithColumns, TableConfig } from 'drizzle-orm/sqlite-core'
+import { hash } from '@node-rs/argon2'
 
-const orderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
+import { db } from './index.ts'
+import { orderStatusTable, userTable } from './schema.ts'
+import apiConfig from '@/config/api.ts'
+
+const defaultOrderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
   {
     status: 'Bokad',
   },
@@ -19,19 +23,46 @@ const orderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
   },
 ]
 
-async function main() {
-  // TODO: skip insert if the count of orderStatusTable is > 0
-  // If we already have values, there's no need to seed data to that table.
+const defaultUsers = await Promise.all(
+  [
+    {
+      name: 'Admin',
+      username: 'admin',
+      password: '123456',
+    },
+  ].map(async (u) => {
+    const hashedPassword = await hash(
+      u.password,
+      apiConfig.passwordHashingConfig,
+    )
+    return { ...u, password: hashedPassword }
+  }),
+)
 
-  await db.insert(orderStatusTable).values(orderStatuses)
+async function seedIfEmpty<T extends TableConfig>(
+  table: SQLiteTableWithColumns<T>,
+  seedingData: {
+    [K in keyof {
+      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+    }]: {
+      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+    }[K]
+  }[],
+) {
+  if ((await db.$count(table)) === 0) {
+    await db.insert(table).values(seedingData)
+  }
+}
+
+async function main() {
+  await seedIfEmpty(userTable, defaultUsers)
+  await seedIfEmpty(orderStatusTable, defaultOrderStatuses)
 
   // TODO: Add a function to reset the local DB and populate it with seeding data
   // Make it easy to drop specific table(s) and completely reset the DB, including primary keys and similar
   // Easy way is to just delete the DB file and re-create it
 
-  // TODO: seed an admin user to be used for testing
-
-  // TODO: Maybe seed with realistic example data
+  // TODO: Maybe seed with realistic example data for other data types too.
 }
 
 await main().catch((e) => {

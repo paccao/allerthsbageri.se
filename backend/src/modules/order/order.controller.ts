@@ -9,7 +9,6 @@ export async function createOrderHandler(
   const { customerId, pickupOccasionId, statusId } = request.body
 
   try {
-    // TODO: Add DB seeding script which adds common order statuses
     const order = await createOrder({
       customerId,
       pickupOccasionId,
