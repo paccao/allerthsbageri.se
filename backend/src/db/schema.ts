@@ -16,7 +16,7 @@ export type User = InferSelectModel<typeof userTable>
 export const customerTable = sqliteTable('customer', {
   id: int().primaryKey(),
   name: text({ length: 200 }).notNull(),
-  phone: text({ length: 50 }).notNull(),
+  phone: text({ length: 50 }).notNull().unique(),
 })
 
 export const pickupOccasionTable = sqliteTable('pickup_occasion', {

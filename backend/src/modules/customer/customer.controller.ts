@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { CreateCustomerBody } from './customer.schemas.ts'
-import { createCustomer } from './customer.service.ts'
+import { upsertCustomer } from './customer.service.ts'
 
 export async function createCustomerHandler(
   request: FastifyRequest<{ Body: CreateCustomerBody }>,
@@ -9,7 +9,7 @@ export async function createCustomerHandler(
   const { name, phone } = request.body
 
   try {
-    const customer = await createCustomer({
+    const customer = await upsertCustomer({
       name,
       phone,
     })
