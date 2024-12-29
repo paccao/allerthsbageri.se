@@ -7,7 +7,8 @@
     "dev": "node --import=tsx --env-file=.env --watch src/index.ts",
     "lint": "prettier --check .",
     "format": "prettier --write .",
-    "db": "drizzle-kit"
+    "db": "drizzle-kit",
+    "db:seed": "node --import=tsx --env-file=.env src/db/seed.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
