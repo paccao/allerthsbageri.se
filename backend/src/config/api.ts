@@ -1,3 +1,4 @@
+import { Options } from '@node-rs/argon2'
 import { FastifyServerOptions } from 'fastify'
 import { z } from 'zod'
 
@@ -71,6 +72,17 @@ const apiConfig = {
     },
     {} as Record<TagName, Tag>,
   ),
+
+  /**
+   * OWASP recommendations:
+   * https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
+   */
+  passwordHashingConfig: {
+    memoryCost: 19456,
+    timeCost: 3,
+    outputLen: 32,
+    parallelism: 1,
+  } as Options,
 }
 
 export default apiConfig

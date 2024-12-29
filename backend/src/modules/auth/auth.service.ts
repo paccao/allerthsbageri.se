@@ -1,19 +1,9 @@
-import { hash, verify, Options } from '@node-rs/argon2'
+import { hash, verify } from '@node-rs/argon2'
 
 import { db } from '@/db/index.ts'
 import { userTable } from '@/db/schema.ts'
 import { eq } from 'drizzle-orm'
-
-/**
- * OWASP recommendations:
- * https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html
- */
-const hashConfig: Options = {
-  memoryCost: 19456,
-  timeCost: 3,
-  outputLen: 32,
-  parallelism: 1,
-}
+import apiConfig from '@/config/api.ts'
 
 export async function signUpUser({
   username,
@@ -29,7 +19,7 @@ export async function signUpUser({
     return { error: 'Username already taken', status: 422 }
   }
 
-  const hashedPassword = await hash(password, hashConfig)
+  const hashedPassword = await hash(password, apiConfig.passwordHashingConfig)
 
   const [newUser] = await db
     .insert(userTable)
@@ -54,7 +44,12 @@ export async function signInUser(username: string, password: string) {
     .where(eq(userTable.username, username))
 
   const isValidPassword =
-    existingUser && (await verify(existingUser.password, password, hashConfig))
+    existingUser &&
+    (await verify(
+      existingUser.password,
+      password,
+      apiConfig.passwordHashingConfig,
+    ))
 
   if (!existingUser || !isValidPassword) {
     return { error: 'Invalid username or password', status: 422 }
