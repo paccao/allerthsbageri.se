@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { createCustomerHandler } from './customer.controller.ts'
+import { upsertCustomerHandler } from './customer.controller.ts'
 import {
   CreateCustomerBody,
   createCustomerBodySchema,
@@ -17,6 +17,6 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    createCustomerHandler,
+    upsertCustomerHandler,
   )
 }
