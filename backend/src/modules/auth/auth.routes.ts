@@ -1,11 +1,11 @@
-import { FastifyInstance } from 'fastify'
+import type { FastifyInstance } from 'fastify'
 import { signInBodySchema, signUpBodySchema } from './auth.schemas.ts'
 import {
   signInHandler,
   signOutHandler,
   signUpHandler,
 } from './auth.controller.ts'
-import { getTags } from '@/utils/openAPI.ts'
+import { getTags } from '#utils/openAPI.ts'
 
 const tags = getTags('auth')
 

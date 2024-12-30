@@ -1,5 +1,5 @@
-import { db } from '@/db/index.ts'
-import { customerTable } from '@/db/schema.ts'
+import { db } from '#db/index.ts'
+import { customerTable } from '#db/schema.ts'
 import { eq } from 'drizzle-orm'
 
 export async function upsertCustomer(data: typeof customerTable.$inferInsert) {

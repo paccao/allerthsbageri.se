@@ -1,15 +1,15 @@
 import { eq } from 'drizzle-orm'
 import cookie from 'cookie'
-import { db } from '@/db/index.ts'
+import { db } from '#db/index.ts'
 import {
   userTable as userTable,
   sessionTable as sessionTable,
-  User,
-  Session,
-} from '@/db/schema.ts'
-import apiConfig from '@/config/api.ts'
+  type User,
+  type Session,
+} from '#db/schema.ts'
+import apiConfig from '#config/api.ts'
 import { getSHA256Hash } from './crypto.ts'
-import { FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
 const DAY = 1000 * 60 * 60 * 24
 

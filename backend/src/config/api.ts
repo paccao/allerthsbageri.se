@@ -1,5 +1,5 @@
-import { Options } from '@node-rs/argon2'
-import { FastifyServerOptions } from 'fastify'
+import { type Options } from '@node-rs/argon2'
+import { type FastifyServerOptions } from 'fastify'
 import { z } from 'zod'
 
 const envSchema = z.object({

@@ -1,5 +1,5 @@
-import { db } from '@/db/index.ts'
-import { pickupOccasionTable } from '@/db/schema.ts'
+import { db } from '#db/index.ts'
+import { pickupOccasionTable } from '#db/schema.ts'
 
 export async function createPickup({
   bookingOpens,

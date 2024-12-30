@@ -1,4 +1,4 @@
-import { InferSelectModel } from 'drizzle-orm'
+import { type InferSelectModel } from 'drizzle-orm'
 import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
 
 const ISO_DATE_LENGTH = 30

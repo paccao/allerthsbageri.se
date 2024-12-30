@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { CreateCustomerBody } from './customer.schemas.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { CreateCustomerBody } from './customer.schemas.ts'
 import { upsertCustomer } from './customer.service.ts'
 
 export async function upsertCustomerHandler(

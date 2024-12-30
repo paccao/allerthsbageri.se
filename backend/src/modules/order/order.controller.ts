@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { CreateOrderBody } from './order.schemas.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { CreateOrderBody } from './order.schemas.ts'
 import { createOrder } from './order.service.ts'
 
 export async function createOrderHandler(

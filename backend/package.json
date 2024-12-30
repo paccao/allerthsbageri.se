@@ -4,11 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "node --import=tsx --env-file=.env --watch src/index.ts",
+    "dev": "node --experimental-strip-types --experimental-transform-types --env-file=.env --watch src/index.ts",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "db": "drizzle-kit",
-    "db:seed": "node --import=tsx --env-file=.env src/db/seed.ts"
+    "db:seed": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
@@ -32,6 +32,11 @@
     "prettier": "^3.4.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
+  },
+  "imports": {
+    "#config/*": "./src/config/*",
+    "#utils/*": "./src/utils/*",
+    "#db/*": "./src/db/*"
   },
   "prettier": {
     "singleQuote": true,

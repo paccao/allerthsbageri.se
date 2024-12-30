@@ -1,11 +1,11 @@
-import { FastifyInstance } from 'fastify'
+import type { FastifyInstance } from 'fastify'
 import { jsonSchemaTransform } from 'fastify-type-provider-zod'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 
-import apiConfig from '@/config/api.ts'
+import apiConfig from '#config/api.ts'
 
 /**
  * This context wraps all logic that should only be available during development

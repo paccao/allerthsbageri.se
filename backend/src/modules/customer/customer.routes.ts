@@ -1,10 +1,10 @@
-import { FastifyInstance } from 'fastify'
+import type { FastifyInstance } from 'fastify'
 import { upsertCustomerHandler } from './customer.controller.ts'
 import {
-  CreateCustomerBody,
+  type CreateCustomerBody,
   createCustomerBodySchema,
 } from './customer.schemas.ts'
-import { getTags } from '@/utils/openAPI.ts'
+import { getTags } from '#utils/openAPI.ts'
 
 const tags = getTags('customers')
 

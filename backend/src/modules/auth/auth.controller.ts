@@ -1,6 +1,6 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
+import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import { SignInBody, SignUpBody } from './auth.schemas.ts'
+import type { SignInBody, SignUpBody } from './auth.schemas.ts'
 import { signInUser, signUpUser } from './auth.service.ts'
 import {
   createSession,
@@ -9,8 +9,8 @@ import {
   invalidateSession,
   parseSessionTokenFromCookie,
   setSessionTokenCookie,
-} from '@/utils/session.ts'
-import { getSHA256Hash } from '@/utils/crypto.ts'
+} from '#utils/session.ts'
+import { getSHA256Hash } from '#utils/crypto.ts'
 
 // TODO: improve the boundary between controller and service
 // Let the service perform DB operations, one at a time

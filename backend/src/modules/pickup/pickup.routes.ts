@@ -1,7 +1,10 @@
-import { FastifyInstance } from 'fastify'
+import type { FastifyInstance } from 'fastify'
 import { createPickupHandler } from './pickup.controller.ts'
-import { CreatePickupBody, createPickupBodySchema } from './pickup.schemas.ts'
-import { getTags } from '@/utils/openAPI.ts'
+import {
+  type CreatePickupBody,
+  createPickupBodySchema,
+} from './pickup.schemas.ts'
+import { getTags } from '#utils/openAPI.ts'
 
 const tags = getTags('pickups')
 

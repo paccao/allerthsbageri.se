@@ -21,6 +21,7 @@
     "strictPropertyInitialization": true,
     "strictBuiltinIteratorReturn": true,
     "noImplicitThis": true,
+    "verbatimModuleSyntax": true,
     "paths": {
       "@/*": ["./src/*"]
     }

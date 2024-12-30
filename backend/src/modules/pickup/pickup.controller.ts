@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from 'fastify'
-import { CreatePickupBody } from './pickup.schemas.ts'
+import type { FastifyReply, FastifyRequest } from 'fastify'
+import type { CreatePickupBody } from './pickup.schemas.ts'
 import { createPickup } from './pickup.service.ts'
 
 export async function createPickupHandler(

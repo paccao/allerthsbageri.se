@@ -1,9 +1,12 @@
-import { SQLiteTableWithColumns, TableConfig } from 'drizzle-orm/sqlite-core'
+import type {
+  SQLiteTableWithColumns,
+  TableConfig,
+} from 'drizzle-orm/sqlite-core'
 import { hash } from '@node-rs/argon2'
 
 import { db } from './index.ts'
 import { orderStatusTable, userTable } from './schema.ts'
-import apiConfig from '@/config/api.ts'
+import apiConfig from '#config/api.ts'
 
 const defaultOrderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
   {
@@ -63,6 +66,7 @@ async function main() {
   // Easy way is to just delete the DB file and re-create it
 
   // TODO: Maybe seed with realistic example data for other data types too.
+  console.log(`🌱 Successfully seeded the database`)
 }
 
 await main().catch((e) => {

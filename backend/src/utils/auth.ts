@@ -1,14 +1,14 @@
-import { FastifyPluginAsync } from 'fastify'
+import type { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 
-import { User } from '@/db/schema.ts'
-import apiConfig from '@/config/api.ts'
+import type { User } from '#db/schema.ts'
+import apiConfig from '#config/api.ts'
 import {
   validateSessionToken,
   deleteSessionTokenCookie,
   setSessionTokenCookie,
   parseSessionTokenFromCookie,
-} from '@/utils/session.ts'
+} from '#utils/session.ts'
 
 declare module 'fastify' {
   export interface FastifyRequest {
