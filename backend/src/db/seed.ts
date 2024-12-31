@@ -61,11 +61,6 @@ async function main() {
   await seedIfEmpty(userTable, defaultUsers)
   await seedIfEmpty(orderStatusTable, defaultOrderStatuses)
 
-  // TODO: Add a function to reset the local DB and populate it with seeding data
-  // Make it easy to drop specific table(s) and completely reset the DB, including primary keys and similar
-  // Easy way is to just delete the DB file and re-create it
-
-  // TODO: Maybe seed with realistic example data for other data types too.
   console.log(`🌱 Successfully seeded the database`)
 }
 

@@ -8,7 +8,8 @@
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "db": "drizzle-kit",
-    "db:seed": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts"
+    "db:seed": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts",
+    "db:reset": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
