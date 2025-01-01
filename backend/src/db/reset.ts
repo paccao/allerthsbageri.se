@@ -20,7 +20,7 @@ export async function resetDB() {
     'order_status',
     'customer_order',
     'pickup_occasion',
-    'pickup_details',
+    'product_details',
     'product',
     'session',
     'user',
@@ -31,6 +31,7 @@ export async function resetDB() {
   )
 
   if (unknownTables.length) {
+    console.dir(unknownTables, { colors: true, depth: 2 })
     throw new Error(
       'Please add the following unknown tables to the DB reset script (and delete them in the right order):' +
         unknownTables.join(', '),
