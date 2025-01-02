@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "node --experimental-strip-types --experimental-transform-types --env-file=.env --watch src/index.ts",
+    "dev": "node --experimental-strip-types --experimental-transform-types --env-file=.env --watch src/server.ts",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "db": "drizzle-kit",

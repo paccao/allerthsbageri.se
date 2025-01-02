@@ -1,56 +1,25 @@
-import Fastify, { type FastifyInstance } from 'fastify'
-import fp from 'fastify-plugin'
-import {
-  serializerCompiler,
-  validatorCompiler,
-  type ZodTypeProvider,
-} from 'fastify-type-provider-zod'
-
+import startApp from './app.ts'
 import apiConfig from './config/api.ts'
-import { sessionPlugin, authenticationRequiredPlugin } from './utils/auth.ts'
-import { authRoutes } from './modules/auth/auth.routes.ts'
-import { pickupRoutes } from './modules/pickup/pickup.routes.ts'
-import { customerRoutes } from './modules/customer/customer.routes.ts'
-import { orderRoutes } from './modules/order/order.routes.ts'
 
-const server = Fastify({
-  logger: apiConfig.logger,
-}).withTypeProvider<ZodTypeProvider>()
+const app = await startApp()
 
-async function initServer() {
-  server.setValidatorCompiler(validatorCompiler)
-  server.setSerializerCompiler(serializerCompiler)
+async function main() {
+  try {
+    await app.ready()
+    await app.listen({
+      host: apiConfig.host,
+      port: apiConfig.port,
+    })
 
-  server.register(sessionPlugin)
-
-  if (apiConfig.env.DEV) {
-    const developmentContext = await import('./utils/developmentContext.ts')
-
-    server.register(fp(developmentContext.default))
+    if (apiConfig.env.DEV) {
+      app.log.info(
+        `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${apiConfig.openAPIPrefix}`,
+      )
+    }
+  } catch (e) {
+    app.log.error(e)
+    process.exit(1)
   }
-
-  server.register(publicContext)
-  server.register(authenticatedContext)
-
-  return server
 }
 
-/**
- * This context wraps all logic that should be public.
- */
-async function publicContext(server: FastifyInstance) {
-  server.get('/healthcheck', async () => ({ ok: true }))
-  server.register(authRoutes, { prefix: 'api/auth' })
-}
-
-/**
- * This context wraps all logic that requires authentication.
- */
-async function authenticatedContext(server: FastifyInstance) {
-  server.register(authenticationRequiredPlugin)
-  server.register(pickupRoutes, { prefix: 'api/pickups' })
-  server.register(customerRoutes, { prefix: 'api/customers' })
-  server.register(orderRoutes, { prefix: 'api/orders' })
-}
-
-export default initServer
+await main()
