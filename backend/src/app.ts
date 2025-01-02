@@ -13,11 +13,11 @@ import { pickupRoutes } from './modules/pickup/pickup.routes.ts'
 import { customerRoutes } from './modules/customer/customer.routes.ts'
 import { orderRoutes } from './modules/order/order.routes.ts'
 
-const app = Fastify({
-  logger: apiConfig.logger,
-}).withTypeProvider<ZodTypeProvider>()
-
 async function startApp() {
+  const app = Fastify({
+    logger: apiConfig.logger,
+  }).withTypeProvider<ZodTypeProvider>()
+
   app.setValidatorCompiler(validatorCompiler)
   app.setSerializerCompiler(serializerCompiler)
 
@@ -39,7 +39,7 @@ async function startApp() {
  * This context wraps all logic that should be public.
  */
 async function publicContext(app: FastifyInstance) {
-  app.get('/healthcheck', async () => ({ ok: true }))
+  app.get('/health-check', async () => ({ ok: true }))
   app.register(authRoutes, { prefix: 'api/auth' })
 }
 
