@@ -19,8 +19,8 @@ declare module 'fastify' {
 /**
  * Automatically set the signed in user based on the session cookie.
  */
-export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
-  server.addHook('onRequest', async (request, reply) => {
+export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
+  app.addHook('onRequest', async (request, reply) => {
     // CSRF protection
     if (!apiConfig.env.DEV && request.method !== 'GET') {
       const origin = request.headers['origin'] as string | undefined
@@ -53,8 +53,8 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (server) => {
  * All routes registered after this plugin will require authentication.
  */
 export const authenticationRequiredPlugin: FastifyPluginAsync = fp(
-  async (server) => {
-    server.addHook('onRequest', (request, reply, done) => {
+  async (app) => {
+    app.addHook('onRequest', (request, reply, done) => {
       if (!request.user) {
         reply.code(401).send({ message: 'Unauthorized' })
       }

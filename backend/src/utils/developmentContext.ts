@@ -10,7 +10,7 @@ import apiConfig from '#config/api.ts'
 /**
  * This context wraps all logic that should only be available during development
  */
-export default async function developmentContext(server: FastifyInstance) {
+export default async function developmentContext(app: FastifyInstance) {
   const swaggerUITitle = 'OpenAPI docs'
 
   const [darkTheme, apiVersion] = await Promise.all([
@@ -24,7 +24,7 @@ export default async function developmentContext(server: FastifyInstance) {
       .then((pkg: { version: string }) => pkg.version),
   ])
 
-  server.register(fastifySwagger, {
+  app.register(fastifySwagger, {
     openapi: {
       openapi: '3.1.1',
       info: {
@@ -49,7 +49,7 @@ export default async function developmentContext(server: FastifyInstance) {
     transform: jsonSchemaTransform,
   })
 
-  server.register(fastifySwaggerUI, {
+  app.register(fastifySwaggerUI, {
     routePrefix: `/${apiConfig.openAPIPrefix}`,
     logLevel: 'silent',
     theme: {
