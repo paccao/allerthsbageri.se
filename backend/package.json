@@ -10,8 +10,8 @@
     "db": "drizzle-kit",
     "db:seed": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts",
     "db:reset": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts",
-    "test": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test",
-    "test:watch": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test --watch"
+    "test": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test --test-only",
+    "test:watch": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test --watch --test-only"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
@@ -39,7 +39,8 @@
   "imports": {
     "#config/*": "./src/config/*",
     "#utils/*": "./src/utils/*",
-    "#db/*": "./src/db/*"
+    "#db/*": "./src/db/*",
+    "#src/*": "./src/*"
   },
   "prettier": {
     "singleQuote": true,
