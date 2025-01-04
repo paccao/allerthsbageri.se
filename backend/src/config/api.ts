@@ -15,7 +15,7 @@ const env = envSchema.parse(process.env)
 
 const baseLoggerOptions: FastifyServerOptions['logger'] = {
   // TODO: Redact all sensitive data
-  redact: ['DATABASE_URL', 'SESSION_SECRET'],
+  redact: ['DATABASE_URL', 'SESSION_SECRET', 'req.headers.cookie'],
 }
 
 const DEV = env.NODE_ENV === 'development'
