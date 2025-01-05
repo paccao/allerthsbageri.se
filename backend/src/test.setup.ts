@@ -11,6 +11,8 @@ const execAsync = promisify(exec)
  * Perform some test setup before each test run.
  */
 async function setup() {
+  console.log('🧪 Preparing to run tests...')
+
   // Clear results from the previous test run
   await rm(resolve(apiConfig.dbConnection), { force: true })
 
