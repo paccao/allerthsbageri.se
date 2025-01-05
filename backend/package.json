@@ -4,14 +4,15 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "node --experimental-strip-types --experimental-transform-types --env-file=.env --watch src/server.ts",
+    "dev": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env --watch src/server.ts",
     "lint": "prettier --check .",
     "format": "prettier --write .",
     "db": "drizzle-kit",
-    "db:seed": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts",
-    "db:reset": "node --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts",
-    "test": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test --test-only",
-    "test:watch": "NODE_ENV=test DATABASE_URL=test.db node --experimental-strip-types --experimental-transform-types --env-file=.env --test --watch --test-only"
+    "db:seed": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts",
+    "db:reset": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts",
+    "test:setup": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file .env.test ./src/test.setup.ts",
+    "test": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --test-only",
+    "test:watch": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --watch --test-only"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
