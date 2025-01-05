@@ -13,5 +13,6 @@ const env = envSchema.parse(process.env)
 
 export const DEV = env.NODE_ENV === 'development'
 export const PROD = env.NODE_ENV === 'production'
+export const TEST = env.NODE_ENV === 'test'
 
 export default env

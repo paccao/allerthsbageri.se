@@ -21,8 +21,9 @@ export async function signUpHandler(
   reply: FastifyReply,
 ) {
   // No need to sign up if already authenticated
-  if (request.user)
+  if (request.user) {
     return reply.code(400).send({ message: 'Already signed in' })
+  }
 
   const { name, username, password } = request.body
   try {

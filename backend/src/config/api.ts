@@ -1,7 +1,7 @@
 import { type Options } from '@node-rs/argon2'
 import { type FastifyServerOptions } from 'fastify'
 
-import env, { DEV, PROD } from './env.ts'
+import env, { DEV, PROD, TEST } from './env.ts'
 
 const baseLoggerOptions: FastifyServerOptions['logger'] = {
   // TODO: Redact all sensitive data
@@ -14,6 +14,7 @@ const apiConfig = {
   env: {
     DEV,
     PROD,
+    TEST,
   },
   allowedOrigins: DEV
     ? ['http://localhost:4321', 'http://localhost:3000']
