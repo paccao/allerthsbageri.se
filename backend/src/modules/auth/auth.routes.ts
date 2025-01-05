@@ -10,6 +10,7 @@ import { getTags } from '#utils/openAPI.ts'
 const tags = getTags('auth')
 
 export async function authRoutes(app: FastifyInstance) {
+  // TODO: Only allow signed-in admin users to use this route to add more users
   app.post(
     '/sign-up',
     {
