@@ -1,5 +1,6 @@
 import startApp from './app.ts'
 import apiConfig from './config/api.ts'
+import openAPIConfig from '#config/openapi.ts'
 
 const app = await startApp()
 
@@ -13,7 +14,7 @@ async function main() {
 
     if (apiConfig.env.DEV) {
       app.log.info(
-        `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${apiConfig.openAPIPrefix}`,
+        `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${openAPIConfig.openAPIPrefix}`,
       )
     }
   } catch (e) {

@@ -5,7 +5,7 @@ import fastifySwaggerUI from '@fastify/swagger-ui'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 
-import apiConfig from '#config/api.ts'
+import openAPIConfig from '#config/openapi.ts'
 
 /**
  * This context wraps all logic that should only be available during development
@@ -39,18 +39,18 @@ export default async function developmentContext(app: FastifyInstance) {
       //     cookieAuth: {
       //       type: 'apiKey',
       //       in: 'cookie',
-      //       name: apiConfig.sessionCookieName,
+      //       name: openAPIConfig.sessionCookieName,
       //     },
       //   },
       // },
 
-      tags: Object.values(apiConfig.openAPITags),
+      tags: Object.values(openAPIConfig.openAPITags),
     },
     transform: jsonSchemaTransform,
   })
 
   app.register(fastifySwaggerUI, {
-    routePrefix: `/${apiConfig.openAPIPrefix}`,
+    routePrefix: `/${openAPIConfig.openAPIPrefix}`,
     logLevel: 'silent',
     theme: {
       title: swaggerUITitle,
