@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify'
+
 import { upsertCustomerHandler } from './customer.controller.ts'
 import {
   type CreateCustomerBody,
