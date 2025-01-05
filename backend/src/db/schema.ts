@@ -41,6 +41,16 @@ export const productTable = sqliteTable('product', {
   id: int().primaryKey(),
   stock: int().notNull(),
   price: int().notNull(),
+  // TODO: Limit how many products of a certain kind that a customer should be allowed to order for the same pickupOccasion
+  // For example, it's better to allow
+  // NOTE: important to limit by customer and pickup occasion, rather than by order and pickup occasion.
+  // Otherwise, a customer could create multiple orders to effectively bypass the limit
+  // So, the endpoint should ensure the ordered product count is available in the stock.
+  // It should also ensure the customer so far have ordered less than the specified maxPerCustomer.
+  // Otherwise, show a friendly error message, and offer to order the other products
+  // TODO: We also need to handle what happens if there are multiple orders at the same time and the stock just run out.
+  // In that case, we should show a message to reach out to see if it can be solved in another way.
+  maxPerCustomer: int(),
   pickupOccasionId: int()
     .notNull()
     .references(() => pickupOccasionTable.id),
