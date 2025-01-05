@@ -12,7 +12,7 @@ function getSessionCookie(response: Awaited<ReturnType<typeof app.inject>>) {
   return response.cookies.find((c) => c.name === apiConfig.sessionCookieName)
 }
 
-suite.only('auth routes', () => {
+suite('auth routes', () => {
   const admin1 = {
     username: 'admin1',
     name: 'Admin1',
@@ -29,7 +29,7 @@ suite.only('auth routes', () => {
     password: '123456',
   }
 
-  test.only('should be possible to sign up', async (t: TestContext) => {
+  test('should be possible to sign up', async (t: TestContext) => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/auth/sign-up',
@@ -41,7 +41,7 @@ suite.only('auth routes', () => {
     t.assert.notStrictEqual(sessionCookie, undefined)
   })
 
-  test.only('should be possible to sign in', async (t: TestContext) => {
+  test('should be possible to sign in', async (t: TestContext) => {
     await app.inject({
       method: 'POST',
       url: '/api/auth/sign-up',
@@ -62,7 +62,7 @@ suite.only('auth routes', () => {
     t.assert.notStrictEqual(sessionCookie, undefined)
   })
 
-  test.only('should be possible to sign out', async (t: TestContext) => {
+  test('should be possible to sign out', async (t: TestContext) => {
     await app.inject({
       method: 'POST',
       url: '/api/auth/sign-up',
