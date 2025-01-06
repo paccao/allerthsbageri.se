@@ -30,7 +30,7 @@ suite('customer routes', () => {
 
   const customer1 = {
     name: 'Customer1',
-    phone: '+4670311111',
+    phone: '+46703111111',
   }
 
   const customer2 = {
