@@ -12,7 +12,7 @@
     "db:reset": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts",
     "test:setup": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file .env.test ./src/test.setup.ts",
     "test": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --test-only",
-    "test:watch": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --watch --test-only"
+    "test:watch": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --test-only --watch"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",

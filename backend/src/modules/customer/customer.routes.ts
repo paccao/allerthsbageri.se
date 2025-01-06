@@ -1,9 +1,16 @@
 import type { FastifyInstance } from 'fastify'
 
-import { upsertCustomerHandler } from './customer.controller.ts'
+import {
+  createCustomerHandler,
+  updateCustomerHandler,
+} from './customer.controller.ts'
 import {
   type CreateCustomerBody,
   createCustomerBodySchema,
+  type UpdateCustomerBody,
+  updateCustomerBodySchema,
+  type UpdateCustomerParams,
+  updateCustomerParamsSchema,
 } from './customer.schemas.ts'
 import { getTags } from '#utils/openAPI.ts'
 
@@ -20,6 +27,18 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    upsertCustomerHandler,
+    createCustomerHandler,
+  )
+
+  app.post<{ Body: UpdateCustomerBody; Params: UpdateCustomerParams }>(
+    '/:id',
+    {
+      schema: {
+        body: updateCustomerBodySchema,
+        params: updateCustomerParamsSchema,
+        tags,
+      },
+    },
+    updateCustomerHandler,
   )
 }

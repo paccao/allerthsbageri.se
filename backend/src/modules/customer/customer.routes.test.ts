@@ -21,7 +21,7 @@ async function createAdminUser(body: {
   return response.headers['set-cookie'] as string
 }
 
-suite.only('customer routes', () => {
+suite('customer routes', () => {
   const admin1 = {
     username: 'customer_admin1',
     name: 'Admin1',
@@ -49,7 +49,7 @@ suite.only('customer routes', () => {
     cookie = await createAdminUser(admin1)
   })
 
-  test.only('should be possible to create a customer', async (t: TestContext) => {
+  test('should be possible to create a customer', async (t: TestContext) => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/customers',
@@ -60,7 +60,7 @@ suite.only('customer routes', () => {
     t.assert.strictEqual(response.json().name, customer1.name)
   })
 
-  test.only('should not accept invalid phone numbers', async (t: TestContext) => {
+  test('should not accept invalid phone numbers', async (t: TestContext) => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/customers',
@@ -73,7 +73,8 @@ suite.only('customer routes', () => {
 
   // NOTE: Maybe updating the customer should only happen via POST /api/customers/:id
   // This would clearly separate the two operations 1) create new customer, and 2) update existing customer
-  test.only('should be possible to update the customer name', async (t: TestContext) => {
+  // And for the public frontend, we need special logic anyway. The create customer route should only be used by system admins.
+  test('should be possible to update the customer name', async (t: TestContext) => {
     const response1 = await app.inject({
       method: 'POST',
       url: '/api/customers',
@@ -81,17 +82,19 @@ suite.only('customer routes', () => {
       headers: { cookie },
     })
 
+    const created = response1.json()
+
+    t.assert.strictEqual(created.name, customer2.name)
+
     const updatedName = 'Updated Customer2'
 
     const response2 = await app.inject({
       method: 'POST',
-      url: '/api/customers',
+      url: `/api/customers/${created.id}`,
       body: { ...customer2, name: updatedName },
       headers: { cookie },
     })
 
-    // TODO: Seems like the upsert doesn't work as expected on the server side
-    t.assert.strictEqual(response1.json().name, customer2.name)
     t.assert.strictEqual(response2.json().name, updatedName)
   })
 
@@ -108,7 +111,6 @@ suite.only('customer routes', () => {
         ),
       )
 
-    // TODO: delete customers used in this test suite, directly via the DB
     // TODO: add an endpoint for deleting a customer
     // TODO: test that the endpoint for deleting a customer works as expected
   })
