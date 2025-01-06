@@ -43,6 +43,11 @@ suite('customer routes', () => {
     phone: '+46703333333',
   }
 
+  const customer4 = {
+    name: 'Customer4',
+    phone: '+46703444444',
+  }
+
   const customerInvalidPhone = {
     name: 'Invalid Customer',
     phone: '+46123',
@@ -143,29 +148,42 @@ suite('customer routes', () => {
     t.assert.strictEqual(response.statusCode, 404)
   })
 
-  test.todo(
-    'should be possible to delete a customer',
-    async (t: TestContext) => {
-      // create customer
-      // delete customer based on id
-      // get customers
-      // get customer by id
-      // verify that the customer no longer exists
-    },
-  )
+  test('should be possible to delete a customer', async (t: TestContext) => {
+    const response1 = await app.inject({
+      method: 'POST',
+      url: '/api/customers',
+      body: customer4,
+      headers: { cookie },
+    })
 
-  test.todo(
-    'delete customer: should return 404 if customer does not exist',
-    async (t: TestContext) => {
-      const response = await app.inject({
-        method: 'DELETE',
-        url: `/api/customers/9999999`,
-        headers: { cookie },
-      })
+    const created = response1.json()
 
-      t.assert.strictEqual(response.statusCode, 404)
-    },
-  )
+    const response2 = await app.inject({
+      method: 'DELETE',
+      url: `/api/customers/${created.id}`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response2.statusCode, 204)
+
+    const response3 = await app.inject({
+      method: 'GET',
+      url: `/api/customers/${created.id}`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response3.statusCode, 404)
+  })
+
+  test('delete customer: should return 204 even if customer does not exist', async (t: TestContext) => {
+    const response = await app.inject({
+      method: 'DELETE',
+      url: `/api/customers/9999999`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response.statusCode, 204)
+  })
 
   after(async () => {
     await db.delete(userTable).where(eq(userTable.username, admin1.username))
@@ -174,13 +192,10 @@ suite('customer routes', () => {
       .delete(customerTable)
       .where(
         or(
-          ...[customer1, customer2].map(({ phone }) =>
+          ...[customer1, customer2, customer3, customer4].map(({ phone }) =>
             eq(customerTable.phone, phone),
           ),
         ),
       )
-
-    // TODO: add an endpoint for deleting a customer
-    // TODO: test that the endpoint for deleting a customer works as expected
   })
 })
