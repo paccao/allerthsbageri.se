@@ -60,6 +60,17 @@ suite('customer routes', () => {
   })
 
   test('should be possible to create a customer', async (t: TestContext) => {
+    const authResponse = await app.inject({
+      method: 'POST',
+      url: '/api/customers',
+    })
+
+    t.assert.strictEqual(
+      authResponse.statusCode,
+      401,
+      'valid auth should be required',
+    )
+
     const response = await app.inject({
       method: 'POST',
       url: '/api/customers',
@@ -94,6 +105,17 @@ suite('customer routes', () => {
 
     const created = response1.json()
 
+    const authResponse = await app.inject({
+      method: 'GET',
+      url: `/api/customers/${created.id}`,
+    })
+
+    t.assert.strictEqual(
+      authResponse.statusCode,
+      401,
+      'valid auth should be required',
+    )
+
     const response2 = await app.inject({
       method: 'GET',
       url: `/api/customers/${created.id}`,
@@ -124,6 +146,17 @@ suite('customer routes', () => {
     const created = response1.json()
 
     t.assert.strictEqual(created.name, customer3.name)
+
+    const authResponse = await app.inject({
+      method: 'POST',
+      url: `/api/customers/${created.id}`,
+    })
+
+    t.assert.strictEqual(
+      authResponse.statusCode,
+      401,
+      'valid auth should be required',
+    )
 
     const updatedName = 'Updated Customer'
 
@@ -157,6 +190,17 @@ suite('customer routes', () => {
     })
 
     const created = response1.json()
+
+    const authResponse = await app.inject({
+      method: 'DELETE',
+      url: `/api/customers/${created.id}`,
+    })
+
+    t.assert.strictEqual(
+      authResponse.statusCode,
+      401,
+      'valid auth should be required',
+    )
 
     const response2 = await app.inject({
       method: 'DELETE',
