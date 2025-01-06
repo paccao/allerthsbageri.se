@@ -159,15 +159,32 @@ suite('customer routes', () => {
     )
 
     const updatedName = 'Updated Customer'
+    const updatedPhone = '+46705888222'
 
     const response2 = await app.inject({
       method: 'PATCH',
       url: `/api/customers/${created.id}`,
-      body: { ...customer3, name: updatedName },
+      body: { name: updatedName, phone: updatedPhone },
       headers: { cookie },
     })
 
     t.assert.strictEqual(response2.json().name, updatedName)
+    t.assert.strictEqual(response2.json().phone, updatedPhone)
+
+    const updatedName2 = 'New name'
+
+    const response3 = await app.inject({
+      method: 'PATCH',
+      url: `/api/customers/${created.id}`,
+      body: { name: updatedName2 },
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      response3.json().name,
+      updatedName2,
+      'should allow partial updates',
+    )
   })
 
   test('update customer: should return 404 if customer does not exist', async (t: TestContext) => {

@@ -20,7 +20,7 @@ export async function getCustomer(id: number) {
 
 export async function updateCustomer(
   id: number,
-  data: typeof customerTable.$inferInsert,
+  data: Partial<typeof customerTable.$inferInsert>,
 ) {
   const results = await db
     .update(customerTable)

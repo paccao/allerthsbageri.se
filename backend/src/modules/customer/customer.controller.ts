@@ -1,5 +1,9 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { CreateCustomerBody } from './customer.schemas.ts'
+
+import type {
+  CreateCustomerBody,
+  UpdateCustomerBody,
+} from './customer.schemas.ts'
 import {
   createCustomer,
   deleteCustomer,
@@ -46,8 +50,8 @@ export async function getCustomerHandler(
 
 export async function updateCustomerHandler(
   request: FastifyRequest<{
-    Body: CreateCustomerBody
     Params: IdParams
+    Body: UpdateCustomerBody
   }>,
   reply: FastifyReply,
 ) {
@@ -60,9 +64,7 @@ export async function updateCustomerHandler(
     })
 
     if (!customer) {
-      return reply
-        .code(404)
-        .send({ message: 'Failed to update customer: Customer does not exist' })
+      return reply.code(404).send({ message: 'Customer does not exist' })
     }
 
     return customer
