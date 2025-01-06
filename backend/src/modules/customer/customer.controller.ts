@@ -79,9 +79,8 @@ export async function deleteCustomerHandler(
   reply: FastifyReply,
 ) {
   try {
-    const result = await deleteCustomer(request.params.id)
-    request.log.info(result)
-    return result
+    await deleteCustomer(request.params.id)
+    return reply.code(204).send()
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to delete customer' })
