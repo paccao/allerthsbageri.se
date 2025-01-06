@@ -7,9 +7,9 @@ export async function upsertCustomer(data: typeof customerTable.$inferInsert) {
     .insert(customerTable)
     .values(data)
     .onConflictDoUpdate({
-      target: customerTable.id,
+      target: customerTable.phone,
+      targetWhere: eq(customerTable.phone, data.phone),
       set: data,
-      where: eq(customerTable.phone, data.phone),
     })
     .returning()
 
