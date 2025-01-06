@@ -15,9 +15,3 @@ export const updateCustomerBodySchema = z.object({
 })
 
 export type UpdateCustomerBody = z.infer<typeof updateCustomerBodySchema>
-
-export const updateCustomerParamsSchema = z.object({
-  id: z.coerce.number().int().min(1),
-})
-
-export type UpdateCustomerParams = z.infer<typeof updateCustomerParamsSchema>

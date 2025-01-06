@@ -9,6 +9,15 @@ export async function createCustomer(data: typeof customerTable.$inferInsert) {
   return results[0]
 }
 
+export async function getCustomer(id: number) {
+  const results = await db
+    .select()
+    .from(customerTable)
+    .where(eq(customerTable.id, id))
+
+  return results[0]
+}
+
 export async function updateCustomer(
   id: number,
   data: typeof customerTable.$inferInsert,
@@ -20,4 +29,10 @@ export async function updateCustomer(
     .returning()
 
   return results[0]
+}
+
+export async function deleteCustomer(id: number) {
+  const result = await db.delete(customerTable).where(eq(customerTable.id, id))
+
+  return result
 }

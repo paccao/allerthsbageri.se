@@ -38,6 +38,11 @@ suite('customer routes', () => {
     phone: '+46703222222',
   }
 
+  const customer3 = {
+    name: 'Customer3',
+    phone: '+46703333333',
+  }
+
   const customerInvalidPhone = {
     name: 'Invalid Customer',
     phone: '+46123',
@@ -57,6 +62,7 @@ suite('customer routes', () => {
       headers: { cookie },
     })
 
+    t.assert.strictEqual(response.statusCode, 201)
     t.assert.strictEqual(response.json().name, customer1.name)
   })
 
@@ -71,10 +77,7 @@ suite('customer routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  // NOTE: Maybe updating the customer should only happen via POST /api/customers/:id
-  // This would clearly separate the two operations 1) create new customer, and 2) update existing customer
-  // And for the public frontend, we need special logic anyway. The create customer route should only be used by system admins.
-  test('should be possible to update the customer name', async (t: TestContext) => {
+  test('should be possible to get a customer by id', async (t: TestContext) => {
     const response1 = await app.inject({
       method: 'POST',
       url: '/api/customers',
@@ -82,21 +85,59 @@ suite('customer routes', () => {
       headers: { cookie },
     })
 
+    t.assert.strictEqual(response1.statusCode, 201)
+
     const created = response1.json()
 
-    t.assert.strictEqual(created.name, customer2.name)
+    const response2 = await app.inject({
+      method: 'GET',
+      url: `/api/customers/${created.id}`,
+      headers: { cookie },
+    })
 
-    const updatedName = 'Updated Customer2'
+    t.assert.strictEqual(response2.json().name, customer2.name)
+  })
+
+  test.todo('get customer: should return 404 if customer does not exist')
+
+  test('should be possible to update the customer name', async (t: TestContext) => {
+    const response1 = await app.inject({
+      method: 'POST',
+      url: '/api/customers',
+      body: customer3,
+      headers: { cookie },
+    })
+
+    const created = response1.json()
+
+    t.assert.strictEqual(created.name, customer3.name)
+
+    const updatedName = 'Updated Customer'
 
     const response2 = await app.inject({
       method: 'POST',
       url: `/api/customers/${created.id}`,
-      body: { ...customer2, name: updatedName },
+      body: { ...customer3, name: updatedName },
       headers: { cookie },
     })
 
     t.assert.strictEqual(response2.json().name, updatedName)
   })
+
+  test.todo('update customer: should return 404 if customer does not exist')
+
+  test.todo(
+    'should be possible to delete a customer',
+    async (t: TestContext) => {
+      // create customer
+      // delete customer based on id
+      // get customers
+      // get customer by id
+      // verify that the customer no longer exists
+    },
+  )
+
+  test.todo('delete customer: should return 404 if customer does not exist')
 
   after(async () => {
     await db.delete(userTable).where(eq(userTable.username, admin1.username))

@@ -2,6 +2,8 @@ import type { FastifyInstance } from 'fastify'
 
 import {
   createCustomerHandler,
+  deleteCustomerHandler,
+  getCustomerHandler,
   updateCustomerHandler,
 } from './customer.controller.ts'
 import {
@@ -9,10 +11,9 @@ import {
   createCustomerBodySchema,
   type UpdateCustomerBody,
   updateCustomerBodySchema,
-  type UpdateCustomerParams,
-  updateCustomerParamsSchema,
 } from './customer.schemas.ts'
 import { getTags } from '#utils/openAPI.ts'
+import { idParamsSchema, type IdParams } from '#utils/common.schemas.ts'
 
 const tags = getTags('customers')
 
@@ -30,15 +31,37 @@ export async function customerRoutes(app: FastifyInstance) {
     createCustomerHandler,
   )
 
-  app.post<{ Body: UpdateCustomerBody; Params: UpdateCustomerParams }>(
+  app.get<{ Params: IdParams }>(
+    '/:id',
+    {
+      schema: {
+        params: idParamsSchema,
+        tags,
+      },
+    },
+    getCustomerHandler,
+  )
+
+  app.post<{ Body: UpdateCustomerBody; Params: IdParams }>(
     '/:id',
     {
       schema: {
         body: updateCustomerBodySchema,
-        params: updateCustomerParamsSchema,
+        params: idParamsSchema,
         tags,
       },
     },
     updateCustomerHandler,
+  )
+
+  app.delete<{ Params: IdParams }>(
+    '/:id',
+    {
+      schema: {
+        params: idParamsSchema,
+        tags,
+      },
+    },
+    deleteCustomerHandler,
   )
 }
