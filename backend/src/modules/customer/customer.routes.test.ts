@@ -98,7 +98,15 @@ suite('customer routes', () => {
     t.assert.strictEqual(response2.json().name, customer2.name)
   })
 
-  test.todo('get customer: should return 404 if customer does not exist')
+  test('get customer: should return 404 if customer does not exist', async (t: TestContext) => {
+    const response = await app.inject({
+      method: 'GET',
+      url: `/api/customers/9999999`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response.statusCode, 404)
+  })
 
   test('should be possible to update the customer name', async (t: TestContext) => {
     const response1 = await app.inject({
@@ -124,7 +132,16 @@ suite('customer routes', () => {
     t.assert.strictEqual(response2.json().name, updatedName)
   })
 
-  test.todo('update customer: should return 404 if customer does not exist')
+  test('update customer: should return 404 if customer does not exist', async (t: TestContext) => {
+    const response = await app.inject({
+      method: 'POST',
+      url: `/api/customers/9999999`,
+      body: customer1,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response.statusCode, 404)
+  })
 
   test.todo(
     'should be possible to delete a customer',
@@ -137,7 +154,18 @@ suite('customer routes', () => {
     },
   )
 
-  test.todo('delete customer: should return 404 if customer does not exist')
+  test.todo(
+    'delete customer: should return 404 if customer does not exist',
+    async (t: TestContext) => {
+      const response = await app.inject({
+        method: 'DELETE',
+        url: `/api/customers/9999999`,
+        headers: { cookie },
+      })
+
+      t.assert.strictEqual(response.statusCode, 404)
+    },
+  )
 
   after(async () => {
     await db.delete(userTable).where(eq(userTable.username, admin1.username))
