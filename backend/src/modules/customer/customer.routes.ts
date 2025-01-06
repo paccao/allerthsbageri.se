@@ -42,7 +42,7 @@ export async function customerRoutes(app: FastifyInstance) {
     getCustomerHandler,
   )
 
-  app.post<{ Body: UpdateCustomerBody; Params: IdParams }>(
+  app.patch<{ Body: UpdateCustomerBody; Params: IdParams }>(
     '/:id',
     {
       schema: {

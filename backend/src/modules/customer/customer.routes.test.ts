@@ -148,7 +148,7 @@ suite('customer routes', () => {
     t.assert.strictEqual(created.name, customer3.name)
 
     const authResponse = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: `/api/customers/${created.id}`,
     })
 
@@ -161,7 +161,7 @@ suite('customer routes', () => {
     const updatedName = 'Updated Customer'
 
     const response2 = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: `/api/customers/${created.id}`,
       body: { ...customer3, name: updatedName },
       headers: { cookie },
@@ -172,7 +172,7 @@ suite('customer routes', () => {
 
   test('update customer: should return 404 if customer does not exist', async (t: TestContext) => {
     const response = await app.inject({
-      method: 'POST',
+      method: 'PATCH',
       url: `/api/customers/9999999`,
       body: customer1,
       headers: { cookie },
