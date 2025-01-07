@@ -23,6 +23,8 @@ import {
 
 const tags = getTags('customers')
 
+// TODO: Define responses for HTTP 400 errors
+// There might be a common schema that could be used.
 export async function customerRoutes(app: FastifyInstance) {
   app.post<{ Body: CreateCustomerBody }>(
     '/',
