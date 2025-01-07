@@ -1,12 +1,13 @@
 import { after, before, suite, test, type TestContext } from 'node:test'
 import { eq, or } from 'drizzle-orm'
-import type { InjectOptions } from 'fastify'
 
 import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { customerTable, userTable } from '#db/schema.ts'
+import { getTestingUtils } from '#utils/testing-utils.ts'
 
 const app = await startApp()
+const { assertAuthRequired } = getTestingUtils(app)
 
 async function createAdminUser(body: {
   username: string
@@ -20,25 +21,6 @@ async function createAdminUser(body: {
   })
 
   return response.headers['set-cookie'] as string
-}
-
-/**
- * Verify that a given API endpoint requires authentication.
- */
-async function assertAuthRequired(
-  opts: Omit<InjectOptions, 'cookies' | 'headers'> & {
-    // Cookie should intentionally be omitted to cause a HTTP 401 response
-    headers?: InjectOptions['headers'] & { cookie: undefined }
-  },
-  t: TestContext,
-) {
-  const authResponse = await app.inject(opts)
-
-  t.assert.strictEqual(
-    authResponse.statusCode,
-    401,
-    `valid auth should be required for ${opts.method} ${opts.url}`,
-  )
 }
 
 suite('customer routes', () => {
