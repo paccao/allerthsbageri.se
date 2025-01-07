@@ -9,22 +9,30 @@ import {
 import {
   type CreateCustomerBody,
   createCustomerBodySchema,
+  getCustomerSchema,
   type UpdateCustomerBody,
   updateCustomerBodySchema,
 } from './customer.schemas.ts'
 import { getTags } from '#utils/openAPI.ts'
-import { idParamsSchema, type IdParams } from '#utils/common.schemas.ts'
+import {
+  emptyBodySchema,
+  getErrorResponseSchemas,
+  idParamsSchema,
+  type IdParams,
+} from '#utils/common.schemas.ts'
 
 const tags = getTags('customers')
 
 export async function customerRoutes(app: FastifyInstance) {
-  // TODO: Define valid responses for the OpenAPI docs
-  // IDEA: Use common responses for errors that can be reused across multiple endpoints. Perhaps as a shared schema
   app.post<{ Body: CreateCustomerBody }>(
     '/',
     {
       schema: {
         body: createCustomerBodySchema,
+        response: {
+          201: getCustomerSchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
         tags,
       },
     },
@@ -36,6 +44,10 @@ export async function customerRoutes(app: FastifyInstance) {
     {
       schema: {
         params: idParamsSchema,
+        response: {
+          200: getCustomerSchema,
+          ...getErrorResponseSchemas(401, 404, 500),
+        },
         tags,
       },
     },
@@ -48,6 +60,10 @@ export async function customerRoutes(app: FastifyInstance) {
       schema: {
         body: updateCustomerBodySchema,
         params: idParamsSchema,
+        response: {
+          200: getCustomerSchema,
+          ...getErrorResponseSchemas(401, 404, 500),
+        },
         tags,
       },
     },
@@ -59,6 +75,10 @@ export async function customerRoutes(app: FastifyInstance) {
     {
       schema: {
         params: idParamsSchema,
+        response: {
+          204: emptyBodySchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
         tags,
       },
     },
