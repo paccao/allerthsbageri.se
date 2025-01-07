@@ -1,5 +1,6 @@
 import { after, before, suite, test, type TestContext } from 'node:test'
 import { eq, or } from 'drizzle-orm'
+import type { InjectOptions } from 'fastify'
 
 import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
@@ -19,6 +20,25 @@ async function createAdminUser(body: {
   })
 
   return response.headers['set-cookie'] as string
+}
+
+/**
+ * Verify that a given API endpoint requires authentication.
+ */
+async function assertAuthRequired(
+  opts: Omit<InjectOptions, 'cookies' | 'headers'> & {
+    // Cookie should intentionally be omitted to cause a HTTP 401 response
+    headers?: InjectOptions['headers'] & { cookie: undefined }
+  },
+  t: TestContext,
+) {
+  const authResponse = await app.inject(opts)
+
+  t.assert.strictEqual(
+    authResponse.statusCode,
+    401,
+    `valid auth should be required for ${opts.method} ${opts.url}`,
+  )
 }
 
 suite('customer routes', () => {
@@ -60,16 +80,7 @@ suite('customer routes', () => {
   })
 
   test('should be possible to create a customer', async (t: TestContext) => {
-    const authResponse = await app.inject({
-      method: 'POST',
-      url: '/api/customers',
-    })
-
-    t.assert.strictEqual(
-      authResponse.statusCode,
-      401,
-      'valid auth should be required',
-    )
+    await assertAuthRequired({ method: 'POST', url: '/api/customers' }, t)
 
     const response = await app.inject({
       method: 'POST',
@@ -105,15 +116,9 @@ suite('customer routes', () => {
 
     const created = response1.json()
 
-    const authResponse = await app.inject({
-      method: 'GET',
-      url: `/api/customers/${created.id}`,
-    })
-
-    t.assert.strictEqual(
-      authResponse.statusCode,
-      401,
-      'valid auth should be required',
+    await assertAuthRequired(
+      { method: 'GET', url: `/api/customers/${created.id}` },
+      t,
     )
 
     const response2 = await app.inject({
@@ -144,18 +149,11 @@ suite('customer routes', () => {
     })
 
     const created = response1.json()
-
     t.assert.strictEqual(created.name, customer3.name)
 
-    const authResponse = await app.inject({
-      method: 'PATCH',
-      url: `/api/customers/${created.id}`,
-    })
-
-    t.assert.strictEqual(
-      authResponse.statusCode,
-      401,
-      'valid auth should be required',
+    await assertAuthRequired(
+      { method: 'PATCH', url: `/api/customers/${created.id}` },
+      t,
     )
 
     const updatedName = 'Updated Customer'
@@ -208,15 +206,9 @@ suite('customer routes', () => {
 
     const created = response1.json()
 
-    const authResponse = await app.inject({
-      method: 'DELETE',
-      url: `/api/customers/${created.id}`,
-    })
-
-    t.assert.strictEqual(
-      authResponse.statusCode,
-      401,
-      'valid auth should be required',
+    await assertAuthRequired(
+      { method: 'DELETE', url: `/api/customers/${created.id}` },
+      t,
     )
 
     const response2 = await app.inject({
