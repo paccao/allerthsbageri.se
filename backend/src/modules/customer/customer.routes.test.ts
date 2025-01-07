@@ -7,21 +7,7 @@ import { customerTable, userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 
 const app = await startApp()
-const { assertAuthRequired } = getTestingUtils(app)
-
-async function createAdminUser(body: {
-  username: string
-  name: string
-  password: string
-}) {
-  const response = await app.inject({
-    method: 'POST',
-    url: '/api/auth/sign-up',
-    body,
-  })
-
-  return response.headers['set-cookie'] as string
-}
+const { assertAuthRequired, createAdminUser } = getTestingUtils(app)
 
 suite('customer routes', () => {
   const admin1 = {
@@ -43,6 +29,7 @@ suite('customer routes', () => {
   const customer3 = {
     name: 'Customer3',
     phone: '+46703333333',
+    updatedPhone: '+46705888222',
   }
 
   const customer4 = {
@@ -139,17 +126,16 @@ suite('customer routes', () => {
     )
 
     const updatedName = 'Updated Customer'
-    const updatedPhone = '+46705888222'
 
     const response2 = await app.inject({
       method: 'PATCH',
       url: `/api/customers/${created.id}`,
-      body: { name: updatedName, phone: updatedPhone },
+      body: { name: updatedName, phone: customer3.updatedPhone },
       headers: { cookie },
     })
 
     t.assert.strictEqual(response2.json().name, updatedName)
-    t.assert.strictEqual(response2.json().phone, updatedPhone)
+    t.assert.strictEqual(response2.json().phone, customer3.updatedPhone)
 
     const updatedName2 = 'New name'
 
@@ -227,8 +213,14 @@ suite('customer routes', () => {
       .delete(customerTable)
       .where(
         or(
-          ...[customer1, customer2, customer3, customer4].map(({ phone }) =>
-            eq(customerTable.phone, phone),
+          ...[customer1, customer2, customer3, customer4].map(
+            ({
+              phone,
+              updatedPhone,
+            }: {
+              phone: string
+              updatedPhone?: string
+            }) => eq(customerTable.phone, updatedPhone ?? phone),
           ),
         ),
       )
