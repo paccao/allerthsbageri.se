@@ -4,18 +4,20 @@ import { createSelectSchema } from 'drizzle-zod'
 import { zPhone } from '#utils/zod.ts'
 import { customerTable } from '#db/schema.ts'
 
+const nameMaxLength = 200
+
 export const createCustomerBodySchema = z.object({
-  name: z.string().max(200),
+  name: z.string().max(nameMaxLength),
   phone: zPhone,
 })
 
-export const getCustomerSchema = createSelectSchema(customerTable)
-
 export type CreateCustomerBody = z.infer<typeof createCustomerBodySchema>
+
+export const getCustomerSchema = createSelectSchema(customerTable)
 
 export const updateCustomerBodySchema = z
   .object({
-    name: z.string().max(200).optional(),
+    name: z.string().max(nameMaxLength).optional(),
     phone: zPhone.optional(),
   })
   .superRefine(({ name, phone }, ctx) => {
