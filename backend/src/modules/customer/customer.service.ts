@@ -9,6 +9,10 @@ export async function createCustomer(data: typeof customerTable.$inferInsert) {
   return results[0]
 }
 
+export async function listCustomers() {
+  return db.select().from(customerTable)
+}
+
 export async function getCustomer(id: number) {
   const results = await db
     .select()

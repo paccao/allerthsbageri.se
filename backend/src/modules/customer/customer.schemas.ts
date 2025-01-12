@@ -14,6 +14,7 @@ export const createCustomerBodySchema = z.object({
 export type CreateCustomerBody = z.infer<typeof createCustomerBodySchema>
 
 export const getCustomerSchema = createSelectSchema(customerTable)
+export const listCustomersSchema = z.array(getCustomerSchema)
 
 export const updateCustomerBodySchema = z
   .object({

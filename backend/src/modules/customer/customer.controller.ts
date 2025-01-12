@@ -1,13 +1,14 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type {
-  CreateCustomerBody,
-  UpdateCustomerBody,
+import {
+  type CreateCustomerBody,
+  type UpdateCustomerBody,
 } from './customer.schemas.ts'
 import {
   createCustomer,
   deleteCustomer,
   getCustomer,
+  listCustomers,
   updateCustomer,
 } from './customer.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
@@ -24,6 +25,18 @@ export async function createCustomerHandler(
       phone,
     })
     return reply.code(201).send(customer)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to create customer' })
+  }
+}
+
+export async function listCustomersHandler(
+  request: FastifyRequest<{ Params: IdParams }>,
+  reply: FastifyReply,
+) {
+  try {
+    return await listCustomers()
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create customer' })

@@ -3,7 +3,7 @@ import { eq, or } from 'drizzle-orm'
 
 import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
-import { customerTable, userTable } from '#db/schema.ts'
+import { customerTable, userTable, type Customer } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 
 const app = await startApp()
@@ -35,6 +35,16 @@ suite('customer routes', () => {
   const customer4 = {
     name: 'Customer4',
     phone: '+46703444444',
+  }
+
+  const customer5 = {
+    name: 'Customer5',
+    phone: '+46703555555',
+  }
+
+  const customer6 = {
+    name: 'Customer6',
+    phone: '+46703666666',
   }
 
   const customerInvalidPhone = {
@@ -206,6 +216,39 @@ suite('customer routes', () => {
     t.assert.strictEqual(response.statusCode, 204)
   })
 
+  test('should be possible to list all customers', async (t: TestContext) => {
+    await Promise.all([
+      app.inject({
+        method: 'POST',
+        url: '/api/customers',
+        body: customer5,
+        headers: { cookie },
+      }),
+      app.inject({
+        method: 'POST',
+        url: '/api/customers',
+        body: customer6,
+        headers: { cookie },
+      }),
+    ])
+
+    await assertAuthRequired({ method: 'GET', url: `/api/customers` }, t)
+
+    const response = await app.inject({
+      method: 'GET',
+      url: '/api/customers',
+      headers: { cookie },
+    })
+
+    const customers: Customer[] = response.json()
+
+    const wanted = customers.filter((c) =>
+      [customer5.phone, customer6.phone].includes(c.phone),
+    )
+
+    t.assert.strictEqual(wanted.length, 2)
+  })
+
   after(async () => {
     await db.delete(userTable).where(eq(userTable.username, admin1.username))
 
@@ -213,7 +256,14 @@ suite('customer routes', () => {
       .delete(customerTable)
       .where(
         or(
-          ...[customer1, customer2, customer3, customer4].map(
+          ...[
+            customer1,
+            customer2,
+            customer3,
+            customer4,
+            customer5,
+            customer6,
+          ].map(
             ({
               phone,
               updatedPhone,
