@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { createOrderHandler } from './order.controller.ts'
 import { type CreateOrderBody, createOrderBodySchema } from './order.schemas.ts'
-import { getTags } from '#utils/openAPI.ts'
+import { getTags } from '#utils/openapi.ts'
 
 const tags = getTags('orders')
 

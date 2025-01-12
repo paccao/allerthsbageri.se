@@ -5,7 +5,7 @@ import {
   signOutHandler,
   signUpHandler,
 } from './auth.controller.ts'
-import { getTags } from '#utils/openAPI.ts'
+import { getTags } from '#utils/openapi.ts'
 
 const tags = getTags('auth')
 

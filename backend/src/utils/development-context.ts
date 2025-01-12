@@ -12,14 +12,11 @@ import openAPIConfig from '#config/openapi.ts'
  */
 export default async function developmentContext(app: FastifyInstance) {
   const swaggerUITitle = 'OpenAPI docs'
+  const darkThemeFile = 'swagger-dark.css'
 
   const [darkTheme, apiVersion] = await Promise.all([
-    readFile(resolve('static/SwaggerDark.css'), {
-      encoding: 'utf-8',
-    }),
-    readFile(resolve('package.json'), {
-      encoding: 'utf-8',
-    })
+    readFile(resolve('static', darkThemeFile), 'utf-8'),
+    readFile(resolve('package.json'), 'utf-8')
       .then(JSON.parse)
       .then((pkg: { version: string }) => pkg.version),
   ])
@@ -54,7 +51,7 @@ export default async function developmentContext(app: FastifyInstance) {
     logLevel: 'silent',
     theme: {
       title: swaggerUITitle,
-      css: [{ filename: 'SwaggerDark.css', content: darkTheme }],
+      css: [{ filename: darkThemeFile, content: darkTheme }],
     },
   })
 }

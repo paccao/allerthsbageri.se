@@ -24,7 +24,7 @@ async function startApp() {
   app.register(sessionPlugin)
 
   if (apiConfig.env.DEV) {
-    const developmentContext = await import('./utils/developmentContext.ts')
+    const developmentContext = await import('./utils/development-context.ts')
 
     app.register(fp(developmentContext.default))
   }
