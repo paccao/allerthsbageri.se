@@ -12,6 +12,7 @@ const execAsync = promisify(exec)
  */
 async function setup() {
   console.log('🧪 Preparing to run tests...')
+  if (!apiConfig.env.TEST) throw new Error('Ensure NODE_ENV is set to testing')
 
   // Clear results from the previous test run
   await rm(resolve(apiConfig.dbConnection), { force: true })
