@@ -1483,7 +1483,8 @@
     fill: #fff;
   }
 
-  #unlocked {
+  #unlocked,
+  #locked {
     fill: #fff;
   }
 
