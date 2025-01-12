@@ -4,15 +4,15 @@ const openAPITags = {
   auth: {
     description: 'Authentication and user account',
   },
-  pickups: {
-    description:
-      'Pickup occasions, where customers receive their ordered products',
-  },
   customers: {
     description: 'Customers who order products or activities',
   },
   orders: {
     description: 'Customer orders',
+  },
+  pickups: {
+    description:
+      'Pickup occasions, where customers receive their ordered products',
   },
 } as const
 
