@@ -41,13 +41,13 @@ export default async function developmentContext(app: FastifyInstance) {
       //   },
       // },
 
-      tags: Object.values(openAPIConfig.openAPITags),
+      tags: Object.values(openAPIConfig.tags),
     },
     transform: jsonSchemaTransform,
   })
 
   app.register(fastifySwaggerUI, {
-    routePrefix: `/${openAPIConfig.openAPIPrefix}`,
+    routePrefix: `/${openAPIConfig.prefix}`,
     logLevel: 'silent',
     theme: {
       title: swaggerUITitle,

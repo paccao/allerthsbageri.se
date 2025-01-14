@@ -16,6 +16,18 @@ declare module 'fastify' {
   }
 }
 
+// IDEA: Even better with more specific types
+// declare module 'fastify' {
+//   export interface FastifyRequest {
+//     user: User | null
+//   }
+
+//   export interface AuthenticatedFastifyRequest<T extends RouteGenericInterface>
+//     extends FastifyRequest<T> {
+//     user: User
+//   }
+// }
+
 /**
  * Automatically set the signed in user based on the session cookie.
  */

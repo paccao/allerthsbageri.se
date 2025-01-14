@@ -15,7 +15,7 @@ import {
   type UpdateCustomerBody,
   updateCustomerBodySchema,
 } from './customer.schemas.ts'
-import { getTags } from '#utils/openapi.ts'
+import { getTags } from '#config/openapi.ts'
 import {
   emptyBodySchema,
   getErrorResponseSchemas,

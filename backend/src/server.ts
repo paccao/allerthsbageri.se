@@ -14,7 +14,7 @@ async function main() {
 
     if (apiConfig.env.DEV) {
       app.log.info(
-        `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${openAPIConfig.openAPIPrefix}`,
+        `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${openAPIConfig.prefix}`,
       )
     }
   } catch (e) {

@@ -4,7 +4,7 @@ import {
   type CreatePickupBody,
   createPickupBodySchema,
 } from './pickup.schemas.ts'
-import { getTags } from '#utils/openapi.ts'
+import { getTags } from '#config/openapi.ts'
 
 const tags = getTags('pickups')
 
