@@ -13,6 +13,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# SQLite databases
+*.db
+
 # environment variables
 .env
 .env.production
