@@ -15,6 +15,19 @@ pnpm i && \
 pnpm dev
 ```
 
+## Upgrade dependencies
+
+```sh
+pnpm outdated
+pnpm up
+```
+
+Check Astrojs [upgrade guides](https://docs.astro.build/en/upgrade-astro/#upgrade-guides) to upgrade major versions
+
+```sh
+pnpm dlx @astrojs/upgrade
+```
+
 ## Email Spam Protection
 
 1. Make a copy of `.env.example` and name it `.env`.
