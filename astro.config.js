@@ -10,4 +10,9 @@ export default defineConfig({
   image: {
     service: passthroughImageService(),
   },
+  vite: {
+    resolve: {
+      conditions: ['browser'],
+    },
+  }
 })
