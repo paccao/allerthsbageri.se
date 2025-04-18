@@ -32,9 +32,6 @@
     "tsx": "^4.19.3"
   },
   "pnpm": {
-    "overrides": {
-      "@sveltejs/vite-plugin-svelte": "^4.0.0"
-    },
     "onlyBuiltDependencies": [
       "esbuild",
       "sharp"
