@@ -36,7 +36,8 @@
       "@sveltejs/vite-plugin-svelte": "^4.0.0"
     },
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "sharp"
     ]
   },
   "prettier": {
