@@ -1,12 +1,12 @@
 import { defineConfig, passthroughImageService } from 'astro/config'
-import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
 import svelte from '@astrojs/svelte'
+import tailwind from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://www.allerthsbageri.se',
-  integrations: [tailwind(), svelte(), sitemap()],
+  integrations: [svelte(), sitemap()],
   image: {
     service: passthroughImageService(),
   },
@@ -14,5 +14,6 @@ export default defineConfig({
     resolve: {
       conditions: ['browser'],
     },
+    plugins: [tailwind()]
   }
 })
