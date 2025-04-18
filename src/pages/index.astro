@@ -19,6 +19,10 @@ import mariaBlender from '../assets/maria-blender.jpg'
 import pumpabrod from '../assets/pumpabrod.jpeg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
+
+const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
+  dateStyle: 'full',
+})
 ---
 
 <Layout>
@@ -143,8 +147,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
             </article>
 
             <article class="my-4 w-full px-4 pt-4">
-              {
-                /* <div class="my-8 grid justify-center" id="event">
+              <div class="my-8 grid justify-center" id="event">
                 <Image
                   class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
                   src={kursinbjudan}
@@ -162,10 +165,10 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
                 </h2>
                 <div class="flex justify-center">
                   <p class="my-2 max-w-screen-sm">
-                    Lördag 29 mars blir det kurs i hur du bakar surdegsbröd på
-                    enbart ekologiskt och kravmärkt mjöl. Vi lär oss mata
-                    surdegen, forma och snitta bröd. Sätta en ny deg som du kan
-                    grädda hemma nästa dag.
+                    <span class="capitalize">{bakingCourseDate}</span> blir det kurs
+                    i hur du bakar surdegsbröd på enbart ekologiskt och kravmärkt
+                    mjöl. Vi lär oss mata surdegen, forma och snitta bröd. Sätta
+                    en ny deg som du kan grädda hemma nästa dag.
                   </p>
                 </div>
 
@@ -194,8 +197,9 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
 
                 <div class="mx-auto max-w-screen-sm">
                   <p class="my-2">
-                    <span class="font-bold">När:</span> Lördag 29 mars kl 09.00 -
-                    ca 13.00 eller tills vi känner oss klara.
+                    <span class="font-bold">När:</span>
+                    <span class="capitalize">{bakingCourseDate}</span> kl 10:00 -
+                    ca 13:30 eller tills vi känner oss klara.
                   </p>
                   <p class="my-2">
                     <span class="font-bold">Kursavgift: </span>1200 kr, betalas
@@ -224,8 +228,7 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
 
               <span class="flex justify-center">
                 <hr class="my-12 w-7 text-center text-gray-200" />
-              </span> */
-              }
+              </span>
 
               <section>
                 {
