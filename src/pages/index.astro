@@ -20,6 +20,7 @@ import pumpabrod from '../assets/pumpabrod.jpeg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
 import breadPrenumeration from '../assets/brod-prenumeration.jpeg'
+import breadMarket from '../assets/brod-marknad.jpeg'
 
 const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
   dateStyle: 'full',
@@ -181,6 +182,29 @@ const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
                 />
               </div>
 
+
+              <article class="grid grid-cols-2 gap-2 xs:px-4">
+                <h3 class="mb-4 font-display text-3xl font-bold">
+                  Kommande marknader där du träffar Allerths bageri:
+                </h3>
+                <ul class="list-inside list-disc space-y-2">
+                  <li>
+                    9 augusti Hedareds hembygdsgård kl 11.00-16.00 eller tills det är slutsålt
+                  </li>
+                  <li>
+                    24 augusti Hedareds församlingshem, medeltidsdagen kl 11.00 – 15 eller tills det är slutsålt
+                  </li>
+                  <li>
+                    6 september Toarps hembygdsgård
+                  </li>
+                </ul>
+
+                <Image
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  src={breadMarket}
+                  alt="Hantverksbröd till försäljning på marknad"
+                />
+              </article>
 
             </section>
 
