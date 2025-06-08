@@ -19,8 +19,10 @@ import mariaBlender from '../assets/maria-blender.jpg'
 import pumpabrod from '../assets/pumpabrod.jpeg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
+import breadPrenumeration from '../assets/brod-prenumeration.jpeg'
+import breadMarket from '../assets/brod-marknad.jpeg'
 
-const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
+const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
   dateStyle: 'full',
 })
 ---
@@ -67,6 +69,11 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
             </span>
 
             <section class="mb-8 flex flex-col gap-5">
+              <a
+                href="#news"
+                class="px-6 py-2 text-center font-display text-4xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+                >Se <span class="whitespace-nowrap">nyheter</span></a
+              >
               <a
                 href="#event"
                 class="px-6 py-2 text-center font-display text-4xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
@@ -143,8 +150,90 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
             </div>
 
             <article class="flex justify-center text-center">
-              <p class="my-4">Hantverksbröd bakat på kultursäd.</p>
+              <p class="my-2">Hantverksbröd bakat på kultursäd.</p>
             </article>
+
+            <span class="flex justify-center">
+              <hr class="my-12 w-7 text-center text-gray-200" />
+            </span>
+
+            <section id="news">
+
+              <h4 class="mb-4 text-center font-display text-2xl">
+                Nyheter!
+              </h4>
+
+              <article class="grid grid-cols-2 gap-2 xs:px-4">
+                <Image
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  src={breadPrenumeration}
+                  alt="Hantverksbröd"
+                />
+                <div class="mt-4 pr-4">
+                  <p class="mb-4 text-center text-4xl font-display font-bold">Nu lanserar Allerths bageri brödprenumeration!</p>
+                  <p class="mt-4 px-4 text-center">
+                    Du har nu möjlighet att starta en brödprenumeration: 2 till 10/15 bröd per månad eller varannan månad så du är säker på att alltid ha tillgång till bra hantverksbröd.
+                  </p>
+                </div>
+              </article>
+
+              <p class="mt-8 px-4 text-center">
+                Du kan just nu välja mellan ett ljusare surdegsbröd eller rågkraft som bakas på enbart råg. Du kan avsluta din prenumeration när du önskar dock senast tre hela arbetsdagar innan nästa leverans.
+              </p>
+
+              <p class="mt-8 px-4 text-center">
+                Boka din prenumeration via mejl: <EncryptedEmail client:load />
+              </p>
+
+              <div class="flex justify-center mt-8">
+                <Image
+                  class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                  src={kakaobrod}
+                  alt="Surdegsbröd med kakao som dekoration för halloween."
+                />
+                <Image
+                  class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                  src={kladdkakekakor}
+                  alt="Kakor gjorda på kladdkaka"
+                />
+              </div>
+
+              <span class="flex justify-center">
+                <hr class="my-12 w-7 text-center text-gray-200" />
+              </span>
+
+              <h3 class="mb-8 font-display text-3xl font-bold text-center">
+                Kommande marknader där du träffar Allerths bageri:
+              </h3>
+
+              <article class="grid grid-cols-2 gap-2 xs:px-8">
+                <Image
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  src={breadMarket}
+                  alt="Hantverksbröd till försäljning på marknad"
+                />
+
+                <ul class="list-inside list-disc space-y-2">
+                  <li>
+                    9 augusti Hedareds hembygdsgård kl 11.00 - 16.00 eller tills det är slutsålt
+                  </li>
+                  <li>
+                    24 augusti Hedareds församlingshem, medeltidsdagen kl 11.00 - 15 eller tills det är slutsålt
+                  </li>
+                  <li>
+                    6 september Toarps hembygdsgård, kl 15.00 - 17.00
+                  </li>
+                  <li>
+                    20 september Marknad i Götseredsstugan, Sandhult. Kl 11.00 - 16.00 eller tills det är slutsålt
+                  </li>
+                </ul>
+              </article>
+
+            </section>
+
+            <span class="flex justify-center">
+              <hr class="my-12 w-7 text-center text-gray-200" />
+            </span>
 
             <article class="my-4 w-full px-4 pt-4">
               <div class="my-8 grid justify-center" id="event">
@@ -198,8 +287,8 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
                 <div class="mx-auto max-w-screen-sm">
                   <p class="my-2">
                     <span class="font-bold">När:</span>
-                    <span class="capitalize">{bakingCourseDate}</span> kl 10:00 -
-                    ca 13:30 eller tills vi känner oss klara.
+                    <span class="capitalize">{bakingCourseDate}</span> kl 10.00 -
+                    ca 14.00 eller tills vi känner oss klara.
                   </p>
                   <p class="my-2">
                     <span class="font-bold">Kursavgift: </span>1200 kr, betalas
@@ -207,8 +296,7 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
                     betalning på plats.
                   </p>
                   <p class="my-2">
-                    <span class="font-bold">Var: </span>Sämsjöborg
-                    Equmeniakyrkan, Örum Sämsjöborg 1, 524 96 Ljung
+                    <span class="font-bold">Var: </span>Meddelas senare
                   </p>
                   <p class="text-center font-bold">Anmälan & frågor:</p>
                   <div class="flex justify-center text-center">
@@ -224,66 +312,6 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
                     alt="Kulturbröd uppställt för försäljning"
                   />
                 </div>
-              </section>
-
-              <span class="flex justify-center">
-                <hr class="my-12 w-7 text-center text-gray-200" />
-              </span>
-
-              <section>
-                {
-                  /*
-                <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                  Nu kan du boka surdegsbröd och kladdkakekakor
-                </h2>
-                <div class="flex justify-center">
-                  <p class="my-2 max-w-screen-sm">
-                    Om du vill ha bröd den 25:e januari, boka <span
-                      class="font-bold">senast den 23:e.</span
-                    > Brödet på bilden är dekorerat med ekologiskt svart kakao.
-                  </p>
-                </div>
-
-                <div class="mx-auto max-w-screen-sm">
-                  <p class="text-center font-bold">
-                    Boka via mail eller instagram:
-                  </p>
-                  <div class="flex justify-center text-center my-1">
-                    <EncryptedEmail client:load />
-                  </div>
-                  <ul class="flex justify-center">
-                    <li>
-                      <Image
-                        src={allerthsBageriLogo}
-                        alt="Profilbild"
-                        class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
-                      />
-                      <a
-                        href="https://www.instagram.com/allerthsbageri/"
-                        class="inline-block font-medium underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                      >
-                        @allerthsbageri
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                */
-                }
-
-                <div class="flex justify-center mt-8">
-                  <Image
-                    class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
-                    src={kakaobrod}
-                    alt="Surdegsbröd med kakao som dekoration för halloween."
-                  />
-                  <Image
-                    class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={kladdkakekakor}
-                    alt="Kakor gjorda på kladdkaka"
-                  />
-                </div>
-
-                <div class="flex justify-center"></div>
               </section>
 
               <span class="flex justify-center">
@@ -359,23 +387,24 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
                 </h3>
                 <ul class="list-inside list-disc space-y-2">
                   <li>
-                    Levererar örter och bröd till Grovare Event & kafé, Marie
-                    Arturéns härliga och mysiga kafé i Grovare.
-                  </li>
-                  <li>
-                    Vissa lördagar säljer jag mitt hantverksbröd direkt vid
-                    bageriet. Ett surdegsbröd bakat på kultursäd, så som Emmer
+                    Vissa lördagar säljer jag mitt hantverksbröd direkt vid bageriet, för exakt info om försäljningen följ på instagram <a
+                    href="https://www.instagram.com/allerthsbageri/"
+                    target="_blank"
+                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                    >@allerthsbageri</a>. Ett surdegsbröd bakat på kultursäd, så som Emmer
                     och vetemjöl special. Du kan förhandsboka via <EncryptedEmail
                       client:load
                     />
                   </li>
                   <li>
-                    Jag levererar nyplockade örter till <a
-                      href="https://www.sasongsbagarn.se/"
-                      target="_blank"
-                      class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
-                      >@sasongsbagarn</a
-                    > i Dalsjöfors. Köp hennes goda bröd, bullar med mera.
+                    Levererar örter och bröd till Grovare Event & kafé, Marie
+                    Arturéns härliga och mysiga kafé i Grovare.
+                  </li>
+                  <li>
+                    Musik i sommarkväll med Sanna Moberg-sång/piano & Maggan Allerth-saxofon
+                    <p> - 17 juni kl 19.00 Brämhults kyrka, Borås</p>
+                    <p> - 29 juli kl 19.00 Hakarps kyrka, Huskvarna</p>
+                    <p> - 17 augusti kl 18.00 Ljushults kyrka, Aplared</p>
                   </li>
                   <li>
                     Kören FREKVENS träffas varannan måndag kl 18.00-19.30. <a
@@ -406,9 +435,7 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
               <div class="flex justify-center">
                 <p class="max-w-screen-sm p-4" id="friskvård">
                   Maggan Allerth heter jag och är utbildad musiklärare,
-                  kyrkomusiker och örtpedagog. Älskar körmusik, surdegsbröd och
-                  örter. Glädjen över att få människor att må bra via musik
-                  och/eller läkeväxter är min drivkraft.
+                  kyrkomusiker och örtpedagog. Älskar surdegsbröd, örter och körmusik. Glädjen över att få människor att må bra via surdegsbröd, musik och läkeväxter är min drivkraft.
                 </p>
               </div>
             </article>
@@ -489,6 +516,13 @@ const bakingCourseDate = new Date('2025-05-18').toLocaleString('sv-SE', {
               href="#event"
               class="text-green-500 underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >Kommande event</a
+            >
+          </li>
+          <li class="mb-2">
+            <a
+              href="#news"
+              class="text-green-500 underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >Nyheter</a
             >
           </li>
         </ul>
