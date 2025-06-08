@@ -19,6 +19,7 @@ import mariaBlender from '../assets/maria-blender.jpg'
 import pumpabrod from '../assets/pumpabrod.jpeg'
 import sax from '../assets/sax.jpg'
 import vitsippor from '../assets/vitsippor-vandring.jpg'
+import breadPrenumeration from '../assets/brod-prenumeration.jpeg'
 
 const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
   dateStyle: 'full',
@@ -146,6 +147,47 @@ const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
               <p class="my-4">Hantverksbröd bakat på kultursäd.</p>
             </article>
 
+            <section>
+              <article class="grid grid-cols-2 gap-2 xs:px-4">
+                <Image
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  src={breadPrenumeration}
+                  alt="Hantverksbröd"
+                />
+                <div class="mt-4 pr-4">
+                  <h3 class="mb-4 text-center font-display text-2xl">
+                    Nyheter
+                  </h3>
+                  <p class="mb-4 text-center font-display text-4xl font-bold">Nu lanserar Allerths bageri brödprenumeration!</p>
+                  <p class="mt-4 px-4 text-center">
+                    Du har nu möjlighet att starta en brödprenumeration: 2 till 10/15 bröd per månad eller varannan månad så du är säker på att alltid ha tillgång till bra hantverksbröd.
+                  </p>
+                  <p>
+                    Du kan just nu välja mellan ett ljusare surdegsbröd eller rågkraft som bakas på enbart råg. Du kan avsluta din prenumeration när du önskar dock senast tre hela arbetsdagar innan nästa leverans.
+                  </p>
+                </div>
+              </article>
+
+              <div class="flex justify-center mt-8">
+                <Image
+                  class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                  src={kakaobrod}
+                  alt="Surdegsbröd med kakao som dekoration för halloween."
+                />
+                <Image
+                  class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                  src={kladdkakekakor}
+                  alt="Kakor gjorda på kladdkaka"
+                />
+              </div>
+
+
+            </section>
+
+            <span class="flex justify-center">
+              <hr class="my-12 w-7 text-center text-gray-200" />
+            </span>
+
             <article class="my-4 w-full px-4 pt-4">
               <div class="my-8 grid justify-center" id="event">
                 <Image
@@ -223,29 +265,6 @@ const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
                     alt="Kulturbröd uppställt för försäljning"
                   />
                 </div>
-              </section>
-
-              <span class="flex justify-center">
-                <hr class="my-12 w-7 text-center text-gray-200" />
-              </span>
-
-              <section>
-
-
-                <div class="flex justify-center mt-8">
-                  <Image
-                    class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
-                    src={kakaobrod}
-                    alt="Surdegsbröd med kakao som dekoration för halloween."
-                  />
-                  <Image
-                    class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
-                    src={kladdkakekakor}
-                    alt="Kakor gjorda på kladdkaka"
-                  />
-                </div>
-
-                <div class="flex justify-center"></div>
               </section>
 
               <span class="flex justify-center">
