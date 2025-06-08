@@ -197,11 +197,17 @@ const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
                 <hr class="my-12 w-7 text-center text-gray-200" />
               </span>
 
-              <h3 class="my-4 font-display text-3xl font-bold">
+              <h3 class="mb-8 font-display text-3xl font-bold text-center">
                 Kommande marknader där du träffar Allerths bageri:
               </h3>
 
-              <article class="grid grid-cols-2 gap-2 xs:px-4">
+              <article class="grid grid-cols-2 gap-2 xs:px-8">
+                <Image
+                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  src={breadMarket}
+                  alt="Hantverksbröd till försäljning på marknad"
+                />
+
                 <ul class="list-inside list-disc space-y-2">
                   <li>
                     9 augusti Hedareds hembygdsgård kl 11.00 - 16.00 eller tills det är slutsålt
@@ -216,12 +222,6 @@ const bakingCourseDate = new Date('2025-07-06').toLocaleString('sv-SE', {
                     20 september Marknad i Götseredsstugan, Sandhult. Kl 11.00 - 16.00 eller tills det är slutsålt
                   </li>
                 </ul>
-
-                <Image
-                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
-                  src={breadMarket}
-                  alt="Hantverksbröd till försäljning på marknad"
-                />
               </article>
 
             </section>
