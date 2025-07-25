@@ -6,13 +6,26 @@ A website made with Astro and Tailwind CSS.
 
 ## Development
 
-Install [Node.js 20](https://nodejs.org/) and [pnpm 9](https://pnpm.io/).
+Install [Node.js 22](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
 ```sh
 git clone https://github.com/paccao/allerthsbageri.se.git && \
 cd allerthsbageri.se/ && \
 pnpm i && \
 pnpm dev
+```
+
+## Upgrade dependencies
+
+```sh
+pnpm outdated
+pnpm up
+```
+
+Check Astrojs [upgrade guides](https://docs.astro.build/en/upgrade-astro/#upgrade-guides) to upgrade major versions
+
+```sh
+pnpm dlx @astrojs/upgrade
 ```
 
 ## Email Spam Protection
