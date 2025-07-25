@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-3xs: 300px;
+  --breakpoint-2xs: 375px;
+  --breakpoint-xs: 475px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --font-sans:
+    Italianno, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --font-serif:
+    Quattrocento, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+
+  --color-brand: #49b952;
+  --color-yellow: #fbec5d;
+  --color-white: #fceff9;
+}
