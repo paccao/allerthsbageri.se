@@ -33,8 +33,9 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
     <div class="flex w-full items-center justify-center gap-4">
       <Image
         src={allerthsBageriLogo}
-        alt="Profilbild"
+        alt="Profilbild för Allerths Bageri"
         class="h-auto w-20 rounded-full object-cover shadow-md"
+        priority
       />
       <h1 class="inline-flex pt-4 font-display text-4xl font-bold sm:text-6xl">
         {SITE_NAME}
@@ -46,8 +47,8 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
     <Image
       class="max-h-[400px] w-full object-cover shadow-md sm:rounded-md"
       src={breadMarketPlace}
-      loading="eager"
       alt="Surdegsbröd från Allerths Bageri"
+      priority
     />
     <section class="relative">
       <section id="main-content">
