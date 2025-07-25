@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { base64 } from 'rfc4648'
+  import { parse } from '../lib/base64'
 
   let decrypted: Promise<string> | undefined = undefined
 
@@ -29,7 +29,7 @@
   async function decrypt(pl: string, password: string) {
     const decoder = new TextDecoder()
 
-    const bytes = base64.parse(pl)
+    const bytes = parse(pl)
     const salt = bytes.slice(0, 32)
     const iv = bytes.slice(32, 32 + 16)
     const ciphertext = bytes.slice(32 + 16)
