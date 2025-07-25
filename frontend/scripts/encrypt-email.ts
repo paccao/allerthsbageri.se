@@ -2,7 +2,7 @@
 
 import { webcrypto } from 'crypto'
 
-import { stringify } from '../src/lib/base64'
+import { stringify } from '../src/lib/base64.ts'
 
 /**
  * Encrypt a string and turn it into an encrypted payload.
