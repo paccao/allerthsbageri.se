@@ -46,7 +46,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
   <main class="mx-auto w-full max-w-screen-md xs:px-4">
     <Image
-      class="max-h-[400px] w-full object-cover shadow-md sm:rounded-md"
+      class="max-h-[400px] w-full object-cover shadow-md xs:rounded-md"
       src={breadMarketPlace}
       alt="Surdegsbröd från Allerths Bageri"
       priority
@@ -130,22 +130,22 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
             <div class="gap my-8 grid columns-2 grid-cols-2 grid-rows-2 gap-2">
               <Image
-                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
                 src={allerthsBageriLogo}
                 alt="Kulturbröd uppställt för försäljning"
               />
               <Image
-                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
                 src={sixthHantverksbrod}
                 alt="Kulturbröd uppställt för försäljning"
               />
               <Image
-                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
                 src={pumpabrod}
                 alt="Kulturbröd uppställt för försäljning"
               />
               <Image
-                class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
                 src={breadMarketPlace}
                 alt="Kulturbröd uppställt för försäljning"
               />
@@ -162,9 +162,9 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             <section id="news">
               <h4 class="mb-4 text-center font-display text-2xl">Nyheter!</h4>
 
-              <article class="grid grid-cols-2 gap-2 xs:px-4">
+              <article class="grid xs:grid-cols-2 gap-2 xs:px-4 justify-center">
                 <Image
-                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  class="h-auto max-h-[500px] mx-auto min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
                   src={breadPrenumeration}
                   alt="Hantverksbröd"
                 />
@@ -193,12 +193,12 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
               <div class="flex justify-center mt-8">
                 <Image
-                  class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                  class="h-auto w-full rounded-md object-cover shadow-md"
                   src={kakaobrod}
                   alt="Surdegsbröd med kakao som dekoration för halloween."
                 />
                 <Image
-                  class="aspect-square h-auto w-full max-w-[700px] rounded-md object-cover shadow-md"
+                  class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
                   src={kladdkakekakor}
                   alt="Kakor gjorda på kladdkaka"
                 />
@@ -216,7 +216,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
               <div class="flex justify-center mt-8">
                 <Image
-                  class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md p-4"
+                  class="h-auto w-full rounded-md object-cover shadow-md p-4"
                   src={leaderSjuharad}
                   alt="Logotyp Leader Sjuhärad"
                 />
@@ -243,14 +243,14 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
                 Kommande marknader där du träffar Allerths bageri:
               </h3>
 
-              <article class="grid grid-cols-2 gap-2 xs:px-8">
+              <article class="grid xs:grid-cols-2 gap-4">
                 <Image
-                  class="h-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
+                  class="h-auto mx-auto max-h-[500px] min-h-[15rem] w-full max-w-[300px] items-center rounded-r-md object-cover shadow-md xs:rounded-md"
                   src={breadMarket}
                   alt="Hantverksbröd till försäljning på marknad"
                 />
 
-                <ul class="list-inside list-disc space-y-2">
+                <ul class="list-inside list-disc space-y-2 px-4 xs:pl-0">
                   <li>
                     9 augusti Hedareds hembygdsgård kl 11.00 - 16.00 eller tills
                     det är slutsålt
@@ -275,7 +275,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             <article class="my-4 w-full px-4 pt-4">
               <div class="my-8 grid justify-center" id="event">
                 <Image
-                  class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                  class="h-auto w-full rounded-md object-cover shadow-md"
                   src={kursinbjudan}
                   alt="Inbjudan till kurs"
                 />
@@ -345,7 +345,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
                 <div class="mt-8 flex justify-center">
                   <Image
-                    class="h-auto w-full max-w-[500px] rounded-md object-cover shadow-md"
+                    class="h-auto w-full rounded-md object-cover shadow-md"
                     src={fifthHantverksbrod}
                     alt="Kulturbröd uppställt för försäljning"
                   />
@@ -526,7 +526,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
               <p class="mx-auto px-4 py-2">Anmälningsavgift 500kr.</p>
 
               <p class="mx-auto px-4 py-4">
-                Kontakta Maggan om du vill veta mer och anmäla dig.
+                Kontakta Maggan om du vill veta mer och anmäla dig:
                 <EncryptedEmail client:load />
               </p>
             </article>
