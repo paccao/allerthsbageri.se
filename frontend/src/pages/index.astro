@@ -510,7 +510,16 @@ import vitsippor from '../assets/vitsippor-vandring.jpg'
     <div
       class="mx-auto mt-8 max-w-screen-lg border-t border-gray-700 pt-4 text-center"
     >
-      <p>&copy; 2024 Maggan Allerth</p>
+      <p>© <span id="year">{new Date().getFullYear()}</span> {SITE_NAME}</p>
     </div>
   </footer>
 </Layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const year = document.querySelector('#year')
+        if (year) {
+            year.textContent = new Date().getFullYear().toString()
+        }
+    })
+</script>
