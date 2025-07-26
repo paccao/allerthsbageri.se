@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  import { parse } from '../lib/base64'
+  import { parse } from '$lib/base64'
 
   let decrypted: Promise<string> | undefined = undefined
 
