@@ -1,15 +1,22 @@
 ---
 import '@fontsource/italianno'
 import '@fontsource/quattrocento'
-import { SITE_NAME } from '$lib/constants'
 
-import '../styles/global.css'
-import Header from '$components/Header.astro'
+import Navbar from '$components/Navbar.astro'
 import Footer from '$components/Footer.astro'
+import { SITE_NAME } from '$lib/constants'
+import { cn } from '$lib/utils'
+import '../styles/global.css'
+
+type Props = {
+  class?: string
+}
+
+let { class: className = '' } = Astro.props
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-pt-4">
   <head>
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta
@@ -28,21 +35,13 @@ import Footer from '$components/Footer.astro'
 
     <title>{SITE_NAME}</title>
   </head>
-  <body class="!font-serif">
-    <Header />
+  <body class="!font-serif bg-background text-foreground">
+    {Astro.url.pathname !== '/' && <Navbar />}
 
-    <main class="mx-auto w-full max-w-screen-md xs:px-4">
+    <main class={cn('mx-auto w-full', className)}>
       <slot />
     </main>
-
-    <hr class="mt-8 border-gray-400" />
 
     <Footer />
   </body>
 </html>
-
-<style is:global>
-  html {
-    scroll-padding-top: 1rem;
-  }
-</style>

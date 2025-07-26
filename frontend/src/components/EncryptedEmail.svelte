@@ -92,7 +92,7 @@
   {href}
   onpointerenter={handler}
   onfocusin={handler}
-  class="text-center text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline {className}"
+  class="text-center text-green-500 underline-offset-2 hover:underline focus:underline {className}"
 >
   <span class="whitespace-nowrap">
     {label}
