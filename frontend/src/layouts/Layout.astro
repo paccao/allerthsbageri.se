@@ -4,6 +4,8 @@ import '@fontsource/quattrocento'
 import { SITE_NAME } from '../constants'
 
 import '../styles/global.css'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <!doctype html>
@@ -27,7 +29,15 @@ import '../styles/global.css'
     <title>{SITE_NAME}</title>
   </head>
   <body class="!font-serif">
-    <slot />
+    <Header />
+
+    <main class="mx-auto w-full max-w-screen-md xs:px-4">
+      <slot />
+    </main>
+
+    <hr class="mt-8 border-gray-400" />
+
+    <Footer />
   </body>
 </html>
 
