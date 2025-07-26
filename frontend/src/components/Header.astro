@@ -21,9 +21,13 @@ import { SITE_NAME } from '../constants'
       </h1>
     </div>
     <nav class="flex flex-col justify-center">
-      <a class="h-auto mx-auto px-4 py-2 border rounded-md" href="/bokning"
-        >Boka ditt bröd!</a
-      >
+      {
+        Astro.url.pathname !== '/bokning' && (
+          <a class="h-auto mx-auto px-4 py-2 border rounded-md" href="/bokning">
+            Boka ditt bröd!
+          </a>
+        )
+      }
     </nav>
   </div>
 </header>
