@@ -9,7 +9,7 @@
     "format": "prettier --write .",
     "db": "drizzle-kit",
     "db:seed": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env src/db/seed.ts",
-    "db:reset": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env src/db/reset.ts",
+    "db:reset": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env scripts/reset-db.ts",
     "test:setup": "node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file .env.test ./src/test.setup.ts",
     "test": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test",
     "test:watch": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --experimental-transform-types --env-file=.env.test --test --watch"
