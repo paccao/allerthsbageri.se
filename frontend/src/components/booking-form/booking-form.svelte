@@ -2,6 +2,7 @@
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
   // TODO: steps as separate snippets that get rendered by selecting the current step
 
+  // NOTE: Maybe rename booking/bokning to order/beställning?
   const pickupOccasions = [
     {
       id: 1,
@@ -57,4 +58,15 @@
 
   type PickupOccasion = (typeof pickupOccasions)[number]
   type Product = (typeof pickupOccasions)[number]['products'][number]
+
+  let order = $state({
+    pickupOccasionId: null,
+    items: [],
+  })
+
+  let customer = $state({
+    name: '',
+    email: '',
+    phone: '',
+  })
 </script>
