@@ -73,7 +73,29 @@
   const steps = ['1-pickup', '2-order', '3-customer', '4-confirmation'] as const
   type Step = (typeof steps)[number]
   let step = $state<Step>('1-pickup')
+
+  // $effect(() => {
+  //   const hash = new SvelteURL(window.location.href).hash.slice(1)
+  //   if (steps.includes(hash as Step)) {
+  //     step = hash as Step
+  //   }
+  // })
+
+  let prevStep = $derived(steps[steps.indexOf(step) - 1] ?? null)
+  let nextStep = $derived(steps[steps.indexOf(step) + 1] ?? null)
+
+  // IDEA: Once we have persisted order form state, set the initial step based on
+  // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
+
+<svelte:window
+  onhashchange={() => {
+    const hash = new URL(window.location.href).hash.slice(1)
+    if (steps.includes(hash as Step)) {
+      step = hash as Step
+    }
+  }}
+/>
 
 <!-- TODO: Wrapper layout for the entire process, showing the steps -->
 <!-- TODO: Use navigaton from lifewheel -->
@@ -87,4 +109,42 @@
   <!-- fixed header -->
   <!-- scrollable area in the middle -->
   <!-- bottom nav fixed on the screen -->
+
+  <footer
+    class="flex justify-center fixed bottom-0 w-full bg-amber-200 left-0 right-0"
+  >
+    <nav
+      class="max-w-3xl flex gap-2 justify-between items-center bg-teal-200 w-full"
+    >
+      <!-- TODO: Ensure consistent width for all buttons, maybe use grid instead and center in the middle -->
+      {#if prevStep}
+        <!-- TODO: Ghost button with small chevron left -->
+        <a href={`#${prevStep}`}>Tillbaka</a>
+      {:else}
+        <div></div>
+      {/if}
+
+      <!-- TODO: Make step dots clickable -->
+      <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
+
+      <div class="flex items-center gap-1">
+        {#each steps as current}
+          <div
+            class={[
+              'rounded-full size-4 border',
+              current === step && 'bg-border',
+            ]}
+          ></div>
+        {/each}
+      </div>
+
+      {#if nextStep}
+        <!-- TODO: Primary button with small chevron right -->
+        <a href={`#${nextStep}`}>Gå vidare</a>
+      {:else}
+        <!-- TODO: Show succes button that navigates back to the home page -->
+        <div></div>
+      {/if}
+    </nav>
+  </footer>
 </div>
