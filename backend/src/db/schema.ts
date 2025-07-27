@@ -25,10 +25,10 @@ export const pickupOccasionTable = sqliteTable('pickup_occasion', {
   id: int().primaryKey(),
   name: text({ length: 200 }).notNull(),
   description: text({ length: 1000 }).notNull(),
-  bookingOpens: dateField.notNull(),
-  bookingCloses: dateField.notNull(),
-  pickupOpens: dateField.notNull(),
-  pickupCloses: dateField.notNull(),
+  bookingStart: dateField.notNull(),
+  bookingEnd: dateField.notNull(),
+  pickupStart: dateField.notNull(),
+  pickupEnd: dateField.notNull(),
 })
 
 export const productDetailsTable = sqliteTable('product_details', {

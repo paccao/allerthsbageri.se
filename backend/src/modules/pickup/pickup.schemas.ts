@@ -4,27 +4,25 @@ export const createPickupBodySchema = z
   .object({
     name: z.string().max(200),
     description: z.string().max(1000),
-    bookingOpens: z.date(),
-    bookingCloses: z.date(),
-    pickupOpens: z.date(),
-    pickupCloses: z.date(),
+    bookingStart: z.date(),
+    bookingEnd: z.date(),
+    pickupStart: z.date(),
+    pickupEnd: z.date(),
   })
-  .superRefine(
-    ({ bookingOpens, bookingCloses, pickupOpens, pickupCloses }, ctx) => {
-      if (bookingOpens.getTime() > bookingCloses.getTime()) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'bookingCloses must be after bookingOpens',
-        })
-      }
+  .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
+    if (bookingStart.getTime() > bookingEnd.getTime()) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'bookingEnd must be after bookingStart',
+      })
+    }
 
-      if (pickupOpens.getTime() > pickupCloses.getTime()) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'pickupCloses must be after pickupOpens',
-        })
-      }
-    },
-  )
+    if (pickupStart.getTime() > pickupEnd.getTime()) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'pickupEnd must be after pickupStart',
+      })
+    }
+  })
 
 export type CreatePickupBody = z.infer<typeof createPickupBodySchema>

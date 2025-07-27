@@ -9,20 +9,20 @@ export async function createPickupHandler(
   const {
     name,
     description,
-    bookingOpens,
-    bookingCloses,
-    pickupOpens,
-    pickupCloses,
+    bookingStart,
+    bookingEnd,
+    pickupStart,
+    pickupEnd,
   } = request.body
 
   try {
     const pickup = await createPickup({
       name,
       description,
-      bookingOpens,
-      bookingCloses,
-      pickupOpens,
-      pickupCloses,
+      bookingStart,
+      bookingEnd,
+      pickupStart,
+      pickupEnd,
     })
     return pickup
   } catch (error: any) {

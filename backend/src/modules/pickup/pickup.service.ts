@@ -2,25 +2,25 @@ import { db } from '#db/index.ts'
 import { pickupOccasionTable } from '#db/schema.ts'
 
 export async function createPickup({
-  bookingOpens,
-  bookingCloses,
-  pickupOpens,
-  pickupCloses,
+  bookingStart,
+  bookingEnd,
+  pickupStart,
+  pickupEnd,
   ...data
 }: Pick<typeof pickupOccasionTable.$inferInsert, 'name' | 'description'> & {
-  bookingOpens: Date
-  bookingCloses: Date
-  pickupOpens: Date
-  pickupCloses: Date
+  bookingStart: Date
+  bookingEnd: Date
+  pickupStart: Date
+  pickupEnd: Date
 }) {
   const results = await db
     .insert(pickupOccasionTable)
     .values({
       ...data,
-      bookingOpens: bookingOpens.toISOString(),
-      bookingCloses: bookingCloses.toISOString(),
-      pickupOpens: pickupOpens.toISOString(),
-      pickupCloses: pickupCloses.toISOString(),
+      bookingStart: bookingStart.toISOString(),
+      bookingEnd: bookingEnd.toISOString(),
+      pickupStart: pickupStart.toISOString(),
+      pickupEnd: pickupEnd.toISOString(),
     })
     .returning()
 
