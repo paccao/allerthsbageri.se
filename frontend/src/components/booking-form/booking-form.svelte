@@ -69,4 +69,22 @@
     email: '',
     phone: '',
   })
+
+  const steps = ['1-pickup', '2-order', '3-customer', '4-confirmation'] as const
+  type Step = (typeof steps)[number]
+  let step = $state<Step>('1-pickup')
 </script>
+
+<!-- TODO: Wrapper layout for the entire process, showing the steps -->
+<!-- TODO: Use navigaton from lifewheel -->
+
+<!-- TODO: Step 1: show pickup occasions -->
+<!-- TODO: Step 2: show product grid with option to show product details -->
+<!-- TODO: Step 3: show customer form -->
+<!-- TODO: Step 4: show order confirmation -->
+
+<div class="max-w-7xl mx-auto w-full">
+  <!-- fixed header -->
+  <!-- scrollable area in the middle -->
+  <!-- bottom nav fixed on the screen -->
+</div>
