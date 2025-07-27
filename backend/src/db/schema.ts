@@ -36,6 +36,10 @@ export const productDetailsTable = sqliteTable('product_details', {
   name: text({ length: 200 }).notNull(),
   description: text({ length: 1000 }).notNull(),
   image: text(),
+  // IDEA: Maybe store VAT rates as standardised values in a separate table.
+  // This would allow us to update the VAT values easily when they change.
+  // We could also preseve old VAT values (for historical stats) by adding new rows for updated VAT rates.
+  // If we do this, we could have columns on the VAT table with `validFrom` (date) and `validTo` (date) to disallow using old VAT rates after a certain time.
   vatPercentage: int().notNull(),
 })
 
