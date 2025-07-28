@@ -129,15 +129,20 @@
 <!-- TODO: Step 3: show customer form -->
 <!-- TODO: Step 4: show order confirmation -->
 
+<!-- TODO: Adjust padding to be around content rather than on the page container -->
 <section class="max-w-7xl mx-auto w-full grid justify-items-center">
-  <header class="p-4">
+  <header class="p-4 sticky top-0 bg-background w-full">
     <h2 class="text-center text-balance font-semibold text-xl">
       {step.title}
     </h2>
   </header>
 
-  <!-- sticky header with title of the current step -->
-  <!-- scrollable area in the middle -->
+  <div class="w-full grid gap-8 pb-18">
+    <div class="h-screen bg-lime-100 w-full"></div>
+    <div class="h-screen bg-lime-100 w-full"></div>
+  </div>
+  <!-- NOTE: Maybe linear gradient at both the top and bottom of the scrollable content. Absolute position, and relative container -->
+  <!-- ideally only show linear gradient if there is scrollable content. Could use JS to check if the content is scrollable by comparing scrollHeight with element height or viewport height -->
 
   {#if isLastStep}
     <a
@@ -149,7 +154,9 @@
     >
   {/if}
 
-  <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
+  <footer
+    class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
+  >
     <nav
       class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:p-8 sm:pt-4"
     >
