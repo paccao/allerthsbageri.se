@@ -151,7 +151,7 @@
 
   <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
     <nav
-      class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:pb-8"
+      class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:p-8 sm:pt-4"
     >
       {#if prevStepId && !isLastStep}
         <a
@@ -165,24 +165,29 @@
         <div></div>
       {/if}
 
-      <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
+      <div>
+        <span class="sm:hidden"
+          >{orderedSteps.findIndex((step) => step.id === stepId) +
+            1}/{orderedSteps.length - 1}</span
+        >
 
-      <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
-      <div class="flex items-center gap-1">
-        {#if !isLastStep}
-          {#each orderedSteps.slice(0, -1) as { id, title }}
-            <a
-              class={[
-                id === stepId
-                  ? 'bg-black'
-                  : 'hover:bg-black/20 focus:bg-black/20',
-                'rounded-full size-3 sm:size-4 border border-black ',
-              ]}
-              href={`#${id}`}
-              aria-label="Gå till steg: {title}"
-            ></a>
-          {/each}
-        {/if}
+        <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
+        <nav class="items-center gap-1 sm:flex hidden">
+          {#if !isLastStep}
+            {#each orderedSteps.slice(0, -1) as { id, title }}
+              <a
+                class={[
+                  id === stepId
+                    ? 'bg-black'
+                    : 'hover:bg-black/20 focus:bg-black/20',
+                  'rounded-full size-3 sm:size-4 border border-black ',
+                ]}
+                href={`#${id}`}
+                aria-label="Gå till steg: {title}"
+              ></a>
+            {/each}
+          {/if}
+        </nav>
       </div>
 
       {#if nextStepId}
