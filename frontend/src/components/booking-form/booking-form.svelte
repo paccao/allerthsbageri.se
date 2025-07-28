@@ -132,12 +132,12 @@
 <!-- TODO: Adjust padding to be around content rather than on the page container -->
 <section class="max-w-7xl mx-auto w-full grid justify-items-center">
   <header class="p-4 sticky top-0 bg-background w-full">
-    <h2 class="text-center text-balance font-semibold text-xl">
+    <h2 class="text-center text-balance font-semibold text-xl px-4">
       {step.title}
     </h2>
   </header>
 
-  <div class="w-full grid gap-8 pb-18">
+  <div class="w-full grid gap-8 pb-18 px-4">
     <div class="h-screen bg-lime-100 w-full"></div>
     <div class="h-screen bg-lime-100 w-full"></div>
   </div>
@@ -174,13 +174,13 @@
 
       <div>
         {#if !isLastStep}
-          <span class="sm:hidden text-sm"
+          <span class="xs:hidden text-sm"
             >{orderedSteps.findIndex((step) => step.id === stepId) +
               1}/{orderedSteps.length - 1}</span
           >
 
           <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
-          <nav class="items-center gap-1 sm:flex hidden">
+          <nav class="items-center gap-1 xs:flex hidden">
             {#each orderedSteps.slice(0, -1) as { id, title }}
               <a
                 class={[
