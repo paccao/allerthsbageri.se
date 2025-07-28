@@ -75,42 +75,39 @@
     phone: '',
   })
 
-  // convert steps to objects with title and id
-
-  const steps = [
-    {
-      id: '1-pickup',
-      title: 'Välj upphämtningstillfälle',
-    },
-    {
-      id: '2-order',
-      title: 'Beställ produkter',
-    },
-    {
-      id: '3-customer',
-      title: 'Dina kontaktuppgifter',
-    },
-    {
-      id: '4-confirmation',
-      title: 'Tack för din beställning!',
-    },
+  const orderedSteps = [
+    { id: '1-pickup', title: 'Välj upphämtningstillfälle' },
+    { id: '2-order', title: 'Beställ produkter' },
+    { id: '3-customer', title: 'Dina kontaktuppgifter' },
+    { id: '4-confirmation', title: 'Tack för din beställning!' },
   ] as const
 
-  type StepId = (typeof steps)[number]['id']
+  type StepId = (typeof orderedSteps)[number]['id']
+  type Step = { id: StepId; title: string }
+  const defaultStepId: StepId = orderedSteps[0].id
+
+  const steps = orderedSteps.reduce(
+    (acc, step) => {
+      acc[step.id as StepId] = step
+      return acc
+    },
+    {} as Record<StepId, Step>,
+  )
 
   function getStepIdFromHash(hash: string) {
-    return steps.find(({ id }) => id === (hash as StepId))?.id ?? steps[0].id
+    return steps[hash as StepId]?.id ?? defaultStepId
   }
 
   let stepId = $state<StepId>(
     getStepIdFromHash(new URL(window.location.href).hash.slice(1)),
   )
+  let step = $derived(steps[stepId])!
 
   let prevStepId = $derived(
-    steps[steps.findIndex(({ id }) => id === stepId) - 1]?.id,
+    orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) - 1]?.id,
   )
   let nextStepId = $derived(
-    steps[steps.findIndex(({ id }) => id === stepId) + 1]?.id,
+    orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) + 1]?.id,
   )
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
@@ -130,13 +127,19 @@
 <!-- TODO: Step 3: show customer form -->
 <!-- TODO: Step 4: show order confirmation -->
 
-<div class="max-w-7xl mx-auto w-full">
+<section class="max-w-7xl mx-auto w-full">
+  <header class="p-4">
+    <h2 class="text-center text-balance font-semibold text-xl">
+      {step.title}
+    </h2>
+  </header>
+
   <!-- sticky header with title of the current step -->
   <!-- scrollable area in the middle -->
 
   <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
     <nav
-      class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 bg-amber-200 w-full"
+      class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:pb-8"
     >
       {#if prevStepId}
         <a
@@ -155,10 +158,10 @@
       <!-- IDEA: Hide last step since it's not really a step -->
       <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
       <div class="flex items-center gap-1">
-        {#each steps as { id, title }}
+        {#each orderedSteps as { id, title }}
           <a
             class={[
-              'rounded-full size-4 border border-black',
+              'rounded-full size-3 sm:size-4 border border-black',
               id === stepId && 'bg-black',
             ]}
             href={`#${id}`}
@@ -182,4 +185,4 @@
       {/if}
     </nav>
   </footer>
-</div>
+</section>
