@@ -76,10 +76,10 @@
   })
 
   const orderedSteps = [
-    { id: '1-pickup', title: 'Välj upphämtningstillfälle' },
-    { id: '2-order', title: 'Beställ produkter' },
-    { id: '3-customer', title: 'Dina kontaktuppgifter' },
-    { id: '4-confirmation', title: 'Tack för din beställning!' },
+    { id: 'pickup', title: 'Välj upphämtningstillfälle' },
+    { id: 'order', title: 'Beställ produkter' },
+    { id: 'customer', title: 'Dina kontaktuppgifter' },
+    { id: 'confirmation', title: 'Tack för din beställning!' },
   ] as const
 
   type StepId = (typeof orderedSteps)[number]['id']
