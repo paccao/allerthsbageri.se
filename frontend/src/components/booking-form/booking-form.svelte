@@ -1,6 +1,8 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
+  import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
+  import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
 
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
   // TODO: steps as separate snippets that get rendered by selecting the current step
@@ -132,21 +134,18 @@
 <div class="max-w-7xl mx-auto w-full">
   <!-- sticky header with title of the current step -->
   <!-- scrollable area in the middle -->
-  <!-- bottom nav fixed on the screen -->
 
   <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
     <nav
       class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 bg-amber-200 w-full"
     >
-      <!-- TODO: Ensure consistent width for all buttons, maybe use grid instead and center in the middle -->
       {#if prevStepId}
-        <!-- TODO: Ghost button with small chevron left -->
         <a
           href={`#${prevStepId}`}
           class={cn([
-            'justify-self-start',
+            'justify-self-start flex items-center gap-2',
             buttonVariants({ variant: 'ghost', size: 'lg' }),
-          ])}>Tillbaka</a
+          ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
         >
       {:else}
         <div></div>
@@ -167,13 +166,12 @@
       </div>
 
       {#if nextStepId}
-        <!-- TODO: Primary button with small chevron right -->
         <a
           href={`#${nextStepId}`}
           class={cn([
-            'justify-self-end',
+            'justify-self-end flex items-center gap-2',
             buttonVariants({ variant: 'default', size: 'lg' }),
-          ])}>Gå vidare</a
+          ])}>Gå vidare<LucideChevronRight class="size-4" /></a
         >
       {:else}
         <!-- TODO: Show succes button that navigates back to the home page -->

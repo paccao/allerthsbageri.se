@@ -11,6 +11,7 @@
       "$components/*": ["./src/components/*"],
       "$layouts": ["./src/layouts"],
       "$layouts/*": ["./src/layouts/*"]
-    }
+    },
+    "types": ["unplugin-icons/types/astro"]
   }
 }
