@@ -166,14 +166,14 @@
       {/if}
 
       <div>
-        <span class="sm:hidden text-sm"
-          >{orderedSteps.findIndex((step) => step.id === stepId) +
-            1}/{orderedSteps.length - 1}</span
-        >
+        {#if !isLastStep}
+          <span class="sm:hidden text-sm"
+            >{orderedSteps.findIndex((step) => step.id === stepId) +
+              1}/{orderedSteps.length - 1}</span
+          >
 
-        <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
-        <nav class="items-center gap-1 sm:flex hidden">
-          {#if !isLastStep}
+          <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
+          <nav class="items-center gap-1 sm:flex hidden">
             {#each orderedSteps.slice(0, -1) as { id, title }}
               <a
                 class={[
@@ -186,8 +186,8 @@
                 aria-label="Gå till steg: {title}"
               ></a>
             {/each}
-          {/if}
-        </nav>
+          </nav>
+        {/if}
       </div>
 
       {#if nextStepId}
