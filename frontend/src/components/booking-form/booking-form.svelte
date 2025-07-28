@@ -157,7 +157,7 @@
         <a
           href={`#${prevStepId}`}
           class={cn([
-            'justify-self-start flex items-center gap-2',
+            'justify-self-start',
             buttonVariants({ variant: 'ghost', size: 'lg' }),
           ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
         >
@@ -166,7 +166,7 @@
       {/if}
 
       <div>
-        <span class="sm:hidden"
+        <span class="sm:hidden text-sm"
           >{orderedSteps.findIndex((step) => step.id === stepId) +
             1}/{orderedSteps.length - 1}</span
         >
@@ -180,7 +180,7 @@
                   id === stepId
                     ? 'bg-black'
                     : 'hover:bg-black/20 focus:bg-black/20',
-                  'rounded-full size-3 sm:size-4 border border-black ',
+                  'rounded-full size-4 border border-black ',
                 ]}
                 href={`#${id}`}
                 aria-label="Gå till steg: {title}"
@@ -195,7 +195,7 @@
         <a
           href={`#${nextStepId}`}
           class={cn([
-            'justify-self-end flex items-center gap-2',
+            'justify-self-end',
             buttonVariants({ variant: 'default', size: 'lg' }),
           ])}
           >{#if nextStepId === orderedSteps.at(-1)!.id}<span
