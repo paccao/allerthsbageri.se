@@ -113,7 +113,7 @@
     steps[steps.findIndex(({ id }) => id === stepId) + 1]?.id,
   )
 
-  // IDEA: Once we have persisted order form state, set the initial step based on
+  // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
 
@@ -124,7 +124,6 @@
 />
 
 <!-- TODO: Wrapper layout for the entire process, showing the steps -->
-<!-- TODO: Use navigaton from lifewheel -->
 
 <!-- TODO: Step 1: show pickup occasions -->
 <!-- TODO: Step 2: show product grid with option to show product details -->
@@ -151,21 +150,25 @@
         <div></div>
       {/if}
 
-      <!-- TODO: Make step dots clickable -->
       <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
 
+      <!-- IDEA: Hide last step since it's not really a step -->
+      <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
       <div class="flex items-center gap-1">
-        {#each steps as { id }}
-          <div
+        {#each steps as { id, title }}
+          <a
             class={[
               'rounded-full size-4 border border-black',
               id === stepId && 'bg-black',
             ]}
-          ></div>
+            href={`#${id}`}
+            aria-label="Gå till steg: {title}"
+          ></a>
         {/each}
       </div>
 
       {#if nextStepId}
+        <!-- IDEA: Only allow navigating to the next step if all previous steps are valid -->
         <a
           href={`#${nextStepId}`}
           class={cn([
