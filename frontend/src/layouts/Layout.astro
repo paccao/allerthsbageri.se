@@ -10,9 +10,11 @@ import '../styles/global.css'
 
 type Props = {
   class?: string
+  header?: boolean
+  footer?: boolean
 }
 
-let { class: className = '' } = Astro.props
+let { class: className = '', header = true, footer = true } = Astro.props
 ---
 
 <!doctype html>
@@ -36,12 +38,12 @@ let { class: className = '' } = Astro.props
     <title>{SITE_NAME}</title>
   </head>
   <body class="!font-serif bg-background text-foreground">
-    {Astro.url.pathname !== '/' && <Navbar />}
+    {header && <Navbar />}
 
     <main class={cn('mx-auto w-full', className)}>
       <slot />
     </main>
 
-    <Footer />
+    {footer && <Footer />}
   </body>
 </html>
