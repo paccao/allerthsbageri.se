@@ -150,7 +150,7 @@
 <!-- TODO: Step 4: show order confirmation -->
 
 <section class="max-w-7xl mx-auto w-full grid justify-items-center">
-  <header class="sticky top-0 w-full">
+  <header class="sticky top-0 w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
         {step.title}
