@@ -147,8 +147,6 @@
     <div class="h-screen bg-lime-100 w-full"></div>
     <div class="h-screen bg-lime-100 w-full"></div>
   </div>
-  <!-- NOTE: Maybe linear gradient at both the top and bottom of the scrollable content. Absolute position, and relative container -->
-  <!-- ideally only show linear gradient if there is scrollable content. Could use JS to check if the content is scrollable by comparing scrollHeight with element height or viewport height -->
 
   {#if isLastStep}
     <a
@@ -163,6 +161,10 @@
   <footer
     class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
   >
+    <div
+      class="fixed bottom-18 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
+    ></div>
+
     <nav
       class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:p-8 sm:pt-4"
     >
