@@ -13,4 +13,5 @@ export default defineConfig({
     },
     plugins: [tailwind()],
   },
+  devToolbar: { enabled: false },
 })

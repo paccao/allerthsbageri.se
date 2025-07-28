@@ -1,4 +1,13 @@
 <script lang="ts">
+  import { buttonVariants } from '$components/ui/button'
+  import { cn } from '$lib/utils'
+  import { onMount } from 'svelte'
+
+  type Props = {
+    url: URL
+  }
+  let { url }: Props = $props()
+
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
   // TODO: steps as separate snippets that get rendered by selecting the current step
 
@@ -70,30 +79,57 @@
     phone: '',
   })
 
-  const steps = ['1-pickup', '2-order', '3-customer', '4-confirmation'] as const
-  type Step = (typeof steps)[number]
-  let step = $state<Step>('1-pickup')
+  // convert steps to objects with title and id
 
-  // $effect(() => {
-  //   const hash = new SvelteURL(window.location.href).hash.slice(1)
-  //   if (steps.includes(hash as Step)) {
-  //     step = hash as Step
-  //   }
+  const steps = [
+    {
+      id: '1-pickup',
+      title: 'Välj upphämtningstillfälle',
+    },
+    {
+      id: '2-order',
+      title: 'Beställ produkter',
+    },
+    {
+      id: '3-customer',
+      title: 'Dina kontaktuppgifter',
+    },
+    {
+      id: '4-confirmation',
+      title: 'Tack för din beställning!',
+    },
+  ] as const
+
+  type StepId = (typeof steps)[number]['id']
+  let ready = $state(true)
+
+  function getStepIdFromHash(hash: string) {
+    return steps.find(({ id }) => id === (hash as StepId))?.id ?? steps[0].id
+  }
+
+  let stepId = $state<StepId>(getStepIdFromHash(window.location.hash.slice(1)))
+
+  // onMount(() => {
+  //   stepId = getStepIdFromHash(url.hash.slice(1))
+  //   ready = true
   // })
 
-  let prevStep = $derived(steps[steps.indexOf(step) - 1] ?? null)
-  let nextStep = $derived(steps[steps.indexOf(step) + 1] ?? null)
+  let prevStepId = $derived(
+    steps[steps.findIndex(({ id }) => id === stepId) - 1]?.id,
+  )
+  let nextStepId = $derived(
+    steps[steps.findIndex(({ id }) => id === stepId) + 1]?.id,
+  )
 
   // IDEA: Once we have persisted order form state, set the initial step based on
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
 
 <svelte:window
-  onhashchange={() => {
-    const hash = new URL(window.location.href).hash.slice(1)
-    if (steps.includes(hash as Step)) {
-      step = hash as Step
-    }
+  onhashchange={({ newURL }) => {
+    console.log(new URL(newURL).hash.slice(1))
+
+    stepId = getStepIdFromHash(new URL(newURL).hash.slice(1))
   }}
 />
 
@@ -106,45 +142,58 @@
 <!-- TODO: Step 4: show order confirmation -->
 
 <div class="max-w-7xl mx-auto w-full">
-  <!-- fixed header -->
-  <!-- scrollable area in the middle -->
-  <!-- bottom nav fixed on the screen -->
+  {#if ready}
+    <!-- sticky header with title of the current step -->
+    <!-- scrollable area in the middle -->
+    <!-- bottom nav fixed on the screen -->
 
-  <footer
-    class="flex justify-center fixed bottom-0 w-full bg-amber-200 left-0 right-0"
-  >
-    <nav
-      class="max-w-3xl flex gap-2 justify-between items-center bg-teal-200 w-full"
-    >
-      <!-- TODO: Ensure consistent width for all buttons, maybe use grid instead and center in the middle -->
-      {#if prevStep}
-        <!-- TODO: Ghost button with small chevron left -->
-        <a href={`#${prevStep}`}>Tillbaka</a>
-      {:else}
-        <div></div>
-      {/if}
+    <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
+      <nav
+        class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 bg-amber-200 w-full"
+      >
+        <!-- Maybe add click handler to manually update state on navigation if we can't get the hashchange handler to work -->
+        <!-- TODO: Ensure consistent width for all buttons, maybe use grid instead and center in the middle -->
+        {#if prevStepId}
+          <!-- TODO: Ghost button with small chevron left -->
+          <a
+            href={`#${prevStepId}`}
+            class={cn([
+              'justify-self-start',
+              buttonVariants({ variant: 'ghost', size: 'lg' }),
+            ])}>Tillbaka</a
+          >
+        {:else}
+          <div></div>
+        {/if}
 
-      <!-- TODO: Make step dots clickable -->
-      <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
+        <!-- TODO: Make step dots clickable -->
+        <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
 
-      <div class="flex items-center gap-1">
-        {#each steps as current}
-          <div
-            class={[
-              'rounded-full size-4 border',
-              current === step && 'bg-border',
-            ]}
-          ></div>
-        {/each}
-      </div>
+        <div class="flex items-center gap-1">
+          {#each steps as { id }}
+            <div
+              class={[
+                'rounded-full size-4 border border-black',
+                id === stepId && 'bg-black',
+              ]}
+            ></div>
+          {/each}
+        </div>
 
-      {#if nextStep}
-        <!-- TODO: Primary button with small chevron right -->
-        <a href={`#${nextStep}`}>Gå vidare</a>
-      {:else}
-        <!-- TODO: Show succes button that navigates back to the home page -->
-        <div></div>
-      {/if}
-    </nav>
-  </footer>
+        {#if nextStepId}
+          <!-- TODO: Primary button with small chevron right -->
+          <a
+            href={`#${nextStepId}`}
+            class={cn([
+              'justify-self-end',
+              buttonVariants({ variant: 'default', size: 'lg' }),
+            ])}>Gå vidare</a
+          >
+        {:else}
+          <!-- TODO: Show succes button that navigates back to the home page -->
+          <div></div>
+        {/if}
+      </nav>
+    </footer>
+  {/if}
 </div>
