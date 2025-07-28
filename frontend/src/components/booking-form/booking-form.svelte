@@ -177,10 +177,14 @@
           class={cn([
             'justify-self-end flex items-center gap-2',
             buttonVariants({ variant: 'default', size: 'lg' }),
-          ])}>Gå vidare<LucideChevronRight class="size-4" /></a
+          ])}
+          >{#if nextStepId === orderedSteps.at(-1)!.id}<span
+              >Skicka beställning</span
+            >{:else}<span>Gå vidare</span><LucideChevronRight
+              class="size-4"
+            />{/if}</a
         >
       {:else}
-        <!-- TODO: Show succes button that navigates back to the home page -->
         <div></div>
       {/if}
     </nav>
