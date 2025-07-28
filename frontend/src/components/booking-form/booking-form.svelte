@@ -110,6 +110,8 @@
     orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) + 1]?.id,
   )
 
+  let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
+
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
@@ -127,7 +129,7 @@
 <!-- TODO: Step 3: show customer form -->
 <!-- TODO: Step 4: show order confirmation -->
 
-<section class="max-w-7xl mx-auto w-full">
+<section class="max-w-7xl mx-auto w-full grid justify-items-center">
   <header class="p-4">
     <h2 class="text-center text-balance font-semibold text-xl">
       {step.title}
@@ -137,11 +139,21 @@
   <!-- sticky header with title of the current step -->
   <!-- scrollable area in the middle -->
 
+  {#if isLastStep}
+    <a
+      href="/"
+      class={cn([
+        'flex items-center gap-2 mt-8',
+        buttonVariants({ variant: 'default', size: 'lg' }),
+      ])}>Till startsidan</a
+    >
+  {/if}
+
   <footer class="flex justify-center fixed bottom-0 w-full left-0 right-0">
     <nav
       class="max-w-md grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:pb-8"
     >
-      {#if prevStepId}
+      {#if prevStepId && !isLastStep}
         <a
           href={`#${prevStepId}`}
           class={cn([
@@ -155,19 +167,22 @@
 
       <!-- NOTE: Maybe hide step dots for smallest screens and show "1/N" instead -->
 
-      <!-- IDEA: Hide last step since it's not really a step -->
       <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
       <div class="flex items-center gap-1">
-        {#each orderedSteps as { id, title }}
-          <a
-            class={[
-              'rounded-full size-3 sm:size-4 border border-black',
-              id === stepId && 'bg-black',
-            ]}
-            href={`#${id}`}
-            aria-label="Gå till steg: {title}"
-          ></a>
-        {/each}
+        {#if !isLastStep}
+          {#each orderedSteps.slice(0, -1) as { id, title }}
+            <a
+              class={[
+                id === stepId
+                  ? 'bg-black'
+                  : 'hover:bg-black/20 focus:bg-black/20',
+                'rounded-full size-3 sm:size-4 border border-black ',
+              ]}
+              href={`#${id}`}
+              aria-label="Gå till steg: {title}"
+            ></a>
+          {/each}
+        {/if}
       </div>
 
       {#if nextStepId}
