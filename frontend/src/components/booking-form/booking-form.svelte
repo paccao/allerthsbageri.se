@@ -76,10 +76,10 @@
   })
 
   const orderedSteps = [
-    { id: 'pickup', title: 'Välj upphämtningstillfälle' },
-    { id: 'order', title: 'Beställ produkter' },
-    { id: 'customer', title: 'Dina kontaktuppgifter' },
-    { id: 'confirmation', title: 'Tack för din beställning!' },
+    { id: 'tid', title: 'Välj upphämtningstillfälle' },
+    { id: 'varor', title: 'Beställ produkter' },
+    { id: 'kund', title: 'Dina kontaktuppgifter' },
+    { id: 'tack', title: 'Tack för din beställning!' },
   ] as const
 
   type StepId = (typeof orderedSteps)[number]['id']
@@ -116,10 +116,13 @@
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
 
+<!-- Prevent navigating back to earlier steps after order form has been submitted -->
 <svelte:window
-  onhashchange={({ newURL }) => {
-    stepId = getStepIdFromHash(new URL(newURL).hash.slice(1))
-  }}
+  onhashchange={isLastStep
+    ? null
+    : ({ newURL }) => {
+        stepId = getStepIdFromHash(new URL(newURL).hash.slice(1))
+      }}
 />
 
 <!-- TODO: Wrapper layout for the entire process, showing the steps -->
