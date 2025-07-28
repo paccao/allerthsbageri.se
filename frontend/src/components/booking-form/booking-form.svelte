@@ -125,19 +125,22 @@
       }}
 />
 
-<!-- TODO: Wrapper layout for the entire process, showing the steps -->
-
 <!-- TODO: Step 1: show pickup occasions -->
 <!-- TODO: Step 2: show product grid with option to show product details -->
 <!-- TODO: Step 3: show customer form -->
 <!-- TODO: Step 4: show order confirmation -->
 
-<!-- TODO: Adjust padding to be around content rather than on the page container -->
 <section class="max-w-7xl mx-auto w-full grid justify-items-center">
-  <header class="p-4 sticky top-0 bg-background w-full">
-    <h2 class="text-center text-balance font-semibold text-xl px-4">
-      {step.title}
-    </h2>
+  <header class="sticky top-0 w-full">
+    <div class="relative p-4 bg-background">
+      <h2 class="text-center text-balance font-semibold text-xl px-4">
+        {step.title}
+      </h2>
+
+      <div
+        class="absolute top-full bg-gradient-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
+      ></div>
+    </div>
   </header>
 
   <div class="w-full grid gap-8 pb-18 px-4">
