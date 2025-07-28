@@ -12,8 +12,8 @@
     {
       id: 1,
       location: 'REKO-ringen Borås',
-      startTime: new Date('2025-08-23T10:00:00.000Z'),
-      endTime: new Date('2025-08-23T15:30:00.000Z'),
+      startTime: new Date('2025-08-23T08:00:00.000Z'),
+      endTime: new Date('2025-08-23T13:30:00.000Z'),
       products: [
         {
           id: 1,
@@ -37,7 +37,7 @@
     {
       id: 2,
       location: 'REKO-ringen Ulricehamn',
-      startTime: new Date('2025-08-23T10:00:00.000Z'),
+      startTime: new Date('2025-08-23T07:00:00.000Z'),
       endTime: new Date('2025-08-23T15:30:00.000Z'),
       products: [
         {
