@@ -1,5 +1,6 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
+  import * as Card from '$components/ui/card'
   import { cn } from '$lib/utils'
   import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
   import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
@@ -112,6 +113,24 @@
 
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
+  function formatPickupDateTime({
+    startTime,
+    endTime,
+  }: PickupOccasion): string {
+    if (
+      startTime.toLocaleDateString('sv-SE') ===
+      endTime.toLocaleDateString('sv-SE')
+    ) {
+      // TODO: Simplify this expression
+
+      // Standard case: Show Date followed by times
+      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+    } else {
+      // Special case: Show Date + time for both
+      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+    }
+  }
+
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
@@ -143,20 +162,41 @@
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-18 px-4">
-    <div class="h-screen bg-lime-100 w-full"></div>
-    <div class="h-screen bg-lime-100 w-full"></div>
-  </div>
+  <div class="w-full grid gap-8 pb-18 px-4 pt-4">
+    {#if stepId === 'tid'}
+      <div class="grid gap-4">
+        {#each pickupOccasions as pickup}
+          <Card.Root>
+            <Card.Header>
+              <Card.Title>{pickup.location}</Card.Title>
+              <!-- TODO: handle case if startTime and endTime are on different days. If so, we should show both dates and times. Else we show the date separately and just the times -->
+            </Card.Header>
+            <Card.Content>
+              <!-- <span>
+                {time.startTime.toLocaleTimeString('sv-SE', {
+                  timeStyle: 'short',
+                })} - {time.endTime.toLocaleTimeString('sv-SE', {
+                  timeStyle: 'short',
+                })}</span
+              > -->
+              <span>{formatPickupDateTime(pickup)}</span>
+            </Card.Content>
+          </Card.Root>
+        {/each}
+      </div>
 
-  {#if isLastStep}
-    <a
-      href="/"
-      class={cn([
-        'flex items-center gap-2 mt-8',
-        buttonVariants({ variant: 'default', size: 'lg' }),
-      ])}>Till startsidan</a
-    >
-  {/if}
+      <!-- {:else if stepId === 'varor'}
+    {:else if stepId === 'kund'} -->
+    {:else if isLastStep}
+      <a
+        href="/"
+        class={cn([
+          'flex items-center gap-2 mt-8',
+          buttonVariants({ variant: 'default', size: 'lg' }),
+        ])}>Till startsidan</a
+      >
+    {/if}
+  </div>
 
   <footer
     class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
