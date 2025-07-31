@@ -4,10 +4,19 @@ import svelte from '@astrojs/svelte'
 import tailwind from '@tailwindcss/vite'
 import Icons from 'unplugin-icons/vite'
 
+const site = 'https://www.allerthsbageri.se'
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.allerthsbageri.se',
-  integrations: [svelte(), sitemap()],
+  site,
+  integrations: [
+    svelte(),
+    sitemap({
+      // Filter out some pages from the sitemap during the production build
+      filter: (page) =>
+        !['bokning'].map((path) => `${site}/${path}/`).includes(page),
+    }),
+  ],
   vite: {
     resolve: {
       conditions: ['browser'],

@@ -28,30 +28,52 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 ---
 
 <header class="py-8 text-center">
-  <span class="text-sm font-light tracking-widest">Välkommen till</span>
-  <div class="grid w-full grid-cols-3 gap-4">
-    <div></div>
-    <div class="flex align-center justify-center">
-      <Image
-        src={allerthsBageriLogo}
-        alt="Profilbild för Allerths Bageri"
-        class="h-auto w-20 rounded-full object-cover shadow-md"
-        priority
-      />
-      <h1 class="inline-flex pt-4 font-display text-4xl font-bold sm:text-6xl">
-        {SITE_NAME}
-      </h1>
-    </div>
-    <nav class="flex flex-col justify-center">
-      {
-        Astro.url.pathname !== '/bokning' && (
-          <a class="h-auto mx-auto px-4 py-2 border rounded-md" href="/bokning">
-            Boka ditt bröd!
-          </a>
-        )
-      }
-    </nav>
-  </div>
+  {
+    import.meta.env.DEV ? (
+      <div class="grid w-full grid-cols-[1fr_3fr_1fr] gap-4 place-items-center">
+        <div />
+        <div class="justify-center items-center grid grid-cols-[max-content_1fr] gap-x-4">
+          <span class="text-sm font-light tracking-widest col-span-full">
+            Välkommen till
+          </span>
+          <Image
+            src={allerthsBageriLogo}
+            alt="Profilbild för Allerths Bageri"
+            class="size-20 rounded-full object-cover shadow-md aspect-square"
+            priority
+          />
+          <h1 class="inline-flex font-display text-2xl 2xs:text-3xl xs:text-4xl font-bold sm:text-5xl md:text-6xl pt-2">
+            {SITE_NAME}
+          </h1>
+        </div>
+        <nav class="flex flex-col justify-center">
+          {Astro.url.pathname !== '/bokning' && (
+            <a
+              class="h-auto mx-auto px-4 py-2 border rounded-md"
+              href="/bokning"
+            >
+              Boka bröd
+            </a>
+          )}
+        </nav>
+      </div>
+    ) : (
+      <div>
+        <span class="text-sm font-light tracking-widest">Välkommen till</span>
+        <div class="flex items-center gap-4 justify-center">
+          <Image
+            src={allerthsBageriLogo}
+            alt="Profilbild för Allerths Bageri"
+            class="size-20 rounded-full object-cover shadow-md aspect-square"
+            priority
+          />
+          <h1 class="inline-flex font-display text-4xl font-bold sm:text-6xl pt-2">
+            {SITE_NAME}
+          </h1>
+        </div>
+      </div>
+    )
+  }
 </header>
 
 <Image
