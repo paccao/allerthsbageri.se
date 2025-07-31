@@ -21,6 +21,7 @@ import vitsippor from '$assets/vitsippor-vandring.jpg'
 import breadPrenumeration from '$assets/brod-prenumeration.jpeg'
 import breadMarket from '$assets/brod-marknad.jpeg'
 import leaderSjuharad from '$assets/leader-sjuharad.png'
+import Divider from './Divider.astro'
 
 const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
   dateStyle: 'full',
@@ -86,9 +87,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
   <section id="main-content">
     <section class="flex items-center justify-center">
       <div class="mx-auto w-full">
-        <span class="flex justify-center">
-          <hr class="my-8 w-7 text-center text-gray-200" />
-        </span>
+        <Divider class="my-8" />
         <div class="mx-auto max-w-sm text-balance text-center" id="intro">
           <p class="font-display text-3xl font-bold">Hantverksbröd</p>
           <p class="pt-4">
@@ -97,9 +96,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             korsning mellan enkorn och vildgräs.
           </p>
         </div>
-        <span class="flex justify-center">
-          <hr class="my-8 w-7 text-center text-gray-200" />
-        </span>
+        <Divider class="my-8" />
 
         <section class="mb-8 flex flex-col gap-5">
           <a
@@ -183,9 +180,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           <p class="my-2">Hantverksbröd bakat på kultursäd.</p>
         </article>
 
-        <span class="flex justify-center">
-          <hr class="my-12 w-7 text-center text-gray-200" />
-        </span>
+        <Divider />
 
         <section id="news">
           <h4 class="mb-4 text-center font-display text-2xl">Nyheter!</h4>
@@ -231,9 +226,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             />
           </div>
 
-          <span class="flex justify-center">
-            <hr class="my-12 w-7 text-center text-gray-200" />
-          </span>
+          <Divider />
 
           <p class="mt-8 px-4 text-center">
             Allerths bageri har tilldelats ett microstöd från Leader Sjuhärad
@@ -249,9 +242,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             />
           </div>
 
-          <span class="flex justify-center">
-            <hr class="my-12 w-7 text-center text-gray-200" />
-          </span>
+          <Divider />
 
           <p class="px-4 text-center">
             Nyhet! Du kan också beställa vårt bröd via REKOringen.
@@ -262,9 +253,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             <li>Ojämna veckor - Borås & Fristad</li>
           </ul>
 
-          <span class="flex justify-center">
-            <hr class="my-12 w-7 text-center text-gray-200" />
-          </span>
+          <Divider />
 
           <h3 class="mb-8 font-display text-3xl font-bold text-center">
             Kommande marknader där du träffar Allerths bageri:
@@ -295,9 +284,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           </article>
         </section>
 
-        <span class="flex justify-center">
-          <hr class="my-12 w-7 text-center text-gray-200" />
-        </span>
+        <Divider />
 
         <article class="my-4 w-full px-4 pt-4">
           <div class="my-8 grid justify-center" id="event">
@@ -325,9 +312,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
               </p>
             </div>
 
-            <span class="flex justify-center">
-              <hr class="my-5 w-7 text-center text-gray-200" />
-            </span>
+            <Divider class="my-5" />
 
             <div class="flex justify-center">
               <p class="my-2 max-w-screen-sm">
@@ -344,9 +329,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
               </p>
             </div>
 
-            <span class="flex justify-center">
-              <hr class="my-5 w-7 text-center text-gray-200" />
-            </span>
+            <Divider class="my-5" />
 
             <div class="mx-auto max-w-screen-sm">
               <p class="my-2">
@@ -378,9 +361,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             </div>
           </section>
 
-          <span class="flex justify-center">
-            <hr class="my-12 w-7 text-center text-gray-200" />
-          </span>
+          <Divider />
 
           <section>
             <h2 class="mb-4 text-center font-display text-4xl font-bold">
@@ -441,9 +422,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
             </div>
           </section>
 
-          <span class="flex justify-center">
-            <hr class="my-12 w-7 text-gray-200" />
-          </span>
+          <Divider />
 
           <section>
             <h3 class="mb-4 font-display text-3xl font-bold">
@@ -482,9 +461,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           </section>
         </article>
 
-        <span class="flex justify-center">
-          <hr class="my-8 w-7 text-center text-gray-200" />
-        </span>
+        <Divider class="my-8" />
 
         <article class="my-4" id="om-mig">
           <h3 class="mb-4 text-center font-display text-3xl font-bold">
@@ -528,9 +505,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           </div>
         </article>
 
-        <span class="flex justify-center">
-          <hr class="my-12 w-7 text-center text-gray-200" />
-        </span>
+        <Divider />
 
         <article class="mx-auto my-4 max-w-screen-sm" id="frekvens">
           <h3 class="mb-4 text-center font-display text-3xl font-bold">
