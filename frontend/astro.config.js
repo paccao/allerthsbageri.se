@@ -29,5 +29,8 @@ export default defineConfig({
       Icons({ compiler: 'astro' }),
     ],
   },
+  prefetch: {
+    prefetchAll: true,
+  },
   devToolbar: { enabled: false },
 })
