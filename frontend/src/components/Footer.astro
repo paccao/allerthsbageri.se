@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets'
+
+import EncryptedEmail from '$components/EncryptedEmail.svelte'
+import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg'
+import { SITE_NAME } from '$lib/constants'
+---
+
+<footer class="px-4 py-8 border-t border-stone-400 mt-8">
+  <div class="mx-auto flex max-w-screen-lg flex-wrap justify-between">
+    <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
+      <h3 class="mb-4 text-lg font-bold">Sidolänkar</h3>
+      <ul class="mb-4 list-none gap-y-2">
+        <li>
+          <a
+            href="#"
+            class="text-green-500 underline-offset-2 hover:underline focus:underline"
+            >Upp till toppen</a
+          >
+        </li>
+        <li>
+          <a
+            href="/#historia"
+            class="text-green-500 underline-offset-2 hover:underline focus:underline"
+            >Historia</a
+          >
+        </li>
+        <li>
+          <a
+            href="/#event"
+            class="text-green-500 underline-offset-2 hover:underline focus:underline"
+            >Kommande event</a
+          >
+        </li>
+        <li>
+          <a
+            href="/#news"
+            class="text-green-500 underline-offset-2 hover:underline focus:underline"
+            >Nyheter</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
+      <h3 class="mb-4 text-lg font-bold">Följ mig på Instagram</h3>
+      <ul class="mb-4 list-none">
+        <li>
+          <Image
+            src={allerthsBageriLogo}
+            alt="Profilbild"
+            class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
+          />
+          <a
+            href="https://www.instagram.com/allerthsbageri/"
+            class="inline-block font-medium text-green-500 underline-offset-2 hover:underline focus:underline"
+          >
+            @allerthsbageri
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="mb-8 w-full text-center sm:mb-0 md:w-1/4 lg:w-1/5">
+      <h3 class="mb-4 text-lg font-bold">Kontakta mig</h3>
+      <EncryptedEmail client:load />
+    </div>
+  </div>
+  <div class="mx-auto mt-8 max-w-screen-lg pt-4 text-center">
+    <p>
+      © <span id="year">{new Date().getFullYear()}</span>
+      {SITE_NAME}
+    </p>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const year = document.querySelector('#year')
+    if (year) {
+      year.textContent = new Date().getFullYear().toString()
+    }
+  })
+</script>
