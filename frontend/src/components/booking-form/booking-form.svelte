@@ -184,7 +184,7 @@
           >
             <Card.Root
               class={[
-                'hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
+                'relative hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
                 order.pickupOccasionId === pickup.id &&
                   'border-primary bg-black/5',
               ]}
@@ -203,6 +203,13 @@
               > -->
                 <span>{dateTime}</span>
               </Card.Content>
+
+              <span
+                class="absolute right-8 top-1/2 -translate-y-1/2 flex gap-2 items-center font-semibold group-hover:underline underline-offset-2"
+              >
+                Välj
+                <LucideChevronRight class="size-6" />
+              </span>
             </Card.Root>
           </button>
         {/each}
