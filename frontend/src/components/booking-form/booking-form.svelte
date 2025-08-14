@@ -115,6 +115,26 @@
     orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) + 1]?.id,
   )
 
+  const validators: Record<StepId, () => boolean> = {
+    tid: () => Number.isInteger(order.pickupOccasionId),
+    varor: () => order.items.length > 0,
+    kund: () => true, // TODO: check for valid name and contact details,
+    tack: () => true,
+  }
+
+  let canNavigateToNextStep = $derived.by(() => {
+    switch (nextStepId) {
+      case 'varor':
+        return validators.tid()
+      case 'kund':
+        return validators.tid() && validators.varor()
+      case 'tack':
+        return validators.tid() && validators.varor() && validators.kund()
+      default:
+        return true
+    }
+  })
+
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
   function formatPickupDateTime({
@@ -276,7 +296,8 @@
       </div>
 
       {#if nextStepId}
-        <!-- IDEA: Only allow navigating to the next step if all previous steps are valid -->
+        <!-- TODO: Only allow navigating to the next step if all previous steps are valid -->
+        <!-- TODO: use canNavigateToNextStep to disable this link, and change styles -->
         <a
           href={`#${nextStepId}`}
           class={cn([
