@@ -65,7 +65,11 @@
   type PickupOccasion = (typeof pickupOccasions)[number]
   type Product = (typeof pickupOccasions)[number]['products'][number]
 
-  let order = $state({
+  type Order = {
+    pickupOccasionId: number | null
+    items: []
+  }
+  let order = $state<Order>({
     pickupOccasionId: null,
     items: [],
   })
@@ -133,6 +137,11 @@
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
+
+  function selectPickupOccasion(pickup: PickupOccasion) {
+    location.href = `#${nextStepId}`
+    order.pickupOccasionId = pickup.id
+  }
 </script>
 
 <!-- Prevent navigating back to earlier steps after order form has been submitted -->
@@ -166,22 +175,36 @@
     {#if stepId === 'tid'}
       <div class="grid gap-4">
         {#each pickupOccasions as pickup}
-          <Card.Root>
-            <Card.Header>
-              <Card.Title>{pickup.location}</Card.Title>
-              <!-- TODO: handle case if startTime and endTime are on different days. If so, we should show both dates and times. Else we show the date separately and just the times -->
-            </Card.Header>
-            <Card.Content>
-              <!-- <span>
+          {@const dateTime = formatPickupDateTime(pickup)}
+          <!-- IDEA: Add arrow to the right visible on focus and hover, to make it clear this can be selected -->
+          <button
+            onclick={() => selectPickupOccasion(pickup)}
+            aria-label="Välj upphämtningstillfälle {dateTime}"
+            class="group cursor-pointer"
+          >
+            <Card.Root
+              class={[
+                'hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
+                order.pickupOccasionId === pickup.id &&
+                  'border-primary bg-black/5',
+              ]}
+            >
+              <Card.Header>
+                <Card.Title>{pickup.location}</Card.Title>
+                <!-- TODO: handle case if startTime and endTime are on different days. If so, we should show both dates and times. Else we show the date separately and just the times -->
+              </Card.Header>
+              <Card.Content>
+                <!-- <span>
                 {time.startTime.toLocaleTimeString('sv-SE', {
                   timeStyle: 'short',
                 })} - {time.endTime.toLocaleTimeString('sv-SE', {
                   timeStyle: 'short',
                 })}</span
               > -->
-              <span>{formatPickupDateTime(pickup)}</span>
-            </Card.Content>
-          </Card.Root>
+                <span>{dateTime}</span>
+              </Card.Content>
+            </Card.Root>
+          </button>
         {/each}
       </div>
 
