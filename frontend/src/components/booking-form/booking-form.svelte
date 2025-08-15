@@ -282,10 +282,10 @@
             {#each orderedSteps.slice(0, -1) as { id, title }}
               <a
                 class={[
+                  'rounded-full size-4 border border-black',
                   id === stepId
                     ? 'bg-black'
                     : 'hover:bg-black/20 focus:bg-black/20',
-                  'rounded-full size-4 border border-black ',
                 ]}
                 href={`#${id}`}
                 aria-label="Gå till steg: {title}"
@@ -296,20 +296,20 @@
       </div>
 
       {#if nextStepId}
-        <!-- TODO: Only allow navigating to the next step if all previous steps are valid -->
-        <!-- TODO: use canNavigateToNextStep to disable this link, and change styles -->
         <a
-          href={`#${nextStepId}`}
+          href={canNavigateToNextStep ? `#${nextStepId}` : 'javascript:void(0)'}
           class={cn([
             'justify-self-end',
             buttonVariants({ variant: 'default', size: 'lg' }),
           ])}
-          >{#if nextStepId === orderedSteps.at(-1)!.id}<span
-              >Skicka beställning</span
-            >{:else}<span>Gå vidare</span><LucideChevronRight
-              class="size-4"
-            />{/if}</a
+          aria-disabled={!canNavigateToNextStep}
         >
+          {#if nextStepId === orderedSteps.at(-1)!.id}
+            <span>Skicka beställning</span>
+          {:else}
+            <span>Gå vidare</span><LucideChevronRight class="size-4" />
+          {/if}
+        </a>
       {:else}
         <div></div>
       {/if}
