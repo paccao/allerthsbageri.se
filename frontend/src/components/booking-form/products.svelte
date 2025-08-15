@@ -11,8 +11,9 @@
 </script>
 
 {#if ctx.pickupOccasion}
+  <!-- NOTE: Maybe we can set a max number of columns based on how many products there are -->
   <div class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(256px,1fr))]">
-    {#each [ctx.pickupOccasion.products, ctx.pickupOccasion.products].flat() as { id, name, description, price }}
+    {#each ctx.pickupOccasion.products as { id, name, description, price }}
       <Card.Root class="gap-4">
         <Card.Header>
           <Card.Title class="font-bold text-lg">{name}</Card.Title>
