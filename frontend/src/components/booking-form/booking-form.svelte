@@ -12,7 +12,8 @@
   const pickupOccasions = [
     {
       id: 1,
-      location: 'REKO-ringen Borås',
+      name: 'REKO-ringen Borås',
+      description: 'Bäckängsgymnasiet',
       startTime: new Date('2025-08-23T08:00:00.000Z'),
       endTime: new Date('2025-08-23T13:30:00.000Z'),
       products: [
@@ -37,7 +38,8 @@
     },
     {
       id: 2,
-      location: 'REKO-ringen Ulricehamn',
+      name: 'REKO-ringen Ulricehamn',
+      description: 'Nya torget väveriet',
       startTime: new Date('2025-08-24T07:00:00.000Z'),
       endTime: new Date('2025-08-24T15:30:00.000Z'),
       products: [
@@ -217,7 +219,8 @@
               ]}
             >
               <Card.Header>
-                <Card.Title>{pickup.location}</Card.Title>
+                <Card.Title>{pickup.name}</Card.Title>
+                <p>{pickup.description}</p>
               </Card.Header>
               <Card.Content>
                 <span>{dateTime}</span>
