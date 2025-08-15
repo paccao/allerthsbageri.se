@@ -14,22 +14,22 @@
     "encrypt:email": "node --experimental-strip-types --env-file .env scripts/encrypt-email.ts"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.4.2",
+    "@astrojs/sitemap": "^3.5.0",
     "@astrojs/svelte": "^7.1.0",
     "@fontsource/italianno": "^5.2.6",
     "@fontsource/quattrocento": "^5.2.6",
     "@tailwindcss/typography": "^0.5.16",
-    "@tailwindcss/vite": "^4.1.11",
-    "astro": "^5.12.7",
+    "@tailwindcss/vite": "^4.1.12",
+    "astro": "^5.13.0",
     "runed": "^0.31.1",
     "sharp": "^0.34.3",
-    "svelte": "^5.37.1",
-    "tailwindcss": "^4.1.11"
+    "svelte": "^5.38.1",
+    "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
-    "@iconify-json/lucide": "^1.2.59",
-    "@types/node": "^24.1.0",
-    "bits-ui": "^2.9.0",
+    "@iconify-json/lucide": "^1.2.62",
+    "@types/node": "^24.2.1",
+    "bits-ui": "^2.9.3",
     "clsx": "^2.1.1",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
