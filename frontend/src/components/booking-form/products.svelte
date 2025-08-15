@@ -28,7 +28,7 @@
         <Card.Footer>
           {#if ctx.getProductCount(id) > 0}
             <div
-              class="flex justify-between w-full items-center gap-2 text-center"
+              class="flex justify-between w-full items-center gap-2 text-center border-y rounded-md border-primary h-12"
             >
               <Button
                 size="icon"
@@ -37,7 +37,7 @@
                 ><LucideMinus class="size-5" /></Button
               >
               <!-- TODO: Show a number input in the middle and bind the value by using getters and setters -->
-              <span class="grow">{ctx.getProductCount(id)}</span>
+              <span class="grow text-lg">{ctx.getProductCount(id)}</span>
               <Button
                 size="icon"
                 class="size-12"

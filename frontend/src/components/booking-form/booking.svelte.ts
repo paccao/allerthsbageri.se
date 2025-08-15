@@ -110,6 +110,8 @@ export class BookingState {
 
   selectPickupOccasion(pickup: PickupOccasion) {
     location.href = `#${this.nextStepId}`
+    // TODO: If selecting a different pickupOccasionId, then warn the customer about any differences in products
+    // Otherwise, reset the order items and start fresh
     this.order.pickupOccasionId = pickup.id
   }
 
