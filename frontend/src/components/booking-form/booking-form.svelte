@@ -151,13 +151,11 @@
       startTime.toLocaleDateString('sv-SE') ===
       endTime.toLocaleDateString('sv-SE')
     ) {
-      // TODO: Simplify this expression
-
       // Standard case: Show Date followed by times
       return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
     } else {
       // Special case: Show Date + time for both
-      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
     }
   }
 
@@ -216,16 +214,8 @@
             >
               <Card.Header>
                 <Card.Title>{pickup.location}</Card.Title>
-                <!-- TODO: handle case if startTime and endTime are on different days. If so, we should show both dates and times. Else we show the date separately and just the times -->
               </Card.Header>
               <Card.Content>
-                <!-- <span>
-                {time.startTime.toLocaleTimeString('sv-SE', {
-                  timeStyle: 'short',
-                })} - {time.endTime.toLocaleTimeString('sv-SE', {
-                  timeStyle: 'short',
-                })}</span
-              > -->
                 <span>{dateTime}</span>
               </Card.Content>
 
