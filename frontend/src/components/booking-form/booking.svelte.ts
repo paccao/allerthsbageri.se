@@ -82,6 +82,8 @@ export class BookingState {
 
   canNavigateToStep(id: StepId) {
     switch (id) {
+      case defaultStepId:
+        return true
       case 'varor':
         return this.validators.tid()
       case 'kund':
@@ -93,7 +95,7 @@ export class BookingState {
           this.validators.kund()
         )
       default:
-        return true
+        return false
     }
   }
 }
