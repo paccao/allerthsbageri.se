@@ -1,4 +1,6 @@
 <script lang="ts" module>
+  import { BookingState } from './booking.svelte'
+
   // NOTE: Maybe rename booking/bokning to order/beställning?
   const pickupOccasions = [
     {
@@ -57,21 +59,6 @@
 
   export type PickupOccasion = (typeof pickupOccasions)[number]
   type Product = (typeof pickupOccasions)[number]['products'][number]
-
-  export type Order = {
-    pickupOccasionId: number | null
-    items: []
-  }
-
-  const orderedSteps = [
-    { id: 'tid', title: 'Välj upphämtningstillfälle' },
-    { id: 'varor', title: 'Beställ produkter' },
-    { id: 'kund', title: 'Dina kontaktuppgifter' },
-    { id: 'tack', title: 'Tack för din beställning!' },
-  ] as const
-
-  export type StepId = (typeof orderedSteps)[number]['id']
-  type Step = { id: StepId; title: string }
 </script>
 
 <script lang="ts">
@@ -80,73 +67,13 @@
   import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
   import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
   import PickupOccasions from './pickup-occasions.svelte'
+  import { bookingContext } from './context'
+
+  // TODO: Check if we can destructure and use properties or if we need to use the ctx
+  const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
   // TODO: steps as separate snippets that get rendered by selecting the current step
-
-  let order = $state<Order>({
-    pickupOccasionId: null,
-    items: [],
-  })
-
-  let customer = $state({
-    name: '',
-    email: '',
-    phone: '',
-  })
-
-  const defaultStepId: StepId = orderedSteps[0].id
-
-  const steps = orderedSteps.reduce(
-    (acc, step) => {
-      acc[step.id as StepId] = step
-      return acc
-    },
-    {} as Record<StepId, Step>,
-  )
-
-  function getStepIdFromHash(hash: string) {
-    return steps[hash as StepId]?.id ?? defaultStepId
-  }
-
-  let stepId = $state<StepId>(
-    getStepIdFromHash(new URL(window.location.href).hash.slice(1)),
-  )
-  let step = $derived(steps[stepId])!
-
-  let prevStepId = $derived(
-    orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) - 1]?.id,
-  )
-  let nextStepId = $derived(
-    orderedSteps[orderedSteps.findIndex(({ id }) => id === stepId) + 1]?.id,
-  )
-
-  const validators: Record<StepId, () => boolean> = {
-    tid: () => Number.isInteger(order.pickupOccasionId),
-    varor: () => order.items.length > 0,
-    // TODO: Improve validation for customer data, maybe using a zod schema
-    kund: () =>
-      customer.name.trim().length > 0 &&
-      customer.email.trim().length > 0 &&
-      customer.phone.trim().length > 0,
-    tack: () => true,
-  }
-
-  function canNavigateToStep(id: StepId) {
-    switch (id) {
-      case 'varor':
-        return validators.tid()
-      case 'kund':
-        return validators.tid() && validators.varor()
-      case 'tack':
-        return validators.tid() && validators.varor() && validators.kund()
-      default:
-        return true
-    }
-  }
-
-  let canNavigateToNextStep = $derived.by(() => canNavigateToStep(nextStepId))
-  let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
@@ -154,11 +81,9 @@
 
 <!-- Prevent navigating back to earlier steps after order form has been submitted -->
 <svelte:window
-  onhashchange={isLastStep
+  onhashchange={ctx.isLastStep
     ? null
-    : ({ newURL }) => {
-        stepId = getStepIdFromHash(new URL(newURL).hash.slice(1))
-      }}
+    : ({ newURL }) => ctx.setStepIdFromURL(new URL(newURL))}
 />
 
 <!-- TODO: Step 2: show product grid with option to show product details -->
@@ -169,7 +94,7 @@
   <header class="sticky top-0 w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
-        {step.title}
+        {ctx.step.title}
       </h2>
 
       <div
@@ -179,12 +104,12 @@
   </header>
 
   <div class="w-full grid gap-8 pb-18 px-4 pt-4">
-    {#if stepId === 'tid'}
+    {#if ctx.stepId === 'tid'}
       <!-- TODO: use a context to share state instead of prop drilling -->
-      <PickupOccasions {order} {nextStepId} {pickupOccasions} />
+      <PickupOccasions />
       <!-- {:else if stepId === 'varor'}
     {:else if stepId === 'kund'} -->
-    {:else if isLastStep}
+    {:else if ctx.isLastStep}
       <a
         href="/"
         class={cn([
@@ -195,6 +120,7 @@
     {/if}
   </div>
 
+  <!-- IDEA: Hide the footer completely after submitting the order. This would allow us to remove the ctx.isLastStep checks -->
   <footer
     class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
   >
@@ -205,9 +131,9 @@
     <nav
       class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full"
     >
-      {#if prevStepId && !isLastStep}
+      {#if ctx.prevStepId && !ctx.isLastStep}
         <a
-          href={`#${prevStepId}`}
+          href={`#${ctx.prevStepId}`}
           class={cn([
             'justify-self-start',
             buttonVariants({ variant: 'ghost', size: 'lg' }),
@@ -218,19 +144,18 @@
       {/if}
 
       <div>
-        {#if !isLastStep}
+        {#if !ctx.isLastStep}
           <span class="xs:hidden text-sm"
-            >{orderedSteps.findIndex((step) => step.id === stepId) +
-              1}/{orderedSteps.length - 1}</span
+            >{ctx.stepIndex + 1}/{ctx.visibleSteps.length}</span
           >
 
           <nav class="items-center gap-1 xs:flex hidden">
-            {#each orderedSteps.slice(0, -1) as { id, title }}
-              {@const enabled = canNavigateToStep(id)}
+            {#each ctx.visibleSteps as { id, title }}
+              {@const enabled = ctx.canNavigateToStep(id)}
               <a
                 class={cn([
                   'rounded-full size-4 border border-black',
-                  id === stepId
+                  id === ctx.stepId
                     ? 'bg-black'
                     : 'hover:bg-black/20 focus:bg-black/20',
                   !enabled && 'opacity-50 pointer-events-none border-black/50',
@@ -243,16 +168,20 @@
         {/if}
       </div>
 
-      {#if nextStepId}
+      {#if ctx.nextStepId}
+        {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)}
+        <!-- {@const canNavigateToNextStep = true} -->
         <a
-          href={canNavigateToNextStep ? `#${nextStepId}` : 'javascript:void(0)'}
+          href={canNavigateToNextStep
+            ? `#${ctx.nextStepId}`
+            : 'javascript:void(0)'}
           class={cn([
             'justify-self-end',
             buttonVariants({ variant: 'default', size: 'lg' }),
           ])}
           aria-disabled={!canNavigateToNextStep}
         >
-          {#if nextStepId === orderedSteps.at(-1)!.id}
+          {#if ctx.step.nextButtonLabel}
             <span>Skicka beställning</span>
           {:else}
             <span>Gå vidare</span><LucideChevronRight class="size-4" />

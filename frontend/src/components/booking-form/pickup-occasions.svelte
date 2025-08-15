@@ -1,18 +1,10 @@
 <script lang="ts">
   import * as Card from '$components/ui/card'
-  import {
-    type Order,
-    type PickupOccasion,
-    type StepId,
-  } from './booking-form.svelte'
+  import { type PickupOccasion } from './booking-form.svelte'
   import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
+  import { bookingContext } from './context'
 
-  type Props = {
-    order: Order
-    nextStepId: StepId
-    pickupOccasions: PickupOccasion[]
-  }
-  let { order, nextStepId, pickupOccasions }: Props = $props()
+  let ctx = bookingContext.get()
 
   const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
@@ -23,13 +15,13 @@
   })
 
   function selectPickupOccasion(pickup: PickupOccasion) {
-    location.href = `#${nextStepId}`
-    order.pickupOccasionId = pickup.id
+    location.href = `#${ctx.nextStepId}`
+    ctx.order.pickupOccasionId = pickup.id
   }
 </script>
 
 <div class="grid gap-4 max-w-xl mx-auto w-full">
-  {#each pickupOccasions as pickup}
+  {#each ctx.pickupOccasions as pickup}
     {@const dateTime = dateTimeFormatter.formatRange(
       pickup.startTime,
       pickup.endTime,
@@ -42,7 +34,8 @@
       <Card.Root
         class={[
           'text-left sm:text-center relative hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
-          order.pickupOccasionId === pickup.id && 'border-primary bg-black/5',
+          ctx.order.pickupOccasionId === pickup.id &&
+            'border-primary bg-black/5',
         ]}
       >
         <Card.Header>
