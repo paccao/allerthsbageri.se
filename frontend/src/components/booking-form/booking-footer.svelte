@@ -54,8 +54,7 @@
     </div>
 
     {#if ctx.nextStepId}
-      <!-- {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)} -->
-      {@const canNavigateToNextStep = true}
+      {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)}
       <a
         href={canNavigateToNextStep
           ? `#${ctx.nextStepId}`
