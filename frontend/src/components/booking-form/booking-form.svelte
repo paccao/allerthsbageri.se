@@ -118,12 +118,16 @@
   const validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(order.pickupOccasionId),
     varor: () => order.items.length > 0,
-    kund: () => true, // TODO: check for valid name and contact details,
+    // TODO: Improve validation for customer data, maybe using a zod schema
+    kund: () =>
+      customer.name.trim().length > 0 &&
+      customer.email.trim().length > 0 &&
+      customer.phone.trim().length > 0,
     tack: () => true,
   }
 
-  let canNavigateToNextStep = $derived.by(() => {
-    switch (nextStepId) {
+  function canNavigateToStep(id: StepId) {
+    switch (id) {
       case 'varor':
         return validators.tid()
       case 'kund':
@@ -133,7 +137,9 @@
       default:
         return true
     }
-  })
+  }
+
+  let canNavigateToNextStep = $derived.by(() => canNavigateToStep(nextStepId))
 
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
@@ -196,7 +202,6 @@
       <div class="grid gap-4">
         {#each pickupOccasions as pickup}
           {@const dateTime = formatPickupDateTime(pickup)}
-          <!-- IDEA: Add arrow to the right visible on focus and hover, to make it clear this can be selected -->
           <button
             onclick={() => selectPickupOccasion(pickup)}
             aria-label="Välj upphämtningstillfälle {dateTime}"
@@ -277,17 +282,18 @@
               1}/{orderedSteps.length - 1}</span
           >
 
-          <!-- IDEA: Only allow navigating to previous or the latest step. E.g. only allow navigating to step 1 and 2 if 1 is valid, and 2 is not valid. later steps should not be available -->
           <nav class="items-center gap-1 xs:flex hidden">
             {#each orderedSteps.slice(0, -1) as { id, title }}
+              {@const enabled = canNavigateToStep(id)}
               <a
-                class={[
+                class={cn([
                   'rounded-full size-4 border border-black',
                   id === stepId
                     ? 'bg-black'
                     : 'hover:bg-black/20 focus:bg-black/20',
-                ]}
-                href={`#${id}`}
+                  !enabled && 'opacity-50 pointer-events-none border-black/50',
+                ])}
+                href={enabled ? `#${id}` : 'javascript:void(0)'}
                 aria-label="Gå till steg: {title}"
               ></a>
             {/each}
