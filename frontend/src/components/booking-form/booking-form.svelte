@@ -143,19 +143,23 @@
 
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
+  const dateFormatter = new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+  })
+  const timeFormatter = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'short' })
+
   function formatPickupDateTime({
     startTime,
     endTime,
   }: PickupOccasion): string {
-    if (
-      startTime.toLocaleDateString('sv-SE') ===
-      endTime.toLocaleDateString('sv-SE')
-    ) {
+    if (startTime.toDateString() === endTime.toDateString()) {
       // Standard case: Show Date followed by times
-      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+      return `${dateFormatter.format(startTime)} kl ${timeFormatter.format(startTime)} - ${timeFormatter.format(endTime)}`
     } else {
       // Special case: Show Date + time for both
-      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+      return `${dateFormatter.format(startTime)} kl ${timeFormatter.format(startTime)} - ${dateFormatter.format(endTime)} kl ${timeFormatter.format(endTime)}`
     }
   }
 
