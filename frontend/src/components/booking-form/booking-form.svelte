@@ -67,6 +67,7 @@
   import PickupOccasions from './pickup-occasions.svelte'
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
+  import Products from './products.svelte'
 
   // TODO: Check if we can destructure and use properties or if we need to use the ctx
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
@@ -78,7 +79,8 @@
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
 
-<!-- Prevent navigating back to earlier steps after order form has been submitted -->
+<!-- Allow navigating to a specific step by clicking anchor links. -->
+<!-- Disabled on the last step after submitting the form to prevent navigating back again -->
 <svelte:window
   onhashchange={ctx.isLastStep
     ? null
@@ -87,6 +89,7 @@
 
 <!-- TODO: Step 2: show product grid with option to show product details -->
 <!-- TODO: Step 3: show customer form -->
+<!-- TODO: Step 3: list products and make is possible to adjust amounts -->
 <!-- TODO: Step 4: show order confirmation -->
 
 <section class="max-w-7xl mx-auto w-full grid justify-items-center">
@@ -105,8 +108,9 @@
   <div class="w-full grid gap-8 pb-18 px-4 pt-4">
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
-      <!-- {:else if stepId === 'varor'}
-    {:else if stepId === 'kund'} -->
+    {:else if ctx.stepId === 'varor'}
+      <Products />
+      <!-- {:else if ctx.stepId === 'kund'} -->
     {:else if ctx.isLastStep}
       <a
         href="/"

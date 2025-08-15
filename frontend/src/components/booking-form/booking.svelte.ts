@@ -62,9 +62,13 @@ export class BookingState {
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
   pickupOccasions: PickupOccasion[]
+  pickupOccasion?: PickupOccasion
 
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
+    this.pickupOccasion = $derived(
+      pickupOccasions.find(({ id }) => id === this.order.pickupOccasionId),
+    )
   }
 
   getStepIdFromURL(url: URL) {
