@@ -22,9 +22,16 @@ import { buttonVariants } from '$components/ui/button'
 
   <ul class="flex items-center gap-4">
     <li>
-      <a href="/bokning" class={cn([buttonVariants({ variant: 'outline' })])}>
-        Boka ditt bröd!
-      </a>
+      {
+        Astro.url.pathname !== '/bokning' && (
+          <a
+            href="/bokning"
+            class={cn([buttonVariants({ variant: 'outline', size: 'lg' })])}
+          >
+            Boka ditt bröd!
+          </a>
+        )
+      }
     </li>
   </ul>
 </nav>
