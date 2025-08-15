@@ -5,7 +5,7 @@ import type { PickupOccasion, Product } from './booking-form.svelte'
 
 export type Order = {
   pickupOccasionId: number | null
-  items: Map<Product['id'], { id: Product['id']; count: number }>
+  items: Map<Product['id'], number>
 }
 
 const orderedSteps = [
@@ -113,19 +113,26 @@ export class BookingState {
     this.order.pickupOccasionId = pickup.id
   }
 
+  getProductCount(id: Product['id']) {
+    return this.order.items.get(id) ?? 0
+  }
+
+  setProductCount(id: Product['id'], count: number) {
+    this.order.items.set(id, count)
+  }
+
   addProduct(id: Product['id'], count: number) {
-    this.order.items.set(id, {
-      id,
-      count: (this.order.items.get(id)?.count ?? 0) + count,
-    })
+    const current = this.order.items.get(id)
+    const newCount = (current ?? 0) + count
+    this.order.items.set(id, newCount)
   }
 
   removeProduct(id: Product['id'], count: number) {
     const current = this.order.items.get(id)
-    const newCount = (current?.count ?? 0) - count
+    const newCount = (current ?? 0) - count
 
     if (newCount > 0) {
-      this.order.items.set(id, { id, count: newCount })
+      this.order.items.set(id, newCount)
     } else {
       this.order.items.delete(id)
     }
