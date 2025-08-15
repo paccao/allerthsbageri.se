@@ -38,8 +38,8 @@
     {
       id: 2,
       location: 'REKO-ringen Ulricehamn',
-      startTime: new Date('2025-08-23T07:00:00.000Z'),
-      endTime: new Date('2025-08-23T15:30:00.000Z'),
+      startTime: new Date('2025-08-24T07:00:00.000Z'),
+      endTime: new Date('2025-08-24T15:30:00.000Z'),
       products: [
         {
           id: 1,
@@ -152,10 +152,10 @@
       endTime.toLocaleDateString('sv-SE')
     ) {
       // Standard case: Show Date followed by times
-      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
     } else {
       // Special case: Show Date + time for both
-      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
+      return `${startTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${startTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })} - ${endTime.toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', weekday: 'short' })} kl ${endTime.toLocaleTimeString('sv-SE', { timeStyle: 'short' })}`
     }
   }
 
