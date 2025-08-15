@@ -1,9 +1,11 @@
+import { SvelteMap } from 'svelte/reactivity'
+
 import { clearHash } from '$lib/utils'
-import type { PickupOccasion } from './booking-form.svelte'
+import type { PickupOccasion, Product } from './booking-form.svelte'
 
 export type Order = {
   pickupOccasionId: number | null
-  items: []
+  items: Map<Product['id'], { id: Product['id']; count: number }>
 }
 
 const orderedSteps = [
@@ -32,7 +34,7 @@ const steps = orderedSteps.reduce(
 export class BookingState {
   order = $state<Order>({
     pickupOccasionId: null,
-    items: [],
+    items: new SvelteMap(),
   })
 
   customer = $state({
@@ -43,7 +45,7 @@ export class BookingState {
 
   validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
-    varor: () => this.order.items.length > 0,
+    varor: () => this.order.items.size > 0,
     // TODO: Improve validation for customer data, maybe using a zod schema
     kund: () =>
       this.customer.name.trim().length > 0 &&
@@ -87,11 +89,6 @@ export class BookingState {
     this.stepId = this.getStepIdFromURL(url)
   }
 
-  selectPickupOccasion(pickup: PickupOccasion) {
-    location.href = `#${this.nextStepId}`
-    this.order.pickupOccasionId = pickup.id
-  }
-
   canNavigateToStep(id: StepId) {
     switch (id) {
       case defaultStepId:
@@ -108,6 +105,29 @@ export class BookingState {
         )
       default:
         return false
+    }
+  }
+
+  selectPickupOccasion(pickup: PickupOccasion) {
+    location.href = `#${this.nextStepId}`
+    this.order.pickupOccasionId = pickup.id
+  }
+
+  addProduct(id: Product['id'], count: number) {
+    this.order.items.set(id, {
+      id,
+      count: (this.order.items.get(id)?.count ?? 0) + count,
+    })
+  }
+
+  removeProduct(id: Product['id'], count: number) {
+    const current = this.order.items.get(id)
+    const newCount = (current?.count ?? 0) - count
+
+    if (newCount > 0) {
+      this.order.items.set(id, { id, count: newCount })
+    } else {
+      this.order.items.delete(id)
     }
   }
 }

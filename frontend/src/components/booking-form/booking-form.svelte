@@ -58,7 +58,7 @@
   ]
 
   export type PickupOccasion = (typeof pickupOccasions)[number]
-  type Product = (typeof pickupOccasions)[number]['products'][number]
+  export type Product = (typeof pickupOccasions)[number]['products'][number]
 </script>
 
 <script lang="ts">
