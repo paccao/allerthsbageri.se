@@ -105,7 +105,6 @@
 
   <div class="w-full grid gap-8 pb-18 px-4 pt-4">
     {#if ctx.stepId === 'tid'}
-      <!-- TODO: use a context to share state instead of prop drilling -->
       <PickupOccasions />
       <!-- {:else if stepId === 'varor'}
     {:else if stepId === 'kund'} -->
@@ -120,31 +119,30 @@
     {/if}
   </div>
 
-  <!-- IDEA: Hide the footer completely after submitting the order. This would allow us to remove the ctx.isLastStep checks -->
-  <footer
-    class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
-  >
-    <div
-      class="fixed bottom-18 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
-    ></div>
-
-    <nav
-      class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full"
+  {#if !ctx.isLastStep}
+    <footer
+      class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
     >
-      {#if ctx.prevStepId && !ctx.isLastStep}
-        <a
-          href={`#${ctx.prevStepId}`}
-          class={cn([
-            'justify-self-start',
-            buttonVariants({ variant: 'ghost', size: 'lg' }),
-          ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
-        >
-      {:else}
-        <div></div>
-      {/if}
+      <div
+        class="fixed bottom-18 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
+      ></div>
 
-      <div>
-        {#if !ctx.isLastStep}
+      <nav
+        class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full"
+      >
+        {#if ctx.prevStepId}
+          <a
+            href={`#${ctx.prevStepId}`}
+            class={cn([
+              'justify-self-start',
+              buttonVariants({ variant: 'ghost', size: 'lg' }),
+            ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
+          >
+        {:else}
+          <div></div>
+        {/if}
+
+        <div>
           <span class="xs:hidden text-sm"
             >{ctx.stepIndex + 1}/{ctx.visibleSteps.length}</span
           >
@@ -165,31 +163,31 @@
               ></a>
             {/each}
           </nav>
-        {/if}
-      </div>
+        </div>
 
-      {#if ctx.nextStepId}
-        {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)}
-        <!-- {@const canNavigateToNextStep = true} -->
-        <a
-          href={canNavigateToNextStep
-            ? `#${ctx.nextStepId}`
-            : 'javascript:void(0)'}
-          class={cn([
-            'justify-self-end',
-            buttonVariants({ variant: 'default', size: 'lg' }),
-          ])}
-          aria-disabled={!canNavigateToNextStep}
-        >
-          {#if ctx.step.nextButtonLabel}
-            <span>Skicka beställning</span>
-          {:else}
-            <span>Gå vidare</span><LucideChevronRight class="size-4" />
-          {/if}
-        </a>
-      {:else}
-        <div></div>
-      {/if}
-    </nav>
-  </footer>
+        {#if ctx.nextStepId}
+          <!-- {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)} -->
+          {@const canNavigateToNextStep = true}
+          <a
+            href={canNavigateToNextStep
+              ? `#${ctx.nextStepId}`
+              : 'javascript:void(0)'}
+            class={cn([
+              'justify-self-end',
+              buttonVariants({ variant: 'default', size: 'lg' }),
+            ])}
+            aria-disabled={!canNavigateToNextStep}
+          >
+            {#if ctx.step.nextButtonLabel}
+              <span>Skicka beställning</span>
+            {:else}
+              <span>Gå vidare</span><LucideChevronRight class="size-4" />
+            {/if}
+          </a>
+        {:else}
+          <div></div>
+        {/if}
+      </nav>
+    </footer>
+  {/if}
 </section>
