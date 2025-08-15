@@ -1,13 +1,4 @@
-<script lang="ts">
-  import { buttonVariants } from '$components/ui/button'
-  import * as Card from '$components/ui/card'
-  import { cn } from '$lib/utils'
-  import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
-  import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
-
-  // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
-  // TODO: steps as separate snippets that get rendered by selecting the current step
-
+<script lang="ts" module>
   // NOTE: Maybe rename booking/bokning to order/beställning?
   const pickupOccasions = [
     {
@@ -64,13 +55,35 @@
     },
   ]
 
-  type PickupOccasion = (typeof pickupOccasions)[number]
+  export type PickupOccasion = (typeof pickupOccasions)[number]
   type Product = (typeof pickupOccasions)[number]['products'][number]
 
-  type Order = {
+  export type Order = {
     pickupOccasionId: number | null
     items: []
   }
+
+  const orderedSteps = [
+    { id: 'tid', title: 'Välj upphämtningstillfälle' },
+    { id: 'varor', title: 'Beställ produkter' },
+    { id: 'kund', title: 'Dina kontaktuppgifter' },
+    { id: 'tack', title: 'Tack för din beställning!' },
+  ] as const
+
+  export type StepId = (typeof orderedSteps)[number]['id']
+  type Step = { id: StepId; title: string }
+</script>
+
+<script lang="ts">
+  import { buttonVariants } from '$components/ui/button'
+  import { cn } from '$lib/utils'
+  import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
+  import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
+  import PickupOccasions from './pickup-occasions.svelte'
+
+  // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
+  // TODO: steps as separate snippets that get rendered by selecting the current step
+
   let order = $state<Order>({
     pickupOccasionId: null,
     items: [],
@@ -82,15 +95,6 @@
     phone: '',
   })
 
-  const orderedSteps = [
-    { id: 'tid', title: 'Välj upphämtningstillfälle' },
-    { id: 'varor', title: 'Beställ produkter' },
-    { id: 'kund', title: 'Dina kontaktuppgifter' },
-    { id: 'tack', title: 'Tack för din beställning!' },
-  ] as const
-
-  type StepId = (typeof orderedSteps)[number]['id']
-  type Step = { id: StepId; title: string }
   const defaultStepId: StepId = orderedSteps[0].id
 
   const steps = orderedSteps.reduce(
@@ -142,24 +146,10 @@
   }
 
   let canNavigateToNextStep = $derived.by(() => canNavigateToStep(nextStepId))
-
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
-
-  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
-    day: 'numeric',
-    month: 'short',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
-
-  function selectPickupOccasion(pickup: PickupOccasion) {
-    location.href = `#${nextStepId}`
-    order.pickupOccasionId = pickup.id
-  }
 </script>
 
 <!-- Prevent navigating back to earlier steps after order form has been submitted -->
@@ -171,7 +161,6 @@
       }}
 />
 
-<!-- TODO: Step 1: show pickup occasions -->
 <!-- TODO: Step 2: show product grid with option to show product details -->
 <!-- TODO: Step 3: show customer form -->
 <!-- TODO: Step 4: show order confirmation -->
@@ -191,43 +180,8 @@
 
   <div class="w-full grid gap-8 pb-18 px-4 pt-4">
     {#if stepId === 'tid'}
-      <div class="grid gap-4">
-        {#each pickupOccasions as pickup}
-          {@const dateTime = dateTimeFormatter.formatRange(
-            pickup.startTime,
-            pickup.endTime,
-          )}
-          <button
-            onclick={() => selectPickupOccasion(pickup)}
-            aria-label="Välj upphämtningstillfälle {dateTime}"
-            class="group cursor-pointer"
-          >
-            <Card.Root
-              class={[
-                'relative hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
-                order.pickupOccasionId === pickup.id &&
-                  'border-primary bg-black/5',
-              ]}
-            >
-              <Card.Header>
-                <Card.Title>{pickup.name}</Card.Title>
-                <p>{pickup.description}</p>
-              </Card.Header>
-              <Card.Content>
-                <span>{dateTime}</span>
-              </Card.Content>
-
-              <span
-                class="absolute right-8 top-1/2 -translate-y-1/2 flex gap-2 items-center font-semibold group-hover:underline underline-offset-2"
-              >
-                Välj
-                <LucideChevronRight class="size-6" />
-              </span>
-            </Card.Root>
-          </button>
-        {/each}
-      </div>
-
+      <!-- TODO: use a context to share state instead of prop drilling -->
+      <PickupOccasions {order} {nextStepId} {pickupOccasions} />
       <!-- {:else if stepId === 'varor'}
     {:else if stepId === 'kund'} -->
     {:else if isLastStep}
