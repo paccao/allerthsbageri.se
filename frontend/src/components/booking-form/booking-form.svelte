@@ -203,7 +203,7 @@
     ></div>
 
     <nav
-      class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full sm:p-8 sm:pt-4"
+      class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center p-4 w-full"
     >
       {#if prevStepId && !isLastStep}
         <a
