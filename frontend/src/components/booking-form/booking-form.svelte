@@ -145,25 +145,13 @@
 
   let isLastStep = $derived(stepId === orderedSteps.at(-1)!.id)
 
-  const dateFormatter = new Intl.DateTimeFormat('sv-SE', {
+  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
     weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
   })
-  const timeFormatter = new Intl.DateTimeFormat('sv-SE', { timeStyle: 'short' })
-
-  function formatPickupDateTime({
-    startTime,
-    endTime,
-  }: PickupOccasion): string {
-    if (startTime.toDateString() === endTime.toDateString()) {
-      // Standard case: Show Date followed by times
-      return `${dateFormatter.format(startTime)} kl ${timeFormatter.format(startTime)} - ${timeFormatter.format(endTime)}`
-    } else {
-      // Special case: Show Date + time for both
-      return `${dateFormatter.format(startTime)} kl ${timeFormatter.format(startTime)} - ${dateFormatter.format(endTime)} kl ${timeFormatter.format(endTime)}`
-    }
-  }
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
@@ -205,7 +193,10 @@
     {#if stepId === 'tid'}
       <div class="grid gap-4">
         {#each pickupOccasions as pickup}
-          {@const dateTime = formatPickupDateTime(pickup)}
+          {@const dateTime = dateTimeFormatter.formatRange(
+            pickup.startTime,
+            pickup.endTime,
+          )}
           <button
             onclick={() => selectPickupOccasion(pickup)}
             aria-label="Välj upphämtningstillfälle {dateTime}"
