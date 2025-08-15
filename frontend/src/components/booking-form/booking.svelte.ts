@@ -40,16 +40,6 @@ export class BookingState {
     phone: '',
   })
 
-  orderedSteps = orderedSteps
-  visibleSteps = orderedSteps.slice(0, -1)
-
-  stepId = $state<StepId>(this.getStepIdFromURL(new URL(window.location.href)))!
-  step = $derived(steps[this.stepId])
-  stepIndex = $derived(orderedSteps.findIndex(({ id }) => id === this.stepId))
-  prevStepId = $derived(orderedSteps[this.stepIndex - 1]?.id)
-  nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
-  isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
-
   validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
     varor: () => this.order.items.length > 0,
@@ -60,6 +50,16 @@ export class BookingState {
       this.customer.phone.trim().length > 0,
     tack: () => true,
   }
+
+  orderedSteps = orderedSteps
+  visibleSteps = orderedSteps.slice(0, -1)
+
+  stepId = $state<StepId>(this.getStepIdFromURL(new URL(window.location.href)))!
+  step = $derived(steps[this.stepId])
+  stepIndex = $derived(orderedSteps.findIndex(({ id }) => id === this.stepId))
+  prevStepId = $derived(orderedSteps[this.stepIndex - 1]?.id)
+  nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
+  isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
   pickupOccasions: PickupOccasion[]
 
