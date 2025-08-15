@@ -1,3 +1,4 @@
+import { clearHash } from '$lib/utils'
 import type { PickupOccasion } from './booking-form.svelte'
 
 export type Order = {
@@ -72,7 +73,14 @@ export class BookingState {
   }
 
   getStepIdFromURL(url: URL) {
-    return steps[url.hash.slice(1) as StepId]?.id ?? defaultStepId
+    // Ensure the stepId is valid and that all previous steps have been completed
+    const id = steps[url.hash.slice(1) as StepId]?.id
+    if (id && this.canNavigateToStep(id)) {
+      return id
+    }
+    // Don't show a hash for the default stepId
+    clearHash()
+    return defaultStepId
   }
 
   setStepIdFromURL(url: URL) {
