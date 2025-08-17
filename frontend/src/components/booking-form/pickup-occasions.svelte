@@ -26,6 +26,7 @@
       pickup.startTime,
       pickup.endTime,
     )}
+    {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
     <button
       onclick={() => selectPickupOccasion(pickup)}
       aria-label="Välj upphämtningstillfälle {dateTime}"
@@ -34,8 +35,7 @@
       <Card.Root
         class={[
           'text-left sm:text-center relative hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
-          ctx.order.pickupOccasionId === pickup.id &&
-            'border-primary bg-black/5',
+          isSelected && 'border-primary bg-black/5',
         ]}
       >
         <Card.Header>
