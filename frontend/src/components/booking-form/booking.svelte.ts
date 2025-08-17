@@ -1,4 +1,5 @@
 import { clearHash } from '$lib/utils'
+import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 
 export type Order = {
@@ -30,10 +31,12 @@ const steps = orderedSteps.reduce(
 )
 
 export class BookingState {
-  order = $state<Order>({
+  #order = new PersistedState<Order>('order', {
     pickupOccasionId: null,
     items: {},
   })
+  // Convenience shortcut to allow using `order` instead of `order.current`
+  order = $derived(this.#order.current)
 
   customer = $state({
     name: '',
