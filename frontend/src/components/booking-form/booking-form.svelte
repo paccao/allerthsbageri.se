@@ -92,7 +92,9 @@
 <!-- TODO: Step 3: list products and make is possible to adjust amounts -->
 <!-- TODO: Step 4: show order confirmation -->
 
-<section class="max-w-7xl mx-auto w-full grid justify-items-center">
+<section
+  class="max-w-[var(--breakpoint-2xl)] mx-auto w-full grid justify-items-center"
+>
   <header class="sticky top-0 w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">

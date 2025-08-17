@@ -11,10 +11,11 @@
 </script>
 
 {#if ctx.pickupOccasion}
-  <!-- NOTE: Maybe we can set a max number of columns based on how many products there are -->
-  <div class="grid gap-4 grid-cols-[repeat(auto-fit,minmax(256px,1fr))]">
+  <div
+    class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mx-auto pb-4"
+  >
     {#each ctx.pickupOccasion.products as { id, name, description, price }}
-      <Card.Root class="gap-4">
+      <Card.Root class="gap-4 max-w-sm sm:max-w-xs w-full">
         <Card.Header>
           <Card.Title class="font-bold text-lg">{name}</Card.Title>
         </Card.Header>
