@@ -1,11 +1,9 @@
-import { SvelteMap } from 'svelte/reactivity'
-
 import { clearHash } from '$lib/utils'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 
 export type Order = {
   pickupOccasionId: number | null
-  items: Map<Product['id'], number>
+  items: Record<Product['id'], number>
 }
 
 const orderedSteps = [
@@ -34,8 +32,7 @@ const steps = orderedSteps.reduce(
 export class BookingState {
   order = $state<Order>({
     pickupOccasionId: null,
-    // IDEA: Maybe use regular object instead of Map to simplify persisted state
-    items: new SvelteMap(),
+    items: {},
   })
 
   customer = $state({
@@ -49,7 +46,7 @@ export class BookingState {
 
   #validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
-    varor: () => this.order.items.size > 0,
+    varor: () => Object.keys(this.order.items).length > 0,
     // TODO: Improve validation for customer data, maybe using a zod schema
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
@@ -140,27 +137,27 @@ export class BookingState {
   }
 
   getProductCount(id: Product['id']) {
-    return this.order.items.get(id) ?? 0
+    return this.order.items[id] ?? 0
   }
 
   setProductCount(id: Product['id'], count: number) {
-    this.order.items.set(id, count)
+    this.order.items[id] = count
   }
 
   addProduct(id: Product['id'], count: number) {
-    const current = this.order.items.get(id)
+    const current = this.order.items[id]
     const newCount = (current ?? 0) + count
-    this.order.items.set(id, newCount)
+    this.order.items[id] = newCount
   }
 
   removeProduct(id: Product['id'], count: number) {
-    const current = this.order.items.get(id)
+    const current = this.order.items[id]
     const newCount = (current ?? 0) - count
 
     if (newCount > 0) {
-      this.order.items.set(id, newCount)
+      this.order.items[id] = newCount
     } else {
-      this.order.items.delete(id)
+      delete this.order.items[id]
     }
   }
 }
