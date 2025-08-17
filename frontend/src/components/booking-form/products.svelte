@@ -8,7 +8,13 @@
   import LucidePlus from 'virtual:icons/lucide/plus'
 
   const ctx = bookingContext.get()
+
+  /** Keep references to all number inputs */
+  const numberInputs: Record<number, HTMLInputElement> = {}
+  let activeElement: HTMLElement | null
 </script>
+
+<svelte:document bind:activeElement />
 
 {#if ctx.pickupOccasion}
   <div
@@ -28,9 +34,14 @@
           </p>
         </Card.Content>
         <Card.Footer>
+          <!--
+            Show number input when there are products selected, and also keep it visible as long as the input retains focus.
+            This way, we improve the UX when deleting the contents of the input field and allow typing in a new number instead.
+          -->
+          {#if ctx.getProductCount(id) > 0 || activeElement === numberInputs[id]}
           {#if ctx.getProductCount(id) > 0}
             <div
-              class="flex justify-between w-full items-center gap-2 text-center border-y rounded-md border-primary h-12"
+              class="gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary h-12"
             >
               <Button
                 size="icon"
@@ -38,8 +49,17 @@
                 onclick={() => ctx.removeProduct(id, 1)}
                 ><LucideMinus class="size-5" /></Button
               >
-              <!-- TODO: Show a number input in the middle and bind the value by using getters and setters -->
-              <span class="grow text-lg">{ctx.getProductCount(id)}</span>
+              <input
+                type="number"
+                min="0"
+                bind:this={numberInputs[id]}
+                onfocusin={() => numberInputs[id].select()}
+                bind:value={
+                  () => ctx.getProductCount(id),
+                  (newVal) => ctx.setProductCount(id, newVal)
+                }
+                class="text-center text-lg w-full reset-style"
+              />
               <Button
                 size="icon"
                 class="size-12"
@@ -59,3 +79,15 @@
     {/each}
   </div>
 {/if}
+
+<style>
+  .reset-style {
+    appearance: textfield;
+  }
+
+  .reset-style::-webkit-outer-spin-button,
+  .reset-style::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+</style>
