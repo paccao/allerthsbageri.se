@@ -43,10 +43,15 @@ export class BookingState {
     phone: '',
   })
 
+  pickupOccasions: PickupOccasion[]
+  pickupOccasion?: PickupOccasion
+
   validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
     varor: () => this.order.items.size > 0,
     // TODO: Improve validation for customer data, maybe using a zod schema
+    // TODO: We could change the validatedSteps to store errors which could be shown in the UI
+    // This way, we could still detect which steps are valid by checking they don't have any errors
     kund: () =>
       this.customer.name.trim().length > 0 &&
       this.customer.email.trim().length > 0 &&
@@ -57,19 +62,26 @@ export class BookingState {
   orderedSteps = orderedSteps
   visibleSteps = orderedSteps.slice(0, -1)
 
-  stepId = $state<StepId>(this.getStepIdFromHash(window.location.hash))!
+  /** Stores a boolean for each step, indicating which steps are valid */
+  validatedSteps = $derived(
+    this.orderedSteps.map(({ id }) => this.validators[id]()),
+  )
+  /** Maps stepIds to a boolean, indicating which steps are enabled */
+  enabledSteps = $derived(
+    this.orderedSteps.reduce(
+      (enabledSteps, step) => {
+        enabledSteps[step.id] = this.#canNavigateToStep(step.id)
+        return enabledSteps
+      },
+      {} as Record<StepId, boolean>,
+    ),
+  )
+  stepId = $state(this.getStepIdFromHash(window.location.hash))
   step = $derived(steps[this.stepId])
   stepIndex = $derived(orderedSteps.findIndex(({ id }) => id === this.stepId))
   prevStepId = $derived(orderedSteps[this.stepIndex - 1]?.id)
   nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
-
-  validatedSteps = $derived(
-    this.orderedSteps.map(({ id }) => this.validators[id]()),
-  )
-
-  pickupOccasions: PickupOccasion[]
-  pickupOccasion?: PickupOccasion
 
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
@@ -81,7 +93,7 @@ export class BookingState {
   getStepIdFromHash(hash: string) {
     // Ensure the stepId is valid and that all previous steps have been completed
     const id = steps[hash.slice(1) as StepId]?.id
-    if (id && this.canNavigateToStep(id)) {
+    if (id && this.enabledSteps[id]) {
       return id
     }
     // Don't show a hash for the default stepId
@@ -99,7 +111,7 @@ export class BookingState {
    * @param id stepId to navigate to.
    * @returns whether or not it's possible to navigate to the given stepId.
    */
-  canNavigateToStep(id: StepId) {
+  #canNavigateToStep(id: StepId) {
     for (let i = 0; i < this.orderedSteps.length; i++) {
       // When we find the given step id, we can be sure that all previous steps are valid.
       // If we have reached the desired step, we don't need to validate either this step or any later steps.

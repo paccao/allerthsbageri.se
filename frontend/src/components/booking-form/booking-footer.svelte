@@ -37,7 +37,7 @@
 
       <nav class="items-center gap-1 xs:flex hidden">
         {#each ctx.visibleSteps as { id, title }}
-          {@const enabled = ctx.canNavigateToStep(id)}
+          {@const enabled = ctx.enabledSteps[id]}
           <a
             class={cn([
               'rounded-full size-4 border border-black',
@@ -54,7 +54,7 @@
     </div>
 
     {#if ctx.nextStepId}
-      {@const canNavigateToNextStep = ctx.canNavigateToStep(ctx.nextStepId)}
+      {@const canNavigateToNextStep = ctx.enabledSteps[ctx.nextStepId]}
       <a
         href={canNavigateToNextStep
           ? `#${ctx.nextStepId}`
