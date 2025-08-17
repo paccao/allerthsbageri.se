@@ -46,7 +46,7 @@ export class BookingState {
   pickupOccasions: PickupOccasion[]
   pickupOccasion?: PickupOccasion
 
-  validators: Record<StepId, () => boolean> = {
+  #validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
     varor: () => this.order.items.size > 0,
     // TODO: Improve validation for customer data, maybe using a zod schema
@@ -59,12 +59,11 @@ export class BookingState {
     tack: () => true,
   }
 
-  orderedSteps = orderedSteps
   visibleSteps = orderedSteps.slice(0, -1)
 
   /** Stores a boolean for each step, indicating which steps are valid */
-  validatedSteps = $derived(
-    this.orderedSteps.map(({ id }) => this.validators[id]()),
+  #validatedSteps = $derived(
+    orderedSteps.map(({ id }) => this.#validators[id]()),
   )
   /** Maps stepIds to a boolean, indicating which steps are enabled */
   #enabledSteps = $derived(
@@ -122,7 +121,7 @@ export class BookingState {
 
       // Abort as soon as we find a step that is not yet valid.
       // By returning false, we disable all the following steps.
-      if (!this.validatedSteps[i]) return false
+      if (!this.#validatedSteps[i]) return false
     }
 
     throw new Error(`Failed step validation for stepId ${id}`)
