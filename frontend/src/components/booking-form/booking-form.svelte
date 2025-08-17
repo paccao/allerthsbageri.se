@@ -69,7 +69,6 @@
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
 
-  // TODO: Check if we can destructure and use properties or if we need to use the ctx
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
@@ -77,6 +76,7 @@
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
+  const url = new URL(window.location.href)
 </script>
 
 <!-- Allow navigating to a specific step by clicking anchor links. -->
@@ -84,7 +84,10 @@
 <svelte:window
   onhashchange={ctx.isLastStep
     ? null
-    : ({ newURL }) => ctx.setStepIdFromURL(new URL(newURL))}
+    : ({ newURL }) => {
+        url.href = newURL
+        ctx.setStepIdFromHash(url.hash)
+      }}
 />
 
 <!-- TODO: Step 2: show product grid with option to show product details -->

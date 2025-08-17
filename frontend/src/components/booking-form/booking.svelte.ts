@@ -57,7 +57,7 @@ export class BookingState {
   orderedSteps = orderedSteps
   visibleSteps = orderedSteps.slice(0, -1)
 
-  stepId = $state<StepId>(this.getStepIdFromURL(new URL(window.location.href)))!
+  stepId = $state<StepId>(this.getStepIdFromHash(window.location.hash))!
   step = $derived(steps[this.stepId])
   stepIndex = $derived(orderedSteps.findIndex(({ id }) => id === this.stepId))
   prevStepId = $derived(orderedSteps[this.stepIndex - 1]?.id)
@@ -74,9 +74,9 @@ export class BookingState {
     )
   }
 
-  getStepIdFromURL(url: URL) {
+  getStepIdFromHash(hash: string) {
     // Ensure the stepId is valid and that all previous steps have been completed
-    const id = steps[url.hash.slice(1) as StepId]?.id
+    const id = steps[hash.slice(1) as StepId]?.id
     if (id && this.canNavigateToStep(id)) {
       return id
     }
@@ -85,8 +85,8 @@ export class BookingState {
     return defaultStepId
   }
 
-  setStepIdFromURL(url: URL) {
-    this.stepId = this.getStepIdFromURL(url)
+  setStepIdFromHash(hash: string) {
+    this.stepId = this.getStepIdFromHash(hash)
   }
 
   canNavigateToStep(id: StepId) {
