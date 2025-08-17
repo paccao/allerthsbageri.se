@@ -35,16 +35,17 @@ export class BookingState {
     pickupOccasionId: null,
     items: {},
   })
-  // Convenience shortcut to allow using `order` instead of `order.current`
-  order = $derived(this.#order.current)
-
-  customer = $state({
+  #customer = new PersistedState('customer', {
     name: '',
     email: '',
     phone: '',
   })
+  // Convenience shortcuts to allow using `x` instead of `x.current`
+  order = $derived(this.#order.current)
+  customer = $derived(this.#customer.current)
 
   pickupOccasions: PickupOccasion[]
+  /** Currently selected pickupOccasion */
   pickupOccasion?: PickupOccasion
 
   #validators: Record<StepId, () => boolean> = {
