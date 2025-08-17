@@ -34,6 +34,7 @@ const steps = orderedSteps.reduce(
 export class BookingState {
   order = $state<Order>({
     pickupOccasionId: null,
+    // IDEA: Maybe use regular object instead of Map to simplify persisted state
     items: new SvelteMap(),
   })
 

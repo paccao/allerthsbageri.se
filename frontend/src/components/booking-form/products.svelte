@@ -39,7 +39,7 @@
             This way, we improve the UX when deleting the contents of the input field and allow typing in a new number instead.
           -->
           {#if ctx.getProductCount(id) > 0 || activeElement === numberInputs[id]}
-          {#if ctx.getProductCount(id) > 0}
+            <!-- TODO: Add aria-labels for increment and decrement buttons -->
             <div
               class="gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary h-12"
             >
