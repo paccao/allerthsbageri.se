@@ -39,7 +39,6 @@
             This way, we improve the UX when deleting the contents of the input field and allow typing in a new number instead.
           -->
           {#if ctx.getProductCount(id) > 0 || activeElement === numberInputs[id]}
-            <!-- TODO: Add aria-labels for increment and decrement buttons -->
             <div
               class="gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary h-12"
             >
@@ -47,7 +46,7 @@
                 size="icon"
                 class="size-12"
                 onclick={() => ctx.removeProduct(id, 1)}
-                ><LucideMinus class="size-5" /></Button
+                aria-label="Ta bort 1"><LucideMinus class="size-5" /></Button
               >
               <input
                 type="number"
@@ -64,7 +63,7 @@
                 size="icon"
                 class="size-12"
                 onclick={() => ctx.addProduct(id, 1)}
-                ><LucidePlus class="size-5" /></Button
+                aria-label="Lägg till 1"><LucidePlus class="size-5" /></Button
               >
             </div>
           {:else}
