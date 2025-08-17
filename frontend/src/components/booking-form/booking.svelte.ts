@@ -67,10 +67,10 @@ export class BookingState {
     this.orderedSteps.map(({ id }) => this.validators[id]()),
   )
   /** Maps stepIds to a boolean, indicating which steps are enabled */
-  enabledSteps = $derived(
-    this.orderedSteps.reduce(
+  #enabledSteps = $derived(
+    orderedSteps.reduce(
       (enabledSteps, step) => {
-        enabledSteps[step.id] = this.#canNavigateToStep(step.id)
+        enabledSteps[step.id] = this.#isStepEnabled(step.id)
         return enabledSteps
       },
       {} as Record<StepId, boolean>,
@@ -93,7 +93,7 @@ export class BookingState {
   getStepIdFromHash(hash: string) {
     // Ensure the stepId is valid and that all previous steps have been completed
     const id = steps[hash.slice(1) as StepId]?.id
-    if (id && this.enabledSteps[id]) {
+    if (id && this.#enabledSteps[id]) {
       return id
     }
     // Don't show a hash for the default stepId
@@ -111,12 +111,12 @@ export class BookingState {
    * @param id stepId to navigate to.
    * @returns whether or not it's possible to navigate to the given stepId.
    */
-  #canNavigateToStep(id: StepId) {
-    for (let i = 0; i < this.orderedSteps.length; i++) {
+  #isStepEnabled(id: StepId) {
+    for (let i = 0; i < orderedSteps.length; i++) {
       // When we find the given step id, we can be sure that all previous steps are valid.
       // If we have reached the desired step, we don't need to validate either this step or any later steps.
       // This way, we always enable the first step, and potentially also one more step that still needs to be completed.
-      if (this.orderedSteps[i].id === id) {
+      if (orderedSteps[i].id === id) {
         return true
       }
 
@@ -126,6 +126,10 @@ export class BookingState {
     }
 
     throw new Error(`Failed step validation for stepId ${id}`)
+  }
+
+  canNavigateToStep(id: StepId) {
+    return this.#enabledSteps[id]
   }
 
   selectPickupOccasion(pickup: PickupOccasion) {

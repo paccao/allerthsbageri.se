@@ -37,7 +37,7 @@
 
       <nav class="items-center gap-1 xs:flex hidden">
         {#each ctx.visibleSteps as { id, title }}
-          {@const enabled = ctx.enabledSteps[id]}
+          {@const enabled = ctx.canNavigateToStep(id)}
           <a
             class={cn([
               'rounded-full size-4 border border-black',
@@ -54,16 +54,14 @@
     </div>
 
     {#if ctx.nextStepId}
-      {@const canNavigateToNextStep = ctx.enabledSteps[ctx.nextStepId]}
+      {@const enabled = ctx.canNavigateToStep(ctx.nextStepId)}
       <a
-        href={canNavigateToNextStep
-          ? `#${ctx.nextStepId}`
-          : 'javascript:void(0)'}
+        href={enabled ? `#${ctx.nextStepId}` : 'javascript:void(0)'}
         class={cn([
           'justify-self-end',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}
-        aria-disabled={!canNavigateToNextStep}
+        aria-disabled={!enabled}
       >
         {#if ctx.step.nextButtonLabel}
           <span>Skicka beställning</span>
