@@ -64,6 +64,10 @@ export class BookingState {
   nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
+  validatedSteps = $derived(
+    this.orderedSteps.map(({ id }) => this.validators[id]()),
+  )
+
   pickupOccasions: PickupOccasion[]
   pickupOccasion?: PickupOccasion
 
@@ -89,23 +93,27 @@ export class BookingState {
     this.stepId = this.getStepIdFromHash(hash)
   }
 
+  /**
+   * Ensure all steps up until the given stepId are valid.
+   *
+   * @param id stepId to navigate to.
+   * @returns whether or not it's possible to navigate to the given stepId.
+   */
   canNavigateToStep(id: StepId) {
-    switch (id) {
-      case defaultStepId:
+    for (let i = 0; i < this.orderedSteps.length; i++) {
+      // When we find the given step id, we can be sure that all previous steps are valid.
+      // If we have reached the desired step, we don't need to validate either this step or any later steps.
+      // This way, we always enable the first step, and potentially also one more step that still needs to be completed.
+      if (this.orderedSteps[i].id === id) {
         return true
-      case 'varor':
-        return this.validators.tid()
-      case 'kund':
-        return this.validators.tid() && this.validators.varor()
-      case 'tack':
-        return (
-          this.validators.tid() &&
-          this.validators.varor() &&
-          this.validators.kund()
-        )
-      default:
-        return false
+      }
+
+      // Abort as soon as we find a step that is not yet valid.
+      // By returning false, we disable all the following steps.
+      if (!this.validatedSteps[i]) return false
     }
+
+    throw new Error(`Failed step validation for stepId ${id}`)
   }
 
   selectPickupOccasion(pickup: PickupOccasion) {
