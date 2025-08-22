@@ -40,9 +40,14 @@ export class BookingState {
     email: '',
     phone: '',
   })
-  // Convenience shortcuts to allow using `x` instead of `x.current`
-  order = $derived(this.#order.current)
-  customer = $derived(this.#customer.current)
+
+  get order() {
+    return this.#order.current
+  }
+
+  get customer() {
+    return this.#customer.current
+  }
 
   pickupOccasions: PickupOccasion[]
   /** Currently selected pickupOccasion */
@@ -50,7 +55,7 @@ export class BookingState {
 
   #validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
-    varor: () => Object.keys(this.order.items).length > 0,
+    varor: () => Object.values(this.order.items).some((amount) => amount > 0),
     // TODO: Improve validation for customer data, maybe using a zod schema
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
@@ -137,31 +142,28 @@ export class BookingState {
     location.href = `#${this.nextStepId}`
     // TODO: If selecting a different pickupOccasionId, then warn the customer about any differences in products
     // Otherwise, reset the order items and start fresh
-    this.order.pickupOccasionId = pickup.id
+    this.#order.current.pickupOccasionId = pickup.id
   }
 
   getProductCount(id: Product['id']) {
-    return this.order.items[id] ?? 0
+    return this.#order.current.items[id] ?? 0
   }
 
   setProductCount(id: Product['id'], count: number) {
-    this.order.items[id] = count
+    this.#order.current.items[id] = count
   }
 
   addProduct(id: Product['id'], count: number) {
-    const current = this.order.items[id]
-    const newCount = (current ?? 0) + count
-    this.order.items[id] = newCount
+    this.#order.current.items[id] = (this.#order.current.items[id] ?? 0) + count
   }
 
   removeProduct(id: Product['id'], count: number) {
-    const current = this.order.items[id]
-    const newCount = (current ?? 0) - count
+    const newCount = (this.#order.current.items[id] ?? 0) - count
 
     if (newCount > 0) {
-      this.order.items[id] = newCount
+      this.#order.current.items[id] = newCount
     } else {
-      delete this.order.items[id]
+      this.#order.current.items[id] = 0
     }
   }
 }

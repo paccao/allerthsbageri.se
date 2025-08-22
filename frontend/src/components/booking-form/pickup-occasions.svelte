@@ -1,7 +1,6 @@
 <script lang="ts">
-  import * as Card from '$components/ui/card'
-  import { type PickupOccasion } from './booking-form.svelte'
   import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
+  import * as Card from '$components/ui/card'
   import { bookingContext } from './context'
 
   let ctx = bookingContext.get()
@@ -13,11 +12,6 @@
     hour: '2-digit',
     minute: '2-digit',
   })
-
-  function selectPickupOccasion(pickup: PickupOccasion) {
-    location.href = `#${ctx.nextStepId}`
-    ctx.order.pickupOccasionId = pickup.id
-  }
 </script>
 
 <div class="grid gap-4 max-w-xl mx-auto w-full">
@@ -28,7 +22,7 @@
     )}
     {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
     <button
-      onclick={() => selectPickupOccasion(pickup)}
+      onclick={() => ctx.selectPickupOccasion(pickup)}
       aria-label="Välj upphämtningstillfälle {dateTime}"
       class="group cursor-pointer"
     >
