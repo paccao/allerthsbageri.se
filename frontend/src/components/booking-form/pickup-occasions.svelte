@@ -1,5 +1,6 @@
 <script lang="ts">
   import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
+  import LucideCheck from '~icons/lucide/check'
   import * as Card from '$components/ui/card'
   import { bookingContext } from './context'
 
@@ -43,8 +44,14 @@
         <span
           class="absolute right-4 sm:right-8 text-sm sm:text-base top-1/2 -translate-y-1/2 flex gap-2 items-center font-semibold group-hover:underline underline-offset-2"
         >
-          Välj
-          <LucideChevronRight class="size-6" />
+          {#if isSelected}
+            <LucideCheck
+              class="size-7 sm:size-8 bg-black text-white rounded-full p-2 shadow-xl mr-4"
+            />
+          {:else}
+            Välj
+            <LucideChevronRight class="size-6" />
+          {/if}
         </span>
       </Card.Root>
     </button>
