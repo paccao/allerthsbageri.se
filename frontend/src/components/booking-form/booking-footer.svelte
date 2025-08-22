@@ -23,7 +23,7 @@
         href={`#${ctx.prevStepId}`}
         class={cn([
           'justify-self-start',
-          buttonVariants({ variant: 'ghost', size: 'lg' }),
+          buttonVariants({ variant: 'outline', size: 'lg' }),
         ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
       >
     {:else}
