@@ -20,6 +20,7 @@
   <div
     class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mx-auto pb-4"
   >
+    <!-- TODO: Show product details -->
     {#each ctx.pickupOccasion.products as { id, name, description, price }}
       <Card.Root class="gap-4 max-w-sm sm:max-w-xs w-full">
         <Card.Header>
@@ -42,6 +43,7 @@
             <div
               class="gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary h-12"
             >
+              <!-- TODO: Removing the last product doesn't work - maybe we need to clear it from localStorage too -->
               <Button
                 size="icon"
                 class="size-12"

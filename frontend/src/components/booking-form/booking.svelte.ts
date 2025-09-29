@@ -1,6 +1,7 @@
 import { clearHash } from '$lib/utils'
 import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
+import { tick } from 'svelte'
 
 export type Order = {
   pickupOccasionId: number | null
@@ -139,10 +140,15 @@ export class BookingState {
   }
 
   selectPickupOccasion(pickup: PickupOccasion) {
-    location.href = `#${this.nextStepId}`
     // TODO: If selecting a different pickupOccasionId, then warn the customer about any differences in products
     // Otherwise, reset the order items and start fresh
     this.#order.current.pickupOccasionId = pickup.id
+
+    tick().then(() => {
+      // TODO: Prevent flickering when the pickupOccasionId is updated just before navigaton.
+      // We do need to make it visible. Maybe if we add a transition for the checkmark, we could make it less noticeable
+      // location.href = `#${this.nextStepId}`
+    })
   }
 
   getProductCount(id: Product['id']) {
