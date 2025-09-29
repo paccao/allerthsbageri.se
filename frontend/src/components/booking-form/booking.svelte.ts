@@ -140,9 +140,10 @@ export class BookingState {
   }
 
   selectPickupOccasion(pickup: PickupOccasion) {
-    // TODO: If selecting a different pickupOccasionId, then warn the customer about any differences in products
-    // Otherwise, reset the order items and start fresh
-    this.#order.current.pickupOccasionId = pickup.id
+    if (this.#order.current.pickupOccasionId !== pickup.id) {
+      this.#order.current.items = {}
+      this.#order.current.pickupOccasionId = pickup.id
+    }
 
     tick().then(() => {
       // TODO: Prevent flickering when the pickupOccasionId is updated just before navigaton.
