@@ -89,10 +89,10 @@
       }}
 />
 
-<!-- TODO: Step 2: show product grid with option to show product details -->
 <!-- TODO: Step 3: show customer form -->
-<!-- TODO: Step 3: list products and make is possible to adjust amounts -->
-<!-- TODO: Step 4: show order confirmation -->
+<!-- TODO: Step 3: confirm order before submitting. list products and make it possible to adjust amounts -->
+
+<!-- TODO: Step 4: show order confirmation after sucessfully submitted order  -->
 
 <section class="w-full grid justify-items-center">
   <header class="sticky top-0 w-full border-t">
