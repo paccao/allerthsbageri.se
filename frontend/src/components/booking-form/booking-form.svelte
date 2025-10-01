@@ -68,6 +68,7 @@
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
+  import Order from './order.svelte'
 
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
@@ -114,7 +115,8 @@
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}
       <Products />
-      <!-- {:else if ctx.stepId === 'kund'} -->
+    {:else if ctx.stepId === 'order'}
+      <Order />
     {:else if ctx.isLastStep}
       <a
         href="/"

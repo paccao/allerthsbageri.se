@@ -11,9 +11,9 @@ const orderedSteps = [
   { id: 'tid', title: 'Välj upphämtningstillfälle' },
   { id: 'varor', title: 'Beställ produkter' },
   {
-    id: 'kund',
-    title: 'Dina kontaktuppgifter',
-    nextButtonLabel: 'Skicka beställning',
+    id: 'order',
+    title: 'Bekräfta beställning',
+    nextButtonLabel: 'Beställ',
   },
   { id: 'tack', title: 'Tack för din beställning!' },
 ] as const
@@ -59,7 +59,7 @@ export class BookingState {
     // TODO: Improve validation for customer data, maybe using a zod schema
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
-    kund: () =>
+    order: () =>
       this.customer.name.trim().length > 0 &&
       this.customer.email.trim().length > 0 &&
       this.customer.phone.trim().length > 0,
