@@ -95,9 +95,7 @@
 <!-- TODO: Step 3: list products and make is possible to adjust amounts -->
 <!-- TODO: Step 4: show order confirmation -->
 
-<section
-  class="max-w-[var(--breakpoint-2xl)] mx-auto w-full grid justify-items-center"
->
+<section class="w-full grid justify-items-center">
   <header class="sticky top-0 w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
@@ -110,7 +108,9 @@
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-18 px-4 pt-4">
+  <div
+    class="w-full grid gap-8 pb-18 px-4 pt-4 max-w-[var(--breakpoint-2xl)] mx-auto"
+  >
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}
