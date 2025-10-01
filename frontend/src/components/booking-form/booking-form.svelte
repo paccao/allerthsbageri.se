@@ -72,7 +72,6 @@
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
   // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
-  // TODO: steps as separate snippets that get rendered by selecting the current step
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.

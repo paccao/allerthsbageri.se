@@ -1,7 +1,6 @@
 import { clearHash } from '$lib/utils'
 import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
-import { tick } from 'svelte'
 
 export type Order = {
   pickupOccasionId: number | null
