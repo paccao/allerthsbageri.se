@@ -64,7 +64,7 @@
         aria-disabled={!enabled}
       >
         {#if ctx.step.nextButtonLabel}
-          <span>Skicka beställning</span>
+          <span>{ctx.step.nextButtonLabel}</span>
         {:else}
           <span>Gå vidare</span><LucideChevronRight class="size-4" />
         {/if}
