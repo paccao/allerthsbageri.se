@@ -3,7 +3,6 @@
   import LucideCheck from '~icons/lucide/check'
   import * as Card from '$components/ui/card'
   import { bookingContext } from './context'
-  import { fade } from 'svelte/transition'
 
   let ctx = bookingContext.get()
 
@@ -14,9 +13,12 @@
     hour: '2-digit',
     minute: '2-digit',
   })
+
+  /** Used to prevent visual glitch when navigating */
+  let isNavigating = $state(false)
 </script>
 
-<div class="grid gap-4 max-w-xl mx-auto w-full">
+<div class="grid gap-4 max-w-xl mx-auto w-full" class:hidden={isNavigating}>
   {#each ctx.pickupOccasions as pickup}
     {@const dateTime = dateTimeFormatter.formatRange(
       pickup.startTime,
@@ -24,7 +26,11 @@
     )}
     {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
     <button
-      onclick={() => ctx.selectPickupOccasion(pickup)}
+      onclick={() => {
+        isNavigating = true
+        ctx.selectPickupOccasion(pickup)
+        window.location.hash = `#${ctx.nextStepId}`
+      }}
       aria-label="Välj upphämtningstillfälle {dateTime}"
       class="group cursor-pointer"
     >
@@ -44,14 +50,11 @@
 
         <span
           class="absolute right-4 sm:right-8 text-sm sm:text-base top-1/2 -translate-y-1/2 flex gap-2 items-center font-semibold group-hover:underline underline-offset-2"
-          transition:fade={{ duration: 300 }}
         >
           {#if isSelected}
-            <!-- <span transition:fade={{ duration: 300 }}> -->
             <LucideCheck
               class="size-7 sm:size-8 bg-black text-white rounded-full p-2 shadow-xl mr-4"
             />
-            <!-- </span> -->
           {:else}
             Välj
             <LucideChevronRight class="size-6" />

@@ -144,7 +144,6 @@ export class BookingState {
       this.#order.current.items = {}
       this.#order.current.pickupOccasionId = pickup.id
     }
-    window.location.hash = `#${this.nextStepId}`
   }
 
   getProductCount(id: Product['id']) {
