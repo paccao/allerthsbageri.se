@@ -94,6 +94,9 @@
 <!-- TODO: Step 3: confirm order before submitting. list products and make it possible to adjust amounts -->
 
 <!-- TODO: Step 4: show order confirmation after sucessfully submitted order  -->
+<!-- TODO: Step 4: describe payment methods: swish and cash  -->
+<!-- TODO: Step 4: show date, time and location -->
+<!-- TODO: Step 4: Maybe add notice about cancellation and/or changes -->
 
 <section class="w-full grid justify-items-center">
   <header class="sticky top-0 w-full border-t">
