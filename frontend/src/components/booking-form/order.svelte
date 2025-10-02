@@ -23,7 +23,10 @@
   )
 
   const totalPrice = $derived(
-    orderItems.reduce((total, { price }) => total + price, 0n),
+    orderItems.reduce(
+      (total, { price, count }) => total + price * BigInt(count),
+      0n,
+    ),
   )
 </script>
 
