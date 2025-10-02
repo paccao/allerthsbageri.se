@@ -1,6 +1,13 @@
 import { clearHash } from '$lib/utils'
 import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
+import { z } from 'zod'
+
+const contactDetails = z.object({
+  name: z.string(),
+  email: z.email(),
+  phone: z.e164(),
+})
 
 export type Order = {
   pickupOccasionId: number | null
@@ -63,6 +70,11 @@ export class BookingState {
       this.customer.name.trim().length > 0 &&
       this.customer.email.trim().length > 0 &&
       this.customer.phone.trim().length > 0,
+    //       contactDetails.parse({
+    //   name: this.customer.name.trim(),
+    //   email: this.customer.email.trim(),
+    //   phone: this.customer.phone.trim(),
+    // }),
     tack: () => true,
   }
 
