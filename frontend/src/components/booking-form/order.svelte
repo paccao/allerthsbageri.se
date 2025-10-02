@@ -29,9 +29,25 @@
 
 <div class="grid gap-x-4 gap-y-8 sm:grid-cols-[3fr_2fr]">
   <div class="bg-teal-50 h-full grid gap-4 p-4">
-    <input type="text" placeholder="Namn" />
-    <input type="email" placeholder="Email" />
-    <input type="tel" placeholder="Telefonnummer" />
+    <input
+      type="text"
+      placeholder="Namn"
+      required
+      aria-required="true"
+      bind:value={ctx.customer.name}
+    />
+    <input
+      type="email"
+      placeholder="Email"
+      required
+      aria-required="true"
+      bind:value={ctx.customer.email}
+    />
+    <input
+      type="tel"
+      placeholder="Telefonnummer"
+      bind:value={ctx.customer.phone}
+    />
   </div>
   <Card.Root class="gap-4">
     <Card.Header>
