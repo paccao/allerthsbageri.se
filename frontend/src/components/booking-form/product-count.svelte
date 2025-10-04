@@ -9,11 +9,16 @@
   const ctx = bookingContext.get()
 
   const sizes = {
-    // TODO: Fix buttons for md size. Make sure they fit within the input.
-    // TODO: Rework icon sizes. Maybe turn icon button into a separate component
-    // TODO: Fix icon colors - use currentColor or explicitly add white
-    md: { container: 'h-10 text-base', button: 'size-10', icon: 'size-4' },
-    lg: { container: 'h-12 text-lg', button: 'size-12', icon: 'size-5' },
+    md: {
+      container: 'h-10 text-base',
+      button: 'size-10 rounded-xl',
+      icon: 'size-4',
+    },
+    lg: {
+      container: 'h-12 text-lg',
+      button: 'size-12 rounded-xl',
+      icon: 'size-5',
+    },
   }
 
   type Props = {
@@ -27,7 +32,7 @@
 
 <div
   class={[
-    'gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary',
+    'gap-1 flex justify-between items-stretch text-center outline-black rounded-2xl w-full outline-1 -outline-offset-1',
     sizes[size].container,
     className,
   ]}
