@@ -75,7 +75,7 @@
   })
 </script>
 
-<input type="tel" bind:this={element} class="h-10 leading-8 text-lg" />
+<input type="tel" bind:this={element} class="h-10" />
 
 <style>
   :global(.iti__search-input) {

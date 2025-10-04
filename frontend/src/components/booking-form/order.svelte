@@ -33,25 +33,29 @@
   )
 </script>
 
-<div class="grid gap-x-4 gap-y-8 sm:grid-cols-[3fr_2fr]">
-  <div class="bg-teal-50 h-full grid gap-4 p-4">
+<div class="grid gap-x-4 gap-y-8 sm:grid-cols-[2fr_3fr]">
+  <div class="bg-teal-50 grid p-4 place-content-start gap-4">
     <input
       type="text"
       placeholder="Namn"
+      class="h-10 p-2"
       required
       bind:value={ctx.customer.name}
     />
     <input
       type="email"
       placeholder="Email"
+      class="h-10 p-2"
       required
       bind:value={ctx.customer.email}
     />
-    <input
+    <!-- <input
       type="tel"
       placeholder="Telefonnummer"
       bind:value={ctx.customer.phone}
-    />
+    /> -->
+    <!-- TODO: Either bind or pass callback functions to get and set number -->
+    <!-- <PhoneInput bind:value={ctx.customer.phone} /> -->
     <PhoneInput />
   </div>
 
