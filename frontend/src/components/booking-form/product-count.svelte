@@ -9,6 +9,9 @@
   const ctx = bookingContext.get()
 
   const sizes = {
+    // TODO: Fix buttons for md size. Make sure they fit within the input.
+    // TODO: Rework icon sizes. Maybe turn icon button into a separate component
+    // TODO: Fix icon colors - use currentColor or explicitly add white
     md: { container: 'h-10 text-base', button: 'size-10', icon: 'size-4' },
     lg: { container: 'h-12 text-lg', button: 'size-12', icon: 'size-5' },
   }
@@ -40,18 +43,18 @@
     min="0"
     onfocusin={(event) => event.currentTarget.select()}
     value={count}
-    onchange={(event) => {
-      const val = event.currentTarget.value
+    oninput={(event) => {
+      const val = parseInt(event.currentTarget.value)
 
       // Only update state for numeric values to allow clearing
       // the input with the keyboard and then typing something else.
-      if (val === '') return
-
-      ctx.setProductCount(productId, parseInt(val))
+      if (Number.isInteger(val)) {
+        ctx.setProductCount(productId, val)
+      }
     }}
     onfocusout={(event) => {
-      // Revert to the current value if nothing new was typed to make it harder
-      // to remove the item by accidentally moving focus away from the input.
+      // Revert to the current value if no new numeric value was entered.
+      // This prevents accidentally removing the item by moving focus away from the input.
       if (event.currentTarget.value === '') {
         event.currentTarget.value = count.toString()
       }
