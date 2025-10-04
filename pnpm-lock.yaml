@@ -99,9 +99,6 @@ importers:
       intl-tel-input:
         specifier: ^25.11.2
         version: 25.11.2
-      libphonenumber-js:
-        specifier: ^1.12.23
-        version: 1.12.23
       runed:
         specifier: ^0.34.0
         version: 0.34.0(svelte@5.39.8)
@@ -2101,9 +2098,6 @@ packages:
 
   libphonenumber-js@1.12.10:
     resolution: {integrity: sha512-E91vHJD61jekHHR/RF/E83T/CMoaLXT7cwYA75T4gim4FZjnM6hbJjVIGg7chqlSqRsSvQ3izGmOjHy1SQzcGQ==}
-
-  libphonenumber-js@1.12.23:
-    resolution: {integrity: sha512-RN3q3gImZ91BvRDYjWp7ICz3gRn81mW5L4SW+2afzNCC0I/nkXstBgZThQGTE3S/9q5J90FH4dP+TXx8NhdZKg==}
 
   libsql@0.4.7:
     resolution: {integrity: sha512-T9eIRCs6b0J1SHKYIvD8+KCJMcWZ900iZyxdnSCdqxN12Z1ijzT+jY5nrk72Jw4B0HGzms2NgpryArlJqvc3Lw==}
@@ -5144,8 +5138,6 @@ snapshots:
   kolorist@1.8.0: {}
 
   libphonenumber-js@1.12.10: {}
-
-  libphonenumber-js@1.12.23: {}
 
   libsql@0.4.7:
     dependencies:
