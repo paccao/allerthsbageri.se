@@ -38,18 +38,19 @@
     <input type="email" placeholder="Email" />
     <input type="tel" placeholder="Telefonnummer" />
   </div>
+
   <Card.Root class="gap-4">
     <Card.Header>
       <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
     </Card.Header>
 
     {#if ctx.pickupOccasion}
-      {#if orderItems.length}
-        <Card.Content>
+      <Card.Content>
+        {#if orderItems.length}
           <div class="grid gap-1 font-bold">
             {#each orderItems as { id, name } (id)}
               <div class="flex justify-between items-center gap-x-2">
-                <h2 class="font-bold">{name}</h2>
+                <h2 class="font-bold text-sm md:text-base">{name}</h2>
                 <ProductCount productId={id} size="md" class="max-w-32" />
               </div>
             {/each}
@@ -61,13 +62,7 @@
             <span>Att betala</span>
             <span>{toSEKString(totalPrice)}</span>
           </p>
-        </Card.Content>
-
-        <!-- TODO: Show details about payment conditions -->
-        <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
-        <!-- TODO: Add ToS and privacy policy pages -->
-      {:else}
-        <Card.Content>
+        {:else}
           <div class="grid place-content-center text-center">
             <p>Här var det tomt.</p>
             <p class="pb-6">Dags att lägga till lite varor!</p>
@@ -77,8 +72,16 @@
               href={`#${ctx.prevStepId}`}>Välj produkter</a
             >
           </div>
-        </Card.Content>
-      {/if}
+        {/if}
+      </Card.Content>
     {/if}
   </Card.Root>
+
+  {#if orderItems.length}
+    <div class="sm:col-start-2 px-6 text-black/85">
+      <p>Betalning sker med Swish eller kontant på plats.</p>
+      <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
+      <!-- TODO: Add ToS and privacy policy pages -->
+    </div>
+  {/if}
 </div>
