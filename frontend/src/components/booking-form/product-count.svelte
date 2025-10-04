@@ -70,7 +70,7 @@
         event.currentTarget.value = count.toString()
       }
     }}
-    class="text-center w-full reset-style"
+    class="text-center w-full reset-style focus:-outline-offset-2"
   />
   <Button
     size="icon"
