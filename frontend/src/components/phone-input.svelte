@@ -4,9 +4,9 @@
   import 'intl-tel-input/build/css/intlTelInput.css'
   import sv from 'intl-tel-input/i18n/sv'
 
-  const EUROPEAN_COUNTRIES: Parameters<
-    typeof intlTelInput
-  >[1]['onlyCountries'] = [
+  const EUROPEAN_COUNTRIES: NonNullable<
+    Parameters<typeof intlTelInput>[1]
+  >['onlyCountries'] = [
     'al',
     'ad',
     'at',
@@ -75,9 +75,7 @@
   })
 </script>
 
-<div class="grid place-content-center h-96">
-  <input type="tel" bind:this={element} class="h-10 leading-8 text-lg" />
-</div>
+<input type="tel" bind:this={element} class="h-10 leading-8 text-lg" />
 
 <style>
   :global(.iti__search-input) {

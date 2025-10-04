@@ -5,6 +5,7 @@
   import type { Product } from './booking-form.svelte'
   import ProductCount from './product-count.svelte'
   import { buttonVariants } from '$components/ui/button'
+  import PhoneInput from '$components/phone-input.svelte'
 
   const ctx = bookingContext.get()
 
@@ -51,6 +52,7 @@
       placeholder="Telefonnummer"
       bind:value={ctx.customer.phone}
     />
+    <PhoneInput />
   </div>
 
   <Card.Root class="gap-4">
