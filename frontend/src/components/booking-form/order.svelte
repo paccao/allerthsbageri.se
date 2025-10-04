@@ -44,13 +44,11 @@
     {#if ctx.pickupOccasion && ctx.order}
       <Card.Content class="grow">
         <div class="grid gap-1 font-bold">
-          {#each orderItems as { id, name, count } (id)}
-            <div class="flex justify-between">
+          {#each orderItems as { id, name } (id)}
+            <div class="flex justify-between items-center gap-x-2">
               <h2 class="font-bold">{name}</h2>
-              <span>{count}</span>
+              <ProductCount productId={id} size="md" class="max-w-32" />
             </div>
-            <!-- TODO: Show the buttons to add/remove products -->
-            <!-- TODO: If a product is completely removed from the order, remove it from the list. This should happen automatically when the state is updated -->
           {/each}
         </div>
 
