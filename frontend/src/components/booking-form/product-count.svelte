@@ -43,6 +43,12 @@
     min="0"
     onfocusin={(event) => event.currentTarget.select()}
     value={count}
+    onbeforeinput={(event) => {
+      // Only allow entering numeric values when using the keyboard
+      if (event.data && Number.isNaN(parseInt(event.data, 10))) {
+        event.preventDefault()
+      }
+    }}
     oninput={(event) => {
       const val = parseInt(event.currentTarget.value)
 
