@@ -9,15 +9,16 @@
   const ctx = bookingContext.get()
 
   const sizes = {
-    md: { container: 'h-10 max-w-32', button: 'size-10' },
-    lg: { container: 'h-12 max-w-48', button: 'size-12' },
+    md: { container: 'h-10 text-base', button: 'size-10', icon: 'size-4' },
+    lg: { container: 'h-12 text-lg', button: 'size-12', icon: 'size-5' },
   }
 
   type Props = {
     productId: Product['id']
     size?: keyof typeof sizes
+    class?: string
   }
-  let { productId, size = 'lg' }: Props = $props()
+  let { productId, size = 'lg', class: className }: Props = $props()
   let count = $derived(ctx.getProductCount(productId))
 </script>
 
@@ -25,13 +26,14 @@
   class={[
     'gap-1 flex justify-between w-full items-stretch text-center border-y rounded-md border-primary',
     sizes[size].container,
+    className,
   ]}
 >
   <Button
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.removeProduct(productId, 1)}
-    aria-label="Ta bort 1"><LucideMinus class="size-5" /></Button
+    aria-label="Ta bort 1"><LucideMinus class={sizes[size].icon} /></Button
   >
   <input
     type="number"
@@ -54,13 +56,13 @@
         event.currentTarget.value = count.toString()
       }
     }}
-    class="text-center text-lg w-full reset-style"
+    class="text-center w-full reset-style"
   />
   <Button
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.addProduct(productId, 1)}
-    aria-label="Lägg till 1"><LucidePlus class="size-5" /></Button
+    aria-label="Lägg till 1"><LucidePlus class={sizes[size].icon} /></Button
   >
 </div>
 
