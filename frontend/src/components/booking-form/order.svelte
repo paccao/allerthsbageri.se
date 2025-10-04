@@ -38,14 +38,12 @@
       type="text"
       placeholder="Namn"
       required
-      aria-required="true"
       bind:value={ctx.customer.name}
     />
     <input
       type="email"
       placeholder="Email"
       required
-      aria-required="true"
       bind:value={ctx.customer.email}
     />
     <input
