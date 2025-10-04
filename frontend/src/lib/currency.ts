@@ -1,9 +1,25 @@
-// TODO: Improve currency formatting to use Intl.NumberFormat() instead for a more standardised approach
+const currencyFormatEvenNumbers = new Intl.NumberFormat('sv-SE', {
+  style: 'currency',
+  currency: 'SEK',
+  minimumFractionDigits: 0,
+})
+
+const currencyFormatFractions = new Intl.NumberFormat('sv-SE', {
+  style: 'currency',
+  currency: 'SEK',
+  roundingMode: 'halfCeil',
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+})
+
 export function toSEKString(total: bigint) {
   const kronor = total / 100n
   const ören = total % 100n
+
   if (ören === 0n) {
-    return `${kronor} kr`
+    return currencyFormatEvenNumbers.format(kronor)
   }
-  return `${kronor},${ören} kr`
+
+  // Always show 2 digits for fractions
+  return currencyFormatFractions.format(`${kronor}.${ören}` as `${number}`)
 }
