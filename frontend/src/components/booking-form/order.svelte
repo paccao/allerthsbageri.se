@@ -44,8 +44,8 @@
     </Card.Header>
 
     {#if ctx.pickupOccasion}
-      <Card.Content class="grow">
-        {#if orderItems.length}
+      {#if orderItems.length}
+        <Card.Content>
           <div class="grid gap-1 font-bold">
             {#each orderItems as { id, name } (id)}
               <div class="flex justify-between items-center gap-x-2">
@@ -61,7 +61,13 @@
             <span>Att betala</span>
             <span>{toSEKString(totalPrice)}</span>
           </p>
-        {:else}
+        </Card.Content>
+
+        <!-- TODO: Show details about payment conditions -->
+        <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
+        <!-- TODO: Add ToS and privacy policy pages -->
+      {:else}
+        <Card.Content>
           <div class="grid place-content-center text-center">
             <p>Här var det tomt.</p>
             <p class="pb-6">Dags att lägga till lite varor!</p>
@@ -71,8 +77,8 @@
               href={`#${ctx.prevStepId}`}>Välj produkter</a
             >
           </div>
-        {/if}
-      </Card.Content>
+        </Card.Content>
+      {/if}
     {/if}
   </Card.Root>
 </div>
