@@ -16,6 +16,13 @@
 
 <svelte:document bind:activeElement />
 
+<!--
+  TODO: Show the products listed directly on the same page as pickup occasions page.
+  This would reduce the process by one step. Just select your products, confirm your details and you're done.
+  By showing products earlier, it will be more inviting to complete orders.
+-->
+<!-- IDEA: Alternatively, show the pickup occasion on the products page. Maybe thin banner at the top -->
+
 {#if ctx.pickupOccasion}
   <div
     class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mx-auto pb-4"
