@@ -3,6 +3,7 @@
   import intlTelInput, { type Iti } from 'intl-tel-input'
   import 'intl-tel-input/build/css/intlTelInput.css'
   import sv from 'intl-tel-input/i18n/sv'
+  import type { HTMLInputAttributes } from 'svelte/elements'
 
   const EUROPEAN_COUNTRIES: NonNullable<
     Parameters<typeof intlTelInput>[1]
@@ -55,16 +56,20 @@
     'gb',
   ]
 
-  // TODO: allow passing in the same props as regular tel inputs: class, name, id, required etc. Props should extend the HTML element.
+  interface Props extends HTMLInputAttributes {
+    value: string
+  }
+
   let element: HTMLInputElement
-  let iti: Iti
+  let iti: Iti = $state()!
+
+  let { value = $bindable(), ...restProps }: Props = $props()
 
   onMount(() => {
     iti = intlTelInput(element, {
       i18n: sv,
       initialCountry: 'se',
       nationalMode: true,
-      strictMode: true,
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
     })
@@ -75,7 +80,14 @@
   })
 </script>
 
-<input type="tel" bind:this={element} class="h-10" />
+<input
+  type="tel"
+  bind:this={element}
+  class="h-10"
+  {...restProps}
+  oninput={() => (value = iti.getNumber(intlTelInput.utils?.numberFormat.E164))}
+  {value}
+/>
 
 <style>
   :global(.iti__search-input) {

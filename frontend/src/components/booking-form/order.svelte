@@ -49,14 +49,7 @@
       required
       bind:value={ctx.customer.email}
     />
-    <!-- <input
-      type="tel"
-      placeholder="Telefonnummer"
-      bind:value={ctx.customer.phone}
-    /> -->
-    <!-- TODO: Either bind or pass callback functions to get and set number -->
-    <!-- <PhoneInput bind:value={ctx.customer.phone} /> -->
-    <PhoneInput />
+    <PhoneInput bind:value={ctx.customer.phone} />
   </div>
 
   <Card.Root class="gap-4">
