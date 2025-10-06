@@ -135,12 +135,16 @@
   onDestroy(() => {
     try {
       iti.destroy()
-      // The widget is partially destroyed and disapperars visually,
-      // but crashes with our frontend frameworks.
-      // Possible memory leak, but should be fine since we usually create few instances
-      // and this mostly happens during development with hot reloading.
-      // This problem could be related to how Astro Islands work during dev. This might work better in SvelteKit.
-    } catch {}
+      // NOTE: (development only): The iti.destroy() crashes with the Astro + Svelte HMR
+      // Possible memory leak, but should be fine since this only affects development.
+      // This problem could be related to how Astro Islands work with Svelte during dev.
+      // Switching to SvelteKit might help resolve this issue.
+    } catch {
+      // Manually clean up old elements to prevent visual duplicates of for example flags.
+      document
+        .querySelectorAll('.iti:not(&:last-of-type)')
+        .forEach((wrapper) => wrapper.remove())
+    }
   })
 </script>
 
