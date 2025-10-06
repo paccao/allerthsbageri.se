@@ -77,9 +77,17 @@
         <Card.Content>
           {#if orderItems.length}
             <div class="grid gap-1 font-bold">
+              <!--
+              IDEA: Maybe wrap to two lines for smallest screens, and add some space in between
+              First row with product aligned to the left
+              Second row with counter, aligned to the right
+              -->
               {#each orderItems as { id, name } (id)}
                 <div class="flex justify-between items-center gap-x-2">
                   <h2 class="font-bold text-sm md:text-base">{name}</h2>
+                  <!-- TODO: make ProductCount smaller for 320-375px screens -->
+                  <!-- Maybe decrease the width of the input -->
+                  <!-- Maybe smaller buttons -->
                   <ProductCount productId={id} size="md" class="max-w-32" />
                 </div>
               {/each}
