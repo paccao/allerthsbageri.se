@@ -5,6 +5,8 @@
   import LucidePlus from 'virtual:icons/lucide/plus'
   import { bookingContext } from './context'
   import type { Product } from './booking-form.svelte'
+  import { inputClasses } from '$components/ui/input/input.svelte'
+  import { cn } from '$lib/utils'
 
   const ctx = bookingContext.get()
 
@@ -70,7 +72,10 @@
         event.currentTarget.value = count.toString()
       }
     }}
-    class="text-center w-full reset-style focus:-outline-offset-2"
+    class={cn([
+      inputClasses,
+      'text-center reset-style p-0 shadow-none border-0',
+    ])}
   />
   <Button
     size="icon"
