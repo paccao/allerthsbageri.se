@@ -60,7 +60,7 @@
     <label class="grid">
       Telefonnummer
       <PhoneInput
-        value={ctx.customer.phone}
+        defaultValue={ctx.customer.phone}
         onChange={(newNumber) => (ctx.customer.phone = newNumber)}
         bind:validationError={phoneError}
         class="h-10 border w-full"

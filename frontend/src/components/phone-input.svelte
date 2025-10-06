@@ -57,36 +57,107 @@
   ]
 
   interface Props extends HTMLInputAttributes {
-    value: string
+    /** The intitial phone number */
+    defaultValue: string
+    /** Will be called with the updated number in E164 format (e.g. starting with the +46 country code) */
+    onChange: (newNumber: string) => void
+    validationError?: string | undefined
   }
+
+  let {
+    defaultValue,
+    onChange,
+    validationError = $bindable(),
+    class: className,
+    ...restProps
+  }: Props = $props()
 
   let element: HTMLInputElement
   let iti: Iti = $state()!
-
-  let { value = $bindable(), ...restProps }: Props = $props()
+  let ready = $state(false)
 
   onMount(() => {
+    const isE164Number = defaultValue.startsWith('+')
+    element.value = defaultValue
+
+    // Improve UX when the defaultValue is set by only showing the number once it has been formatted
+    // This makes the loading UX smoother than if we rapidly show multiple number formats
+    if (isE164Number) {
+      let proto = Object.getPrototypeOf(element)
+      let get = Object.getOwnPropertyDescriptor(proto, 'value')!.get!
+      let set = Object.getOwnPropertyDescriptor(proto, 'value')!.set!
+
+      Object.defineProperty(element, 'value', {
+        get,
+        set(v: string) {
+          // Make sure the phone number has been formatted
+          if (v !== defaultValue) {
+            ready = true
+            // Remove this proxy and use the original getter and setter
+            Object.defineProperty(element, 'value', {
+              get,
+              set,
+            })
+          }
+
+          return set?.apply(this, arguments as any)
+        },
+        configurable: true,
+      })
+    }
+
     iti = intlTelInput(element, {
       i18n: sv,
-      initialCountry: 'se',
+      ...(isE164Number ? {} : { initialCountry: 'se' }),
       nationalMode: true,
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
     })
   })
 
+    if (isE164Number) {
+      iti.handleAutoCountry()
+    } else {
+      ready = true
+    }
+  })
+
+  // IDEA: Maybe simplify the error messages. Might be enough to just show if it's valid or not.
+  // However, could also be helpful with more specific errors since we have them.
+  const errorMap = [
+    'Felaktigt telfonnummer',
+    'Ogiltig landskod',
+    'För kort',
+    'För långt',
+    'Felaktigt telfonnummer',
+  ]
+
   onDestroy(() => {
-    iti.destroy()
+    try {
+      iti.destroy()
+      // The widget is partially destroyed and disapperars visually,
+      // but crashes with our frontend frameworks.
+      // Possible memory leak, but should be fine since we usually create few instances
+      // and this mostly happens during development with hot reloading.
+      // This problem could be related to how Astro Islands work during dev. This might work better in SvelteKit.
+    } catch {}
   })
 </script>
 
 <input
   type="tel"
   bind:this={element}
-  class="h-10"
+  class={[!ready && 'text-transparent', className]}
   {...restProps}
-  oninput={() => (value = iti.getNumber(intlTelInput.utils?.numberFormat.E164))}
-  {value}
+  oninput={ready
+    ? () => {
+        onChange(iti.getNumber(intlTelInput.utils?.numberFormat.E164))
+        validationError = iti.isValidNumber()
+          ? undefined
+          : errorMap[iti.getValidationError()]
+      }
+    : null}
+  placeholder="070-123 45 67"
 />
 
 <style>
