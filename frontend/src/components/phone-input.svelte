@@ -119,7 +119,6 @@
       iti.handleAutoCountry()
     } else {
       ready = true
-      iti = null!
     }
   })
 
@@ -145,6 +144,7 @@
       document
         .querySelectorAll('.iti:not(&:last-of-type)')
         .forEach((wrapper) => wrapper.remove())
+      iti = null!
     }
   })
 </script>
