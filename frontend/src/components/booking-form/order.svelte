@@ -55,6 +55,7 @@
         onChange={(newNumber) => (ctx.customer.phone = newNumber)}
         bind:validationError={phoneError}
         class={inputClasses}
+        containerClasses="**:outline-none [&_button]:!rounded-md transition-[color,box-shadow] ring-offset-background border-input **:focus-visible:border-ring **:focus-visible:ring-ring/50 **:focus-visible:ring-[3px]"
       />
       {#if phoneError}
         <span>{phoneError}</span>
