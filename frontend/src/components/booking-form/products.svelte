@@ -17,7 +17,11 @@
 
 {#if ctx.pickupOccasion}
   <div
-    class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mx-auto pb-4"
+    class={[
+      'grid gap-4 sm:grid-cols-2 mx-auto pb-4',
+      ctx.pickupOccasion.products.length > 2 && 'lg:grid-cols-3',
+      ctx.pickupOccasion.products.length > 3 && 'xl:grid-cols-4',
+    ]}
   >
     <!-- TODO: Show product details like ingredients -->
     {#each ctx.pickupOccasion.products as { id, name, description, price }}
