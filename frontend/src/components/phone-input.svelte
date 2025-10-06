@@ -119,6 +119,7 @@
       iti.handleAutoCountry()
     } else {
       ready = true
+      iti = null!
     }
   })
 
