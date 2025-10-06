@@ -180,10 +180,6 @@
 />
 
 <style>
-  :global(.iti__search-input) {
-    height: 40px;
-  }
-
   :global(.iti:not(.ready) .iti__country-container) {
     visibility: hidden;
   }
