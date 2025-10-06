@@ -36,7 +36,7 @@
 </script>
 
 <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2">
-  <div class="grid p-4 place-content-start gap-4">
+  <div class="grid place-content-start gap-4">
     <label class="grid">
       Namn
       <input

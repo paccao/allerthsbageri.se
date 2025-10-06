@@ -112,7 +112,7 @@
   </header>
 
   <div
-    class="w-full grid gap-8 pb-18 px-4 pt-4 max-w-[var(--breakpoint-2xl)] mx-auto"
+    class="w-full grid gap-8 pb-18 px-4 pt-4 sm:pt-8 max-w-[var(--breakpoint-2xl)] mx-auto"
   >
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
