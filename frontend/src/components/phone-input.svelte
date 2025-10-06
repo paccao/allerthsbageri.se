@@ -113,7 +113,6 @@
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
     })
-  })
 
     if (isE164Number) {
       iti.handleAutoCountry()
