@@ -3,9 +3,9 @@ import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 import { z } from 'zod'
 
-const contactDetails = z.object({
-  name: z.string(),
-  email: z.email(),
+const customerSchema = z.object({
+  name: z.string().trim(),
+  email: z.email().trim(),
   phone: z.e164(),
 })
 
@@ -63,18 +63,11 @@ export class BookingState {
   #validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
     varor: () => Object.values(this.order.items).some((amount) => amount > 0),
-    // TODO: Improve validation for customer data, maybe using a zod schema
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
-    order: () =>
-      this.customer.name.trim().length > 0 &&
-      this.customer.email.trim().length > 0 &&
-      this.customer.phone.trim().length > 0,
-    //       contactDetails.parse({
-    //   name: this.customer.name.trim(),
-    //   email: this.customer.email.trim(),
-    //   phone: this.customer.phone.trim(),
-    // }),
+    order: () => {
+      return customerSchema.safeParse(this.customer).success
+    },
     tack: () => true,
   }
 
