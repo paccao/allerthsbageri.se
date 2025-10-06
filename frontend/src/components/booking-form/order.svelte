@@ -31,28 +31,47 @@
       0n,
     ),
   )
+
+  let phoneError: string | undefined = $state()
 </script>
 
-<div class="grid gap-x-4 gap-y-8 sm:grid-cols-[2fr_3fr]">
-  <div class="bg-teal-50 grid p-4 place-content-start gap-4">
-    <input
-      type="text"
-      placeholder="Namn"
-      class="h-10 p-2"
-      required
-      bind:value={ctx.customer.name}
-    />
-    <input
-      type="email"
-      placeholder="Email"
-      class="h-10 p-2"
-      required
-      bind:value={ctx.customer.email}
-    />
-    <PhoneInput bind:value={ctx.customer.phone} />
+<div class="grid gap-x-4 gap-y-8 sm:grid-cols-2">
+  <div class="grid p-4 place-content-start gap-4">
+    <label class="grid">
+      Namn
+      <input
+        type="text"
+        placeholder="Namn"
+        class="h-10 p-2 border"
+        required
+        bind:value={ctx.customer.name}
+      />
+    </label>
+    <label class="grid">
+      Email
+      <input
+        type="email"
+        placeholder="Email"
+        class="h-10 p-2 border"
+        required
+        bind:value={ctx.customer.email}
+      />
+    </label>
+    <label class="grid">
+      Telefonnummer
+      <PhoneInput
+        value={ctx.customer.phone}
+        onChange={(newNumber) => (ctx.customer.phone = newNumber)}
+        bind:validationError={phoneError}
+        class="h-10 border w-full"
+      />
+      {#if phoneError}
+        <span>{phoneError}</span>
+      {/if}
+    </label>
   </div>
 
-  <Card.Root class="gap-4">
+  <Card.Root class="gap-4 h-min">
     <Card.Header>
       <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
     </Card.Header>
