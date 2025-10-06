@@ -39,10 +39,10 @@
 </script>
 
 <div
-  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col"
+  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col justify-center"
 >
   <div
-    class="grid md:justify-end justify-center content-start gap-4 md:grow md:pb-0 pb-8"
+    class="grid w-full gap-4 md:pb-0 pb-8 max-w-xs self-center md:self-start"
   >
     <div class="grid gap-2">
       <Label for="name">Namn</Label>
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <div class="grow max-w-md mx-auto w-full">
+  <div class="grow max-w-md self-center w-full">
     <Card.Root class="gap-4 h-min">
       <Card.Header>
         <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
