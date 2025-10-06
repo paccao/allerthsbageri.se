@@ -152,7 +152,8 @@
 <input
   type="tel"
   bind:this={element}
-  class={[!ready && 'text-transparent', className]}
+  class={className}
+  style:color={ready ? undefined : 'transparent'}
   {...restProps}
   oninput={ready
     ? () => {
