@@ -38,8 +38,12 @@
   let phoneError: string | undefined = $state()
 </script>
 
-<div class="grid gap-x-4 gap-y-8 sm:grid-cols-2">
-  <div class="grid place-content-start gap-4">
+<div
+  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col"
+>
+  <div
+    class="grid md:justify-end justify-center content-start gap-4 md:grow md:pb-0 pb-8"
+  >
     <div class="grid gap-2">
       <Label for="name">Namn</Label>
       <Input id="name" type="text" required bind:value={ctx.customer.name} />
@@ -63,7 +67,7 @@
     </div>
   </div>
 
-  <div>
+  <div class="grow max-w-md mx-auto w-full">
     <Card.Root class="gap-4 h-min">
       <Card.Header>
         <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
