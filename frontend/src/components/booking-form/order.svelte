@@ -6,8 +6,11 @@
   import ProductCount from './product-count.svelte'
   import { buttonVariants } from '$components/ui/button'
   import PhoneInput from '$components/phone-input.svelte'
+  import Label from '$components/ui/label/label.svelte'
+  import Input, { inputClasses } from '$components/ui/input/input.svelte'
 
   const ctx = bookingContext.get()
+  const id = $props.id()
 
   const orderItems = $derived(
     Object.entries(ctx.order.items).reduce<(Product & { count: number })[]>(
@@ -37,38 +40,26 @@
 
 <div class="grid gap-x-4 gap-y-8 sm:grid-cols-2">
   <div class="grid place-content-start gap-4">
-    <label class="grid">
-      Namn
-      <input
-        type="text"
-        placeholder="Namn"
-        class="h-10 p-2 border"
-        required
-        bind:value={ctx.customer.name}
-      />
-    </label>
-    <label class="grid">
-      Email
-      <input
-        type="email"
-        placeholder="Email"
-        class="h-10 p-2 border"
-        required
-        bind:value={ctx.customer.email}
-      />
-    </label>
-    <label class="grid">
-      Telefonnummer
+    <div class="grid gap-2">
+      <Label for="name">Namn</Label>
+      <Input id="name" type="text" required bind:value={ctx.customer.name} />
+    </div>
+    <div class="grid gap-2">
+      <Label for="email">Email</Label>
+      <Input id="email" type="email" required bind:value={ctx.customer.email} />
+    </div>
+    <div class="grid gap-2">
+      <Label for="phone">Telefonnummer</Label>
       <PhoneInput
         defaultValue={ctx.customer.phone}
         onChange={(newNumber) => (ctx.customer.phone = newNumber)}
         bind:validationError={phoneError}
-        class="h-10 border w-full"
+        class={inputClasses}
       />
       {#if phoneError}
         <span>{phoneError}</span>
       {/if}
-    </label>
+    </div>
   </div>
 
   <div>
