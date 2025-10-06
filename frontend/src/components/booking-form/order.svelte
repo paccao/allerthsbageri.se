@@ -39,10 +39,10 @@
 </script>
 
 <div
-  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col justify-center"
+  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col justify-center md:px-4"
 >
   <div
-    class="grid w-full gap-4 md:pb-0 pb-8 max-w-xs self-center md:self-start"
+    class="grid w-full gap-4 px-4 md:px-0 md:pb-0 pb-8 max-w-xs self-center md:self-start"
   >
     <div class="grid gap-2">
       <Label for="name">Namn</Label>
@@ -67,10 +67,10 @@
     </div>
   </div>
 
-  <div class="grow max-w-md self-center w-full">
+  <div class="grow max-w-md self-center w-full px-0 2xs:px-4">
     <Card.Root class="gap-4 h-min">
       <Card.Header>
-        <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
+        <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
       </Card.Header>
 
       {#if ctx.pickupOccasion}

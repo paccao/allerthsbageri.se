@@ -111,9 +111,7 @@
     </div>
   </header>
 
-  <div
-    class="w-full grid gap-8 pb-18 px-4 pt-8 max-w-(--breakpoint-2xl) mx-auto"
-  >
+  <div class="w-full grid gap-8 pb-18 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}
@@ -124,7 +122,7 @@
       <a
         href="/"
         class={cn([
-          'flex items-center gap-2 mt-8',
+          'flex items-center gap-2 mt-8 place-self-center',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}>Till startsidan</a
       >

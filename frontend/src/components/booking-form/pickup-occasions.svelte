@@ -18,7 +18,10 @@
   let isNavigating = $state(false)
 </script>
 
-<div class="grid gap-4 max-w-xl mx-auto w-full" class:hidden={isNavigating}>
+<div
+  class="grid gap-4 max-w-xl mx-auto w-full px-4"
+  class:hidden={isNavigating}
+>
   {#each ctx.pickupOccasions as pickup}
     {@const dateTime = dateTimeFormatter.formatRange(
       pickup.startTime,
