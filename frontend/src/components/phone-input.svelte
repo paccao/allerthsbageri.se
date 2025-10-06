@@ -174,11 +174,7 @@
     height: 40px;
   }
 
-  :global(.iti .iti__country-container) {
+  :global(.iti:not(.ready) .iti__country-container) {
     visibility: hidden;
-  }
-
-  :global(.iti.ready .iti__country-container) {
-    visibility: initial;
   }
 </style>
