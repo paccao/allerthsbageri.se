@@ -71,49 +71,51 @@
     </label>
   </div>
 
-  <Card.Root class="gap-4 h-min">
-    <Card.Header>
-      <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
-    </Card.Header>
+  <div>
+    <Card.Root class="gap-4 h-min">
+      <Card.Header>
+        <Card.Title class="font-bold text-lg h-full">Varukorg</Card.Title>
+      </Card.Header>
 
-    {#if ctx.pickupOccasion}
-      <Card.Content>
-        {#if orderItems.length}
-          <div class="grid gap-1 font-bold">
-            {#each orderItems as { id, name } (id)}
-              <div class="flex justify-between items-center gap-x-2">
-                <h2 class="font-bold text-sm md:text-base">{name}</h2>
-                <ProductCount productId={id} size="md" class="max-w-32" />
-              </div>
-            {/each}
-          </div>
+      {#if ctx.pickupOccasion}
+        <Card.Content>
+          {#if orderItems.length}
+            <div class="grid gap-1 font-bold">
+              {#each orderItems as { id, name } (id)}
+                <div class="flex justify-between items-center gap-x-2">
+                  <h2 class="font-bold text-sm md:text-base">{name}</h2>
+                  <ProductCount productId={id} size="md" class="max-w-32" />
+                </div>
+              {/each}
+            </div>
 
-          <hr class="my-4" />
+            <hr class="my-4" />
 
-          <p class="font-bold flex justify-between">
-            <span>Att betala</span>
-            <span>{toSEKString(totalPrice)}</span>
-          </p>
-        {:else}
-          <div class="grid place-content-center text-center">
-            <p>Här var det tomt.</p>
-            <p class="pb-6">Dags att lägga till lite varor!</p>
+            <p class="font-bold flex justify-between">
+              <span>Att betala</span>
+              <span>{toSEKString(totalPrice)}</span>
+            </p>
+          {:else}
+            <div class="grid place-content-center text-center">
+              <p>Här var det tomt.</p>
+              <p class="pb-6">Dags att lägga till lite varor!</p>
 
-            <a
-              class={buttonVariants({ size: 'lg' })}
-              href={`#${ctx.prevStepId}`}>Välj produkter</a
-            >
-          </div>
-        {/if}
-      </Card.Content>
+              <a
+                class={buttonVariants({ size: 'lg' })}
+                href={`#${ctx.prevStepId}`}>Välj produkter</a
+              >
+            </div>
+          {/if}
+        </Card.Content>
+      {/if}
+    </Card.Root>
+
+    {#if orderItems.length}
+      <div class="px-6 pt-8 text-black/85">
+        <p>Betalning sker med Swish eller kontant på plats.</p>
+        <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
+        <!-- TODO: Add ToS and privacy policy pages -->
+      </div>
     {/if}
-  </Card.Root>
-
-  {#if orderItems.length}
-    <div class="sm:col-start-2 px-6 text-black/85">
-      <p>Betalning sker med Swish eller kontant på plats.</p>
-      <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
-      <!-- TODO: Add ToS and privacy policy pages -->
-    </div>
-  {/if}
+  </div>
 </div>
