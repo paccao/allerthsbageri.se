@@ -3,7 +3,8 @@
   import intlTelInput, { type Iti } from 'intl-tel-input'
   import 'intl-tel-input/build/css/intlTelInput.css'
   import sv from 'intl-tel-input/i18n/sv'
-  import type { HTMLInputAttributes } from 'svelte/elements'
+  import type { ClassValue, HTMLInputAttributes } from 'svelte/elements'
+  import { cn } from '$lib/utils'
 
   const EUROPEAN_COUNTRIES: NonNullable<
     Parameters<typeof intlTelInput>[1]
@@ -62,6 +63,8 @@
     /** Will be called with the updated number in E164 format (e.g. starting with the +46 country code) */
     onChange: (newNumber: string) => void
     validationError?: string | undefined
+    /** CSS classes applied to the container element that wraps the input */
+    containerClasses?: ClassValue
   }
 
   let {
@@ -69,6 +72,7 @@
     onChange,
     validationError = $bindable(),
     class: className,
+    containerClasses,
     ...restProps
   }: Props = $props()
 
@@ -98,7 +102,6 @@
               get,
               set,
             })
-            element.parentElement!.classList.add('ready')
           }
 
           return set?.apply(this, arguments as any)
@@ -121,7 +124,14 @@
       iti.handleAutoCountry()
     } else {
       ready = true
-      element.parentElement!.classList.add('ready')
+    }
+  })
+
+  $effect(() => {
+    if (ready) {
+      element.parentElement!.classList.add(
+        ...cn('ready', containerClasses).split(' '),
+      )
     }
   })
 
