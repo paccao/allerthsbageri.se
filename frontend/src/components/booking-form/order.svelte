@@ -10,7 +10,6 @@
   import Input, { inputClasses } from '$components/ui/input/input.svelte'
 
   const ctx = bookingContext.get()
-  const id = $props.id()
 
   const orderItems = $derived(
     Object.entries(ctx.order.items).reduce<(Product & { count: number })[]>(
