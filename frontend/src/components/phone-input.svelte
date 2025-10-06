@@ -98,6 +98,7 @@
               get,
               set,
             })
+            element.parentElement!.classList.add('ready')
           }
 
           return set?.apply(this, arguments as any)
@@ -110,6 +111,7 @@
       i18n: sv,
       ...(isE164Number ? {} : { initialCountry: 'se' }),
       nationalMode: true,
+      strictMode: true,
       autoPlaceholder: 'aggressive',
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
@@ -119,6 +121,7 @@
       iti.handleAutoCountry()
     } else {
       ready = true
+      element.parentElement!.classList.add('ready')
     }
   })
 
@@ -169,5 +172,13 @@
 <style>
   :global(.iti__search-input) {
     height: 40px;
+  }
+
+  :global(.iti .iti__country-container) {
+    visibility: hidden;
+  }
+
+  :global(.iti.ready .iti__country-container) {
+    visibility: initial;
   }
 </style>
