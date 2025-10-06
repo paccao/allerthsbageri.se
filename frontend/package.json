@@ -24,13 +24,13 @@
     "intl-tel-input": "^25.11.2",
     "runed": "^0.34.0",
     "sharp": "^0.34.4",
-    "svelte": "^5.39.8",
+    "svelte": "^5.39.9",
     "tailwindcss": "^4.1.14",
     "zod": "^4.1.11"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.68",
-    "@types/node": "^24.6.2",
+    "@types/node": "^24.7.0",
     "bits-ui": "^2.11.4",
     "clsx": "^2.1.1",
     "prettier": "^3.6.2",
