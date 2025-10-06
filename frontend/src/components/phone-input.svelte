@@ -110,6 +110,7 @@
       i18n: sv,
       ...(isE164Number ? {} : { initialCountry: 'se' }),
       nationalMode: true,
+      autoPlaceholder: 'aggressive',
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
     })
