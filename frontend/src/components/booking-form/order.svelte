@@ -115,3 +115,9 @@
     {/if}
   </div>
 </div>
+
+<style>
+  :global(.iti__search-input) {
+    height: 40px;
+  }
+</style>
