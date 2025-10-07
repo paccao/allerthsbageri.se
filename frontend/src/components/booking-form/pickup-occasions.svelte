@@ -31,7 +31,7 @@
     <button
       onclick={() => {
         isNavigating = true
-        ctx.selectPickupOccasion(pickup)
+        ctx.selectPickupOccasion(pickup.id)
         window.location.hash = `#${ctx.nextStepId}`
       }}
       aria-label="Välj upphämtningstillfälle {dateTime}"

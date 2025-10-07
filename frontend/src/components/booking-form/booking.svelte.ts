@@ -143,10 +143,10 @@ export class BookingState {
     return this.#enabledSteps[id]
   }
 
-  selectPickupOccasion(pickup: PickupOccasion) {
-    if (this.#order.current.pickupOccasionId !== pickup.id) {
+  selectPickupOccasion(id: PickupOccasion['id']) {
+    if (this.#order.current.pickupOccasionId !== id) {
       this.#order.current.items = {}
-      this.#order.current.pickupOccasionId = pickup.id
+      this.#order.current.pickupOccasionId = id
     }
   }
 

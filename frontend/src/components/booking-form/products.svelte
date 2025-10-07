@@ -43,7 +43,7 @@ By showing products earlier, it will be more inviting to complete orders.
   )}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   <button
-    onclick={() => ctx.selectPickupOccasion(pickup)}
+    onclick={() => ctx.selectPickupOccasion(pickup.id)}
     aria-label="Välj upphämtningstillfälle {dateTime}"
     class="group cursor-pointer max-w-(--breakpoint-lg) mx-auto w-full p-4"
   >
