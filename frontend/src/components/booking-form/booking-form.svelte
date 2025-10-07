@@ -113,7 +113,7 @@
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-18 pt-8 max-w-(--breakpoint-2xl) mx-auto">
+  <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}
