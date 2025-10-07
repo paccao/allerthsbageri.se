@@ -76,7 +76,6 @@
 
 @theme {
   --breakpoint-*: initial;
-  --breakpoint-3xs: 300px;
   --breakpoint-2xs: 375px;
   --breakpoint-xs: 475px;
   --breakpoint-sm: 640px;

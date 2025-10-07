@@ -3,6 +3,9 @@ import { Image } from 'astro:assets'
 
 import EncryptedEmail from '$components/EncryptedEmail.svelte'
 import { SITE_NAME } from '$lib/constants'
+import Divider from '$components/Divider.astro'
+import { cn } from '$lib/utils'
+import { buttonVariants } from '$components/ui/button'
 
 import kursinbjudan from '$assets/inbjudan-surdegskurs.png'
 import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg'
@@ -21,7 +24,6 @@ import vitsippor from '$assets/vitsippor-vandring.jpg'
 import breadPrenumeration from '$assets/brod-prenumeration.jpeg'
 import breadMarket from '$assets/brod-marknad.jpeg'
 import leaderSjuharad from '$assets/leader-sjuharad.png'
-import Divider from './Divider.astro'
 
 const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
   dateStyle: 'full',
@@ -48,14 +50,12 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           </h1>
         </div>
         <nav class="flex flex-col justify-center">
-          {Astro.url.pathname !== '/bokning' && (
-            <a
-              class="h-auto mx-auto px-4 py-2 border rounded-md"
-              href="/bokning"
-            >
-              Boka bröd
-            </a>
-          )}
+          <a
+            href="/bokning"
+            class={cn([buttonVariants({ variant: 'outline', size: 'xl' })])}
+          >
+            Boka bröd
+          </a>
         </nav>
       </div>
     ) : (
