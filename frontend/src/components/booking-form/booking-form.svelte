@@ -68,11 +68,9 @@
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
+  import Order from './order.svelte'
 
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
-
-  // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
-  // TODO: steps as separate snippets that get rendered by selecting the current step
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
@@ -90,14 +88,19 @@
       }}
 />
 
-<!-- TODO: Step 2: show product grid with option to show product details -->
 <!-- TODO: Step 3: show customer form -->
-<!-- TODO: Step 3: list products and make is possible to adjust amounts -->
-<!-- TODO: Step 4: show order confirmation -->
+<!-- TODO: Step 3: confirm order before submitting. list products and make it possible to adjust amounts -->
 
-<section
-  class="max-w-[var(--breakpoint-2xl)] mx-auto w-full grid justify-items-center"
->
+<!-- TODO: Step 4: show order confirmation after sucessfully submitted order  -->
+<!-- TODO: Step 4: describe payment methods: swish and cash  -->
+<!-- TODO: Step 4: show date, time and location -->
+<!-- TODO: Step 4: Maybe add notice about cancellation and/or changes -->
+<!--
+  TODO: Step 4: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
+  We could also show a list of other pickup occasions that you haven't ordered from in the current session.
+-->
+
+<section class="w-full grid justify-items-center">
   <header class="sticky top-0 w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
@@ -110,17 +113,18 @@
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-18 px-4 pt-4">
+  <div class="w-full grid gap-8 pb-18 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}
       <Products />
-      <!-- {:else if ctx.stepId === 'kund'} -->
+    {:else if ctx.stepId === 'order'}
+      <Order />
     {:else if ctx.isLastStep}
       <a
         href="/"
         class={cn([
-          'flex items-center gap-2 mt-8',
+          'flex items-center gap-2 mt-8 place-self-center',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}>Till startsidan</a
       >

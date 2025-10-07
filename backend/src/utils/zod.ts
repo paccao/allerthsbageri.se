@@ -16,7 +16,7 @@ export const zPhone = z.string().transform((arg, ctx) => {
   }
 
   ctx.addIssue({
-    code: z.ZodIssueCode.custom,
+    code: 'custom',
     message: 'Invalid phone number',
   })
   return z.NEVER

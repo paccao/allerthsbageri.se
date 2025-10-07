@@ -40,7 +40,7 @@
           {@const enabled = ctx.canNavigateToStep(id)}
           <a
             class={cn([
-              'rounded-full size-4 border border-black',
+              'rounded-full size-4 border border-black select-none',
               id === ctx.stepId
                 ? 'bg-black'
                 : 'hover:bg-black/20 focus:bg-black/20',
@@ -58,13 +58,13 @@
       <a
         href={enabled ? `#${ctx.nextStepId}` : 'javascript:void(0)'}
         class={cn([
-          'justify-self-end',
+          'justify-self-end select-none',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}
         aria-disabled={!enabled}
       >
         {#if ctx.step.nextButtonLabel}
-          <span>Skicka beställning</span>
+          <span>{ctx.step.nextButtonLabel}</span>
         {:else}
           <span>Gå vidare</span><LucideChevronRight class="size-4" />
         {/if}

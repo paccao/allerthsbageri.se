@@ -10,7 +10,7 @@ const site = 'https://www.allerthsbageri.se'
 export default defineConfig({
   site,
   integrations: [
-    svelte(),
+    svelte({ compilerOptions: { experimental: { async: true } } }),
     sitemap({
       // Filter out some pages from the sitemap during the production build
       filter: (page) =>

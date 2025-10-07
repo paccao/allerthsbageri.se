@@ -1,7 +1,13 @@
 import { clearHash } from '$lib/utils'
 import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
-import { tick } from 'svelte'
+import { z } from 'zod'
+
+const customerSchema = z.object({
+  name: z.string().trim(),
+  email: z.email().trim(),
+  phone: z.e164(),
+})
 
 export type Order = {
   pickupOccasionId: number | null
@@ -12,9 +18,9 @@ const orderedSteps = [
   { id: 'tid', title: 'Välj upphämtningstillfälle' },
   { id: 'varor', title: 'Beställ produkter' },
   {
-    id: 'kund',
-    title: 'Dina kontaktuppgifter',
-    nextButtonLabel: 'Skicka beställning',
+    id: 'order',
+    title: 'Bekräfta beställning',
+    nextButtonLabel: 'Beställ',
   },
   { id: 'tack', title: 'Tack för din beställning!' },
 ] as const
@@ -57,13 +63,11 @@ export class BookingState {
   #validators: Record<StepId, () => boolean> = {
     tid: () => Number.isInteger(this.order.pickupOccasionId),
     varor: () => Object.values(this.order.items).some((amount) => amount > 0),
-    // TODO: Improve validation for customer data, maybe using a zod schema
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
-    kund: () =>
-      this.customer.name.trim().length > 0 &&
-      this.customer.email.trim().length > 0 &&
-      this.customer.phone.trim().length > 0,
+    order: () => {
+      return customerSchema.safeParse(this.customer).success
+    },
     tack: () => true,
   }
 
