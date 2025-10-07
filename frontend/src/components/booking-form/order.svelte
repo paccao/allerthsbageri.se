@@ -34,6 +34,10 @@
     ),
   )
 
+  const totalCount = $derived(
+    orderItems.reduce((total, { count }) => total + count, 0),
+  )
+
   let phoneError: string | undefined = $state()
 </script>
 
@@ -83,6 +87,8 @@
                   class="grid gap-4 xs:gap-2 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
                 >
                   <h2 class="font-bold text-sm lg:text-base">{name}</h2>
+                  <!-- IDEA: Show ProductCount to the left on small screens, then switch to the right side -->
+                  <!-- IDEA: Show total cost for each item to the right on small screens, and switch to show above on large screens -->
                   <ProductCount
                     productId={id}
                     size="md"
@@ -109,7 +115,10 @@
             : 'pb-6'}
         >
           {#if orderItems.length}
-            <span>Att betala</span>
+            <span
+              >{totalCount}
+              {`var${totalCount < 2 ? 'a' : 'or'}`}</span
+            >
             <span>{toSEKString(totalPrice)}</span>
           {/if}
         </Card.Footer>
