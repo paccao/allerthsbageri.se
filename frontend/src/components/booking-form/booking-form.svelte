@@ -72,8 +72,6 @@
 
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
-  // TODO: state management for the booking process: pickup occasion, products and amounts, contact details
-
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
   const url = new URL(window.location.href)
@@ -97,6 +95,10 @@
 <!-- TODO: Step 4: describe payment methods: swish and cash  -->
 <!-- TODO: Step 4: show date, time and location -->
 <!-- TODO: Step 4: Maybe add notice about cancellation and/or changes -->
+<!--
+  TODO: Step 4: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
+  We could also show a list of other pickup occasions that you haven't ordered from in the current session.
+-->
 
 <section class="w-full grid justify-items-center">
   <header class="sticky top-0 w-full border-t">

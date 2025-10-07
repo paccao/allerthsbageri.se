@@ -9,11 +9,22 @@
 </script>
 
 <!--
-  TODO: Show the products listed directly on the same page as pickup occasions page.
-  This would reduce the process by one step. Just select your products, confirm your details and you're done.
-  By showing products earlier, it will be more inviting to complete orders.
+TODO: Show clearly separated sections for each pickup occasion, with thier products listed in each section.
+IDEA: Maybe implement as an accordion where selecting products from one pickup occasion disables the other sections.
+IDEA: Show selection check mark for the selected pickup occasion.
+
+To disable the other pickup occasions:
+1) IDEA: Show overlay on hover or pointerdown over the section and describe that you.
+2) IDEA: Only show overlay when pressing the ProductCount buttons.
+   This is probably the best because it lets customers stay focused, and given them additional
+   information only when they need it.
+3) IDEA: Collapse the other sections to just show them as dates.
+
+This would allow us to use one less step in the booking process. Just select your products, confirm your details and you're done.
+By showing products earlier, it will be more inviting to complete orders.
 -->
 <!-- IDEA: Alternatively, show the pickup occasion on the products page. Maybe thin banner at the top -->
+<!-- TODO: Only show the two upcoming pickup occasions -->
 
 {#if ctx.pickupOccasion}
   <div

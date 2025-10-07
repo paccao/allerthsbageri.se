@@ -70,6 +70,8 @@
     <Card.Root class="gap-4 h-min">
       <Card.Header>
         <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
+
+        <!-- IDEA: Show pickup occasion details here for easy confirmation -->
       </Card.Header>
 
       {#if ctx.pickupOccasion}
@@ -89,10 +91,12 @@
                   <!-- Maybe smaller buttons -->
                   <ProductCount productId={id} size="md" class="max-w-32" />
                 </div>
+                <!-- IDEA: Add separator between each order item - border bottom -->
               {/each}
             </div>
 
             <hr class="my-4" />
+            <!-- IDEA: use a solid background for the footer -->
 
             <p class="font-bold flex justify-between">
               <span>Att betala</span>
