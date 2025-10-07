@@ -74,7 +74,7 @@
     }}
     class={cn([
       inputClasses,
-      'text-center reset-style p-0 shadow-none border-0 h-full',
+      'text-center reset-style p-0 shadow-none border-0 h-full !text-base',
     ])}
   />
   <Button
