@@ -37,6 +37,19 @@
   const totalCount = $derived(
     orderItems.reduce((total, { count }) => total + count, 0),
   )
+
+  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  const pickup = $derived(ctx.pickupOccasion!)
+  const dateTime = $derived(
+    dateTimeFormatter.formatRange(pickup.startTime, pickup.endTime),
+  )
 </script>
 
 <div
@@ -67,11 +80,17 @@
 
   <div class="grow max-w-md self-center w-full px-0 2xs:px-4">
     <Card.Root class="gap-4 h-min pb-0">
-      <Card.Header>
+      <Card.Header class="gap-4">
         <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
 
-        <!-- IDEA: Show pickup occasion details here for easy confirmation -->
-        <!-- {ctx.pickupOccasion.} -->
+        <p
+          class="bg-accent rounded-md grid grid-cols-[max-content_1fr] p-2 shadow-sm text-sm"
+        >
+          <span class="font-bold">Upphämtning:</span>
+          <span class="text-right">{dateTime}</span>
+          <span class="font-bold">Plats:</span>
+          <span class="text-right">{pickup.location}</span>
+        </p>
       </Card.Header>
 
       {#if ctx.pickupOccasion}
