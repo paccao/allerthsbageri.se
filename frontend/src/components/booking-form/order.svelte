@@ -37,8 +37,6 @@
   const totalCount = $derived(
     orderItems.reduce((total, { count }) => total + count, 0),
   )
-
-  let phoneError: string | undefined = $state()
 </script>
 
 <div
@@ -58,15 +56,12 @@
     <div class="grid gap-2">
       <Label for="phone">Telefonnummer</Label>
       <PhoneInput
+        id="phone"
         defaultValue={ctx.customer.phone}
         onChange={(newNumber) => (ctx.customer.phone = newNumber)}
-        bind:validationError={phoneError}
         class={inputClasses}
         containerClasses="**:outline-none [&_input]:h-10 [&_button]:!rounded-md transition-[color,box-shadow] ring-offset-background border-input **:focus-visible:border-ring **:focus-visible:ring-ring/50 **:focus-visible:ring-[3px]"
       />
-      {#if phoneError}
-        <span>{phoneError}</span>
-      {/if}
     </div>
   </div>
 
