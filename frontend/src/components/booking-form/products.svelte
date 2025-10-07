@@ -29,11 +29,11 @@
         <Card.Header>
           <Card.Title class="font-bold text-lg">{name}</Card.Title>
         </Card.Header>
-        <Card.Content class="grow">
+        <Card.Content class="grow grid grid-rows-[1fr_min-content] gap-2">
           <Card.Description class="text-black/85"
             >{description}</Card.Description
           >
-          <p class="font-black pt-2">
+          <p class="font-black">
             {toSEKString(price)}
           </p>
         </Card.Content>
