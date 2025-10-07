@@ -67,7 +67,7 @@
   </div>
 
   <div class="grow max-w-md self-center w-full px-0 2xs:px-4">
-    <Card.Root class="gap-4 h-min">
+    <Card.Root class="gap-4 h-min pb-0">
       <Card.Header>
         <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
 
@@ -77,31 +77,20 @@
       {#if ctx.pickupOccasion}
         <Card.Content>
           {#if orderItems.length}
-            <div class="grid gap-1 font-bold">
-              <!--
-              IDEA: Maybe wrap to two lines for smallest screens, and add some space in between
-              First row with product aligned to the left
-              Second row with counter, aligned to the right
-              -->
+            <ul class="grid gap-4 font-bold">
               {#each orderItems as { id, name } (id)}
-                <div class="flex justify-between items-center gap-x-2">
-                  <h2 class="font-bold text-sm md:text-base">{name}</h2>
-                  <!-- TODO: make ProductCount smaller for 320-375px screens -->
-                  <!-- Maybe decrease the width of the input -->
-                  <!-- Maybe smaller buttons -->
-                  <ProductCount productId={id} size="md" class="max-w-32" />
-                </div>
-                <!-- IDEA: Add separator between each order item - border bottom -->
+                <li
+                  class="grid gap-4 xs:gap-2 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
+                >
+                  <h2 class="font-bold text-sm lg:text-base">{name}</h2>
+                  <ProductCount
+                    productId={id}
+                    size="md"
+                    class="max-w-32 justify-self-end"
+                  />
+                </li>
               {/each}
-            </div>
-
-            <hr class="my-4" />
-            <!-- IDEA: use a solid background for the footer -->
-
-            <p class="font-bold flex justify-between">
-              <span>Att betala</span>
-              <span>{toSEKString(totalPrice)}</span>
-            </p>
+            </ul>
           {:else}
             <div class="grid place-content-center text-center">
               <p>Här var det tomt.</p>
@@ -114,6 +103,16 @@
             </div>
           {/if}
         </Card.Content>
+        <Card.Footer
+          class={orderItems.length
+            ? 'bg-accent py-4 font-bold justify-between'
+            : 'pb-6'}
+        >
+          {#if orderItems.length}
+            <span>Att betala</span>
+            <span>{toSEKString(totalPrice)}</span>
+          {/if}
+        </Card.Footer>
       {/if}
     </Card.Root>
 
