@@ -19,9 +19,7 @@
 </script>
 
 <!--
-TODO: Show clearly separated sections for each pickup occasion, with thier products listed in each section.
 IDEA: Maybe implement as an accordion where selecting products from one pickup occasion disables the other sections.
-IDEA: Show selection check mark for the selected pickup occasion.
 
 To disable the other pickup occasions:
 1) IDEA: Show overlay on hover or pointerdown over the section and describe that you.
@@ -33,8 +31,14 @@ To disable the other pickup occasions:
 This would allow us to use one less step in the booking process. Just select your products, confirm your details and you're done.
 By showing products earlier, it will be more inviting to complete orders.
 -->
-<!-- IDEA: Alternatively, show the pickup occasion on the products page. Maybe thin banner at the top -->
-<!-- TODO: Only show the two upcoming pickup occasions -->
+
+<!--
+TODO: Only show the two upcoming pickup occasions.
+This should be limited in the API to only return the two next pickupOccasions,
+or those with startDate within the next two weeks
+-->
+
+<!-- IDEA: Maybe add a short description at the top -->
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
   {@const dateTime = dateTimeFormatter.formatRange(
@@ -42,6 +46,11 @@ By showing products earlier, it will be more inviting to complete orders.
     pickup.endTime,
   )}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
+  <!--
+  IDEA: Maybe instead of rendering a button, what if we wrap all products in another card?
+  Then we get more flexibility for showing the pickup occasion at the top.
+  -->
+  <!-- IDEA: Make the pickup occasions non-interactive. They are selected automatically when you select products -->
   <button
     onclick={() => ctx.selectPickupOccasion(pickup.id)}
     aria-label="Välj upphämtningstillfälle {dateTime}"
@@ -91,7 +100,14 @@ By showing products earlier, it will be more inviting to complete orders.
             <Button
               class="w-full self-end"
               size="xl"
-              onclick={() => ctx.addProduct(id, 1)}>Lägg i varukorg</Button
+              onclick={() => {
+                // TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding.
+                // Possibly clear the selected products
+                if (ctx.pickupOccasion?.id !== pickup.id) {
+                  ctx.selectPickupOccasion(pickup.id)
+                }
+                ctx.addProduct(id, 1)
+              }}>Lägg i varukorg</Button
             >
           {/if}
         </Card.Footer>
