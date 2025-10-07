@@ -92,7 +92,7 @@
                   <div
                     class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
                   >
-                    <span class="hidden xs:flex justify-self-end pb-1"
+                    <span class="hidden xs:flex justify-self-end pb-1 pr-1"
                       >{productTotalPrice}</span
                     >
                     <ProductCount productId={id} size="md" class="max-w-32" />
@@ -131,7 +131,7 @@
 
     {#if orderItems.length}
       <div class="px-6 pt-8 text-black/85">
-        <p>Betalning sker med Swish eller kontant på plats.</p>
+        <p>Betalning sker på plats med Swish eller kontant.</p>
         <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
         <!-- TODO: Add ToS and privacy policy pages -->
       </div>
