@@ -76,6 +76,7 @@
         <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
 
         <!-- IDEA: Show pickup occasion details here for easy confirmation -->
+        <!-- {ctx.pickupOccasion.} -->
       </Card.Header>
 
       {#if ctx.pickupOccasion}
@@ -85,7 +86,7 @@
               {#each orderItems as { id, name, count, price } (id)}
                 {@const productTotalPrice = toSEKString(BigInt(count) * price)}
                 <li
-                  class="grid gap-4 xs:gap-2 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
+                  class="grid gap-4 xs:gap-0 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
                 >
                   <h2 class="font-bold text-sm lg:text-base">{name}</h2>
                   <div
