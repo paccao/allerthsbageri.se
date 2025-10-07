@@ -82,18 +82,21 @@
         <Card.Content>
           {#if orderItems.length}
             <ul class="grid gap-4 font-bold">
-              {#each orderItems as { id, name } (id)}
+              {#each orderItems as { id, name, count, price } (id)}
+                {@const productTotalPrice = toSEKString(BigInt(count) * price)}
                 <li
                   class="grid gap-4 xs:gap-2 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
                 >
                   <h2 class="font-bold text-sm lg:text-base">{name}</h2>
-                  <!-- IDEA: Show ProductCount to the left on small screens, then switch to the right side -->
-                  <!-- IDEA: Show total cost for each item to the right on small screens, and switch to show above on large screens -->
-                  <ProductCount
-                    productId={id}
-                    size="md"
-                    class="max-w-32 justify-self-end"
-                  />
+                  <div
+                    class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
+                  >
+                    <span class="hidden xs:flex justify-self-end pb-1"
+                      >{productTotalPrice}</span
+                    >
+                    <ProductCount productId={id} size="md" class="max-w-32" />
+                    <span class="xs:hidden">{productTotalPrice}</span>
+                  </div>
                 </li>
               {/each}
             </ul>
