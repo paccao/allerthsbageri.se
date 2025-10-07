@@ -16,6 +16,17 @@
     hour: '2-digit',
     minute: '2-digit',
   })
+
+  const items = $derived(
+    ctx.pickupOccasion
+      ? [
+          ctx.pickupOccasion.products,
+          ctx.pickupOccasion.products,
+          ctx.pickupOccasion.products,
+          ctx.pickupOccasion.products.slice(0, 1),
+        ].flat()
+      : [],
+  )
 </script>
 
 <!--
@@ -71,16 +82,18 @@ By showing products earlier, it will be more inviting to complete orders.
 {/each}
 
 {#if ctx.pickupOccasion}
-  <div
-    class={[
-      'grid gap-4 sm:grid-cols-2 mx-auto pb-4 px-4',
-      ctx.pickupOccasion.products.length > 2 && 'lg:grid-cols-3',
-      ctx.pickupOccasion.products.length > 3 && 'xl:grid-cols-4',
-    ]}
-  >
-    <!-- TODO: Show product details like ingredients -->
-    {#each ctx.pickupOccasion.products as { id, name, description, price }}
-      <Card.Root class="gap-4 max-w-sm sm:max-w-xs w-full">
+  <div class="products-grid flex flex-wrap justify-center">
+    <!-- IDEA: Allow opening a modal to see product details like ingredients -->
+    <!-- {#each [ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products].flat() as { id, name, description, price }} -->
+    {#each items as { id, name, description, price }}
+      <!-- <Card.Root class="product max-w-sm xs:!min-w-sm"> -->
+      <!-- <Card.Root
+        class="product max-w-sm xs:!min-w-[clamp(280px,calc(100%/var(--max-cols)),384px)]"
+      > -->
+      <!-- <Card.Root
+        class="product max-w-sm xs:!min-w-sm sm:!min-w-[clamp(300px,40%,384px)]"
+      > -->
+      <Card.Root class="product">
         <Card.Header>
           <Card.Title class="font-bold text-lg">{name}</Card.Title>
         </Card.Header>
@@ -107,3 +120,107 @@ By showing products earlier, it will be more inviting to complete orders.
     {/each}
   </div>
 {/if}
+
+<!--
+{#if ctx.pickupOccasion}
+  <div
+    class={'grid mx-auto pb-4 px-4 w-full place-content-center justify-items-center products-grid'}
+  >
+    <! -- IDEA: Allow opening a modal to see product details like ingredients -- >
+    <! -- {#each [ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products, ctx.pickupOccasion.products].flat() as { id, name, description, price }} -- >
+    {#each [ctx.pickupOccasion.products, ctx.pickupOccasion.products.slice(0, 1)].flat() as { id, name, description, price }}
+      <! -- <Card.Root class="gap-4 max-w-sm sm:max-w-xs w-full"> -- >
+      <Card.Root class="gap-4 max-w-sm w-full">
+        <Card.Header>
+          <Card.Title class="font-bold text-lg">{name}</Card.Title>
+        </Card.Header>
+        <Card.Content class="grow grid grid-rows-[1fr_min-content] gap-2">
+          <Card.Description class="text-black/85"
+            >{description}</Card.Description
+          >
+          <p class="font-black">
+            {toSEKString(price)}
+          </p>
+        </Card.Content>
+        <Card.Footer>
+          {#if ctx.getProductCount(id) > 0}
+            <ProductCount productId={id} size="lg" />
+          {:else}
+            <Button
+              class="w-full self-end"
+              size="xl"
+              onclick={() => ctx.addProduct(id, 1)}>Lägg i varukorg</Button
+            >
+          {/if}
+        </Card.Footer>
+      </Card.Root>
+    {/each}
+  </div>
+{/if}
+
+<style>
+  .products-grid {
+    /**
+     * User input values.
+     */
+    --grid-layout-gap: 1rem;
+    --grid-column-count: 2;
+    --grid-item--min-width: 280px;
+
+    /**
+     * Calculated values.
+     */
+    --gap-count: calc(var(--grid-column-count) - 1);
+    --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+    --grid-item--max-width: calc(
+      (100% - var(--total-gap-width)) / var(--grid-column-count)
+    );
+
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(max(var(--grid-item--min-width), var(--grid-item--max-width)), 1fr)
+    );
+    grid-gap: var(--grid-layout-gap);
+  }
+
+  @media screen and (min-width: 640px) {
+    .products-grid {
+      --grid-column-count: 3;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .products-grid {
+      --grid-column-count: 4;
+    }
+  }
+</style>
+-->
+
+<style>
+  .products-grid {
+    --gap: 1rem;
+    --max-cols: 3;
+  }
+
+  /* NOTE: Seems to be a bug with Svelte not recognising the .product class unless we put it in :global() */
+  :global(.product) {
+    flex: 0 0 calc(calc(100% / var(--max-cols)) - var(--gap));
+    margin: calc(var(--gap) / 2);
+    min-width: calc(100% - calc(var(--gap) * 2));
+    max-width: 384px;
+  }
+
+  @media (width >= 475px) {
+    :global(.product) {
+      min-width: 384px !important;
+    }
+  }
+
+  @media (width >= 640px) {
+    :global(.product) {
+      min-width: clamp(300px, 40%, 384px) !important;
+    }
+  }
+</style>
