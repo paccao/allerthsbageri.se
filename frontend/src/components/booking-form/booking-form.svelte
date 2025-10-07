@@ -37,7 +37,7 @@
       endTime: new Date('2025-08-24T15:30:00.000Z'),
       products: [
         {
-          id: 1,
+          id: 3,
           stock: 50,
           price: 6900n,
           pickupOccasionId: 2,
@@ -46,7 +46,7 @@
             'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
         },
         {
-          id: 2,
+          id: 4,
           stock: 25,
           price: 6500n,
           pickupOccasionId: 2,
