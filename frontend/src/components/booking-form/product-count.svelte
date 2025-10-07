@@ -59,9 +59,12 @@
     oninput={(event) => {
       const val = parseInt(event.currentTarget.value)
 
-      // Only update state for numeric values to allow clearing
-      // the input with the keyboard and then typing something else.
-      if (Number.isInteger(val)) {
+      // 1) Only update state for numeric values to allow clearing
+      //    the input with the keyboard and then typing something else.
+      // 2) Delay updating the state until the input loses focus if the value is 0
+      //    This prevents accidentally removing the last item when decreasing
+      //    the amount with the down arrow key.
+      if (Number.isInteger(val) && val !== 0) {
         ctx.setProductCount(productId, val)
       }
     }}
@@ -70,6 +73,9 @@
       // This prevents accidentally removing the item by moving focus away from the input.
       if (event.currentTarget.value === '') {
         event.currentTarget.value = count.toString()
+      } else if (event.currentTarget.value === '0') {
+        // Only set the count to 0 when leaving the input
+        ctx.setProductCount(productId, parseInt(event.currentTarget.value))
       }
     }}
     class={cn([
