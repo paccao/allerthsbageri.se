@@ -56,21 +56,17 @@ This could be an expandable section with a help icon or similar.
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
-  <!-- IDEA: Make the div wrap the button to get correct focus outlines -->
-  <button
-    onclick={() => ctx.selectPickupOccasion(pickup.id)}
-    aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
-      pickup.startTime,
-      pickup.endTime,
-    )}"
-    class="group cursor-pointer max-w-(--breakpoint-lg) mx-auto w-full p-4"
-  >
-    <div
+  <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
+  <div class="max-w-(--breakpoint-lg) mx-auto w-full p-4">
+    <button
+      onclick={() => ctx.selectPickupOccasion(pickup.id)}
+      aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
+        pickup.startTime,
+        pickup.endTime,
+      )}"
       class={[
-        'p-4 flex justify-between items-center border rounded-lg bg-black/5',
-        isSelected
-          ? 'border-black'
-          : 'group-hover:border-black/50 group-focus-within:border-black/50',
+        'group w-full cursor-pointer p-4 flex justify-between items-center border rounded-lg bg-black/5',
+        isSelected ? 'border-black' : 'hover:border-black/50',
       ]}
     >
       <div class="flex flex-col justify-between items-start">
@@ -108,8 +104,8 @@ This could be an expandable section with a help icon or similar.
           ]}
         />
       </div>
-    </div>
-  </button>
+    </button>
+  </div>
 
   <div class="products-grid flex flex-wrap justify-center">
     <!-- IDEA: Allow opening a modal to see product details like ingredients -->
@@ -135,7 +131,6 @@ This could be an expandable section with a help icon or similar.
               size="xl"
               onclick={() => {
                 // TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding.
-                // Possibly clear the selected products
                 if (ctx.pickupOccasion?.id !== pickup.id) {
                   ctx.selectPickupOccasion(pickup.id)
                 }
