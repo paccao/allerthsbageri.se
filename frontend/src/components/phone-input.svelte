@@ -62,7 +62,6 @@
     defaultValue: string
     /** Will be called with the updated number in E164 format (e.g. starting with the +46 country code) */
     onChange: (newNumber: string) => void
-    validationError?: string | undefined
     /** CSS classes applied to the container element that wraps the input */
     containerClasses?: ClassValue
   }
@@ -70,7 +69,6 @@
   let {
     defaultValue,
     onChange,
-    validationError = $bindable(),
     class: className,
     containerClasses,
     ...restProps
@@ -79,6 +77,8 @@
   let element: HTMLInputElement
   let iti: Iti = $state()!
   let ready = $state(false)
+  let showError = $state(false)
+  let phoneError: string | undefined = $state()
 
   onMount(() => {
     const isE164Number = defaultValue.startsWith('+')
@@ -127,6 +127,14 @@
     } else {
       ready = true
     }
+
+    element.addEventListener(
+      'blur',
+      () => {
+        showError = true
+      },
+      { once: true },
+    )
   })
 
   $effect(() => {
@@ -140,11 +148,11 @@
   // IDEA: Maybe simplify the error messages. Might be enough to just show if it's valid or not.
   // However, could also be helpful with more specific errors since we have them.
   const errorMap = [
-    'Felaktigt telfonnummer',
+    'Felaktigt telefonnummer',
     'Ogiltig landskod',
     'För kort',
     'För långt',
-    'Felaktigt telfonnummer',
+    'Felaktigt telefonnummer',
   ]
 
   onDestroy(() => {
@@ -173,13 +181,16 @@
   oninput={ready
     ? () => {
         onChange(iti.getNumber(intlTelInput.utils?.numberFormat.E164))
-        validationError = iti.isValidNumber()
+        phoneError = iti.isValidNumber()
           ? undefined
           : errorMap[iti.getValidationError()]
       }
     : null}
   placeholder="070-123 45 67"
 />
+{#if showError && phoneError}
+  <span>{phoneError}</span>
+{/if}
 
 <style>
   :global(.iti:not(.ready) .iti__country-container) {

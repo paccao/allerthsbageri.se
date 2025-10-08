@@ -38,7 +38,18 @@
     orderItems.reduce((total, { count }) => total + count, 0),
   )
 
-  let phoneError: string | undefined = $state()
+  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  const pickup = $derived(ctx.pickupOccasion!)
+  const dateTime = $derived(
+    dateTimeFormatter.formatRange(pickup.startTime, pickup.endTime),
+  )
 </script>
 
 <div
@@ -58,42 +69,49 @@
     <div class="grid gap-2">
       <Label for="phone">Telefonnummer</Label>
       <PhoneInput
+        id="phone"
         defaultValue={ctx.customer.phone}
         onChange={(newNumber) => (ctx.customer.phone = newNumber)}
-        bind:validationError={phoneError}
         class={inputClasses}
         containerClasses="**:outline-none [&_input]:h-10 [&_button]:!rounded-md transition-[color,box-shadow] ring-offset-background border-input **:focus-visible:border-ring **:focus-visible:ring-ring/50 **:focus-visible:ring-[3px]"
       />
-      {#if phoneError}
-        <span>{phoneError}</span>
-      {/if}
     </div>
   </div>
 
   <div class="grow max-w-md self-center w-full px-0 2xs:px-4">
     <Card.Root class="gap-4 h-min pb-0">
-      <Card.Header>
+      <Card.Header class="gap-4">
         <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
 
-        <!-- IDEA: Show pickup occasion details here for easy confirmation -->
+        <p
+          class="bg-accent rounded-md grid grid-cols-[max-content_1fr] p-2 shadow-sm text-sm"
+        >
+          <span class="font-bold">Upphämtning:</span>
+          <span class="text-right">{dateTime}</span>
+          <span class="font-bold">Plats:</span>
+          <span class="text-right">{pickup.location}</span>
+        </p>
       </Card.Header>
 
       {#if ctx.pickupOccasion}
         <Card.Content>
           {#if orderItems.length}
             <ul class="grid gap-4 font-bold">
-              {#each orderItems as { id, name } (id)}
+              {#each orderItems as { id, name, count, price } (id)}
+                {@const productTotalPrice = toSEKString(BigInt(count) * price)}
                 <li
-                  class="grid gap-4 xs:gap-2 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
+                  class="grid gap-4 xs:gap-0 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
                 >
                   <h2 class="font-bold text-sm lg:text-base">{name}</h2>
-                  <!-- IDEA: Show ProductCount to the left on small screens, then switch to the right side -->
-                  <!-- IDEA: Show total cost for each item to the right on small screens, and switch to show above on large screens -->
-                  <ProductCount
-                    productId={id}
-                    size="md"
-                    class="max-w-32 justify-self-end"
-                  />
+                  <div
+                    class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
+                  >
+                    <span class="hidden xs:flex justify-self-end pb-1 pr-1"
+                      >{productTotalPrice}</span
+                    >
+                    <ProductCount productId={id} size="md" class="max-w-32" />
+                    <span class="xs:hidden">{productTotalPrice}</span>
+                  </div>
                 </li>
               {/each}
             </ul>
@@ -127,7 +145,7 @@
 
     {#if orderItems.length}
       <div class="px-6 pt-8 text-black/85">
-        <p>Betalning sker med Swish eller kontant på plats.</p>
+        <p>Betalning sker på plats med Swish eller kontant.</p>
         <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
         <!-- TODO: Add ToS and privacy policy pages -->
       </div>

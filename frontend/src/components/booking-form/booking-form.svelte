@@ -6,7 +6,7 @@
     {
       id: 1,
       name: 'REKO-ringen Borås',
-      description: 'Bäckängsgymnasiet',
+      location: 'Bäckängsgymnasiet',
       startTime: new Date('2025-08-23T08:00:00.000Z'),
       endTime: new Date('2025-08-23T13:30:00.000Z'),
       products: [
@@ -32,7 +32,7 @@
     {
       id: 2,
       name: 'REKO-ringen Ulricehamn',
-      description: 'Nya torget väveriet',
+      location: 'Nya torget väveriet',
       startTime: new Date('2025-08-24T07:00:00.000Z'),
       endTime: new Date('2025-08-24T15:30:00.000Z'),
       products: [
@@ -113,7 +113,7 @@
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-18 pt-8 max-w-(--breakpoint-2xl) mx-auto">
+  <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'tid'}
       <PickupOccasions />
     {:else if ctx.stepId === 'varor'}

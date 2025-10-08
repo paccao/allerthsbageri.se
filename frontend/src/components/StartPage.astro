@@ -268,18 +268,25 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
             <ul class="list-inside list-disc space-y-2 px-4 xs:pl-0">
               <li>
-                9 augusti Hedareds hembygdsgård kl 11.00 - 16.00 eller tills det
-                är slutsålt
+                Torsdagar från kl 09.00 finns färskt surdegsbröd vid Tolkabro
+                handel. Kolla instagram för eventuella ändringar <a
+                  href="https://www.instagram.com/allerthsbageri/"
+                  target="_blank"
+                  class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                  >@allerthsbageri</a
+                >
               </li>
-              <li>
-                24 augusti Hedareds församlingshem, medeltidsdagen kl 11.00 - 15
-                eller tills det är slutsålt
-              </li>
-              <li>6 september Toarps hembygdsgård, kl 15.00 - 17.00</li>
               <li>
                 20 september Marknad i Götseredsstugan, Sandhult. Kl 11.00 -
                 16.00 eller tills det är slutsålt
               </li>
+              <li>11 oktober kl 11.00 Bogastugan Hökerum</li>
+              <li>Konstrundan Toarp 11.00</li>
+              <li>
+                Från och med 2 oktober finns bageriet åter med vid rekoringen
+                Borås, Ulricehamn, eventuellt Fristad i framtiden också
+              </li>
+              <li>Handelsplats Od från och med 18 oktober</li>
             </ul>
           </article>
         </section>
@@ -298,6 +305,60 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
           <h4 class="mb-4 text-center font-display text-2xl">
             Kommande event:
           </h4>
+
+          <section>
+            <h2 class="mb-4 text-center font-display text-4xl font-bold">
+              Saxofonmeditation vid sjön
+            </h2>
+            <div class="flex justify-center">
+              <p class="my-2 max-w-screen-sm">
+                <!-- <span class="capitalize">{bakingCourseDate}</span> blir det kurs -->
+                Den 21/9 blir det återigen saxofonmeditation i skogen, fast denna
+                gång närmare sjö än skog.
+              </p>
+            </div>
+
+            <div class="flex justify-center">
+              <p class="my-2 max-w-screen-sm">
+                Vid alltför dåligt väder är vi inomhus. Efteråt fikar vi
+                tillsammans surdegsmacka från <a
+                  href="https://www.instagram.com/allerthsbageri/"
+                  target="_blank"
+                  class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                  >@allerthsbageri</a
+                > och örtte.
+              </p>
+            </div>
+
+            <Divider class="my-5" />
+
+            <div class="mx-auto max-w-screen-sm">
+              <p class="my-2">
+                <span class="font-bold">När:</span>
+                <!-- <span class="capitalize">{bakingCourseDate}</span> kl 10.00 - ca 14.00 eller tills vi känner oss klara. -->
+                21 september 2025
+              </p>
+              <p class="my-2">
+                <span class="font-bold">Kostnad: </span>222 kr
+              </p>
+              <p class="my-2">
+                <span class="font-bold">Var: </span>Grovare Spången 101, utanför
+                Hökerum
+              </p>
+
+              <p class="my-4">Kommande meditiationer: 19/10, 16/11</p>
+
+              <p class="text-center font-bold">
+                Välkommen med din anmälan till:
+              </p>
+              <div class="flex justify-center text-center">
+                <EncryptedEmail client:load />
+              </div>
+              <p class="my-2 text-center text-lg">Välkommen!</p>
+            </div>
+          </section>
+
+          <Divider />
 
           <section>
             <h2 class="mb-4 text-center font-display text-4xl font-bold">
@@ -335,7 +396,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
               <p class="my-2">
                 <span class="font-bold">När:</span>
                 <!-- <span class="capitalize">{bakingCourseDate}</span> kl 10.00 - ca 14.00 eller tills vi känner oss klara. -->
-                Oktober 2025
+                12:e Oktober 2025
               </p>
               <p class="my-2">
                 <span class="font-bold">Kursavgift: </span>1200 kr, betalas via

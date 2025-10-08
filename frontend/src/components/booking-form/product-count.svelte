@@ -68,7 +68,7 @@
         ctx.setProductCount(productId, val)
       }
     }}
-    onfocusout={(event) => {
+    onblur={(event) => {
       // Revert to the current value if no new numeric value was entered.
       // This prevents accidentally removing the item by moving focus away from the input.
       if (event.currentTarget.value === '') {

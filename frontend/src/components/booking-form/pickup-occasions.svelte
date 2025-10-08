@@ -45,7 +45,7 @@
       >
         <Card.Header>
           <Card.Title>{pickup.name}</Card.Title>
-          <p>{pickup.description}</p>
+          <p>{pickup.location}</p>
         </Card.Header>
         <Card.Content>
           <span>{dateTime}</span>
