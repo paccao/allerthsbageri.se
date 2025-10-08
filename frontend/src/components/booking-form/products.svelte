@@ -21,6 +21,7 @@
   const shortDate = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
+    // weekday: 'short',
   })
 
   const timeFormat = new Intl.DateTimeFormat('sv-SE', {
@@ -65,6 +66,8 @@ or those with startDate within the next two weeks
 IDEA: Maybe add a short description at the top to give instructions on how to make a booking
 This could be an expandable section with a help icon or similar. Expanded by default and dismissed after the first visit.
 -->
+
+<!-- IDEA: Show a table of contents at the top with anchor links to every pickup occasion to clarify that multiple dates are available -->
 
 <!-- {#each ctx.pickupOccasions as pickup (pickup.id)} -->
 {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
@@ -186,7 +189,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
     </div>
 
     <div
-      class="mt-8 flex justify-center text-black/25 gap-4 items-center max-w-full"
+      class="mt-8 mb-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
       aria-hidden="true"
     >
       <!-- <hr class="grow" /> -->
