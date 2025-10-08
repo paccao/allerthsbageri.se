@@ -12,6 +12,7 @@
     "db:reset": "node --no-warnings=ExperimentalWarning --experimental-strip-types --env-file=.env scripts/reset-db.ts",
     "test:setup": "node --no-warnings=ExperimentalWarning --experimental-strip-types --env-file .env.test ./src/test.setup.ts",
     "test": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --env-file=.env.test --test",
+    "test:only": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --env-file=.env.test --test --test-only",
     "test:watch": "node --run test:setup && node --no-warnings=ExperimentalWarning --experimental-strip-types --env-file=.env.test --test --watch"
   },
   "dependencies": {
