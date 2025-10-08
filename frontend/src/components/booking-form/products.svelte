@@ -74,7 +74,6 @@ This could be an expandable section with a help icon or similar. Expanded by def
   .flat()
   .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
-  {@const startDate = shortDate.format(pickup.startTime).slice(0, -1)}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="grid">
     <div
@@ -86,22 +85,16 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.startTime,
           pickup.endTime,
         )}"
-        class="group w-full cursor-pointer py-2 px-4 xs:p-4 flex sm:justify-center justify-between items-center md:rounded-lg relative"
+        class="group w-full cursor-pointer py-2 px-4 xs:p-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
       >
         <div
-          class="grid sm:grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base sm:border-r border-black sm:pr-8 sm:mr-8"
+          class="grid xs:grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base xs:border-r border-black xs:pr-6 sm:pr-8 xs:mr-6 sm:mr-8"
         >
-          <!-- TODO: Use xs (475px) as breakpoint instead of sm (640px) -->
-          <!--
-          TODO: For larger screens, show the date wrapped to two lines
-          TODO: For mobile, show date as one row at the top
-          TODO: For small screens, remove border-r, mr and pr
-          -->
           <span
-            class="text-base sm:text-2xl font-bold sm:row-span-2 grid-cols-[max-content_max-content] sm:grid-cols-1 content-center grid place-items-center sm:pr-8 sm:border-r border-black sm:mr-8"
+            class="text-base xs:text-2xl font-bold xs:row-span-2 grid-cols-[max-content_max-content] xs:grid-cols-1 content-center grid place-items-center xs:pr-6 sm:pr-8 xs:border-r border-black xs:mr-6 sm:mr-8"
           >
             <span
-              >{weekdayShort.format(pickup.startTime)}<span class="sm:hidden"
+              >{weekdayShort.format(pickup.startTime)}<span class="xs:hidden"
                 >&nbsp;</span
               ></span
             >
