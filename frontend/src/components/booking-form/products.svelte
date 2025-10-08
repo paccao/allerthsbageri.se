@@ -5,9 +5,9 @@
   import { bookingContext } from './context'
   import ProductCount from './product-count.svelte'
   import LucideClock from '~icons/lucide/clock'
-  import LucideCheck from '~icons/lucide/check'
   import LucideMapPin from '~icons/lucide/map-pin'
   import { draw } from 'svelte/transition'
+  import GameIconsWheat from '~icons/game-icons/wheat'
 
   const ctx = bookingContext.get()
 
@@ -52,110 +52,130 @@ or those with startDate within the next two weeks
 
 <!--
 IDEA: Maybe add a short description at the top to give instructions on how to make a booking
-This could be an expandable section with a help icon or similar.
+This could be an expandable section with a help icon or similar. Expanded by default and dismissed after the first visit.
 -->
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
+  <!-- {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions].flat() as pickup} -->
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
-  <div class="w-full px-4">
-    <button
-      onclick={() => ctx.selectPickupOccasion(pickup.id)}
-      aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
-        pickup.startTime,
-        pickup.endTime,
-      )}"
-      class={[
-        'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border rounded-lg bg-black/5 relative',
-        isSelected ? 'border-black' : 'hover:border-black/50',
-      ]}
-    >
-      <div class="grid grid-cols-[max-content_1fr] pr-12">
-        <span
-          class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
-          >{shortDate.format(pickup.startTime).slice(0, -1)}</span
-        >
-        <h2 class="flex items-center">
-          <LucideClock class="size-4 inline mr-2" />
-          <span class="pr-1">Upphämtning:</span>
-          <span>
-            {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
-          >
-        </h2>
-        <p class="flex items-center">
-          <LucideMapPin class="size-4 inline mr-2" />
-          <span>Plats: {pickup.location}</span>
-        </p>
-      </div>
-
-      <div
+  <div class="gap-4 grid">
+    <!--
+    TODO: Allow pickup occasion container to fill full width on mobile.
+    Remove rounded corners and maybe adjust the borders
+    -->
+    <div class="w-full px-4 sticky top-0 z-50 bg-background">
+      <button
+        onclick={() => ctx.selectPickupOccasion(pickup.id)}
+        aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
+          pickup.startTime,
+          pickup.endTime,
+        )}"
         class={[
-          'rounded-full size-8 p-2 shadow-xl absolute right-4 top-1/2 -translate-y-1/2 flex',
-          isSelected ? 'bg-green' : 'bg-white text-black/50',
+          'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border rounded-lg bg-black/5 relative',
+          isSelected ? 'border-black' : 'hover:border-black/50',
         ]}
       >
-        {#key isSelected}
-          <svg
-            class={[
-              'w-full h-full',
-              isSelected
-                ? 'visible'
-                : 'invisible group-hover:visible group-focus-within:visible',
-            ]}
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
+        <!--
+        TODO: make this responsive
+        IDEA: Wrap to multiple lines on mobile
+        -->
+        <div class="grid grid-cols-[max-content_1fr] pr-12">
+          <span
+            class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
+            >{shortDate.format(pickup.startTime).slice(0, -1)}</span
           >
-            <path
-              in:draw={{ duration: 200 }}
-              fill="none"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M 4,12 9,17 20,6"
-            />
-          </svg>
-        {/key}
-      </div>
-    </button>
-  </div>
-
-  <div class="products-grid flex flex-wrap justify-center">
-    <!-- IDEA: Allow opening a modal to see product details like ingredients -->
-    {#each pickup.products as { id, name, description, price } (id)}
-      <Card.Root class="product">
-        <Card.Header>
-          <Card.Title class="font-bold text-lg">{name}</Card.Title>
-        </Card.Header>
-        <Card.Content class="grow grid grid-rows-[1fr_min-content] gap-2">
-          <Card.Description class="text-black/85"
-            >{description}</Card.Description
-          >
-          <p class="font-black">
-            {toSEKString(price)}
-          </p>
-        </Card.Content>
-        <Card.Footer>
-          {#if ctx.getProductCount(id) > 0}
-            <ProductCount productId={id} size="lg" />
-          {:else}
-            <Button
-              class="w-full self-end"
-              size="xl"
-              onclick={() => {
-                // TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding.
-                if (ctx.pickupOccasion?.id !== pickup.id) {
-                  ctx.selectPickupOccasion(pickup.id)
-                }
-                ctx.addProduct(id, 1)
-              }}>Lägg i varukorg</Button
+          <h2 class="flex items-center">
+            <LucideClock class="size-4 inline mr-2" />
+            <span class="pr-1">Upphämtning:</span>
+            <span>
+              {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
             >
-          {/if}
-        </Card.Footer>
-      </Card.Root>
-    {/each}
+          </h2>
+          <p class="flex items-center">
+            <LucideMapPin class="size-4 inline mr-2" />
+            <span>Plats: {pickup.location}</span>
+          </p>
+        </div>
+
+        <div
+          class={[
+            'rounded-full size-8 p-2 shadow-xl absolute right-4 top-1/2 -translate-y-1/2 flex',
+            isSelected ? 'bg-green' : 'bg-white text-muted-foreground',
+          ]}
+        >
+          {#key isSelected}
+            <svg
+              class={[
+                'w-full h-full',
+                isSelected
+                  ? 'visible'
+                  : 'invisible group-hover:visible group-focus-within:visible',
+              ]}
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+            >
+              <path
+                in:draw={{ duration: 200 }}
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M 4,12 9,17 20,6"
+              />
+            </svg>
+          {/key}
+        </div>
+      </button>
+    </div>
+
+    <div class="products-grid flex flex-wrap justify-center">
+      <!-- IDEA: Allow opening a modal to see product details like ingredients -->
+      {#each pickup.products as { id, name, description, price } (id)}
+        <Card.Root class="product">
+          <Card.Header>
+            <Card.Title class="font-bold text-lg">{name}</Card.Title>
+          </Card.Header>
+          <Card.Content class="grow grid grid-rows-[1fr_min-content] gap-2">
+            <Card.Description class="text-black/85"
+              >{description}</Card.Description
+            >
+            <p class="font-black">
+              {toSEKString(price)}
+            </p>
+          </Card.Content>
+          <Card.Footer>
+            {#if ctx.getProductCount(id) > 0}
+              <ProductCount productId={id} size="lg" />
+            {:else}
+              <Button
+                class="w-full self-end"
+                size="xl"
+                onclick={() => {
+                  // TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding.
+                  if (ctx.pickupOccasion?.id !== pickup.id) {
+                    ctx.selectPickupOccasion(pickup.id)
+                  }
+                  ctx.addProduct(id, 1)
+                }}>Lägg i varukorg</Button
+              >
+            {/if}
+          </Card.Footer>
+        </Card.Root>
+      {/each}
+    </div>
+
+    <div
+      class="mt-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
+      aria-hidden="true"
+    >
+      <hr class="grow" />
+      <GameIconsWheat />
+      <hr class="grow" />
+    </div>
   </div>
 {/each}
 

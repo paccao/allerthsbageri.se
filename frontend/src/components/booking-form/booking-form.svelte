@@ -100,7 +100,7 @@
 -->
 
 <section class="w-full grid justify-items-center">
-  <header class="sticky top-0 w-full border-t z-50">
+  <header class="w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
         {ctx.step.title}

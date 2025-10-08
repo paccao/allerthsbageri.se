@@ -115,6 +115,9 @@ importers:
         specifier: ^4.1.12
         version: 4.1.12
     devDependencies:
+      '@iconify-json/game-icons':
+        specifier: ^1.2.3
+        version: 1.2.3
       '@iconify-json/lucide':
         specifier: ^1.2.68
         version: 1.2.68
@@ -722,6 +725,9 @@ packages:
 
   '@fontsource/quattrocento@5.2.8':
     resolution: {integrity: sha512-UDIxNIC6404UwhXEP5Y1s5VAWB9IOQOnNJ9e51fwiBbWLhogJdTgrN7Pt8j8CkgI+37MET5tGbQSpNoGfCECwg==}
+
+  '@iconify-json/game-icons@1.2.3':
+    resolution: {integrity: sha512-JnrHQjNI/2nJxlnEAPlU4ta6S44XTX7RJnBUyBV27GbVhJhfwpY9kqzkTqmPs4nyAJaGUjZwOcnBUQ9Dc21nlA==}
 
   '@iconify-json/lucide@1.2.68':
     resolution: {integrity: sha512-lR5xNJdn2CT0iR7lM25G4SewBO4G2hbr3fTWOc3AE9BspflEcneh02E3l9TBaCU/JOHozTJevWLrxBGypD7Tng==}
@@ -3751,6 +3757,10 @@ snapshots:
   '@fontsource/italianno@5.2.8': {}
 
   '@fontsource/quattrocento@5.2.8': {}
+
+  '@iconify-json/game-icons@1.2.3':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/lucide@1.2.68':
     dependencies:
