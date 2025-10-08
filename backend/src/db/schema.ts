@@ -34,7 +34,7 @@ export const pickupOccasionTable = sqliteTable('pickup_occasion', {
 export const productDetailsTable = sqliteTable('product_details', {
   id: int().primaryKey(),
   name: text({ length: 200 }).notNull(),
-  description: text({ length: 1000 }).notNull(),
+  location: text({ length: 150 }).notNull(),
   image: text(),
   // IDEA: Maybe store VAT rates as standardised values in a separate table.
   // This would allow us to update the VAT values easily when they change.
