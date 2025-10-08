@@ -57,7 +57,7 @@ This could be an expandable section with a help icon or similar.
 {#each ctx.pickupOccasions as pickup (pickup.id)}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
-  <div class="max-w-(--breakpoint-lg) mx-auto w-full p-4">
+  <div class="w-full px-4">
     <button
       onclick={() => ctx.selectPickupOccasion(pickup.id)}
       aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
@@ -65,39 +65,37 @@ This could be an expandable section with a help icon or similar.
         pickup.endTime,
       )}"
       class={[
-        'group w-full cursor-pointer p-4 flex justify-between items-center border rounded-lg bg-black/5',
+        'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border rounded-lg bg-black/5 relative',
         isSelected ? 'border-black' : 'hover:border-black/50',
       ]}
     >
-      <div class="flex flex-col justify-between items-start">
-        <div class="grid grid-cols-[max-content_1fr]">
-          <span
-            class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
-            >{shortDate.format(pickup.startTime).slice(0, -1)}</span
+      <div class="grid grid-cols-[max-content_1fr] pr-12">
+        <span
+          class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
+          >{shortDate.format(pickup.startTime).slice(0, -1)}</span
+        >
+        <h2 class="flex items-center">
+          <LucideClock class="size-4 inline mr-2" />
+          <span class="pr-1">Upphämtning:</span>
+          <span>
+            {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
           >
-          <h2 class="flex items-center">
-            <LucideClock class="size-4 inline mr-2" />
-            <span class="pr-1">Upphämtning:</span>
-            <span>
-              {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
-            >
-          </h2>
-          <p class="flex items-center">
-            <LucideMapPin class="size-4 inline mr-2" />
-            <span>Plats: {pickup.location}</span>
-          </p>
-        </div>
+        </h2>
+        <p class="flex items-center">
+          <LucideMapPin class="size-4 inline mr-2" />
+          <span>Plats: {pickup.location}</span>
+        </p>
       </div>
 
       <div
         class={[
-          'rounded-full size-7 sm:size-8 p-2 shadow-xl',
+          'rounded-full size-8 p-2 shadow-xl absolute right-4 top-1/2 -translate-y-1/2 flex',
           isSelected ? 'bg-green' : 'bg-white',
         ]}
       >
         <LucideCheck
           class={[
-            'w-full h-full opacity-0',
+            'w-full h-full opacity-0 self-center',
             isSelected
               ? 'opacity-100'
               : 'group-hover:opacity-100 group-focus-within:opacity-100',
