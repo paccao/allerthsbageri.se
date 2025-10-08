@@ -21,7 +21,6 @@
   const shortDate = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
-    weekday: 'short',
   })
 
   const timeFormat = new Intl.DateTimeFormat('sv-SE', {
@@ -29,8 +28,16 @@
     minute: '2-digit',
   })
 
+  const weekdayShort = new Intl.DateTimeFormat('sv-SE', { weekday: 'short' })
+
   function randomInteger(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+
+  function addDays(date: Date, days: number) {
+    var result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
   }
 </script>
 
@@ -62,11 +69,13 @@ This could be an expandable section with a help icon or similar. Expanded by def
 <!-- {#each ctx.pickupOccasions as pickup (pickup.id)} -->
 {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
   .flat()
-  .map((x) => ({ ...x, id: randomInteger(1, 9999) })) as pickup}
+  .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
+  {@const startDate = shortDate.format(pickup.startTime).slice(0, -1)}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="gap-4 grid">
-    <div class="w-full md:px-4 sticky top-0 z-50 bg-background">
+    <!-- TODO: Always show full width for section headers -->
+    <div class="w-full md:px-4 sticky top-0 z-50 bg-background border-y">
       <button
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
@@ -74,19 +83,24 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.endTime,
         )}"
         class={[
-          'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border md:rounded-lg bg-black/5 relative',
-          isSelected ? 'border-black' : 'hover:border-black/50',
+          'group w-full cursor-pointer p-2 xs:p-4 flex justify-center items-center md:rounded-lg relative',
+          // isSelected ? 'border-black' : 'hover:border-black/50',
         ]}
       >
         <!--
         TODO: make this responsive
         IDEA: Wrap to multiple lines on mobile
         -->
-        <div class="grid grid-cols-[max-content_1fr] pr-12">
+        <div
+          class="grid grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base border-r border-black pr-4 mr-4"
+        >
+          <!-- IDEA: always show date as one row, on mobile at the top and then two rows below with other info -->
           <span
-            class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
-            >{shortDate.format(pickup.startTime).slice(0, -1)}</span
+            class="text-base sm:text-2xl font-bold row-span-2 content-center grid place-items-center pr-2 sm:pr-4 border-r border-black mr-2 sm:mr-4"
           >
+            <span>{weekdayShort.format(pickup.startTime)}</span>
+            <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
+          </span>
           <h2 class="flex items-center">
             <LucideClock class="size-4 inline mr-2" />
             <span class="pr-1">Upphämtning:</span>
@@ -102,7 +116,8 @@ This could be an expandable section with a help icon or similar. Expanded by def
 
         <div
           class={[
-            'rounded-full size-8 p-2 shadow-xl absolute right-4 top-1/2 -translate-y-1/2 flex',
+            // 'rounded-full size-8 p-2 shadow-xl absolute right-2 xs:right-4 top-1/2 -translate-y-1/2 flex border',
+            'rounded-full size-8 p-2 shadow-xl flex border',
             isSelected ? 'bg-green' : 'bg-white text-muted-foreground',
           ]}
         >
@@ -171,12 +186,16 @@ This could be an expandable section with a help icon or similar. Expanded by def
     </div>
 
     <div
-      class="mt-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
+      class="mt-8 flex justify-center text-black/25 gap-4 items-center max-w-full"
       aria-hidden="true"
     >
-      <hr class="grow" />
+      <!-- <hr class="grow" /> -->
+      <!-- <span class="text-2xl">&mdash;</span> -->
+      <GameIconsWheat class="size-3" />
       <GameIconsWheat />
-      <hr class="grow" />
+      <GameIconsWheat class="size-3" />
+      <!-- <hr class="grow" /> -->
+      <!-- <span class="text-2xl">&mdash;</span> -->
     </div>
   </div>
 {/each}
