@@ -4,13 +4,19 @@
   import { toSEKString } from '$lib/currency'
   import { bookingContext } from './context'
   import ProductCount from './product-count.svelte'
-  import LucideCalendarClock from '~icons/lucide/calendar-clock'
   import LucideClock from '~icons/lucide/clock'
   import LucideCheck from '~icons/lucide/check'
   import LucideMapPin from '~icons/lucide/map-pin'
 
   const ctx = bookingContext.get()
 
+  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
+    day: 'numeric',
+    month: 'short',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
   const shortDate = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
@@ -50,41 +56,28 @@ This could be an expandable section with a help icon or similar.
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
-  <!-- <button
+  <!-- IDEA: Make the div wrap the button to get correct focus outlines -->
+  <button
     onclick={() => ctx.selectPickupOccasion(pickup.id)}
-    aria-label="Välj upphämtningstillfälle {dateTime}"
+    aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
+      pickup.startTime,
+      pickup.endTime,
+    )}"
     class="group cursor-pointer max-w-(--breakpoint-lg) mx-auto w-full p-4"
   >
     <div
       class={[
-        'p-4 flex justify-between items-center border border-black rounded-lg hover:border-primary hover:bg-black/5 group-focus-within:border-primary group-focus-within:bg-black/5',
-        isSelected && 'border-primary bg-black/5',
+        'p-4 flex justify-between items-center border rounded-lg bg-black/5',
+        isSelected
+          ? 'border-black'
+          : 'group-hover:border-black/50 group-focus-within:border-black/50',
       ]}
-    >
-      <div class="flex flex-col justify-between items-start">
-        <h2 class="font-bold flex items-center gap-2">
-          <LucideCalendarClock class="size-4 inline" />
-          <span class="first-letter:capitalize">{dateTime}</span>
-        </h2>
-        <p>{pickup.location}</p>
-      </div>
-
-      {#if isSelected}
-        <LucideCheck
-          class="size-7 sm:size-8 bg-black text-white rounded-full p-2 shadow-xl"
-        />
-      {/if}
-    </div>
-  </button> -->
-  <div class="max-w-(--breakpoint-lg) mx-auto w-full p-4">
-    <div
-      class="p-4 flex justify-between items-center border border-black rounded-lg bg-black/5"
     >
       <div class="flex flex-col justify-between items-start">
         <div class="grid grid-cols-[max-content_1fr]">
           <span
-            class="text-2xl font-bold row-span-2 grid place-items-center pr-2 border-r border-black mr-2 first-letter:capitalize"
-            >{shortDate.format(pickup.startTime)}</span
+            class="text-2xl font-bold row-span-2 grid place-items-center pr-4 border-r border-black mr-4"
+            >{shortDate.format(pickup.startTime).slice(0, -1)}</span
           >
           <h2 class="flex items-center">
             <LucideClock class="size-4 inline mr-2" />
@@ -100,13 +93,23 @@ This could be an expandable section with a help icon or similar.
         </div>
       </div>
 
-      {#if isSelected}
+      <div
+        class={[
+          'rounded-full size-7 sm:size-8 p-2 shadow-xl',
+          isSelected ? 'bg-green' : 'bg-white',
+        ]}
+      >
         <LucideCheck
-          class="size-7 sm:size-8 bg-black text-white rounded-full p-2 shadow-xl"
+          class={[
+            'w-full h-full opacity-0',
+            isSelected
+              ? 'opacity-100'
+              : 'group-hover:opacity-100 group-focus-within:opacity-100',
+          ]}
         />
-      {/if}
+      </div>
     </div>
-  </div>
+  </button>
 
   <div class="products-grid flex flex-wrap justify-center">
     <!-- IDEA: Allow opening a modal to see product details like ingredients -->
