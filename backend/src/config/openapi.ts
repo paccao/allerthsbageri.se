@@ -14,6 +14,9 @@ const openAPITagDefinitions = {
     description:
       'Pickup occasions, where customers receive their ordered products',
   },
+  products: {
+    description: 'Products the customer can order',
+  },
 } as const
 
 type TagName = keyof typeof openAPITagDefinitions
