@@ -9,7 +9,7 @@
 </script>
 
 <footer
-  class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background"
+  class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background z-50"
 >
   <div
     class="fixed bottom-18 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
