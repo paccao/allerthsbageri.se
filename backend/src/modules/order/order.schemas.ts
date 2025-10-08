@@ -7,7 +7,3 @@ export const createOrderBodySchema = z.object({
 })
 
 export type CreateOrderBody = z.infer<typeof createOrderBodySchema>
-
-export const getProductAvailabilityByIdSchema = z.object({
-  amount: z.number().int()
-})
