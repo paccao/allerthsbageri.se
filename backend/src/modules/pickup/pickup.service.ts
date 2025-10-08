@@ -46,5 +46,6 @@ export async function updatePickup(
 }
 
 export async function deletePickup(id: number) {
+  // TODO: Implement cascading delete since ProductTable is dependent on pickup occasions
   await db.delete(pickupOccasionTable).where(eq(pickupOccasionTable.id, id))
 }

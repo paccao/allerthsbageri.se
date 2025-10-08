@@ -3,7 +3,6 @@ import {
   listPickupsHandler,
   createPickupHandler,
   updatePickupHandler,
-  deletePickupHandler,
 } from './pickup.controller.ts'
 import {
   type CreatePickupBody,
@@ -15,7 +14,6 @@ import {
 } from './pickup.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
-  emptyBodySchema,
   getErrorResponseSchemas,
   idParamsSchema,
   type IdParams,
@@ -69,18 +67,22 @@ export async function pickupRoutes(app: FastifyInstance) {
     updatePickupHandler,
   )
 
-  app.delete<{ Params: IdParams }>(
-    '/:id',
-    {
-      schema: {
-        params: idParamsSchema,
-        response: {
-          204: emptyBodySchema,
-          ...getErrorResponseSchemas(401, 500),
-        },
-        tags,
-      },
-    },
-    deletePickupHandler,
-  )
+  // NOTE: We dont have use for this now since:
+  // 1. We want to save historical data for possible business intelligence tools.
+  // 2. We won't really have issues with disk space with how small scale this app is for now.
+
+  // app.delete<{ Params: IdParams }>(
+  //   '/:id',
+  //   {
+  //     schema: {
+  //       params: idParamsSchema,
+  //       response: {
+  //         204: emptyBodySchema,
+  //         ...getErrorResponseSchemas(401, 500),
+  //       },
+  //       tags,
+  //     },
+  //   },
+  //   deletePickupHandler,
+  // )
 }
