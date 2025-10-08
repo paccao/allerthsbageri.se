@@ -86,17 +86,25 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.startTime,
           pickup.endTime,
         )}"
-        class="group w-full cursor-pointer p-2 xs:p-4 flex justify-center items-center md:rounded-lg relative"
+        class="group w-full cursor-pointer py-2 px-4 xs:p-4 flex sm:justify-center justify-between items-center md:rounded-lg relative"
       >
         <div
-          class="grid grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base border-r border-black pr-8 mr-8"
+          class="grid sm:grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base sm:border-r border-black sm:pr-8 sm:mr-8"
         >
-          <!-- TODO: always show date as one row, on mobile at the top and then two rows below with other info -->
-          <!-- TODO: For small screens, remove border-r, mr and pr -->
+          <!-- TODO: Use xs (475px) as breakpoint instead of sm (640px) -->
+          <!--
+          TODO: For larger screens, show the date wrapped to two lines
+          TODO: For mobile, show date as one row at the top
+          TODO: For small screens, remove border-r, mr and pr
+          -->
           <span
-            class="text-base sm:text-2xl font-bold row-span-2 content-center grid place-items-center sm:pr-8 border-r border-black mr-2 sm:mr-8"
+            class="text-base sm:text-2xl font-bold sm:row-span-2 grid-cols-[max-content_max-content] sm:grid-cols-1 content-center grid place-items-center sm:pr-8 sm:border-r border-black sm:mr-8"
           >
-            <span>{weekdayShort.format(pickup.startTime)}</span>
+            <span
+              >{weekdayShort.format(pickup.startTime)}<span class="sm:hidden"
+                >&nbsp;</span
+              ></span
+            >
             <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
           </span>
           <h2 class="flex items-center">
