@@ -78,6 +78,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="gap-4 grid">
     <!-- TODO: Always show full width for section headers -->
+    <!-- IDEA: Maybe add full width border-y on :before and :after elements -->
     <div class="w-full md:px-4 sticky top-0 z-50 bg-background border-y">
       <button
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
@@ -95,11 +96,11 @@ This could be an expandable section with a help icon or similar. Expanded by def
         IDEA: Wrap to multiple lines on mobile
         -->
         <div
-          class="grid grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base border-r border-black pr-4 mr-4"
+          class="grid grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base border-r border-black pr-8 mr-8"
         >
           <!-- IDEA: always show date as one row, on mobile at the top and then two rows below with other info -->
           <span
-            class="text-base sm:text-2xl font-bold row-span-2 content-center grid place-items-center pr-2 sm:pr-4 border-r border-black mr-2 sm:mr-4"
+            class="text-base sm:text-2xl font-bold row-span-2 content-center grid place-items-center pr-2 sm:pr-8 border-r border-black mr-2 sm:mr-8"
           >
             <span>{weekdayShort.format(pickup.startTime)}</span>
             <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
@@ -119,7 +120,6 @@ This could be an expandable section with a help icon or similar. Expanded by def
 
         <div
           class={[
-            // 'rounded-full size-8 p-2 shadow-xl absolute right-2 xs:right-4 top-1/2 -translate-y-1/2 flex border',
             'rounded-full size-8 p-2 shadow-xl flex border',
             isSelected ? 'bg-green' : 'bg-white text-muted-foreground',
           ]}
