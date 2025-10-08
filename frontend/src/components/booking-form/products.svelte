@@ -77,9 +77,9 @@ This could be an expandable section with a help icon or similar. Expanded by def
   {@const startDate = shortDate.format(pickup.startTime).slice(0, -1)}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="grid">
-    <!-- TODO: Always show full width for section headers -->
-    <!-- IDEA: Maybe add full width border-y on :before and :after elements -->
-    <div class="w-full md:px-4 sticky top-0 z-50 bg-background border-y">
+    <div
+      class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
+    >
       <button
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
