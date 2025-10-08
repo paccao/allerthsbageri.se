@@ -6,6 +6,7 @@
   import ProductCount from './product-count.svelte'
   import LucideCalendarClock from '~icons/lucide/calendar-clock'
   import LucideCheck from '~icons/lucide/check'
+  import LucideMapPin from '~icons/lucide/map-pin'
 
   const ctx = bookingContext.get()
 
@@ -51,7 +52,7 @@ or those with startDate within the next two weeks
   Then we get more flexibility for showing the pickup occasion at the top.
   -->
   <!-- IDEA: Make the pickup occasions non-interactive. They are selected automatically when you select products -->
-  <button
+  <!-- <button
     onclick={() => ctx.selectPickupOccasion(pickup.id)}
     aria-label="Välj upphämtningstillfälle {dateTime}"
     class="group cursor-pointer max-w-(--breakpoint-lg) mx-auto w-full p-4"
@@ -76,7 +77,33 @@ or those with startDate within the next two weeks
         />
       {/if}
     </div>
-  </button>
+  </button> -->
+
+  <div class="max-w-(--breakpoint-lg) mx-auto w-full p-4">
+    <div
+      class="p-4 flex justify-between items-center border border-black rounded-lg bg-black/5"
+    >
+      <div class="flex flex-col justify-between items-start">
+        <h2 class="flex items-center gap-2">
+          <LucideCalendarClock class="size-4 inline" />
+          <span
+            >Upphämtning: <span class="first-letter:capitalize">{dateTime}</span
+            ></span
+          >
+        </h2>
+        <p class="flex items-center gap-2">
+          <LucideMapPin class="size-4 inline" />
+          <span>Plats: {pickup.location}</span>
+        </p>
+      </div>
+
+      {#if isSelected}
+        <LucideCheck
+          class="size-7 sm:size-8 bg-black text-white rounded-full p-2 shadow-xl"
+        />
+      {/if}
+    </div>
+  </div>
 
   <div class="products-grid flex flex-wrap justify-center">
     <!-- IDEA: Allow opening a modal to see product details like ingredients -->
