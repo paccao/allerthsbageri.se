@@ -44,3 +44,7 @@ export async function updatePickup(
 
   return results[0]
 }
+
+export async function deletePickup(id: number) {
+  await db.delete(pickupOccasionTable).where(eq(pickupOccasionTable.id, id))
+}

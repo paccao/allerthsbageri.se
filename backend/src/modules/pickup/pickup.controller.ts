@@ -1,6 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreatePickupBody } from './pickup.schemas.ts'
-import { listPickups, createPickup, updatePickup } from './pickup.service.ts'
+import {
+  listPickups,
+  createPickup,
+  updatePickup,
+  deletePickup,
+} from './pickup.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
 import type { UpdatePickupBody } from './pickup.schemas.ts'
 
@@ -81,5 +86,20 @@ export async function updatePickupHandler(
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to update pickup occasion' })
+  }
+}
+
+export async function deletePickupHandler(
+  request: FastifyRequest<{
+    Params: IdParams
+  }>,
+  reply: FastifyReply,
+) {
+  try {
+    await deletePickup(request.params.id)
+    return reply.code(204).send()
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to delete pickup' })
   }
 }

@@ -3,6 +3,7 @@ import {
   listPickupsHandler,
   createPickupHandler,
   updatePickupHandler,
+  deletePickupHandler,
 } from './pickup.controller.ts'
 import {
   type CreatePickupBody,
@@ -14,6 +15,7 @@ import {
 } from './pickup.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
+  emptyBodySchema,
   getErrorResponseSchemas,
   idParamsSchema,
   type IdParams,
@@ -67,18 +69,18 @@ export async function pickupRoutes(app: FastifyInstance) {
     updatePickupHandler,
   )
 
-  //   app.delete<{ Params: IdParams }>(
-  //     '/:id',
-  //     {
-  //       schema: {
-  //         params: idParamsSchema,
-  //         response: {
-  //           204: emptyBodySchema,
-  //           ...getErrorResponseSchemas(401, 500),
-  //         },
-  //         tags,
-  //       },
-  //     },
-  //     deleteCustomerHandler,
-  //   )
+  app.delete<{ Params: IdParams }>(
+    '/:id',
+    {
+      schema: {
+        params: idParamsSchema,
+        response: {
+          204: emptyBodySchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
+        tags,
+      },
+    },
+    deletePickupHandler,
+  )
 }
