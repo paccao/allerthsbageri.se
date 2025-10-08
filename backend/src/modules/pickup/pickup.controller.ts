@@ -1,6 +1,20 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreatePickupBody } from './pickup.schemas.ts'
-import { createPickup } from './pickup.service.ts'
+import { listPickups, createPickup } from './pickup.service.ts'
+
+export async function listPickupsHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  try {
+    const pickups = await listPickups()
+
+    return pickups
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to list pickups' })
+  }
+}
 
 export async function createPickupHandler(
   request: FastifyRequest<{ Body: CreatePickupBody }>,

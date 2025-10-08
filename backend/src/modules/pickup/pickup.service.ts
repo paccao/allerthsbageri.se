@@ -1,6 +1,10 @@
 import { db } from '#db/index.ts'
 import { pickupOccasionTable } from '#db/schema.ts'
 
+export async function listPickups() {
+  return db.select().from(pickupOccasionTable)
+}
+
 export async function createPickup({
   bookingStart,
   bookingEnd,
