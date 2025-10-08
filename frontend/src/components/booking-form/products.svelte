@@ -39,7 +39,10 @@ This should be limited in the API to only return the two next pickupOccasions,
 or those with startDate within the next two weeks
 -->
 
-<!-- IDEA: Maybe add a short description at the top -->
+<!--
+IDEA: Maybe add a short description at the top to give instructions on how to make a booking
+This could be an expandable section with a help icon or similar.
+-->
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
   {@const dateTime = dateTimeFormatter.formatRange(
