@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify'
-import { getProductsAvailabilityByIdHandler } from './product.controller.ts'
-import { getProductAvailabilityByIdSchema } from './product.schemas.ts'
+import { getProductStockByIdHandler } from './product.controller.ts'
+import { getProductStockByIdSchema } from './product.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
   getErrorResponseSchemas,
@@ -17,12 +17,12 @@ export async function productRoutes(app: FastifyInstance) {
       schema: {
         params: idParamsSchema,
         response: {
-          200: getProductAvailabilityByIdSchema,
+          200: getProductStockByIdSchema,
           ...getErrorResponseSchemas(401, 404, 500),
         },
         tags,
       },
     },
-    getProductsAvailabilityByIdHandler,
+    getProductStockByIdHandler,
   )
 }

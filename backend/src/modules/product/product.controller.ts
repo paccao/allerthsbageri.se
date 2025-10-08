@@ -1,13 +1,13 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import { getProductById } from './product.service.ts'
+import { getProductStockById } from './product.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
 
-export async function getProductsAvailabilityByIdHandler(
+export async function getProductStockByIdHandler(
   request: FastifyRequest<{ Params: IdParams }>,
   reply: FastifyReply,
 ) {
   try {
-    const product = await getProductById(request.params.id)
+    const product = await getProductStockById(request.params.id)
 
     if (!product) {
       return reply.code(404).send({ message: 'Specified product not found' })

@@ -1,5 +1,5 @@
 import { z } from 'zod'
 
-export const getProductAvailabilityByIdSchema = z.object({
+export const getProductStockByIdSchema = z.object({
   amount: z.number().int(),
 })

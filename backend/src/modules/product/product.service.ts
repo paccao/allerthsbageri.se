@@ -8,7 +8,7 @@ export async function createOrder(data: typeof orderTable.$inferInsert) {
   return results[0]
 }
 
-export async function getProductById(id: number) {
+export async function getProductStockById(id: number) {
   const results = await db
     .select({ stock: productTable.stock })
     .from(productTable)
