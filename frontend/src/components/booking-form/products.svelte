@@ -5,15 +5,19 @@
   import { bookingContext } from './context'
   import ProductCount from './product-count.svelte'
   import LucideCalendarClock from '~icons/lucide/calendar-clock'
+  import LucideClock from '~icons/lucide/clock'
   import LucideCheck from '~icons/lucide/check'
   import LucideMapPin from '~icons/lucide/map-pin'
 
   const ctx = bookingContext.get()
 
-  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
+  const shortDate = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
     weekday: 'short',
+  })
+
+  const timeFormat = new Intl.DateTimeFormat('sv-SE', {
     hour: '2-digit',
     minute: '2-digit',
   })
@@ -45,16 +49,7 @@ This could be an expandable section with a help icon or similar.
 -->
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
-  {@const dateTime = dateTimeFormatter.formatRange(
-    pickup.startTime,
-    pickup.endTime,
-  )}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
-  <!--
-  IDEA: Maybe instead of rendering a button, what if we wrap all products in another card?
-  Then we get more flexibility for showing the pickup occasion at the top.
-  -->
-  <!-- IDEA: Make the pickup occasions non-interactive. They are selected automatically when you select products -->
   <!-- <button
     onclick={() => ctx.selectPickupOccasion(pickup.id)}
     aria-label="Välj upphämtningstillfälle {dateTime}"
@@ -81,23 +76,28 @@ This could be an expandable section with a help icon or similar.
       {/if}
     </div>
   </button> -->
-
   <div class="max-w-(--breakpoint-lg) mx-auto w-full p-4">
     <div
       class="p-4 flex justify-between items-center border border-black rounded-lg bg-black/5"
     >
       <div class="flex flex-col justify-between items-start">
-        <h2 class="flex items-center gap-2">
-          <LucideCalendarClock class="size-4 inline" />
+        <div class="grid grid-cols-[max-content_1fr]">
           <span
-            >Upphämtning: <span class="first-letter:capitalize">{dateTime}</span
-            ></span
+            class="text-2xl font-bold row-span-2 grid place-items-center pr-2 border-r border-black mr-2 first-letter:capitalize"
+            >{shortDate.format(pickup.startTime)}</span
           >
-        </h2>
-        <p class="flex items-center gap-2">
-          <LucideMapPin class="size-4 inline" />
-          <span>Plats: {pickup.location}</span>
-        </p>
+          <h2 class="flex items-center">
+            <LucideClock class="size-4 inline mr-2" />
+            <span class="pr-1">Upphämtning:</span>
+            <span>
+              {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
+            >
+          </h2>
+          <p class="flex items-center">
+            <LucideMapPin class="size-4 inline mr-2" />
+            <span>Plats: {pickup.location}</span>
+          </p>
+        </div>
       </div>
 
       {#if isSelected}
