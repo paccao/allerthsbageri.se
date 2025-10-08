@@ -76,8 +76,12 @@
   const url = new URL(window.location.href)
 </script>
 
-<!-- Allow navigating to a specific step by clicking anchor links. -->
-<!-- Disabled on the last step after submitting the form to prevent navigating back again -->
+<!--
+This allows navigating to a specific step by clicking anchor links.
+The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
+NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
+IDEA: Maybe we could simplify the state management with the steps
+-->
 <svelte:window
   onhashchange={ctx.isLastStep
     ? null

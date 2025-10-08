@@ -58,6 +58,11 @@
   <div
     class="grid w-full gap-4 px-4 md:px-0 md:pb-0 pb-8 max-w-xs self-center md:self-start"
   >
+    <!--
+    TODO: Add proper validation for customer data
+    TODO: Show validation errors after submitting the form
+    TODO: Show validation errors after the first blur event occured, and then after every change
+    -->
     <div class="grid gap-2">
       <Label for="name">Namn</Label>
       <Input id="name" type="text" required bind:value={ctx.customer.name} />
