@@ -9,8 +9,6 @@ export async function getProductsAvailabilityByIdHandler(
   try {
     const product = await getProductById(request.params.id)
 
-    console.dir('getProductsAvailabilityByIdHandler: ', product)
-
     if (!product) {
       return reply.code(404).send({ message: 'Specified product not found' })
     }
