@@ -7,6 +7,7 @@
   import LucideClock from '~icons/lucide/clock'
   import LucideCheck from '~icons/lucide/check'
   import LucideMapPin from '~icons/lucide/map-pin'
+  import { draw } from 'svelte/transition'
 
   const ctx = bookingContext.get()
 
@@ -90,17 +91,33 @@ This could be an expandable section with a help icon or similar.
       <div
         class={[
           'rounded-full size-8 p-2 shadow-xl absolute right-4 top-1/2 -translate-y-1/2 flex',
-          isSelected ? 'bg-green' : 'bg-white',
+          isSelected ? 'bg-green' : 'bg-white text-black/50',
         ]}
       >
-        <LucideCheck
-          class={[
-            'w-full h-full opacity-0 self-center',
-            isSelected
-              ? 'opacity-100'
-              : 'group-hover:opacity-100 group-focus-within:opacity-100',
-          ]}
-        />
+        {#key isSelected}
+          <svg
+            class={[
+              'w-full h-full',
+              isSelected
+                ? 'visible'
+                : 'invisible group-hover:visible group-focus-within:visible',
+            ]}
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+          >
+            <path
+              in:draw={{ duration: 200 }}
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M 4,12 9,17 20,6"
+            />
+          </svg>
+        {/key}
       </div>
     </button>
   </div>
