@@ -86,15 +86,8 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.startTime,
           pickup.endTime,
         )}"
-        class={[
-          'group w-full cursor-pointer p-2 xs:p-4 flex justify-center items-center md:rounded-lg relative',
-          // isSelected ? 'border-black' : 'hover:border-black/50',
-        ]}
+        class="group w-full cursor-pointer p-2 xs:p-4 flex justify-center items-center md:rounded-lg relative"
       >
-        <!--
-        TODO: make this responsive
-        IDEA: Wrap to multiple lines on mobile
-        -->
         <div
           class="grid grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base border-r border-black pr-8 mr-8"
         >
@@ -193,13 +186,9 @@ This could be an expandable section with a help icon or similar. Expanded by def
       class="mt-8 mb-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
       aria-hidden="true"
     >
-      <!-- <hr class="grow" /> -->
-      <!-- <span class="text-2xl">&mdash;</span> -->
       <GameIconsWheat class="size-3" />
       <GameIconsWheat />
       <GameIconsWheat class="size-3" />
-      <!-- <hr class="grow" /> -->
-      <!-- <span class="text-2xl">&mdash;</span> -->
     </div>
   </div>
 {/each}
