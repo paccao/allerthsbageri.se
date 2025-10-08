@@ -5,6 +5,17 @@ import { z } from 'zod'
 export const getPickupSchema = createSelectSchema(pickupOccasionTable)
 export const listPickupSchema = z.array(getPickupSchema)
 
+export const updatePickupBodySchema = z.object({
+  name: z.string().max(200).optional(),
+  description: z.string().max(1000).optional(),
+  bookingStart: z.coerce.date().optional(),
+  bookingEnd: z.coerce.date().optional(),
+  pickupStart: z.coerce.date().optional(),
+  pickupEnd: z.coerce.date().optional(),
+})
+
+export type UpdatePickupBody = z.infer<typeof updatePickupBodySchema>
+
 export const createPickupBodySchema = z
   .object({
     name: z.string().max(200),
