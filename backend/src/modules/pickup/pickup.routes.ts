@@ -3,6 +3,7 @@ import { listPickupsHandler, createPickupHandler } from './pickup.controller.ts'
 import {
   type CreatePickupBody,
   createPickupBodySchema,
+  getPickupSchema,
   listPickupSchema,
 } from './pickup.schemas.ts'
 import { getTags } from '#config/openapi.ts'
@@ -30,6 +31,10 @@ export async function pickupRoutes(app: FastifyInstance) {
     {
       schema: {
         body: createPickupBodySchema,
+        response: {
+          201: getPickupSchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
         tags,
       },
     },

@@ -9,10 +9,10 @@ export const createPickupBodySchema = z
   .object({
     name: z.string().max(200),
     description: z.string().max(1000),
-    bookingStart: z.date(),
-    bookingEnd: z.date(),
-    pickupStart: z.date(),
-    pickupEnd: z.date(),
+    bookingStart: z.coerce.date(),
+    bookingEnd: z.coerce.date(),
+    pickupStart: z.coerce.date(),
+    pickupEnd: z.coerce.date(),
   })
   .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
     if (bookingStart.getTime() > bookingEnd.getTime()) {

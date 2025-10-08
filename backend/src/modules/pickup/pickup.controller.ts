@@ -38,7 +38,7 @@ export async function createPickupHandler(
       pickupStart,
       pickupEnd,
     })
-    return pickup
+    return reply.code(201).send(pickup)
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create pickup' })
