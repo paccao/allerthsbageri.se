@@ -124,7 +124,7 @@ const defaultUsers = await Promise.all(
   [
     {
       name: 'Admin',
-      username: 'admin1',
+      username: 'seed_admin1',
       password: '123456',
     },
   ].map(async (u) => {
