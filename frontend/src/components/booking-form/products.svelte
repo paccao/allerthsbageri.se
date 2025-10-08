@@ -28,6 +28,10 @@
     hour: '2-digit',
     minute: '2-digit',
   })
+
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
 </script>
 
 <!--
@@ -55,16 +59,14 @@ IDEA: Maybe add a short description at the top to give instructions on how to ma
 This could be an expandable section with a help icon or similar. Expanded by default and dismissed after the first visit.
 -->
 
-{#each ctx.pickupOccasions as pickup (pickup.id)}
-  <!-- {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions].flat() as pickup} -->
+<!-- {#each ctx.pickupOccasions as pickup (pickup.id)} -->
+{#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
+  .flat()
+  .map((x) => ({ ...x, id: randomInteger(1, 9999) })) as pickup}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="gap-4 grid">
-    <!--
-    TODO: Allow pickup occasion container to fill full width on mobile.
-    Remove rounded corners and maybe adjust the borders
-    -->
-    <div class="w-full px-4 sticky top-0 z-50 bg-background">
+    <div class="w-full md:px-4 sticky top-0 z-50 bg-background">
       <button
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
@@ -72,7 +74,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.endTime,
         )}"
         class={[
-          'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border rounded-lg bg-black/5 relative',
+          'group w-full cursor-pointer p-4 grid justify-center gap-8 items-center border md:rounded-lg bg-black/5 relative',
           isSelected ? 'border-black' : 'hover:border-black/50',
         ]}
       >
