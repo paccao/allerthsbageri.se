@@ -64,7 +64,6 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import PickupOccasions from './pickup-occasions.svelte'
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
@@ -114,9 +113,7 @@
   </header>
 
   <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
-    {#if ctx.stepId === 'tid'}
-      <PickupOccasions />
-    {:else if ctx.stepId === 'varor'}
+    {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
       <Order />

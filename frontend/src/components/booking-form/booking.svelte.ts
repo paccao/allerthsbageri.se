@@ -15,7 +15,6 @@ export type Order = {
 }
 
 const orderedSteps = [
-  { id: 'tid', title: 'Välj upphämtningstillfälle' },
   { id: 'varor', title: 'Beställ produkter' },
   {
     id: 'order',
@@ -61,8 +60,9 @@ export class BookingState {
   pickupOccasion?: PickupOccasion
 
   #validators: Record<StepId, () => boolean> = {
-    tid: () => Number.isInteger(this.order.pickupOccasionId),
-    varor: () => Object.values(this.order.items).some((amount) => amount > 0),
+    varor: () =>
+      Number.isInteger(this.order.pickupOccasionId) &&
+      Object.values(this.order.items).some((amount) => amount > 0),
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
     order: () => {
