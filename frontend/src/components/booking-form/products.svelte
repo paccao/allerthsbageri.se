@@ -8,6 +8,7 @@
   import LucideMapPin from '~icons/lucide/map-pin'
   import { draw } from 'svelte/transition'
   import GameIconsWheat from '~icons/game-icons/wheat'
+  import * as AlertDialog from '$components/ui/alert-dialog'
 
   const ctx = bookingContext.get()
 
@@ -21,7 +22,6 @@
   const shortDate = new Intl.DateTimeFormat('sv-SE', {
     day: 'numeric',
     month: 'short',
-    // weekday: 'short',
   })
 
   const timeFormat = new Intl.DateTimeFormat('sv-SE', {
@@ -40,6 +40,25 @@
     result.setDate(result.getDate() + days)
     return result
   }
+
+  /** Callback function to resolve the result of the confirmation dialog */
+  let onConfirmResult = $state<((result: boolean) => void) | null>(null)
+
+  let showConfirm = $state(false)
+  const hasSelectedProducts = $derived(
+    Object.values(ctx.order.items).some((count) => count > 0),
+  )
+
+  $effect(() => {
+    if (showConfirm === false) {
+      onConfirmResult = null
+    }
+  })
+
+  // IDEA: Maybe trigger confirmation dialog from within the state instead
+  // Option 1) Build it with a confirmation dialog shared across all steps of the booking process
+  //           Then we could define the logic centrally in the booking state and automatically cover all variations for state changes.
+  // Option 2) Only show the confirmation dialog within the products step since that (currently) is the only place it is used. Less flexible for the future though.
 </script>
 
 <!--
@@ -74,13 +93,26 @@ This could be an expandable section with a help icon or similar. Expanded by def
   .flat()
   .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup}
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
-  <!-- TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding. -->
   <div class="grid">
     <div
       class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
     >
       <button
-        onclick={() => ctx.selectPickupOccasion(pickup.id)}
+        onclick={() => {
+          if (ctx.pickupOccasion?.id === pickup.id) {
+            return
+          } else if (ctx.pickupOccasion === undefined || !hasSelectedProducts) {
+            ctx.selectPickupOccasion(pickup.id)
+            return
+          }
+
+          showConfirm = true
+          onConfirmResult = (confirmed) => {
+            if (confirmed) {
+              ctx.selectPickupOccasion(pickup.id)
+            }
+          }
+        }}
         aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
           pickup.startTime,
           pickup.endTime,
@@ -172,11 +204,21 @@ This could be an expandable section with a help icon or similar. Expanded by def
                 class="w-full self-end"
                 size="xl"
                 onclick={() => {
-                  // TODO: If product is for a different pickupOccasion, show a confirmation dialog before proceeding.
-                  if (ctx.pickupOccasion?.id !== pickup.id) {
-                    ctx.selectPickupOccasion(pickup.id)
+                  if (
+                    ctx.pickupOccasion?.id === pickup.id ||
+                    !hasSelectedProducts
+                  ) {
+                    ctx.addProduct(id, 1)
+                    return
                   }
-                  ctx.addProduct(id, 1)
+
+                  onConfirmResult = (confirmed) => {
+                    if (confirmed) {
+                      ctx.selectPickupOccasion(pickup.id)
+                      ctx.addProduct(id, 1)
+                    }
+                    onConfirmResult = null
+                  }
                 }}>Lägg i varukorg</Button
               >
             {/if}
@@ -195,6 +237,34 @@ This could be an expandable section with a help icon or similar. Expanded by def
     </div>
   </div>
 {/each}
+
+<AlertDialog.Root bind:open={showConfirm}>
+  <AlertDialog.Content>
+    <AlertDialog.Header>
+      <AlertDialog.Title>Vill du byta upphämtningstillfälle?</AlertDialog.Title>
+      <AlertDialog.Description>
+        Om du går vidare kommer din varukorg tömmas. Du är varmt välkommen att
+        göra flera beställningar om du är intresserad av produkter vid andra
+        upphämtningstillfällen.
+      </AlertDialog.Description>
+    </AlertDialog.Header>
+    <AlertDialog.Footer>
+      <AlertDialog.Cancel
+        autofocus
+        onclick={() => {
+          onConfirmResult?.(false)
+          showConfirm = false
+        }}>Avbryt</AlertDialog.Cancel
+      >
+      <AlertDialog.Action
+        onclick={() => {
+          onConfirmResult?.(true)
+          showConfirm = false
+        }}>Fortsätt</AlertDialog.Action
+      >
+    </AlertDialog.Footer>
+  </AlertDialog.Content>
+</AlertDialog.Root>
 
 <style>
   .products-grid {
