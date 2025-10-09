@@ -68,12 +68,19 @@
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
   import Order from './order.svelte'
+  import ConfirmDialog from './confirm-dialog.svelte'
 
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
   const url = new URL(window.location.href)
+
+  let confirmDialog: ConfirmDialog
+
+  // confirmDialog.show((result) => {
+  //   //
+  // })
 </script>
 
 <!--
@@ -118,7 +125,8 @@ IDEA: Maybe we could simplify the state management with the steps
 
   <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'varor'}
-      <Products />
+      <!-- <Products /> -->
+      <ConfirmDialog title="" description="" bind:this={confirmDialog} />
     {:else if ctx.stepId === 'order'}
       <Order />
     {:else if ctx.isLastStep}
