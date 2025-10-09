@@ -15,7 +15,7 @@ export type Order = {
 }
 
 const orderedSteps = [
-  { id: 'varor', title: 'Beställ produkter' },
+  { id: 'varor', title: 'Välj upphämtningstillfälle och produkter' },
   {
     id: 'order',
     title: 'Bekräfta beställning',
