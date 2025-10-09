@@ -86,6 +86,8 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.endTime,
         )}"
         class="group w-full cursor-pointer py-2 px-4 xs:p-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
+        aria-checked={isSelected}
+        role="checkbox"
       >
         <div
           class="grid xs:grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base xs:border-r border-black xs:pr-6 sm:pr-8 xs:mr-6 sm:mr-8"
