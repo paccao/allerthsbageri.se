@@ -12,7 +12,7 @@ export async function createPickup({
   pickupStart,
   pickupEnd,
   ...data
-}: Pick<typeof pickupOccasionTable.$inferInsert, 'name' | 'description'> & {
+}: Pick<typeof pickupOccasionTable.$inferInsert, 'name' | 'location'> & {
   bookingStart: Date
   bookingEnd: Date
   pickupStart: Date

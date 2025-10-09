@@ -20,7 +20,7 @@ suite('pickup routes', () => {
   const pickup = {
     id: 3,
     name: 'Särlatorgets marknad',
-    description:
+    location:
       'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
     bookingStart: new Date('2025-08-23T08:00:00.000Z'),
     bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
@@ -64,7 +64,7 @@ suite('pickup routes', () => {
     const pickupUpdateId = 2
     const pickupUpdate = {
       name: 'Särlatorgets köpställe',
-      description: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
+      location: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
     }
 
@@ -103,12 +103,12 @@ suite('pickup routes', () => {
     t.assert.notStrictEqual(
       {
         name: beforeUpdate.name,
-        description: beforeUpdate.description,
+        location: beforeUpdate.location,
         pickupStart: beforeUpdate.pickupStart,
       },
       {
         name: afterUpdate.name,
-        description: afterUpdate.description,
+        location: afterUpdate.location,
         pickupStart: afterUpdate.pickupStart,
       },
       'assert that the data changed',
@@ -119,7 +119,7 @@ suite('pickup routes', () => {
     const badPickup = {
       id: 5,
       name: 'Testmarknaden',
-      description: 'Testa mera tester',
+      location: 'Testa mera tester',
       bookingStart: new Date('2025-08-28T08:00:00.000Z'),
       bookingEnd: new Date('2025-08-23T17:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
@@ -144,7 +144,7 @@ suite('pickup routes', () => {
     const goodPickup = {
       id: 6,
       name: 'Den bästa marknaden som finns',
-      description: 'Bröd',
+      location: 'Bröd',
       bookingStart: new Date('2025-08-22T08:00:00.000Z'),
       bookingEnd: new Date('2025-08-26T17:00:00.000Z'),
       pickupStart: new Date('2025-08-28T09:00:00.000Z'),

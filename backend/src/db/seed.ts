@@ -18,7 +18,7 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
   {
     id: 1,
     name: 'Brödbakarnas dag',
-    description: 'Bröd åt folket',
+    location: 'Stora torget, Borås',
     bookingStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
     bookingEnd: new Date('2025-08-28T17:00:00.000Z').toISOString(),
     pickupStart: new Date('2025-08-29T09:00:00.000Z').toISOString(),
@@ -27,7 +27,7 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
   {
     id: 2,
     name: 'Bäckängsgymnasiets marknad',
-    description: 'Lokal marknad på gården utanför Bäckängsgymnasiet',
+    location: 'Lokal marknad på gården utanför Bäckängsgymnasiet',
     bookingStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
     bookingEnd: new Date('2025-09-17T23:59:59.999Z').toISOString(),
     pickupStart: new Date('2025-09-07T10:30:00.000Z').toISOString(),
@@ -39,21 +39,21 @@ const defaultProductDetails: (typeof productDetailsTable.$inferInsert)[] = [
   {
     id: 1,
     name: 'Surdegsbröd med Emmer',
-    location: 'Ett surdegsbröd med färskmalen ekologisk kultursäd, Emmer.',
+    description: 'Ett surdegsbröd med färskmalen ekologisk kultursäd, Emmer.',
     image: null,
     vatPercentage: 6,
   },
   {
     id: 2,
     name: 'Surdegsbröd med rågsikt',
-    location: 'Ett surdegsbröd med ekologisk rågsikt',
+    description: 'Ett surdegsbröd med ekologisk rågsikt',
     image: null,
     vatPercentage: 12,
   },
   {
     id: 3,
     name: 'Surdegsbröd med Vänga kvarns samsikt',
-    location: 'Detta bröd är bakat med lokalt mjöl från Vänga kvarn',
+    description: 'Detta bröd är bakat med lokalt mjöl från Vänga kvarn',
     image: null,
     vatPercentage: 6,
   },
