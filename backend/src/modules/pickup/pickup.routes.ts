@@ -36,6 +36,7 @@ export async function pickupRoutes(app: FastifyInstance) {
     listPickupsHandler,
   )
 
+  // TODO: Ensure that dates are correct during POST and PATCH - for example end dates should always come after the 'before' date/time
   app.post<{ Body: CreatePickupBody }>(
     '/',
     {

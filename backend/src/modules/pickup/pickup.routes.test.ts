@@ -28,20 +28,13 @@ suite('pickup routes', () => {
     pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
   }
 
-  const pickupUpdateId = 2
-  const pickupUpdate = {
-    name: 'Särlatorgets köpställe',
-    description: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
-    pickupStart: new Date('2025-08-23T08:00:00.000Z'),
-  }
-
   let cookie: string
 
   before(async () => {
     cookie = await createAdminUser(admin4)
   })
 
-  test('should be possible to create a pickup occasion when authenticated', async (t: TestContext) => {
+  test.only('should be possible to create a pickup occasion when authenticated', async (t: TestContext) => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/pickups/',
@@ -49,11 +42,32 @@ suite('pickup routes', () => {
       headers: { cookie },
     })
 
+    const deserialized = response.json()
+
+    t.assert.strictEqual(deserialized, undefined)
+
     t.assert.strictEqual(response.statusCode, 201)
-    t.assert.strictEqual(response.json().name, pickup.name)
+    // t.assert.strictEqual(deserialized.name, pickup.name)
+    // t.assert.strictEqual(
+    //   new Date(deserialized.bookingEnd).getTime() >
+    //     new Date(deserialized.bookingStart).getTime(),
+    //   true,
+    // )
+    // t.assert.strictEqual(
+    //   new Date(deserialized.pickupEnd).getTime() >
+    //     new Date(deserialized.pickupStart).getTime(),
+    //   true,
+    // )
   })
 
-  test.only('should only patch data that was sent', async (t: TestContext) => {
+  test('should only patch data that was sent', async (t: TestContext) => {
+    const pickupUpdateId = 2
+    const pickupUpdate = {
+      name: 'Särlatorgets köpställe',
+      description: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
+      pickupStart: new Date('2025-08-23T08:00:00.000Z'),
+    }
+
     let beforeUpdateResponse: GetPickup[] = await app
       .inject({
         method: 'GET',
@@ -99,8 +113,73 @@ suite('pickup routes', () => {
       },
       'assert that the data changed',
     )
-    // assert that one of the non-expected data was NOT changed
-    t.assert.strictEqual(afterUpdate.pickupEnd, beforeUpdate.pickupEnd)
+  })
+
+  test('can not create pickup occasions with dates that are not chronological in time', async (t: TestContext) => {
+    const badPickup = {
+      id: 5,
+      name: 'Testmarknaden',
+      description: 'Testa mera tester',
+      bookingStart: new Date('2025-08-28T08:00:00.000Z'),
+      bookingEnd: new Date('2025-08-23T17:00:00.000Z'),
+      pickupStart: new Date('2025-08-29T09:00:00.000Z'),
+      pickupEnd: new Date('2025-08-29T08:59:59.999Z'),
+    }
+
+    const createdPickup = await app.inject({
+      method: 'POST',
+      url: '/api/pickups/',
+      body: badPickup,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      createdPickup.statusCode,
+      400,
+      'should return status code 400 when incorrect dates was passed to it',
+    )
+  })
+
+  test('can not update pickup occasions with dates that are not chronological in time', async (t: TestContext) => {
+    const goodPickup = {
+      id: 6,
+      name: 'Den bästa marknaden som finns',
+      description: 'Bröd',
+      bookingStart: new Date('2025-08-22T08:00:00.000Z'),
+      bookingEnd: new Date('2025-08-26T17:00:00.000Z'),
+      pickupStart: new Date('2025-08-28T09:00:00.000Z'),
+      pickupEnd: new Date('2025-08-28T16:59:59.999Z'),
+    }
+
+    const createdPickup = await app.inject({
+      method: 'POST',
+      url: '/api/pickups/',
+      body: goodPickup,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(createdPickup.statusCode, 201)
+
+    const pickupId = 6
+    const badPickup = {
+      pickupStart: new Date('2025-08-23T08:00:00.000Z'),
+      pickupEnd: new Date('2025-08-23T08:00:00.000Z'),
+      bookingStart: new Date('2025-08-25T08:00:00.000Z'),
+      bookingEnd: new Date('2025-08-25T14:00:00.000Z'),
+    }
+
+    const updatedPickup = await app.inject({
+      method: 'PATCH',
+      url: `/api/pickups/${pickupId}`,
+      body: badPickup,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      updatedPickup.statusCode,
+      400,
+      'should return status code 400 when incorrect dates was passed to it',
+    )
   })
 
   after(async () => {

@@ -29,7 +29,7 @@ export async function createPickup({
     })
     .returning()
 
-  return results[0]
+  return results[0]!
 }
 
 export async function updatePickup(
