@@ -135,7 +135,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
               viewBox="0 0 24 24"
             >
               <path
-                in:draw={{ duration: 200 }}
+                in:draw={{ duration: 300 }}
                 fill="none"
                 stroke="currentColor"
                 stroke-linecap="round"
