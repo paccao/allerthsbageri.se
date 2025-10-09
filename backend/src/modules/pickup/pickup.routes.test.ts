@@ -5,6 +5,7 @@ import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
+import type { GetPickup } from './pickup.schemas.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
@@ -53,15 +54,23 @@ suite('pickup routes', () => {
   })
 
   test.only('should only patch data that was sent', async (t: TestContext) => {
-    const beforeUpdate:  = await app
+    let beforeUpdateResponse: GetPickup[] = await app
       .inject({
         method: 'GET',
-        url: `/api/pickups/`,
+        url: '/api/pickups/',
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    beforeUpdate = beforeUpdate.
+    const beforeUpdate = beforeUpdateResponse.find(
+      (o) => o.id === pickupUpdateId,
+    )
+
+    if (beforeUpdate === undefined) {
+      t.assert.fail(
+        `Couldn't find a pickup occasion with id ${pickupUpdateId}. Expected value was 2, and it might be because of the seed data in seed.ts`,
+      )
+    }
 
     const afterUpdate = await app
       .inject({
@@ -72,10 +81,12 @@ suite('pickup routes', () => {
       })
       .then((res) => res.json())
 
-    // assert that id has not changed
-    t.assert.strictEqual(pickupUpdateId, afterUpdate.id)
-    // assert that the expected data has changed.
     t.assert.strictEqual(
+      pickupUpdateId,
+      afterUpdate.id,
+      'assert that id has not changed',
+    )
+    t.assert.notStrictEqual(
       {
         name: beforeUpdate.name,
         description: beforeUpdate.description,
@@ -86,6 +97,7 @@ suite('pickup routes', () => {
         description: afterUpdate.description,
         pickupStart: afterUpdate.pickupStart,
       },
+      'assert that the data changed',
     )
     // assert that one of the non-expected data was NOT changed
     t.assert.strictEqual(afterUpdate.pickupEnd, beforeUpdate.pickupEnd)

@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 export const getPickupSchema = createSelectSchema(pickupOccasionTable)
 export const listPickupSchema = z.array(getPickupSchema)
-export type ListPickup = z.infer<typeof listPickupSchema>
+export type GetPickup = z.infer<typeof getPickupSchema>
 
 export const updatePickupBodySchema = z.object({
   name: z.string().max(200).optional(),
