@@ -12,11 +12,11 @@
   class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background z-50"
 >
   <div
-    class="fixed bottom-14 sm:bottom-18 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
+    class="fixed bottom-14 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
   ></div>
 
   <nav
-    class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center py-2 px-4 sm:py-4 w-full"
+    class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center py-2 px-4 w-full"
   >
     {#if ctx.prevStepId}
       <a

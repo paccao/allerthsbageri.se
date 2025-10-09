@@ -85,7 +85,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
           pickup.startTime,
           pickup.endTime,
         )}"
-        class="group w-full cursor-pointer py-2 px-4 xs:p-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
+        class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
         aria-checked={isSelected}
         role="checkbox"
       >
