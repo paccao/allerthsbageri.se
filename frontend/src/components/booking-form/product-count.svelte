@@ -43,7 +43,8 @@
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.removeProduct(productId, 1)}
-    aria-label="Ta bort 1"><LucideMinus class={sizes[size].icon} /></Button
+    aria-label="Ta bort 1"
+    ><LucideMinus class={sizes[size].icon} aria-hidden="true" /></Button
   >
   <input
     type="number"
@@ -87,7 +88,8 @@
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.addProduct(productId, 1)}
-    aria-label="Lägg till 1"><LucidePlus class={sizes[size].icon} /></Button
+    aria-label="Lägg till 1"
+    ><LucidePlus class={sizes[size].icon} aria-hidden="true" /></Button
   >
 </div>
 

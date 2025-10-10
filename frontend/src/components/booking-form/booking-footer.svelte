@@ -66,7 +66,10 @@
         {#if ctx.step.nextButtonLabel}
           <span>{ctx.step.nextButtonLabel}</span>
         {:else}
-          <span>Gå vidare</span><LucideChevronRight class="size-4" />
+          <span>Gå vidare</span><LucideChevronRight
+            class="size-4"
+            aria-hidden="true"
+          />
         {/if}
       </a>
     {:else}
