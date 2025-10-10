@@ -34,7 +34,7 @@ suite('pickup routes', () => {
     cookie = await createAdminUser(admin4)
   })
 
-  test.only('should be possible to create a pickup occasion when authenticated', async (t: TestContext) => {
+  test('should be possible to create a pickup occasion when authenticated', async (t: TestContext) => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/pickups/',
@@ -44,20 +44,18 @@ suite('pickup routes', () => {
 
     const deserialized = response.json()
 
-    t.assert.strictEqual(deserialized, undefined)
-
     t.assert.strictEqual(response.statusCode, 201)
-    // t.assert.strictEqual(deserialized.name, pickup.name)
-    // t.assert.strictEqual(
-    //   new Date(deserialized.bookingEnd).getTime() >
-    //     new Date(deserialized.bookingStart).getTime(),
-    //   true,
-    // )
-    // t.assert.strictEqual(
-    //   new Date(deserialized.pickupEnd).getTime() >
-    //     new Date(deserialized.pickupStart).getTime(),
-    //   true,
-    // )
+    t.assert.strictEqual(deserialized.name, pickup.name)
+    t.assert.strictEqual(
+      new Date(deserialized.bookingEnd).getTime() >
+        new Date(deserialized.bookingStart).getTime(),
+      true,
+    )
+    t.assert.strictEqual(
+      new Date(deserialized.pickupEnd).getTime() >
+        new Date(deserialized.pickupStart).getTime(),
+      true,
+    )
   })
 
   test('should only patch data that was sent', async (t: TestContext) => {
@@ -66,6 +64,7 @@ suite('pickup routes', () => {
       name: 'Särlatorgets köpställe',
       location: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
+      pickupEnd: new Date('2025-08-23T015:00:00.000Z'),
     }
 
     let beforeUpdateResponse: GetPickup[] = await app
@@ -142,7 +141,6 @@ suite('pickup routes', () => {
 
   test('can not update pickup occasions with dates that are not chronological in time', async (t: TestContext) => {
     const goodPickup = {
-      id: 6,
       name: 'Den bästa marknaden som finns',
       location: 'Bröd',
       bookingStart: new Date('2025-08-22T08:00:00.000Z'),
@@ -160,7 +158,6 @@ suite('pickup routes', () => {
 
     t.assert.strictEqual(createdPickup.statusCode, 201)
 
-    const pickupId = 6
     const badPickup = {
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
       pickupEnd: new Date('2025-08-23T08:00:00.000Z'),
@@ -170,7 +167,7 @@ suite('pickup routes', () => {
 
     const updatedPickup = await app.inject({
       method: 'PATCH',
-      url: `/api/pickups/${pickupId}`,
+      url: `/api/pickups/${createdPickup.json().id}`,
       body: badPickup,
       headers: { cookie },
     })

@@ -16,21 +16,34 @@ export const updatePickupBodySchema = z
     pickupEnd: z.coerce.date().optional(),
   })
   .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
-    // TODO: This will not be validated if only one of the dates gets updated
+    if ((bookingStart || bookingEnd) && !(bookingStart && bookingEnd)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'both bookingStart and bookingEnd must be provided together',
+      })
+    }
+
+    if ((pickupStart || pickupEnd) && !(pickupStart && pickupEnd)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'both pickupStart and pickupEnd must be provided together',
+      })
+    }
+
     if (bookingStart && bookingEnd) {
-      if (bookingStart.getTime() > bookingEnd.getTime()) {
+      if (bookingStart.getTime() < bookingEnd.getTime()) {
         ctx.addIssue({
           code: 'custom',
-          message: 'bookingEnd must be after bookingStart',
+          message: 'bookingStart must be before bookingEnd',
         })
       }
     }
-    // TODO: same here
+
     if (pickupStart && pickupEnd) {
-      if (pickupStart.getTime() > pickupEnd.getTime()) {
+      if (pickupStart.getTime() < pickupEnd.getTime()) {
         ctx.addIssue({
           code: 'custom',
-          message: 'pickupEnd must be after pickupStart',
+          message: 'pickupStart must be before pickupEnd',
         })
       }
     }
@@ -48,17 +61,17 @@ export const createPickupBodySchema = z
     pickupEnd: z.coerce.date(),
   })
   .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
-    if (bookingStart.getTime() > bookingEnd.getTime()) {
+    if (bookingStart.getTime() < bookingEnd.getTime()) {
       ctx.addIssue({
         code: 'custom',
-        message: 'bookingEnd must be after bookingStart',
+        message: 'bookingStart must be before bookingEnd',
       })
     }
 
-    if (pickupStart.getTime() > pickupEnd.getTime()) {
+    if (pickupStart.getTime() < pickupEnd.getTime()) {
       ctx.addIssue({
         code: 'custom',
-        message: 'pickupEnd must be after pickupStart',
+        message: 'pickupStart must be before pickupEnd',
       })
     }
   })
