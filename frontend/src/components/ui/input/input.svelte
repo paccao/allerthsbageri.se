@@ -1,11 +1,12 @@
 <script lang="ts" module>
   const baseClasses =
-    'border-input selection:bg-primary selection:text-primary-foreground ring-offset-background placeholder:text-muted-foreground shadow-xs flex h-10 w-full min-w-0 rounded-md border px-3 dark:bg-input/30 outline-none transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50 '
+    'border-input selection:bg-primary selection:text-primary-foreground ring-offset-background placeholder:text-muted-foreground shadow-xs flex h-10 w-full min-w-0 rounded-md border px-3 dark:bg-input/30 outline-none transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50'
   const focusClasses =
     'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
   const ariaClasses =
     'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
 
+  const fileInputClasses = 'bg-transparent pt-1.5 text-sm font-medium'
   export const inputClasses = [
     'bg-background py-1 text-base md:text-sm',
     baseClasses,
@@ -37,6 +38,7 @@
     type,
     files = $bindable(),
     class: className,
+    'data-slot': dataSlot = 'input',
     ...restProps
   }: Props = $props()
 </script>
@@ -44,9 +46,9 @@
 {#if type === 'file'}
   <input
     bind:this={ref}
-    data-slot="input"
+    data-slot={dataSlot}
     class={cn(
-      'bg-transparent pt-1.5 text-sm font-medium',
+      fileInputClasses,
       baseClasses,
       focusClasses,
       ariaClasses,
@@ -60,7 +62,7 @@
 {:else}
   <input
     bind:this={ref}
-    data-slot="input"
+    data-slot={dataSlot}
     class={cn(inputClasses, className)}
     {type}
     bind:value
