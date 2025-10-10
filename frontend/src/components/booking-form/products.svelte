@@ -8,7 +8,7 @@
   import LucideMapPin from '~icons/lucide/map-pin'
   import { draw } from 'svelte/transition'
   import GameIconsWheat from '~icons/game-icons/wheat'
-  import * as AlertDialog from '$components/ui/alert-dialog'
+  import ConfirmDialog from './confirm-dialog.svelte'
 
   const ctx = bookingContext.get()
 
@@ -40,25 +40,6 @@
     result.setDate(result.getDate() + days)
     return result
   }
-
-  /** Callback function to resolve the result of the confirmation dialog */
-  let onConfirmResult = $state<((result: boolean) => void) | null>(null)
-
-  let showConfirm = $state(false)
-  const hasSelectedProducts = $derived(
-    Object.values(ctx.order.items).some((count) => count > 0),
-  )
-
-  $effect(() => {
-    if (showConfirm === false) {
-      onConfirmResult = null
-    }
-  })
-
-  // IDEA: Maybe trigger confirmation dialog from within the state instead
-  // Option 1) Build it with a confirmation dialog shared across all steps of the booking process
-  //           Then we could define the logic centrally in the booking state and automatically cover all variations for state changes.
-  // Option 2) Only show the confirmation dialog within the products step since that (currently) is the only place it is used. Less flexible for the future though.
 </script>
 
 <!--
@@ -88,31 +69,17 @@ This could be an expandable section with a help icon or similar. Expanded by def
 
 <!-- IDEA: Show a table of contents at the top with anchor links to every pickup occasion to clarify that multiple dates are available -->
 
-<!-- {#each ctx.pickupOccasions as pickup (pickup.id)} -->
-{#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
+{#each ctx.pickupOccasions as pickup (pickup.id)}
+  <!-- {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
   .flat()
-  .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup}
+  .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup} -->
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   <div class="grid">
     <div
       class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
     >
       <button
-        onclick={() => {
-          if (ctx.pickupOccasion?.id === pickup.id) {
-            return
-          } else if (ctx.pickupOccasion === undefined || !hasSelectedProducts) {
-            ctx.selectPickupOccasion(pickup.id)
-            return
-          }
-
-          showConfirm = true
-          onConfirmResult = (confirmed) => {
-            if (confirmed) {
-              ctx.selectPickupOccasion(pickup.id)
-            }
-          }
-        }}
+        onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
           pickup.startTime,
           pickup.endTime,
@@ -203,23 +170,8 @@ This could be an expandable section with a help icon or similar. Expanded by def
               <Button
                 class="w-full self-end"
                 size="xl"
-                onclick={() => {
-                  if (
-                    ctx.pickupOccasion?.id === pickup.id ||
-                    !hasSelectedProducts
-                  ) {
-                    ctx.addProduct(id, 1)
-                    return
-                  }
-
-                  onConfirmResult = (confirmed) => {
-                    if (confirmed) {
-                      ctx.selectPickupOccasion(pickup.id)
-                      ctx.addProduct(id, 1)
-                    }
-                    onConfirmResult = null
-                  }
-                }}>Lägg i varukorg</Button
+                onclick={() => ctx.addProductAfterConfirmation(id, 1)}
+                >Lägg i varukorg</Button
               >
             {/if}
           </Card.Footer>
@@ -238,33 +190,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
   </div>
 {/each}
 
-<AlertDialog.Root bind:open={showConfirm}>
-  <AlertDialog.Content>
-    <AlertDialog.Header>
-      <AlertDialog.Title>Vill du byta upphämtningstillfälle?</AlertDialog.Title>
-      <AlertDialog.Description>
-        Om du går vidare kommer din varukorg tömmas. Du är varmt välkommen att
-        göra flera beställningar om du är intresserad av produkter vid andra
-        upphämtningstillfällen.
-      </AlertDialog.Description>
-    </AlertDialog.Header>
-    <AlertDialog.Footer>
-      <AlertDialog.Cancel
-        autofocus
-        onclick={() => {
-          onConfirmResult?.(false)
-          showConfirm = false
-        }}>Avbryt</AlertDialog.Cancel
-      >
-      <AlertDialog.Action
-        onclick={() => {
-          onConfirmResult?.(true)
-          showConfirm = false
-        }}>Fortsätt</AlertDialog.Action
-      >
-    </AlertDialog.Footer>
-  </AlertDialog.Content>
-</AlertDialog.Root>
+<ConfirmDialog dialog={ctx.confirmDialog} />
 
 <style>
   .products-grid {

@@ -1,7 +1,8 @@
-import { clearHash } from '$lib/utils'
-import { PersistedState } from 'runed'
-import type { PickupOccasion, Product } from './booking-form.svelte'
 import { z } from 'zod'
+import { PersistedState } from 'runed'
+import { clearHash } from '$lib/utils'
+import type { PickupOccasion, Product } from './booking-form.svelte'
+import type { ConfirmDialogState } from './confirm-dialog.svelte'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -36,6 +37,11 @@ const steps = orderedSteps.reduce(
   {} as Record<StepId, Step>,
 )
 
+const confirmDialogTexts = {
+  title: 'Vill du byta upphämtningstillfälle?',
+  description: `Om du går vidare kommer din varukorg tömmas. Du är varmt välkommen att göra flera beställningar om du är intresserad av produkter vid andra upphämtningstillfällen.`,
+}
+
 export class BookingState {
   #order = new PersistedState<Order>('order', {
     pickupOccasionId: null,
@@ -47,12 +53,25 @@ export class BookingState {
     phone: '',
   })
 
+  /**
+   * If set, a confirmation dialog will be shown to prompt the user
+   * before proceeding with actions that otherwise might cause data loss.
+   *
+   * This approachs allows the UI to be rendered declaratively,
+   * separate from the state management.
+   */
+  #confirmDialog: ConfirmDialogState | null = $state(null)
+
   get order() {
     return this.#order.current
   }
 
   get customer() {
     return this.#customer.current
+  }
+
+  get confirmDialog() {
+    return this.#confirmDialog
   }
 
   pickupOccasions: PickupOccasion[]
@@ -143,11 +162,31 @@ export class BookingState {
     return this.#enabledSteps[id]
   }
 
+  #selectPickupOccasion(id: PickupOccasion['id']) {
+    this.#order.current.items = {}
+    this.#order.current.pickupOccasionId = id
+  }
+
   selectPickupOccasion(id: PickupOccasion['id']) {
-    if (this.#order.current.pickupOccasionId !== id) {
-      this.#order.current.items = {}
-      this.#order.current.pickupOccasionId = id
+    if (this.#order.current.pickupOccasionId === id) return
+
+    if (this.hasSelectedProducts()) {
+      this.#confirmDialog = {
+        ...confirmDialogTexts,
+        onResult: (confirmed) => {
+          if (confirmed) {
+            this.#selectPickupOccasion(id)
+          }
+          this.#confirmDialog = null
+        },
+      }
+    } else {
+      this.#selectPickupOccasion(id)
     }
+  }
+
+  hasSelectedProducts() {
+    return Object.values(this.#order.current.items).some((count) => count > 0)
   }
 
   getProductCount(id: Product['id']) {
@@ -160,6 +199,40 @@ export class BookingState {
 
   addProduct(id: Product['id'], count: number) {
     this.#order.current.items[id] = (this.#order.current.items[id] ?? 0) + count
+  }
+
+  /**
+   * Let the user confirm before adding a product if it's connected to another pickup occasion.
+   * Useful to prevent data loss.
+   */
+  addProductAfterConfirmation(id: Product['id'], count: number) {
+    const pickupId = this.pickupOccasions.find((pickup) =>
+      pickup.products.some((product) => product.id === id),
+    )?.id
+
+    if (!pickupId) throw new Error('Invalid product ID: ' + id)
+
+    if (this.pickupOccasion?.id === pickupId) {
+      this.addProduct(id, count)
+      return
+    }
+
+    if (this.hasSelectedProducts()) {
+      this.#confirmDialog = {
+        ...confirmDialogTexts,
+        onResult: (confirmed) => {
+          if (confirmed) {
+            this.#selectPickupOccasion(pickupId)
+            this.addProduct(id, count)
+          }
+          this.#confirmDialog = null
+        },
+      }
+      return
+    }
+
+    this.#selectPickupOccasion(pickupId)
+    this.addProduct(id, count)
   }
 
   removeProduct(id: Product['id'], count: number) {
