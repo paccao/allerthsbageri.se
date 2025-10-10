@@ -36,7 +36,5 @@ export async function updateCustomer(
 }
 
 export async function deleteCustomer(id: number) {
-  const result = await db.delete(customerTable).where(eq(customerTable.id, id))
-
-  return result
+  await db.delete(customerTable).where(eq(customerTable.id, id))
 }

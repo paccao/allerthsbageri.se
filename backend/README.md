@@ -18,8 +18,7 @@ pnpm i
 ### Setup database first time
 
 ```sh
-pnpm drizzle-kit push
-pnpm drizzle-kit studio
+pnpm run db push && pnpm run db:seed
 ```
 
 ### Run backend
