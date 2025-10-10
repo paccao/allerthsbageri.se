@@ -4,10 +4,7 @@
   import { toSEKString } from '$lib/currency'
   import { bookingContext } from './context'
   import ProductCount from './product-count.svelte'
-  import LucideClock from '~icons/lucide/clock'
-  import LucideMapPin from '~icons/lucide/map-pin'
   import { draw } from 'svelte/transition'
-  import GameIconsWheat from '~icons/game-icons/wheat'
   import ConfirmDialog from './confirm-dialog.svelte'
 
   const ctx = bookingContext.get()
@@ -109,14 +106,14 @@ This could be an expandable section with a help icon or similar. Expanded by def
             <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
           </span>
           <h2 class="flex items-center">
-            <LucideClock class="size-4 inline mr-2" aria-hidden="true" />
+            <span class="i-[lucide--clock] size-4 mr-2"></span>
             <span class="pr-1">Upphämtning:</span>
             <span>
               {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
             >
           </h2>
           <p class="flex items-center">
-            <LucideMapPin class="size-4 inline mr-2" aria-hidden="true" />
+            <span class="i-[lucide--map-pin] size-4 mr-2"></span>
             <span>Plats: {pickup.location}</span>
           </p>
         </div>
@@ -192,9 +189,9 @@ This could be an expandable section with a help icon or similar. Expanded by def
       class="mt-8 mb-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
       aria-hidden="true"
     >
-      <GameIconsWheat class="size-3" />
-      <GameIconsWheat />
-      <GameIconsWheat class="size-3" />
+      <span class="i-[game-icons--wheat] size-3"></span>
+      <span class="i-[game-icons--wheat]"></span>
+      <span class="i-[game-icons--wheat] size-3"></span>
     </div>
   </div>
 {/each}

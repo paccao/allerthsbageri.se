@@ -2,6 +2,10 @@
 @import 'tw-animate-css';
 
 @plugin '@tailwindcss/typography';
+@plugin '@iconify/tailwind4' {
+  prefix: 'i';
+  scale: 1.2;
+}
 
 @custom-variant dark (&:is(.dark *));
 
