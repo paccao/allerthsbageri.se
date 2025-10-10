@@ -120,7 +120,7 @@ suite('pickup routes', () => {
       name: 'Testmarknaden',
       location: 'Testa mera tester',
       bookingStart: new Date('2025-08-28T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-23T17:00:00.000Z'),
+      bookingEnd: new Date('2025-08-23T08:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-29T08:59:59.999Z'),
     }
@@ -162,7 +162,7 @@ suite('pickup routes', () => {
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
       pickupEnd: new Date('2025-08-23T08:00:00.000Z'),
       bookingStart: new Date('2025-08-25T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-25T14:00:00.000Z'),
+      bookingEnd: new Date('2025-08-25T07:59:59.000Z'),
     }
 
     const updatedPickup = await app.inject({
