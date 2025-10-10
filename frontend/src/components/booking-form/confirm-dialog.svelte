@@ -1,50 +1,54 @@
 <script lang="ts">
   import * as AlertDialog from '$components/ui/alert-dialog'
 
-  type Props = {
+  export type ConfirmDialogState = {
     title: string
     description: string
+    cancelLabel?: string
+    confirmLabel?: string
+    onResult: (result: boolean) => void
   }
 
-  type OnResult = (result: boolean) => void
-  let { title, description }: Props = $props()
-
-  let open = $state(false)
-  let callback = $state<OnResult | null>(null)
-
-  export function show(onResult: OnResult) {
-    open = true
-    callback = onResult
+  type Props = {
+    dialog: ConfirmDialogState | null
   }
 
-  function hide(result: boolean) {
-    open = false
-    callback!(result)
-    callback = null
-  }
+  let { dialog }: Props = $props()
+  let cancelButton = $state<HTMLButtonElement>()
+
+  $inspect(cancelButton)
 </script>
 
-<AlertDialog.Root
-  bind:open
-  onOpenChange={(isOpen) => {
-    if (isOpen === false) {
-      callback!(false)
-      callback = null
-    }
-  }}
->
-  <AlertDialog.Content>
-    <AlertDialog.Header>
-      <AlertDialog.Title>{title}</AlertDialog.Title>
-      <AlertDialog.Description>{description}</AlertDialog.Description>
-    </AlertDialog.Header>
-    <AlertDialog.Footer>
-      <AlertDialog.Cancel autofocus onclick={() => hide(false)}
-        >Avbryt</AlertDialog.Cancel
-      >
-      <AlertDialog.Action onclick={() => hide(true)}
-        >Fortsätt</AlertDialog.Action
-      >
-    </AlertDialog.Footer>
-  </AlertDialog.Content>
-</AlertDialog.Root>
+{#if dialog}
+  <AlertDialog.Root
+    open
+    onOpenChange={(isOpen) => {
+      if (isOpen === false && dialog) {
+        dialog.onResult(false)
+      }
+    }}
+  >
+    <AlertDialog.Content
+      interactOutsideBehavior="close"
+      onOpenAutoFocus={(e) => {
+        e.preventDefault()
+        cancelButton?.focus?.()
+      }}
+    >
+      <AlertDialog.Header>
+        <AlertDialog.Title>{dialog.title}</AlertDialog.Title>
+        <AlertDialog.Description>{dialog.description}</AlertDialog.Description>
+      </AlertDialog.Header>
+      <AlertDialog.Footer>
+        <AlertDialog.Cancel
+          ref={cancelButton}
+          onclick={() => dialog.onResult(false)}
+          >{dialog.cancelLabel ?? 'Avbryt'}</AlertDialog.Cancel
+        >
+        <AlertDialog.Action onclick={() => dialog.onResult(true)}
+          >{dialog.confirmLabel ?? 'Fortsätt'}</AlertDialog.Action
+        >
+      </AlertDialog.Footer>
+    </AlertDialog.Content>
+  </AlertDialog.Root>
+{/if}
