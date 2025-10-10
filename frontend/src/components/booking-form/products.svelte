@@ -91,7 +91,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
         id="pickup-{pickup.id}"
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label={ariaLabel}
-        class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
+        class="group w-full cursor-pointer shadow-sm py-2 px-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
         aria-checked={isSelected}
         role="checkbox"
       >
