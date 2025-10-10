@@ -8,6 +8,28 @@ const baseLoggerOptions: FastifyServerOptions['logger'] = {
   redact: ['DATABASE_URL', 'SESSION_SECRET', 'req.headers.cookie'],
 }
 
+const getLoggerOptions = (): FastifyServerOptions['logger'] => {
+  if (DEV && process.stdout.isTTY) {
+    return {
+      level: 'trace',
+      transport: { target: 'pino-pretty' },
+      ...baseLoggerOptions,
+    }
+  } else if (TEST && process.stdout.isTTY) {
+    return {
+      level: 'info',
+      transport: { target: 'pino-pretty' },
+      ...baseLoggerOptions,
+    }
+  }
+
+  // production
+  return {
+    level: 'info',
+    ...baseLoggerOptions,
+  }
+}
+
 const apiConfig = {
   port: env.PORT,
   host: env.HOST,
@@ -18,16 +40,7 @@ const apiConfig = {
   allowedOrigins: DEV
     ? ['http://localhost:4321', 'http://localhost:3000']
     : ['https://allerthsbageri.se'],
-  logger: (DEV && process.stdout.isTTY
-    ? {
-        level: 'trace',
-        transport: { target: 'pino-pretty' },
-        ...baseLoggerOptions,
-      }
-    : {
-        level: 'info',
-        ...baseLoggerOptions,
-      }) as FastifyServerOptions['logger'],
+  logger: getLoggerOptions(),
   dbConnection: env.DATABASE_URL,
   sessionCookieName: env.SESSION_COOKIE_NAME,
 
