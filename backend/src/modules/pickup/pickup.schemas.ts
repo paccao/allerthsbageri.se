@@ -31,7 +31,7 @@ export const updatePickupBodySchema = z
     }
 
     if (bookingStart && bookingEnd) {
-      if (bookingStart.getTime() < bookingEnd.getTime()) {
+      if (bookingStart.getTime() >= bookingEnd.getTime()) {
         ctx.addIssue({
           code: 'custom',
           message: 'bookingStart must be before bookingEnd',
@@ -40,7 +40,7 @@ export const updatePickupBodySchema = z
     }
 
     if (pickupStart && pickupEnd) {
-      if (pickupStart.getTime() < pickupEnd.getTime()) {
+      if (pickupStart.getTime() >= pickupEnd.getTime()) {
         ctx.addIssue({
           code: 'custom',
           message: 'pickupStart must be before pickupEnd',
@@ -61,14 +61,14 @@ export const createPickupBodySchema = z
     pickupEnd: z.coerce.date(),
   })
   .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
-    if (bookingStart.getTime() < bookingEnd.getTime()) {
+    if (bookingStart.getTime() >= bookingEnd.getTime()) {
       ctx.addIssue({
         code: 'custom',
         message: 'bookingStart must be before bookingEnd',
       })
     }
 
-    if (pickupStart.getTime() < pickupEnd.getTime()) {
+    if (pickupStart.getTime() >= pickupEnd.getTime()) {
       ctx.addIssue({
         code: 'custom',
         message: 'pickupStart must be before pickupEnd',
