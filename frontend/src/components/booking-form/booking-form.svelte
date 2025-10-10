@@ -66,9 +66,12 @@
   import { cn } from '$lib/utils'
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
-  import Products from './products.svelte'
+  // import Products from './products.svelte'
   import Order from './order.svelte'
-  import ConfirmDialog from './confirm-dialog.svelte'
+  import ConfirmDialog, {
+    type ConfirmDialogState,
+  } from './confirm-dialog.svelte'
+  import Button from '$components/ui/button/button.svelte'
 
   const ctx = bookingContext.set(new BookingState(pickupOccasions))
 
@@ -76,11 +79,7 @@
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
   const url = new URL(window.location.href)
 
-  let confirmDialog: ConfirmDialog
-
-  // confirmDialog.show((result) => {
-  //   //
-  // })
+  let confirmDialog = $state<ConfirmDialogState | null>(null)
 </script>
 
 <!--
@@ -126,7 +125,19 @@ IDEA: Maybe we could simplify the state management with the steps
   <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
     {#if ctx.stepId === 'varor'}
       <!-- <Products /> -->
-      <ConfirmDialog title="" description="" bind:this={confirmDialog} />
+      <Button
+        onclick={() => {
+          confirmDialog = {
+            title: 'Är du säker?',
+            description: 'Vänligen dubbelkolla så du gör rätt.',
+            onResult(result) {
+              console.log(result)
+              confirmDialog = null
+            },
+          }
+        }}>Open Confirm</Button
+      >
+      <ConfirmDialog dialog={confirmDialog} />
     {:else if ctx.stepId === 'order'}
       <Order />
     {:else if ctx.isLastStep}
