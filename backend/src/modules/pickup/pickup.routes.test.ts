@@ -5,7 +5,6 @@ import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
-import type { GetPickup } from './pickup.schemas.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
@@ -17,17 +16,6 @@ suite('pickup routes', () => {
     password: '123456',
   }
 
-  const pickup = {
-    id: 3,
-    name: 'Särlatorgets marknad',
-    location:
-      'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-    bookingStart: new Date('2025-08-23T08:00:00.000Z'),
-    bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
-    pickupStart: new Date('2025-08-29T09:00:00.000Z'),
-    pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
-  }
-
   let cookie: string
 
   before(async () => {
@@ -35,6 +23,16 @@ suite('pickup routes', () => {
   })
 
   test('should be possible to create a pickup occasion when authenticated', async (t: TestContext) => {
+    const pickup = {
+      name: 'Särlatorgets marknad',
+      location:
+        'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
+      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
+      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
+      pickupStart: new Date('2025-08-29T09:00:00.000Z'),
+      pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
+    }
+
     const response = await app.inject({
       method: 'POST',
       url: '/api/pickups/',
@@ -59,7 +57,26 @@ suite('pickup routes', () => {
   })
 
   test('should only patch data that was sent', async (t: TestContext) => {
-    const pickupUpdateId = 2
+    const pickup = {
+      name: 'testData namn',
+      location: 'Kakor, bröd, kex. Kom och köp!',
+      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
+      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
+      pickupStart: new Date('2025-08-29T09:00:00.000Z'),
+      pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
+    }
+
+    const createdPickup = await app.inject({
+      method: 'POST',
+      url: '/api/pickups/',
+      body: pickup,
+      headers: { cookie },
+    })
+
+    const createdPickupDeserialized = createdPickup.json()
+
+    t.assert.strictEqual(createdPickup.statusCode, 201)
+
     const pickupUpdate = {
       name: 'Särlatorgets köpställe',
       location: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
@@ -67,43 +84,25 @@ suite('pickup routes', () => {
       pickupEnd: new Date('2025-08-23T15:00:00.000Z'),
     }
 
-    let beforeUpdateResponse: GetPickup[] = await app
-      .inject({
-        method: 'GET',
-        url: '/api/pickups/',
-        headers: { cookie },
-      })
-      .then((res) => res.json())
-
-    const beforeUpdate = beforeUpdateResponse.find(
-      (o) => o.id === pickupUpdateId,
-    )
-
-    if (beforeUpdate === undefined) {
-      t.assert.fail(
-        `Couldn't find a pickup occasion with id ${pickupUpdateId}. Expected value was 2, and it might be because of the seed data in seed.ts`,
-      )
-    }
-
     const afterUpdate = await app
       .inject({
         method: 'PATCH',
-        url: `/api/pickups/${pickupUpdateId}`,
+        url: `/api/pickups/${createdPickupDeserialized.id}`,
         body: pickupUpdate,
         headers: { cookie },
       })
       .then((res) => res.json())
 
     t.assert.strictEqual(
-      pickupUpdateId,
+      createdPickupDeserialized.id,
       afterUpdate.id,
       'assert that id has not changed',
     )
     t.assert.notStrictEqual(
       {
-        name: beforeUpdate.name,
-        location: beforeUpdate.location,
-        pickupStart: beforeUpdate.pickupStart,
+        name: createdPickupDeserialized.name,
+        location: createdPickupDeserialized.location,
+        pickupStart: createdPickupDeserialized.pickupStart,
       },
       {
         name: afterUpdate.name,
@@ -116,7 +115,6 @@ suite('pickup routes', () => {
 
   test('can not create pickup occasions with dates that are not chronological in time', async (t: TestContext) => {
     const badPickup = {
-      id: 5,
       name: 'Testmarknaden',
       location: 'Testa mera tester',
       bookingStart: new Date('2025-08-28T08:00:00.000Z'),
