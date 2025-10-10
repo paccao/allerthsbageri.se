@@ -15,7 +15,7 @@ const getLoggerOptions = (): FastifyServerOptions['logger'] => {
       transport: { target: 'pino-pretty' },
       ...baseLoggerOptions,
     }
-  } else if (TEST && process.stdout.isTTY) {
+  } else if (TEST) {
     return {
       level: 'info',
       transport: { target: 'pino-pretty' },
