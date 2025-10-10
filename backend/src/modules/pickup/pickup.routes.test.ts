@@ -64,7 +64,7 @@ suite('pickup routes', () => {
       name: 'Särlatorgets köpställe',
       location: 'Kom och hälsa på mig vid särlatorgets köpställe :)',
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
-      pickupEnd: new Date('2025-08-23T015:00:00.000Z'),
+      pickupEnd: new Date('2025-08-23T15:00:00.000Z'),
     }
 
     let beforeUpdateResponse: GetPickup[] = await app
