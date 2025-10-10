@@ -133,7 +133,7 @@ suite('pickup routes', () => {
     t.assert.strictEqual(
       createdPickup.statusCode,
       400,
-      'should return status code 400 when incorrect dates was passed to it',
+      'should return status code 400 for incorrect dates',
     )
   })
 
