@@ -24,7 +24,10 @@
         class={cn([
           'justify-self-start',
           buttonVariants({ variant: 'outline', size: 'lg' }),
-        ])}><LucideChevronLeft class="size-4" /><span>Tillbaka</span></a
+        ])}
+        ><LucideChevronLeft class="size-4" aria-hidden="true" /><span
+          >Tillbaka</span
+        ></a
       >
     {:else}
       <div></div>
