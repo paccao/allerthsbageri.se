@@ -2,6 +2,10 @@ packages:
   - frontend
   - backend
 
+# Delay updates by 1 day to reduce risk for supply chain attacks
+# Learn more: https://pnpm.io/settings#minimumreleaseage
+minimumReleaseAge: 1440
+
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - '@tailwindcss/oxide'
