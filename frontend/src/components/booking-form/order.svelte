@@ -111,11 +111,12 @@
                   <div
                     class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
                   >
-                    <span class="hidden xs:flex justify-self-end pb-1 pr-1"
+                    <span
+                      class="hidden xs:flex justify-self-end pb-1 pr-1 text-sm"
                       >{productTotalPrice}</span
                     >
                     <ProductCount productId={id} size="md" class="max-w-32" />
-                    <span class="xs:hidden">{productTotalPrice}</span>
+                    <span class="xs:hidden text-sm">{productTotalPrice}</span>
                   </div>
                 </li>
               {/each}
