@@ -15,8 +15,6 @@
 
   let { dialog }: Props = $props()
   let cancelButton = $state<HTMLButtonElement>()
-
-  $inspect(cancelButton)
 </script>
 
 {#if dialog}

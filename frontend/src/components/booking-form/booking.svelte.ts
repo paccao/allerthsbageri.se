@@ -38,8 +38,11 @@ const steps = orderedSteps.reduce(
 )
 
 const confirmDialogTexts = {
+  // IDEA: Maybe show the new date? This would make it super clear.
+  // We could either pass it in from the component, or get it in the state since we have all data. We would need to use consistent formatting though. It's worth moving the formatters out to a separate module.
+  // title: 'Vill du byta upphämtningstillfälle till {date}?',
   title: 'Vill du byta upphämtningstillfälle?',
-  description: `Om du går vidare kommer din varukorg tömmas. Du är varmt välkommen att göra flera beställningar om du är intresserad av produkter vid andra upphämtningstillfällen.`,
+  description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
 }
 
 export class BookingState {
