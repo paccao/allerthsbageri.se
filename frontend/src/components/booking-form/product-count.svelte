@@ -30,6 +30,7 @@
   }
   let { productId, size = 'lg', class: className }: Props = $props()
   let count = $derived(ctx.getProductCount(productId))
+  const counterId = $props.id()
 </script>
 
 <div
@@ -43,9 +44,12 @@
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.removeProduct(productId, 1)}
-    aria-label="Ta bort 1"><LucideMinus class={sizes[size].icon} /></Button
+    aria-label="Ta bort 1"
+    ><LucideMinus class={sizes[size].icon} aria-hidden="true" /></Button
   >
+  <label class="sr-only" for={counterId}>Ändra antal produkter</label>
   <input
+    id={counterId}
     type="number"
     min="0"
     onfocusin={(event) => event.currentTarget.select()}
@@ -87,7 +91,8 @@
     size="icon"
     class={sizes[size].button}
     onclick={() => ctx.addProduct(productId, 1)}
-    aria-label="Lägg till 1"><LucidePlus class={sizes[size].icon} /></Button
+    aria-label="Lägg till 1"
+    ><LucidePlus class={sizes[size].icon} aria-hidden="true" /></Button
   >
 </div>
 

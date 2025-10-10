@@ -58,6 +58,11 @@
   <div
     class="grid w-full gap-4 px-4 md:px-0 md:pb-0 pb-8 max-w-xs self-center md:self-start"
   >
+    <!--
+    TODO: Add proper validation for customer data
+    TODO: Show validation errors after submitting the form
+    TODO: Show validation errors after the first blur event occured, and then after every change
+    -->
     <div class="grid gap-2">
       <Label for="name">Namn</Label>
       <Input id="name" type="text" required bind:value={ctx.customer.name} />
@@ -106,11 +111,12 @@
                   <div
                     class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
                   >
-                    <span class="hidden xs:flex justify-self-end pb-1 pr-1"
+                    <span
+                      class="hidden xs:flex justify-self-end pb-1 pr-1 text-sm"
                       >{productTotalPrice}</span
                     >
                     <ProductCount productId={id} size="md" class="max-w-32" />
-                    <span class="xs:hidden">{productTotalPrice}</span>
+                    <span class="xs:hidden text-sm">{productTotalPrice}</span>
                   </div>
                 </li>
               {/each}

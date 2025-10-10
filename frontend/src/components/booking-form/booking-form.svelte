@@ -37,7 +37,7 @@
       endTime: new Date('2025-08-24T15:30:00.000Z'),
       products: [
         {
-          id: 1,
+          id: 3,
           stock: 50,
           price: 6900n,
           pickupOccasionId: 2,
@@ -46,7 +46,7 @@
             'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
         },
         {
-          id: 2,
+          id: 4,
           stock: 25,
           price: 6500n,
           pickupOccasionId: 2,
@@ -64,7 +64,6 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import PickupOccasions from './pickup-occasions.svelte'
   import { bookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
@@ -77,8 +76,12 @@
   const url = new URL(window.location.href)
 </script>
 
-<!-- Allow navigating to a specific step by clicking anchor links. -->
-<!-- Disabled on the last step after submitting the form to prevent navigating back again -->
+<!--
+This allows navigating to a specific step by clicking anchor links.
+The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
+NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
+IDEA: Maybe we could simplify the state management with the steps
+-->
 <svelte:window
   onhashchange={ctx.isLastStep
     ? null
@@ -101,7 +104,7 @@
 -->
 
 <section class="w-full grid justify-items-center">
-  <header class="sticky top-0 w-full border-t">
+  <header class="w-full border-t">
     <div class="relative p-4 bg-background">
       <h2 class="text-center text-balance font-semibold text-xl px-4">
         {ctx.step.title}
@@ -114,9 +117,7 @@
   </header>
 
   <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
-    {#if ctx.stepId === 'tid'}
-      <PickupOccasions />
-    {:else if ctx.stepId === 'varor'}
+    {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
       <Order />

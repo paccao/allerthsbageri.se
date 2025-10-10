@@ -6,7 +6,7 @@ A website made with Astro and Tailwind CSS.
 
 ## Development
 
-Install [Node.js 22](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
+Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
 ```sh
 git clone https://github.com/paccao/allerthsbageri.se.git && \
@@ -17,16 +17,38 @@ pnpm dev
 
 ## Upgrade dependencies
 
+For general dependencies, these commands are helpful to check versions and make updates. Be careful to review release notes, changelogs and git diffs.
+
 ```sh
 pnpm outdated
 pnpm up
 ```
+
+### `shadcn-svelte` components
+
+1. Start by making sure your local git state is clean. Then, update one [shadcn-svelte](https://shadcn-svelte.com) component at a time with this command:
+
+```sh
+pnpm dlx shadcn-svelte@latest update
+```
+
+2. Then format the code to get cleaner diffs
+
+```sh
+pnpm format
+```
+
+3. Finally, review the git diffs and manually merge the changes from remote with our local project customisations.
+
+### Astro
 
 Check Astrojs [upgrade guides](https://docs.astro.build/en/upgrade-astro/#upgrade-guides) to upgrade major versions
 
 ```sh
 pnpm dlx @astrojs/upgrade
 ```
+
+---
 
 ## Email Spam Protection
 
