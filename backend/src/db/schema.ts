@@ -2,7 +2,7 @@ import { type InferSelectModel } from 'drizzle-orm'
 import { sqliteTable, int, text, numeric } from 'drizzle-orm/sqlite-core'
 
 const ISO_DATE_LENGTH = 30
-const dateField = text({ length: ISO_DATE_LENGTH })
+const dateField = () => text({ length: ISO_DATE_LENGTH })
 
 export const userTable = sqliteTable('user', {
   id: int().primaryKey(),
@@ -24,11 +24,11 @@ export type Customer = InferSelectModel<typeof customerTable>
 export const pickupOccasionTable = sqliteTable('pickup_occasion', {
   id: int().primaryKey(),
   name: text({ length: 200 }).notNull(),
-  description: text({ length: 1000 }).notNull(),
-  bookingStart: dateField.notNull(),
-  bookingEnd: dateField.notNull(),
-  pickupStart: dateField.notNull(),
-  pickupEnd: dateField.notNull(),
+  location: text({ length: 150 }).notNull(),
+  bookingStart: dateField().notNull(),
+  bookingEnd: dateField().notNull(),
+  pickupStart: dateField().notNull(),
+  pickupEnd: dateField().notNull(),
 })
 
 export const productDetailsTable = sqliteTable('product_details', {
@@ -82,7 +82,9 @@ export const orderStatusTable = sqliteTable('order_status', {
 // Two separate tables make it easier to change
 export const orderTable = sqliteTable('customer_order', {
   id: int().primaryKey(),
-  createdAt: dateField.notNull().$defaultFn(() => new Date().toISOString()),
+  createdAt: dateField()
+    .notNull()
+    .$defaultFn(() => new Date().toISOString()),
   customerId: int()
     .notNull()
     .references(() => customerTable.id, { onDelete: 'cascade' }),
