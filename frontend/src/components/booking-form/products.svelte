@@ -31,16 +31,20 @@
 
   const weekdayShort = new Intl.DateTimeFormat('sv-SE', { weekday: 'short' })
 
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
   function randomInteger(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min
   }
 
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
   function addDays(date: Date, days: number) {
     var result = new Date(date)
     result.setDate(result.getDate() + days)
     return result
   }
 </script>
+
+<!-- TODO: Fix a11y warnings -->
 
 <!--
 IDEA: Maybe implement as an accordion where selecting products from one pickup occasion disables the other sections.
@@ -74,16 +78,19 @@ This could be an expandable section with a help icon or similar. Expanded by def
   .flat()
   .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup} -->
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
+  {@const ariaLabel = `Välj upphämtningstillfälle ${dateTimeFormatter.formatRange(
+    pickup.startTime,
+    pickup.endTime,
+  )}`}
   <div class="grid">
     <div
       class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
     >
+      <label class="sr-only" for="pickup-{pickup.id}">{ariaLabel}</label>
       <button
+        id="pickup-{pickup.id}"
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
-        aria-label="Välj upphämtningstillfälle {dateTimeFormatter.formatRange(
-          pickup.startTime,
-          pickup.endTime,
-        )}"
+        aria-label={ariaLabel}
         class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
         aria-checked={isSelected}
         role="checkbox"
