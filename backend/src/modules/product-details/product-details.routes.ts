@@ -1,11 +1,14 @@
 import type { FastifyInstance } from 'fastify'
 import {
+  createProductDetailHandler,
   getProductDetailHandler,
   listProductDetailsHandler,
 } from './product-details.controller.ts'
 import {
+  createProductDetailBodySchema,
   getProductDetailSchema,
   listProductDetailsSchema,
+  type CreateProductDetailBody,
 } from './product-details.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
@@ -44,5 +47,20 @@ export async function productDetailsRoutes(app: FastifyInstance) {
       },
     },
     getProductDetailHandler,
+  )
+
+  app.post<{ Body: CreateProductDetailBody }>(
+    '/',
+    {
+      schema: {
+        body: createProductDetailBodySchema,
+        response: {
+          201: getProductDetailSchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
+        tags,
+      },
+    },
+    createProductDetailHandler,
   )
 }

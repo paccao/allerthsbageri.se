@@ -1,9 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import {
+  createProductDetail,
   getProductDetail,
   listProductDetails,
 } from './product-details.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
+import type { CreateProductDetailBody } from './product-details.schemas.ts'
 
 export async function getProductDetailHandler(
   request: FastifyRequest<{ Params: IdParams }>,
@@ -36,5 +38,25 @@ export async function listProductDetailsHandler(
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to list product details' })
+  }
+}
+
+export async function createProductDetailHandler(
+  request: FastifyRequest<{ Body: CreateProductDetailBody }>,
+  reply: FastifyReply,
+) {
+  const { name, description, image, vatPercentage } = request.body
+
+  try {
+    const productDetail = await createProductDetail({
+      name,
+      description,
+      image,
+      vatPercentage,
+    })
+    return reply.code(201).send(productDetail)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to create product detail' })
   }
 }
