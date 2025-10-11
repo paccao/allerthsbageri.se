@@ -57,6 +57,28 @@
     },
   ]
 
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
+  function addDays(date: Date, days: number) {
+    var result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
+  }
+
+  const randomPickups = [pickupOccasions, pickupOccasions, pickupOccasions]
+    .flat()
+    .map((x, i) => ({
+      ...x,
+      products: x.products.map((p) => ({ ...p, id: randomInteger(1, 9999) })),
+      id: randomInteger(1, 9999),
+      startTime: addDays(x.startTime, i * 12),
+      endTime: addDays(x.endTime, i * 12),
+    }))
+
   export type PickupOccasion = (typeof pickupOccasions)[number]
   export type Product = (typeof pickupOccasions)[number]['products'][number]
 </script>
@@ -69,7 +91,13 @@
   import Products from './products.svelte'
   import Order from './order.svelte'
 
-  const ctx = bookingContext.set(new BookingState(pickupOccasions))
+  const ctx = bookingContext.set(new BookingState(randomPickups))
+
+  // NOTE: Temoporary for testing
+  if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {
+    ctx.order.pickupOccasionId = null
+    ctx.order.items = {}
+  }
 
   // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.

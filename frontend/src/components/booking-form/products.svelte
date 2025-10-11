@@ -27,21 +27,7 @@
   })
 
   const weekdayShort = new Intl.DateTimeFormat('sv-SE', { weekday: 'short' })
-
-  // NOTE: This function is used for TMP testing data with many faked pickup occasions
-  function randomInteger(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
-  // NOTE: This function is used for TMP testing data with many faked pickup occasions
-  function addDays(date: Date, days: number) {
-    var result = new Date(date)
-    result.setDate(result.getDate() + days)
-    return result
-  }
 </script>
-
-<!-- TODO: Fix a11y warnings -->
 
 <!--
 IDEA: Maybe implement as an accordion where selecting products from one pickup occasion disables the other sections.
@@ -71,9 +57,6 @@ This could be an expandable section with a help icon or similar. Expanded by def
 <!-- IDEA: Show a table of contents at the top with anchor links to every pickup occasion to clarify that multiple dates are available -->
 
 {#each ctx.pickupOccasions as pickup (pickup.id)}
-  <!-- {#each [ctx.pickupOccasions, ctx.pickupOccasions, ctx.pickupOccasions]
-  .flat()
-  .map( (x, i) => ({ ...x, id: randomInteger(1, 9999), startTime: addDays(x.startTime, i * 12), endTime: addDays(x.endTime, i * 12) }), ) as pickup} -->
   {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
   {@const ariaLabel = `Välj upphämtningstillfälle ${dateTimeFormatter.formatRange(
     pickup.startTime,
