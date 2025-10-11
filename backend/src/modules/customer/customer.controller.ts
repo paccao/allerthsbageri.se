@@ -39,7 +39,7 @@ export async function listCustomersHandler(
     return await listCustomers()
   } catch (error: any) {
     request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to create customer' })
+    return reply.code(500).send({ message: 'Failed to list customers' })
   }
 }
 
@@ -57,7 +57,7 @@ export async function getCustomerHandler(
     return customer
   } catch (error: any) {
     request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to create customer' })
+    return reply.code(500).send({ message: 'Failed to get customer' })
   }
 }
 
