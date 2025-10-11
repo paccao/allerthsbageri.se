@@ -40,7 +40,6 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
         <button
           id="pickup-{pickup.id}"
           onclick={() => ctx.selectPickupOccasion(pickup.id)}
-          aria-label={ariaLabel}
           class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center relative"
           aria-checked={isSelected}
           role="checkbox"
