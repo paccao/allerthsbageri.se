@@ -1,6 +1,4 @@
 <script lang="ts">
-  import LucideChevronLeft from 'virtual:icons/lucide/chevron-left'
-  import LucideChevronRight from 'virtual:icons/lucide/chevron-right'
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
   import { bookingContext } from './context'
@@ -25,7 +23,7 @@
           'justify-self-start',
           buttonVariants({ variant: 'outline', size: 'lg' }),
         ])}
-        ><LucideChevronLeft class="size-4" aria-hidden="true" /><span
+        ><span class="i-[lucide--chevron-left] size-4"></span><span
           >Tillbaka</span
         ></a
       >
@@ -69,10 +67,8 @@
         {#if ctx.step.nextButtonLabel}
           <span>{ctx.step.nextButtonLabel}</span>
         {:else}
-          <span>Gå vidare</span><LucideChevronRight
-            class="size-4"
-            aria-hidden="true"
-          />
+          <span>Gå vidare</span><span class="i-[lucide--chevron-right] size-4"
+          ></span>
         {/if}
       </a>
     {:else}
