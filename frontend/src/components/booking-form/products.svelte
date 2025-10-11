@@ -73,7 +73,7 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
 
           <div
             class={[
-              'rounded-full size-8 p-2 shadow-xl flex border',
+              'rounded-full size-8 p-2 flex border border-black/25',
               isSelected ? 'bg-green' : 'bg-white text-muted-foreground',
             ]}
             aria-label={isSelected ? 'Vald' : ''}
