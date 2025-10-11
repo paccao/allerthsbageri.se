@@ -134,6 +134,7 @@
           {/if}
         </Card.Content>
         <Card.Footer
+          as="output"
           class={orderItems.length
             ? 'bg-accent py-4 font-bold justify-between'
             : 'pb-6'}
