@@ -143,7 +143,7 @@ IDEA: Maybe we could simplify the state management with the steps
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
+  <div class="pb-26 pt-8 w-full">
     {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
