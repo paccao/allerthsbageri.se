@@ -57,6 +57,28 @@
     },
   ]
 
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
+  function randomInteger(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+  }
+
+  // NOTE: This function is used for TMP testing data with many faked pickup occasions
+  function addDays(date: Date, days: number) {
+    var result = new Date(date)
+    result.setDate(result.getDate() + days)
+    return result
+  }
+
+  const randomPickups = [pickupOccasions, pickupOccasions, pickupOccasions]
+    .flat()
+    .map((x, i) => ({
+      ...x,
+      products: x.products.map((p) => ({ ...p, id: randomInteger(1, 9999) })),
+      id: randomInteger(1, 9999),
+      startTime: addDays(x.startTime, i * 12),
+      endTime: addDays(x.endTime, i * 12),
+    }))
+
   export type PickupOccasion = (typeof pickupOccasions)[number]
   export type Product = (typeof pickupOccasions)[number]['products'][number]
 </script>
@@ -69,9 +91,14 @@
   import Products from './products.svelte'
   import Order from './order.svelte'
 
-  const ctx = bookingContext.set(new BookingState(pickupOccasions))
+  const ctx = bookingContext.set(new BookingState(randomPickups))
 
-  // IDEA: Once we have persisted order form state, load it to determine the intitial step
+  // NOTE: Temoporary for testing
+  if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {
+    ctx.order.pickupOccasionId = null
+    ctx.order.items = {}
+  }
+
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
   const url = new URL(window.location.href)
 </script>
@@ -91,16 +118,16 @@ IDEA: Maybe we could simplify the state management with the steps
       }}
 />
 
-<!-- TODO: Step 3: show customer form -->
-<!-- TODO: Step 3: confirm order before submitting. list products and make it possible to adjust amounts -->
+<!-- TODO: Step 2: show customer form -->
+<!-- TODO: Step 2: confirm order before submitting. list products and make it possible to adjust amounts -->
 
-<!-- TODO: Step 4: show order confirmation after sucessfully submitted order  -->
-<!-- TODO: Step 4: describe payment methods: swish and cash  -->
-<!-- TODO: Step 4: show date, time and location -->
-<!-- TODO: Step 4: Maybe add notice about cancellation and/or changes -->
+<!-- TODO: Step 3: show order confirmation after sucessfully submitted order  -->
+<!-- TODO: Step 3: describe payment methods: swish and cash  -->
+<!-- TODO: Step 3: show date, time and location -->
+<!-- TODO: Step 3: Maybe add notice about cancellation and/or changes -->
 <!--
-  TODO: Step 4: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
-  We could also show a list of other pickup occasions that you haven't ordered from in the current session.
+  TODO: Step 3: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
+  We could also show a button to go back to the start page and order from other pickup occasions.
 -->
 
 <section class="w-full grid justify-items-center">
@@ -116,7 +143,7 @@ IDEA: Maybe we could simplify the state management with the steps
     </div>
   </header>
 
-  <div class="w-full grid gap-8 pb-26 pt-8 max-w-(--breakpoint-2xl) mx-auto">
+  <div class="pb-26 pt-8 w-full">
     {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
