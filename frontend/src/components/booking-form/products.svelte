@@ -30,31 +30,15 @@
 </script>
 
 <!--
-IDEA: Maybe implement as an accordion where selecting products from one pickup occasion disables the other sections.
-
-To disable the other pickup occasions:
-1) IDEA: Show overlay on hover or pointerdown over the section and describe that you.
-2) IDEA: Only show overlay when pressing the ProductCount buttons.
-   This is probably the best because it lets customers stay focused, and given them additional
-   information only when they need it.
-3) IDEA: Collapse the other sections to just show them as dates.
-
-This would allow us to use one less step in the booking process. Just select your products, confirm your details and you're done.
-By showing products earlier, it will be more inviting to complete orders.
--->
-
-<!--
-TODO: Only show the two upcoming pickup occasions.
-This should be limited in the API to only return the two next pickupOccasions,
-or those with startDate within the next two weeks
--->
-
-<!--
 IDEA: Maybe add a short description at the top to give instructions on how to make a booking
 This could be an expandable section with a help icon or similar. Expanded by default and dismissed after the first visit.
+Basically a welcome message that explains how it works with as few words as possible.
 -->
 
-<!-- IDEA: Show a table of contents at the top with anchor links to every pickup occasion to clarify that multiple dates are available -->
+<!--
+IDEA: Show a table of contents at the top with anchor links to every pickup occasion to clarify that multiple dates are available
+Or rather than anchor links, clicking the links scrolls the page using JS since we use the URL hash for stepper navigation.
+-->
 
 <div class="grid gap-8 w-full">
   {#each ctx.pickupOccasions as pickup (pickup.id)}
