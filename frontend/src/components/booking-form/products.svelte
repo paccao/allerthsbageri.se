@@ -79,7 +79,7 @@ This could be an expandable section with a help icon or similar. Expanded by def
     pickup.startTime,
     pickup.endTime,
   )}`}
-  <div class="grid">
+  <div class="grid overflow-x-hidden">
     <div
       class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
     >
