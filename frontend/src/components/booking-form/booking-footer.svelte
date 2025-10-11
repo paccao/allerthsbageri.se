@@ -59,7 +59,7 @@
       <a
         href={enabled ? `#${ctx.nextStepId}` : 'javascript:void(0)'}
         class={cn([
-          'justify-self-end select-none',
+          'justify-self-end',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}
         aria-disabled={!enabled}
