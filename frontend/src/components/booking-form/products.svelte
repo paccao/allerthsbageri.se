@@ -62,16 +62,14 @@ This could be an expandable section with a help icon or similar. Expanded by def
     pickup.startTime,
     pickup.endTime,
   )}`}
-  <div class="grid overflow-x-hidden">
-    <div
-      class="w-screen md:px-4 sticky top-0 z-50 bg-background border-y sm:mx-[calc(50%-50vw)]"
-    >
+  <div class="grid">
+    <div class="w-screen sticky top-0 z-50 bg-background border-y">
       <label class="sr-only" for="pickup-{pickup.id}">{ariaLabel}</label>
       <button
         id="pickup-{pickup.id}"
         onclick={() => ctx.selectPickupOccasion(pickup.id)}
         aria-label={ariaLabel}
-        class="group w-full cursor-pointer shadow-sm py-2 px-4 flex xs:justify-center justify-between items-center md:rounded-lg relative"
+        class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center relative"
         aria-checked={isSelected}
         role="checkbox"
       >
@@ -134,6 +132,10 @@ This could be an expandable section with a help icon or similar. Expanded by def
             </svg>
           {/key}
         </div>
+
+        <div
+          class="absolute top-full bg-gradient-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
+        ></div>
       </button>
     </div>
 
