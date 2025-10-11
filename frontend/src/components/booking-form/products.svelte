@@ -6,27 +6,14 @@
   import ProductCount from './product-count.svelte'
   import { draw } from 'svelte/transition'
   import ConfirmDialog from './confirm-dialog.svelte'
+  import {
+    dateTimeFormatter,
+    shortDate,
+    timeFormat,
+    weekdayShort,
+  } from '$lib/datetime'
 
   const ctx = bookingContext.get()
-
-  const dateTimeFormatter = new Intl.DateTimeFormat('sv-SE', {
-    day: 'numeric',
-    month: 'short',
-    weekday: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-  const shortDate = new Intl.DateTimeFormat('sv-SE', {
-    day: 'numeric',
-    month: 'short',
-  })
-
-  const timeFormat = new Intl.DateTimeFormat('sv-SE', {
-    hour: '2-digit',
-    minute: '2-digit',
-  })
-
-  const weekdayShort = new Intl.DateTimeFormat('sv-SE', { weekday: 'short' })
 </script>
 
 <!--
