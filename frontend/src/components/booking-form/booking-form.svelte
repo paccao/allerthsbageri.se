@@ -99,7 +99,6 @@
     ctx.order.items = {}
   }
 
-  // IDEA: Once we have persisted order form state, load it to determine the intitial step
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
   const url = new URL(window.location.href)
 </script>
@@ -119,16 +118,16 @@ IDEA: Maybe we could simplify the state management with the steps
       }}
 />
 
-<!-- TODO: Step 3: show customer form -->
-<!-- TODO: Step 3: confirm order before submitting. list products and make it possible to adjust amounts -->
+<!-- TODO: Step 2: show customer form -->
+<!-- TODO: Step 2: confirm order before submitting. list products and make it possible to adjust amounts -->
 
-<!-- TODO: Step 4: show order confirmation after sucessfully submitted order  -->
-<!-- TODO: Step 4: describe payment methods: swish and cash  -->
-<!-- TODO: Step 4: show date, time and location -->
-<!-- TODO: Step 4: Maybe add notice about cancellation and/or changes -->
+<!-- TODO: Step 3: show order confirmation after sucessfully submitted order  -->
+<!-- TODO: Step 3: describe payment methods: swish and cash  -->
+<!-- TODO: Step 3: show date, time and location -->
+<!-- TODO: Step 3: Maybe add notice about cancellation and/or changes -->
 <!--
-  TODO: Step 4: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
-  We could also show a list of other pickup occasions that you haven't ordered from in the current session.
+  TODO: Step 3: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
+  We could also show a button to go back to the start page and order from other pickup occasions.
 -->
 
 <section class="w-full grid justify-items-center">
