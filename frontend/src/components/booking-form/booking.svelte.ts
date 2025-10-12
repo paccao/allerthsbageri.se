@@ -1,7 +1,9 @@
-import { clearHash } from '$lib/utils'
-import { PersistedState } from 'runed'
-import type { PickupOccasion, Product } from './booking-form.svelte'
 import { z } from 'zod'
+import { PersistedState } from 'runed'
+import { clearHash } from '$lib/utils'
+import type { PickupOccasion, Product } from './booking-form.svelte'
+import type { ConfirmDialogState } from './confirm-dialog.svelte'
+import { weekdayAndDate } from '$lib/datetime'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -15,8 +17,7 @@ export type Order = {
 }
 
 const orderedSteps = [
-  { id: 'tid', title: 'Välj upphämtningstillfälle' },
-  { id: 'varor', title: 'Beställ produkter' },
+  { id: 'varor', title: 'Välj upphämtningstillfälle och produkter' },
   {
     id: 'order',
     title: 'Bekräfta beställning',
@@ -37,6 +38,13 @@ const steps = orderedSteps.reduce(
   {} as Record<StepId, Step>,
 )
 
+function getConfirmDialogTexts(next: PickupOccasion) {
+  return {
+    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.startTime).replace('.', '')}?`,
+    description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
+  }
+}
+
 export class BookingState {
   #order = new PersistedState<Order>('order', {
     pickupOccasionId: null,
@@ -48,6 +56,15 @@ export class BookingState {
     phone: '',
   })
 
+  /**
+   * If set, a confirmation dialog will be shown to prompt the user
+   * before proceeding with actions that otherwise might cause data loss.
+   *
+   * This approachs allows the UI to be rendered declaratively,
+   * separate from the state management.
+   */
+  #confirmDialog: ConfirmDialogState | null = $state(null)
+
   get order() {
     return this.#order.current
   }
@@ -56,13 +73,18 @@ export class BookingState {
     return this.#customer.current
   }
 
+  get confirmDialog() {
+    return this.#confirmDialog
+  }
+
   pickupOccasions: PickupOccasion[]
   /** Currently selected pickupOccasion */
   pickupOccasion?: PickupOccasion
 
   #validators: Record<StepId, () => boolean> = {
-    tid: () => Number.isInteger(this.order.pickupOccasionId),
-    varor: () => Object.values(this.order.items).some((amount) => amount > 0),
+    varor: () =>
+      Number.isInteger(this.order.pickupOccasionId) &&
+      Object.values(this.order.items).some((amount) => amount > 0),
     // TODO: We could change the validatedSteps to store errors which could be shown in the UI
     // This way, we could still detect which steps are valid by checking they don't have any errors
     order: () => {
@@ -143,11 +165,33 @@ export class BookingState {
     return this.#enabledSteps[id]
   }
 
-  selectPickupOccasion(pickup: PickupOccasion) {
-    if (this.#order.current.pickupOccasionId !== pickup.id) {
-      this.#order.current.items = {}
-      this.#order.current.pickupOccasionId = pickup.id
+  #selectPickupOccasion(id: PickupOccasion['id']) {
+    this.#order.current.items = {}
+    this.#order.current.pickupOccasionId = id
+  }
+
+  selectPickupOccasion(id: PickupOccasion['id']) {
+    if (this.#order.current.pickupOccasionId === id) return
+
+    if (this.hasSelectedProducts()) {
+      this.#confirmDialog = {
+        ...getConfirmDialogTexts(
+          this.pickupOccasions.find((p) => p.id === id)!,
+        ),
+        onResult: (confirmed) => {
+          if (confirmed) {
+            this.#selectPickupOccasion(id)
+          }
+          this.#confirmDialog = null
+        },
+      }
+    } else {
+      this.#selectPickupOccasion(id)
     }
+  }
+
+  hasSelectedProducts() {
+    return Object.values(this.#order.current.items).some((count) => count > 0)
   }
 
   getProductCount(id: Product['id']) {
@@ -160,6 +204,42 @@ export class BookingState {
 
   addProduct(id: Product['id'], count: number) {
     this.#order.current.items[id] = (this.#order.current.items[id] ?? 0) + count
+  }
+
+  /**
+   * Let the user confirm before adding a product if it's connected to another pickup occasion.
+   * Useful to prevent data loss.
+   */
+  addProductAfterConfirmation(id: Product['id'], count: number) {
+    const pickupId = this.pickupOccasions.find((pickup) =>
+      pickup.products.some((product) => product.id === id),
+    )?.id
+
+    if (!pickupId) throw new Error('Invalid product ID: ' + id)
+
+    if (this.pickupOccasion?.id === pickupId) {
+      this.addProduct(id, count)
+      return
+    }
+
+    if (this.hasSelectedProducts()) {
+      this.#confirmDialog = {
+        ...getConfirmDialogTexts(
+          this.pickupOccasions.find((p) => p.id === pickupId)!,
+        ),
+        onResult: (confirmed) => {
+          if (confirmed) {
+            this.#selectPickupOccasion(pickupId)
+            this.addProduct(id, count)
+          }
+          this.#confirmDialog = null
+        },
+      }
+      return
+    }
+
+    this.#selectPickupOccasion(pickupId)
+    this.addProduct(id, count)
   }
 
   removeProduct(id: Product['id'], count: number) {

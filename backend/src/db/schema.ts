@@ -2,10 +2,10 @@ import { type InferSelectModel } from 'drizzle-orm'
 import { sqliteTable, int, text, numeric } from 'drizzle-orm/sqlite-core'
 
 const ISO_DATE_LENGTH = 30
-const dateField = text({ length: ISO_DATE_LENGTH })
+const dateField = () => text({ length: ISO_DATE_LENGTH })
 
 export const userTable = sqliteTable('user', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
   username: text({ length: 30 }).notNull().unique(),
   password: text({ length: 100 }).notNull(),
@@ -14,7 +14,7 @@ export const userTable = sqliteTable('user', {
 export type User = InferSelectModel<typeof userTable>
 
 export const customerTable = sqliteTable('customer', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
   phone: text({ length: 50 }).notNull().unique(),
 })
@@ -22,17 +22,17 @@ export const customerTable = sqliteTable('customer', {
 export type Customer = InferSelectModel<typeof customerTable>
 
 export const pickupOccasionTable = sqliteTable('pickup_occasion', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
-  description: text({ length: 1000 }).notNull(),
-  bookingStart: dateField.notNull(),
-  bookingEnd: dateField.notNull(),
-  pickupStart: dateField.notNull(),
-  pickupEnd: dateField.notNull(),
+  location: text({ length: 150 }).notNull(),
+  bookingStart: dateField().notNull(),
+  bookingEnd: dateField().notNull(),
+  pickupStart: dateField().notNull(),
+  pickupEnd: dateField().notNull(),
 })
 
 export const productDetailsTable = sqliteTable('product_details', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
   description: text({ length: 1000 }).notNull(),
   image: text(),
@@ -44,7 +44,7 @@ export const productDetailsTable = sqliteTable('product_details', {
 })
 
 export const productTable = sqliteTable('product', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   stock: int().notNull(),
   /** Store as BigInt where a value of 100n means 100 ören = 1 SEK */
   price: numeric({ mode: 'bigint' }).notNull(),
@@ -67,7 +67,7 @@ export const productTable = sqliteTable('product', {
 })
 
 export const orderStatusTable = sqliteTable('order_status', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   status: text({ length: 50 }).notNull(),
   color: text({ length: 50 }),
 })
@@ -81,8 +81,10 @@ export const orderStatusTable = sqliteTable('order_status', {
 // Or, it might be better to keep two distinct tables since they represent very different things
 // Two separate tables make it easier to change
 export const orderTable = sqliteTable('customer_order', {
-  id: int().primaryKey(),
-  createdAt: dateField.notNull().$defaultFn(() => new Date().toISOString()),
+  id: int().primaryKey({ autoIncrement: true }),
+  createdAt: dateField()
+    .notNull()
+    .$defaultFn(() => new Date().toISOString()),
   customerId: int()
     .notNull()
     .references(() => customerTable.id, { onDelete: 'cascade' }),
@@ -95,7 +97,7 @@ export const orderTable = sqliteTable('customer_order', {
 })
 
 export const orderItemTable = sqliteTable('order_item', {
-  id: int().primaryKey(),
+  id: int().primaryKey({ autoIncrement: true }),
   count: int().notNull(),
   /** Store as BigInt where a value of 100n means 100 ören = 1 SEK */
   price: numeric({ mode: 'bigint' }).notNull(),

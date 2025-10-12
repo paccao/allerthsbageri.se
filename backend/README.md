@@ -18,8 +18,7 @@ pnpm i
 ### Setup database first time
 
 ```sh
-pnpm drizzle-kit push
-pnpm drizzle-kit studio
+pnpm run db push && pnpm run db:seed
 ```
 
 ### Run backend
@@ -33,4 +32,19 @@ pnpm dev
 ```sh
 pnpm outdated
 pnpm up
+```
+
+## Test github workflow locally
+
+1. Install docker rootless https://docs.docker.com/engine/security/rootless/
+2. Install nektos/act https://github.com/nektos/act
+
+Act lets you test github workflows locally
+
+3. Run act:
+
+```sh
+act --workflows ".github/workflows/test-backend.yaml" \
+    --container-architecture linux/amd64 \
+    -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:runner-24.04
 ```
