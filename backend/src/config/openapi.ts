@@ -14,6 +14,9 @@ const openAPITagDefinitions = {
     description:
       'Pickup occasions, where customers receive their ordered products',
   },
+  product_details: {
+    description: 'Details about a specific product. These can be re-used for multiple pickup occasions, but if you want significant changes you should create a new product detail instead.',
+  },
 } as const
 
 type TagName = keyof typeof openAPITagDefinitions

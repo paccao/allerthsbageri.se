@@ -28,7 +28,7 @@ export async function pickupRoutes(app: FastifyInstance) {
       schema: {
         response: {
           200: listPickupSchema,
-          ...getErrorResponseSchemas(401, 404, 500),
+          ...getErrorResponseSchemas(401, 500),
         },
         tags,
       },
