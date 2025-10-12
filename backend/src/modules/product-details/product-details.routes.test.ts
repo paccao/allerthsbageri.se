@@ -23,7 +23,7 @@ suite('product details routes', () => {
     cookie = await createAdminUser(productDetailsAdmin)
   })
 
-  test.only('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
+  test('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
     const productDetail = {
       name: 'banankaka123',
       description: 'gjord på banan, surdeg och vaniljsocker',
@@ -31,14 +31,6 @@ suite('product details routes', () => {
       vatPercentage: 40,
     }
     const DESCRIPTION_LENGTH = 1000
-
-    const beforeCreate = await app
-      .inject({
-        method: 'GET',
-        url: '/api/product-details/',
-        headers: { cookie },
-      })
-      .then((res) => res.json)
 
     const createResponse = await app.inject({
       method: 'POST',
