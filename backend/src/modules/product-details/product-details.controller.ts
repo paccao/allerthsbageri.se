@@ -3,9 +3,13 @@ import {
   createProductDetail,
   getProductDetail,
   listProductDetails,
+  updateProductDetail,
 } from './product-details.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
-import type { CreateProductDetailBody } from './product-details.schemas.ts'
+import type {
+  CreateProductDetailBody,
+  UpdateProductDetailBody,
+} from './product-details.schemas.ts'
 
 export async function getProductDetailHandler(
   request: FastifyRequest<{ Params: IdParams }>,
@@ -58,5 +62,35 @@ export async function createProductDetailHandler(
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create product detail' })
+  }
+}
+
+export async function updateProductDetailHandler(
+  request: FastifyRequest<{
+    Params: IdParams
+    Body: UpdateProductDetailBody
+  }>,
+  reply: FastifyReply,
+) {
+  const { name, description, image, vatPercentage } = request.body
+
+  try {
+    const productDetail = await updateProductDetail(request.params.id, {
+      name,
+      description,
+      image,
+      vatPercentage,
+    })
+
+    if (!productDetail) {
+      return reply.code(404).send({ message: 'Product detail does not exist' })
+    }
+
+    return productDetail
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply
+      .code(500)
+      .send({ message: 'Failed to update product detail occasion' })
   }
 }

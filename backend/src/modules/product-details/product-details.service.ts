@@ -26,3 +26,16 @@ export async function createProductDetail({
 
   return results[0]!
 }
+
+export async function updateProductDetail(
+  id: number,
+  data: Partial<typeof productDetailsTable.$inferInsert>,
+) {
+  const results = await db
+    .update(productDetailsTable)
+    .set(data)
+    .where(eq(productDetailsTable.id, id))
+    .returning()
+
+  return results[0]
+}

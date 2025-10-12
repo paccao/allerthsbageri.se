@@ -1,5 +1,9 @@
 import { productDetailsTable } from '#db/schema.ts'
-import { createSelectSchema, createInsertSchema } from 'drizzle-zod'
+import {
+  createSelectSchema,
+  createInsertSchema,
+  createUpdateSchema,
+} from 'drizzle-zod'
 import { z } from 'zod'
 
 export const getProductDetailSchema = createSelectSchema(productDetailsTable)
@@ -14,4 +18,10 @@ export const createProductDetailBodySchema = createInsertSchema(
 })
 export type CreateProductDetailBody = z.infer<
   typeof createProductDetailBodySchema
+>
+
+export const updateProductDetailBodySchema =
+  createUpdateSchema(productDetailsTable)
+export type UpdateProductDetailBody = z.infer<
+  typeof updateProductDetailBodySchema
 >
