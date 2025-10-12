@@ -3,6 +3,7 @@ import { PersistedState } from 'runed'
 import { clearHash } from '$lib/utils'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
+import { weekdayAndDate } from '$lib/datetime'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -37,12 +38,11 @@ const steps = orderedSteps.reduce(
   {} as Record<StepId, Step>,
 )
 
-const confirmDialogTexts = {
-  // IDEA: Maybe show the new date? This would make it super clear.
-  // We could either pass it in from the component, or get it in the state since we have all data. We would need to use consistent formatting though. It's worth moving the formatters out to a separate module.
-  // title: 'Vill du byta upphämtningstillfälle till {date}?',
-  title: 'Vill du byta upphämtningstillfälle?',
-  description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
+function getConfirmDialogTexts(next: PickupOccasion) {
+  return {
+    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.startTime).replace('.', '')}?`,
+    description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
+  }
 }
 
 export class BookingState {
@@ -175,7 +175,9 @@ export class BookingState {
 
     if (this.hasSelectedProducts()) {
       this.#confirmDialog = {
-        ...confirmDialogTexts,
+        ...getConfirmDialogTexts(
+          this.pickupOccasions.find((p) => p.id === id)!,
+        ),
         onResult: (confirmed) => {
           if (confirmed) {
             this.#selectPickupOccasion(id)
@@ -222,7 +224,9 @@ export class BookingState {
 
     if (this.hasSelectedProducts()) {
       this.#confirmDialog = {
-        ...confirmDialogTexts,
+        ...getConfirmDialogTexts(
+          this.pickupOccasions.find((p) => p.id === pickupId)!,
+        ),
         onResult: (confirmed) => {
           if (confirmed) {
             this.#selectPickupOccasion(pickupId)
