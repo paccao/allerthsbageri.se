@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import { PersistedState } from 'runed'
-import { clearHash } from '$lib/utils'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
 import { weekdayAndDate } from '$lib/datetime'
@@ -43,6 +42,14 @@ function getConfirmDialogTexts(next: PickupOccasion) {
     title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.startTime).replace('.', '')}?`,
     description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
   }
+}
+
+function clearHash() {
+  history.replaceState(
+    '',
+    document.title,
+    window.location.pathname + window.location.search,
+  )
 }
 
 export class BookingState {
