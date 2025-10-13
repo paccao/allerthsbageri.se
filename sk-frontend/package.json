@@ -24,6 +24,7 @@
   "devDependencies": {
     "@iconify-json/game-icons": "^1.2.3",
     "@iconify-json/lucide": "^1.2.69",
+    "@iconify/tailwind4": "^1.0.6",
     "@sveltejs/adapter-node": "^5.3.3",
     "@sveltejs/kit": "^2.46.4",
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
@@ -49,7 +50,6 @@
     "tabWidth": 2,
     "singleQuote": true,
     "semi": false,
-    "printWidth": 100,
     "plugins": [
       "prettier-plugin-svelte",
       "prettier-plugin-tailwindcss"

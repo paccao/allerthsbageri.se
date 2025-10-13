@@ -11,10 +11,10 @@ const config: Config = {
   kit: {
     adapter: adapter(),
     alias: {
-      $components: './src/components',
-      '$components/*': './src/components/*',
-      $assets: './src/assets',
-      '$assets/*': './src/assets/*',
+      $components: './src/lib/components',
+      '$components/*': './src/lib/components/*',
+      $assets: './src/lib/assets',
+      '$assets/*': './src/lib/assets/*',
     },
   },
 }
