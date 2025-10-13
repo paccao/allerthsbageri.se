@@ -9,9 +9,9 @@ A website made with Astro and Tailwind CSS.
 Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
 ```sh
-git clone https://github.com/paccao/allerthsbageri.se.git && \
-cd allerthsbageri.se/ && \
-pnpm i && \
+git clone https://github.com/paccao/allerthsbageri.se.git
+cd allerthsbageri.se/
+pnpm i
 pnpm dev
 ```
 
