@@ -13,7 +13,8 @@
     "test:setup": "node --env-file=.env.test ./src/test.setup.ts",
     "test": "node --run test:setup && node --env-file=.env.test --test",
     "test:only": "node --run test:setup && node --env-file=.env.test --test --test-only",
-    "test:watch": "node --run test:setup && node --env-file=.env.test --test --watch"
+    "test:watch": "node --run test:setup && node --env-file=.env.test --test --watch",
+    "test:only:watch": "node --run test:setup && node --env-file=.env.test --test --test-only --watch"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
