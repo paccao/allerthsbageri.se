@@ -44,18 +44,29 @@
     return decoder.decode(data)
   }
 
-  export async function getDecryptedEmail(pl: string, password: string) {
+  async function getDecryptedEmail(pl: string, password: string) {
     // Only decrypt once and then re-use the result
     return decrypted ? decrypted : decrypt(pl, password)
   }
 
   let email = $state('')
   let label = $state('Visa mail')
+
+  /**
+   * Call a function once and then remove it.
+   * This is useful for event handlers that should only run once.
+   */
+  function once(fn: Function) {
+    return function (this: Function, event: Event) {
+      if (fn) fn.call(this, event)
+      // @ts-expect-error
+      fn = null
+    }
+  }
 </script>
 
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { once } from '../lib/utils'
 
   type Props = {
     class?: string
