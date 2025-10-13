@@ -146,7 +146,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-serif text-foreground;
   }
 
   button:not(:disabled),
