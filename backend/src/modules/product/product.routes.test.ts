@@ -42,7 +42,7 @@ suite.only('product routes', () => {
 
     const product = {
       stock: 25,
-      price: 7700n,
+      price: 7700,
       maxPerCustomer: 1,
       pickupOccassionId: 1,
       productDetailsId: 1,
