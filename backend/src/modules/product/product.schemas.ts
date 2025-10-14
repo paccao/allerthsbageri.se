@@ -1,10 +1,13 @@
 import { productTable } from '#db/schema.ts'
-import { createInsertSchema } from 'drizzle-zod'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
 export const getProductStockByIdSchema = z.object({
   amount: z.number().int(),
 })
+
+export const getProductSchema = createSelectSchema(productTable)
+export type Product = z.infer<typeof getProductSchema>
 
 export const createProductBodySchema = createInsertSchema(productTable).extend({
   stock: z.int().min(0),
