@@ -1,5 +1,9 @@
 import { productTable } from '#db/schema.ts'
-import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+} from 'drizzle-zod'
 import { z } from 'zod'
 
 export const getProductStockByIdSchema = z.object({
@@ -17,3 +21,27 @@ export const createProductBodySchema = createInsertSchema(productTable).extend({
   productDetailsId: z.int().min(1),
 })
 export type CreateProductBody = z.infer<typeof createProductBodySchema>
+
+export const updateProductBodySchema = createUpdateSchema(
+  productTable,
+).superRefine(
+  (
+    { stock, price, maxPerCustomer, pickupOccasionId, productDetailsId },
+    ctx,
+  ) => {
+    if (
+      !stock &&
+      !price &&
+      !maxPerCustomer &&
+      !pickupOccasionId &&
+      !productDetailsId
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        message:
+          'At least 1 of the parameters must be provided in order to update a product',
+      })
+    }
+  },
+)
+export type UpdateProductBody = z.infer<typeof updateProductBodySchema>

@@ -55,3 +55,51 @@ export function createProduct({ ...data }: CreateProductBody) {
     }
   })
 }
+
+export function updateProduct(
+  id: number,
+  data: Partial<typeof productTable.$inferInsert>,
+) {
+  return db.transaction((tx) => {
+    try {
+      if (data.productDetailsId) {
+        const [productDetail] = tx
+          .select()
+          .from(productDetailsTable)
+          .where(eq(productDetailsTable.id, data.productDetailsId))
+          .all()
+
+        if (!productDetail?.id) {
+          tx.rollback()
+        }
+      }
+
+      if (data.pickupOccasionId) {
+        const [pickupOccasion] = tx
+          .select()
+          .from(pickupOccasionTable)
+          .where(eq(pickupOccasionTable.id, data.pickupOccasionId))
+          .all()
+
+        if (!pickupOccasion?.id) {
+          tx.rollback()
+        }
+      }
+
+      const results = tx
+        .update(productTable)
+        .set(data)
+        .where(eq(productTable.id, id))
+        .returning()
+        .all()
+
+      return results[0]!
+    } catch (error) {
+      if (error instanceof TransactionRollbackError) {
+        return null
+      } else {
+        throw new Error('Unexpected error')
+      }
+    }
+  })
+}
