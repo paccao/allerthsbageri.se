@@ -12,7 +12,7 @@ export type Product = z.infer<typeof getProductSchema>
 export const createProductBodySchema = createInsertSchema(productTable).extend({
   stock: z.int().min(0),
   price: z.int().min(0),
-  maxPerCustomer: z.int().min(1).optional(),
+  maxPerCustomer: z.int().min(1).optional().nullable(),
   pickupOccasionId: z.int().min(1),
   productDetailsId: z.int().min(1),
 })

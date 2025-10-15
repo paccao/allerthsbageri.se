@@ -16,7 +16,6 @@ export async function getProductStockById(id: number) {
   return results[0]
 }
 
-// TODO: TypeError: Transaction function cannot return a promise
 export function createProduct({ ...data }: CreateProductBody) {
   return db.transaction((tx) => {
     try {

@@ -39,9 +39,6 @@ suite('product routes', () => {
       headers: { cookie },
     })
 
-    //todo: Fix product response. It should not return status 400 with the following error:
-    // "Error: body/pickupOccasionId Invalid input: expected number, received undefined"
-
     t.assert.strictEqual(
       badProductResponse.statusCode,
       400,
@@ -99,8 +96,75 @@ suite('product routes', () => {
     })
 
     t.assert.strictEqual(goodProductResponse.statusCode, 201)
+    t.assert.strictEqual(goodProductResponse.json().price, goodProduct.price)
 
-    // Todo: test what happens when you pass different values of maxPerCustomer in CREATE
+    let productWithoutMaxPerCustomer: CreateProductBody = {
+      stock: 13,
+      price: 9000,
+      pickupOccasionId: pickupResponse.json().id,
+      productDetailsId: productDetailResponse.json().id,
+    }
+
+    const res1 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: productWithoutMaxPerCustomer,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    t.assert.strictEqual(
+      res1.maxPerCustomer,
+      null,
+      'maxPerCustomer returns null even though its undefined',
+    )
+
+    const productWithUndefinedMaxPerCustomer: CreateProductBody = {
+      stock: 13,
+      price: 9000,
+      maxPerCustomer: undefined,
+      pickupOccasionId: pickupResponse.json().id,
+      productDetailsId: productDetailResponse.json().id,
+    }
+
+    const res2 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: productWithUndefinedMaxPerCustomer,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    t.assert.strictEqual(
+      res2.maxPerCustomer,
+      null,
+      'maxPerCustomer returns null even though its undefined',
+    )
+
+    const productWithNullMaxPerCustomer: CreateProductBody = {
+      stock: 13,
+      price: 9000,
+      maxPerCustomer: null,
+      pickupOccasionId: pickupResponse.json().id,
+      productDetailsId: productDetailResponse.json().id,
+    }
+
+    const res3 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: productWithNullMaxPerCustomer,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    t.assert.strictEqual(
+      res3.maxPerCustomer,
+      null,
+      'maxPerCustomer returns null even though its undefined',
+    )
   })
 
   after(async () => {
