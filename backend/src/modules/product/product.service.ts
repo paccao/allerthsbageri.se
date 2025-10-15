@@ -4,7 +4,7 @@ import {
   productDetailsTable,
   productTable,
 } from '#db/schema.ts'
-import { eq } from 'drizzle-orm'
+import { eq, TransactionRollbackError } from 'drizzle-orm'
 import { type CreateProductBody } from './product.schemas.ts'
 
 export async function getProductStockById(id: number) {
@@ -16,31 +16,43 @@ export async function getProductStockById(id: number) {
   return results[0]
 }
 
-export async function createProduct({ ...data }: CreateProductBody) {
-  await db.transaction(async (tx) => {
-    const [productDetail] = await tx
-      .select()
-      .from(productDetailsTable)
-      .where(eq(productDetailsTable.id, data.productDetailsId))
+// TODO: TypeError: Transaction function cannot return a promise
+export function createProduct({ ...data }: CreateProductBody) {
+  return db.transaction((tx) => {
+    try {
+      const [productDetail] = tx
+        .select()
+        .from(productDetailsTable)
+        .where(eq(productDetailsTable.id, data.productDetailsId))
+        .all()
 
-    if (!productDetail?.id) {
-      return []
+      if (!productDetail?.id) {
+        tx.rollback()
+      }
+
+      const [pickupOccasion] = tx
+        .select()
+        .from(pickupOccasionTable)
+        .where(eq(pickupOccasionTable.id, data.pickupOccasionId))
+        .all()
+
+      if (!pickupOccasion?.id) {
+        tx.rollback()
+      }
+
+      const results = tx
+        .insert(productTable)
+        .values({ ...data })
+        .returning()
+        .all()
+
+      return results[0]!
+    } catch (error) {
+      if (error instanceof TransactionRollbackError) {
+        return null
+      } else {
+        throw new Error('Unexpected error')
+      }
     }
-
-    const [pickupOccasion] = await tx
-      .select()
-      .from(pickupOccasionTable)
-      .where(eq(pickupOccasionTable.id, data.pickupOccasionId))
-
-    if (!pickupOccasion?.id) {
-      return []
-    }
-
-    const results = await tx
-      .insert(productTable)
-      .values({ ...data })
-      .returning()
-
-    return results[0]!
   })
 }

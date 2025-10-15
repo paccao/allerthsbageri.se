@@ -38,6 +38,13 @@ export async function createProductHandler(
       pickupOccasionId,
       productDetailsId,
     })
+
+    if (product === null) {
+      return reply.code(400).send({
+        message: 'Could not find specified pickup occasion or product detail',
+      })
+    }
+
     return reply.code(201).send(product)
   } catch (error: any) {
     request.log.error(error, error?.message)
