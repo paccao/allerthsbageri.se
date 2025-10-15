@@ -5,11 +5,12 @@ import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
+import type { CreateProductBody } from './product.schemas.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
-suite.only('product routes', () => {
+suite('product routes', () => {
   const productAdmin = {
     username: 'productAdmin',
     name: 'productAdmin',
@@ -22,13 +23,46 @@ suite.only('product routes', () => {
     cookie = await createAdminUser(productAdmin)
   })
 
-  test('products can be created', async (t: TestContext) => {
+  test.only('products can be created', async (t: TestContext) => {
+    const product: CreateProductBody = {
+      stock: 25,
+      price: 7700,
+      maxPerCustomer: 1,
+      pickupOccasionId: 99999,
+      productDetailsId: 99999,
+    }
+
+    const badProductResponse = await app.inject({
+      method: 'POST',
+      url: '/api/products/',
+      body: product,
+      headers: { cookie },
+    })
+
+    //todo: Fix product response. It should not return status 400 with the following error:
+    // "Error: body/pickupOccasionId Invalid input: expected number, received undefined"
+
+    t.assert.strictEqual(
+      badProductResponse.statusCode,
+      400,
+      'should be a bad request when either a pickup occasion or product detail in the product request body does not exist',
+    )
+
     const productDetail = {
       name: 'kladdkakekaka',
       description: 'En kaka gjord på surdeg med konsistensen av en kladdkaka',
       image: null,
       vatPercentage: 13,
     }
+
+    const productDetailResponse = await app.inject({
+      method: 'POST',
+      url: '/api/product-details/',
+      body: productDetail,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(productDetailResponse.statusCode, 201)
 
     const pickup = {
       name: 'Särlatorgets marknad',
@@ -40,28 +74,31 @@ suite.only('product routes', () => {
       pickupEnd: new Date('2025-08-29T16:30:00.000Z'),
     }
 
-    const product = {
-      stock: 25,
-      price: 7700,
-      maxPerCustomer: 1,
-      pickupOccassionId: 1,
-      productDetailsId: 1,
-    }
-
-    const response = await app.inject({
+    const pickupResponse = await app.inject({
       method: 'POST',
-      url: '/api/products/',
-      body: product,
+      url: '/api/pickups/',
+      body: pickup,
       headers: { cookie },
     })
 
-    const deserialized = response.json()
+    t.assert.strictEqual(pickupResponse.statusCode, 201)
 
-    t.assert.strictEqual(
-      response.statusCode,
-      400,
-      'should be a bad request when either a pickup occasion or product detail in the product request body does not exist',
-    )
+    const goodProduct: CreateProductBody = {
+      stock: 13,
+      price: 9000,
+      maxPerCustomer: 2,
+      pickupOccasionId: pickupResponse.json().id,
+      productDetailsId: productDetailResponse.json().id,
+    }
+
+    const goodProductResponse = await app.inject({
+      method: 'POST',
+      url: '/api/products/',
+      body: goodProduct,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(goodProductResponse.statusCode, 201)
 
     // Todo: test what happens when you pass different values of maxPerCustomer in CREATE
   })

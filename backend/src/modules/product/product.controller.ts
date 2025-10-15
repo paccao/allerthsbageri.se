@@ -31,7 +31,7 @@ export async function createProductHandler(
     request.body
 
   try {
-    const product = await createProduct({
+    const product = createProduct({
       stock,
       price,
       maxPerCustomer,
