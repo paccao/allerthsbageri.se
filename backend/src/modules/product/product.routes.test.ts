@@ -14,7 +14,7 @@ import type {
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
-suite.only('product routes', () => {
+suite('product routes', () => {
   const productAdmin = {
     username: 'productAdmin',
     name: 'productAdmin',
@@ -27,7 +27,7 @@ suite.only('product routes', () => {
     cookie = await createAdminUser(productAdmin)
   })
 
-  test.only('can get products', async (t: TestContext) => {
+  test('can get products', async (t: TestContext) => {
     const getResponse1 = await app.inject({
       method: 'GET',
       url: `/api/products/${1337}`,
