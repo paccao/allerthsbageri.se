@@ -6,10 +6,6 @@ import {
 } from 'drizzle-zod'
 import { z } from 'zod'
 
-export const getProductStockByIdSchema = z.object({
-  amount: z.number().int(),
-})
-
 export const getProductSchema = createSelectSchema(productTable)
 export type Product = z.infer<typeof getProductSchema>
 

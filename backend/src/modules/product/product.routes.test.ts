@@ -10,7 +10,7 @@ import type { CreateProductBody, UpdateProductBody } from './product.schemas.ts'
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
-suite('product routes', () => {
+suite.only('product routes', () => {
   const productAdmin = {
     username: 'productAdmin',
     name: 'productAdmin',
@@ -21,6 +21,77 @@ suite('product routes', () => {
 
   before(async () => {
     cookie = await createAdminUser(productAdmin)
+  })
+
+  test.only('can get products', async (t: TestContext) => {
+    const getResponse1 = await app.inject({
+      method: 'GET',
+      url: `/api/products/${1337}`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(getResponse1.statusCode, 404)
+
+    const productDetail = {
+      name: 'testkaka',
+      description:
+        'En kaka gjord på surdeg med konsistensen av en kladdkaka och test',
+      image: 'https://allerthsbageri.se/static/bild123',
+      vatPercentage: 16,
+    }
+
+    const productDetailResponse = await app
+      .inject({
+        method: 'POST',
+        url: '/api/product-details/',
+        body: productDetail,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const pickup = {
+      name: 'Allerths bageri',
+      location: 'Bröd bakat med kärlek',
+      bookingStart: new Date('2025-11-23T08:00:00.000Z'),
+      bookingEnd: new Date('2025-11-28T17:00:00.000Z'),
+      pickupStart: new Date('2025-11-29T09:00:00.000Z'),
+      pickupEnd: new Date('2025-11-29T16:30:00.000Z'),
+    }
+
+    const pickupResponse = await app
+      .inject({
+        method: 'POST',
+        url: '/api/pickups/',
+        body: pickup,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product: CreateProductBody = {
+      stock: 13,
+      price: 4444,
+      maxPerCustomer: 2,
+      pickupOccasionId: pickupResponse.id,
+      productDetailsId: productDetailResponse.id,
+    }
+
+    const createdProduct = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const getProductById = await app.inject({
+      method: 'GET',
+      url: `/api/products/${createdProduct.id}`,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(getProductById.statusCode, 200)
+    t.assert.strictEqual(getProductById.json().price, product.price)
   })
 
   test('products can be created', async (t: TestContext) => {

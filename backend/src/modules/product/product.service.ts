@@ -7,9 +7,9 @@ import {
 import { eq, TransactionRollbackError } from 'drizzle-orm'
 import { type CreateProductBody } from './product.schemas.ts'
 
-export async function getProductStockById(id: number) {
+export async function getProductById(id: number) {
   const results = await db
-    .select({ stock: productTable.stock })
+    .select()
     .from(productTable)
     .where(eq(productTable.id, id))
 
