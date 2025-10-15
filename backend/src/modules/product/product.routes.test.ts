@@ -5,7 +5,11 @@ import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
-import type { CreateProductBody, UpdateProductBody } from './product.schemas.ts'
+import type {
+  CreateProductBody,
+  Product,
+  UpdateProductBody,
+} from './product.schemas.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
@@ -92,6 +96,37 @@ suite.only('product routes', () => {
 
     t.assert.strictEqual(getProductById.statusCode, 200)
     t.assert.strictEqual(getProductById.json().price, product.price)
+
+    const product2: CreateProductBody = {
+      stock: 13,
+      price: 4444,
+      maxPerCustomer: 2,
+      pickupOccasionId: pickupResponse.id,
+      productDetailsId: productDetailResponse.id,
+    }
+
+    const createdProduct2 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product2,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const listProducts = await app.inject({
+      method: 'GET',
+      url: '/api/products/',
+      headers: { cookie },
+    })
+
+    const listDeserialized = listProducts.json() as Array<Product>
+
+    t.assert.strictEqual(getProductById.statusCode, 200)
+    t.assert.strictEqual(
+      listDeserialized.some((item) => item.stock === createdProduct2.stock),
+      true,
+    )
   })
 
   test('products can be created', async (t: TestContext) => {

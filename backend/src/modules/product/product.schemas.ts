@@ -7,6 +7,7 @@ import {
 import { z } from 'zod'
 
 export const getProductSchema = createSelectSchema(productTable)
+export const listProductsSchema = z.array(getProductSchema)
 export type Product = z.infer<typeof getProductSchema>
 
 export const createProductBodySchema = createInsertSchema(productTable).extend({

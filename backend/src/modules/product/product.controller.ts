@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import {
   createProduct,
   getProductById,
+  listProducts,
   updateProduct,
 } from './product.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
@@ -25,6 +26,20 @@ export async function getProductByIdHandler(
   }
 }
 
+export async function listProductsHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  try {
+    const products = await listProducts()
+
+    return reply.code(200).send(products)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to list products' })
+  }
+}
+
 export async function createProductHandler(
   request: FastifyRequest<{ Body: CreateProductBody }>,
   reply: FastifyReply,
@@ -43,7 +58,8 @@ export async function createProductHandler(
 
     if (product === null) {
       return reply.code(400).send({
-        message: 'Could not find specified pickup occasion or product detail',
+        message:
+          'Could not find specified pickup occasion or product detail in product body',
       })
     }
 

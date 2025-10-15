@@ -3,10 +3,12 @@ import {
   getProductByIdHandler,
   createProductHandler,
   updateProductHandler,
+  listProductsHandler,
 } from './product.controller.ts'
 import {
   createProductBodySchema,
   getProductSchema,
+  listProductsSchema,
   updateProductBodySchema,
   type CreateProductBody,
   type UpdateProductBody,
@@ -34,6 +36,20 @@ export async function productRoutes(app: FastifyInstance) {
       },
     },
     getProductByIdHandler,
+  )
+
+  app.get(
+    '/',
+    {
+      schema: {
+        response: {
+          200: listProductsSchema,
+          ...getErrorResponseSchemas(401, 500),
+        },
+        tags,
+      },
+    },
+    listProductsHandler,
   )
 
   app.post<{ Body: CreateProductBody }>(

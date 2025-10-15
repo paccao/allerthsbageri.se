@@ -16,6 +16,10 @@ export async function getProductById(id: number) {
   return results[0]
 }
 
+export async function listProducts() {
+  return await db.select().from(productTable)
+}
+
 export function createProduct({ ...data }: CreateProductBody) {
   return db.transaction((tx) => {
     try {
