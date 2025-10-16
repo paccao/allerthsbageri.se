@@ -14,8 +14,12 @@ const openAPITagDefinitions = {
     description:
       'Pickup occasions, where customers receive their ordered products',
   },
+  products: {
+    description: 'Products the customer can order',
+  },
   product_details: {
-    description: 'Details about a specific product. These can be re-used for multiple pickup occasions, but if you want significant changes you should create a new product detail instead.',
+    description:
+      'Details about a specific product. These can be re-used for multiple pickup occasions, but if you want significant changes you should create a new product detail instead.',
   },
 } as const
 

@@ -89,8 +89,6 @@ export async function updateProductDetailHandler(
     return productDetail
   } catch (error: any) {
     request.log.error(error, error?.message)
-    return reply
-      .code(500)
-      .send({ message: 'Failed to update product detail occasion' })
+    return reply.code(500).send({ message: 'Failed to update product detail' })
   }
 }
