@@ -3,12 +3,15 @@ import {
   createOrderStatusHandler,
   getOrderStatusByIdHandler,
   listOrderStatusesHandler,
+  updateOrderStatusHandler,
 } from './order-status.controller.ts'
 import {
   type CreateOrderStatusBody,
   createOrderStatusBodySchema,
   getOrderStatusSchema,
   listOrderStatusesSchema,
+  type UpdateOrderStatusBody,
+  updateOrderStatusBodySchema,
 } from './order-status.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
@@ -62,5 +65,21 @@ export async function orderStatusRoutes(app: FastifyInstance) {
       },
     },
     createOrderStatusHandler,
+  )
+
+  app.patch<{ Body: UpdateOrderStatusBody; Params: IdParams }>(
+    '/:id',
+    {
+      schema: {
+        body: updateOrderStatusBodySchema,
+        params: idParamsSchema,
+        response: {
+          200: getOrderStatusSchema,
+          ...getErrorResponseSchemas(400, 401, 404, 500),
+        },
+        tags,
+      },
+    },
+    updateOrderStatusHandler,
   )
 }

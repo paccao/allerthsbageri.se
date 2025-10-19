@@ -8,25 +8,26 @@ import { getTestingUtils } from '#utils/testing-utils.ts'
 import type {
   CreateOrderStatusBody,
   OrderStatus,
+  UpdateOrderStatusBody,
 } from './order-status.schemas.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
 suite.only('order status routes', () => {
-  const productAdmin = {
-    username: 'productAdmin',
-    name: 'productAdmin',
+  const orderStatusAdmin = {
+    username: 'orderStatusAdmin',
+    name: 'orderStatusAdmin',
     password: '123456',
   }
 
   let cookie: string
 
   before(async () => {
-    cookie = await createAdminUser(productAdmin)
+    cookie = await createAdminUser(orderStatusAdmin)
   })
 
-  test.only('can create and get order statuses', async (t: TestContext) => {
+  test('can create and get order statuses', async (t: TestContext) => {
     const badOrderStatus = {
       status: 'anythingGoes',
     }
@@ -46,6 +47,7 @@ suite.only('order status routes', () => {
 
     const goodOrderStatus: CreateOrderStatusBody = {
       status: 'IN_PROGRESS',
+      color: 'blue',
     }
 
     const goodResponse = await app.inject({
@@ -93,9 +95,130 @@ suite.only('order status routes', () => {
     )
   })
 
+  // todo: test what happens when no properties in the body is passed
+  // todo: make sure the ID has not been updated when patched
+  test.only('can update order statuses', async (t: TestContext) => {
+    const orderStatus: CreateOrderStatusBody = {
+      status: 'IN_PROGRESS',
+      color: 'green',
+    }
+
+    const createdResponse = await app.inject({
+      method: 'POST',
+      url: `/api/order-status/`,
+      body: orderStatus,
+      headers: { cookie },
+    })
+
+    const createdOrderStatusDeserialized = createdResponse.json()
+
+    t.assert.strictEqual(createdResponse.statusCode, 201)
+
+    const badInputRequests = [
+      {
+        id: createdOrderStatusDeserialized.id,
+        body: {
+          status: 909090,
+        },
+      },
+      {
+        id: createdOrderStatusDeserialized.id,
+        body: {
+          status: 'IN_PROGRESS',
+          color: 1203910293,
+        },
+      },
+      {
+        id: 'aoskdoaskd',
+        body: {
+          status: 'IN_PROGRESS',
+        },
+      },
+    ]
+
+    for (let index = 0; index < badInputRequests.length; index++) {
+      const res = await app.inject({
+        method: 'PATCH',
+        url: `/api/order-status/${badInputRequests[index]!.id}`,
+        body: badInputRequests[index]!.body,
+        headers: { cookie },
+      })
+
+      t.assert.strictEqual(
+        res.statusCode,
+        400,
+        'Should return status 400 when an invalid input is sent',
+      )
+    }
+
+    const noBodyProvidedRes = await app.inject({
+      method: 'PATCH',
+      url: `/api/order-status/${createdOrderStatusDeserialized.id}`,
+      body: {},
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      noBodyProvidedRes.statusCode,
+      400,
+      'Should return status 400 when no parameters in the body is sent',
+    )
+
+    const noIdProvided = await app.inject({
+      method: 'PATCH',
+      url: `/api/order-status/`,
+      body: orderStatus,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      noIdProvided.statusCode,
+      400,
+      'Should return status 400 when no id parameter is sent in the url',
+    )
+
+    const idNotFound = await app.inject({
+      method: 'PATCH',
+      url: `/api/order-status/${createdOrderStatusDeserialized.id + 9997}`,
+      body: orderStatus,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      idNotFound.statusCode,
+      404,
+      'Should return status 404 when no orderStatus with the provided params ID exists',
+    )
+
+    const goodUpdate: UpdateOrderStatusBody = {
+      status: 'COMPLETED',
+      color: 'green',
+    }
+
+    const goodUpdateResponse = await app.inject({
+      method: 'PATCH',
+      url: `/api/order-status/${createdOrderStatusDeserialized.id}`,
+      body: goodUpdate,
+      headers: { cookie },
+    })
+
+    const goodUpdateDeserialized = goodUpdateResponse.json()
+
+    t.assert.strictEqual(
+      goodUpdateResponse.statusCode,
+      200,
+      'Should update when proper url params and body are provided',
+    )
+    t.assert.strictEqual(goodUpdateDeserialized.status, goodUpdate.status)
+    t.assert.strictEqual(
+      createdOrderStatusDeserialized.id,
+      goodUpdateDeserialized.id,
+    )
+  })
+
   after(async () => {
     await db
       .delete(userTable)
-      .where(eq(userTable.username, productAdmin.username))
+      .where(eq(userTable.username, orderStatusAdmin.username))
   })
 })

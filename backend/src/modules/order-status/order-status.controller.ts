@@ -1,9 +1,13 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { CreateOrderStatusBody } from './order-status.schemas.ts'
+import type {
+  CreateOrderStatusBody,
+  UpdateOrderStatusBody,
+} from './order-status.schemas.ts'
 import {
   createOrderStatus,
   getOrderStatusById,
   listOrderStatuses,
+  updateOrderStatus,
 } from './order-status.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
 
@@ -56,5 +60,31 @@ export async function createOrderStatusHandler(
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create order status' })
+  }
+}
+
+export async function updateOrderStatusHandler(
+  request: FastifyRequest<{
+    Params: IdParams
+    Body: UpdateOrderStatusBody
+  }>,
+  reply: FastifyReply,
+) {
+  const { status, color } = request.body
+
+  try {
+    const orderStatus = await updateOrderStatus(request.params.id, {
+      status,
+      color,
+    })
+
+    if (!orderStatus) {
+      return reply.code(404).send({ message: 'Order status does not exist' })
+    }
+
+    return reply.code(200).send(orderStatus)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to update order status' })
   }
 }

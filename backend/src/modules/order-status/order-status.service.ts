@@ -22,3 +22,16 @@ export async function createOrderStatus(
 
   return results[0]
 }
+
+export async function updateOrderStatus(
+  id: number,
+  data: Partial<typeof orderStatusTable.$inferInsert>,
+) {
+  const results = await db
+    .update(orderStatusTable)
+    .set(data)
+    .where(eq(orderStatusTable.id, id))
+    .returning()
+
+  return results[0]
+}
