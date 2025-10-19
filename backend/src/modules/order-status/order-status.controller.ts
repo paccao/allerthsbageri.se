@@ -1,6 +1,45 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreateOrderStatusBody } from './order-status.schemas.ts'
-import { createOrderStatus } from './order-status.service.ts'
+import {
+  createOrderStatus,
+  getOrderStatusById,
+  listOrderStatuses,
+} from './order-status.service.ts'
+import type { IdParams } from '#utils/common.schemas.ts'
+
+export async function getOrderStatusByIdHandler(
+  request: FastifyRequest<{ Params: IdParams }>,
+  reply: FastifyReply,
+) {
+  try {
+    const orderStatus = await getOrderStatusById(request.params.id)
+
+    if (!orderStatus) {
+      return reply
+        .code(404)
+        .send({ message: 'Specified order status not found' })
+    }
+
+    return reply.code(200).send(orderStatus)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to get order status' })
+  }
+}
+
+export async function listOrderStatusesHandler(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
+  try {
+    const orderStatuses = await listOrderStatuses()
+
+    return reply.code(200).send(orderStatuses)
+  } catch (error: any) {
+    request.log.error(error, error?.message)
+    return reply.code(500).send({ message: 'Failed to list order statuses' })
+  }
+}
 
 export async function createOrderStatusHandler(
   request: FastifyRequest<{ Body: CreateOrderStatusBody }>,

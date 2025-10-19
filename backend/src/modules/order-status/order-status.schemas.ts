@@ -1,6 +1,10 @@
 import { orderStatusTable } from '#db/schema.ts'
-import { createInsertSchema } from 'drizzle-zod'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
+
+export const getOrderStatusSchema = createSelectSchema(orderStatusTable)
+export const listOrderStatusesSchema = z.array(getOrderStatusSchema)
+export type OrderStatus = z.infer<typeof getOrderStatusSchema>
 
 export const createOrderStatusBodySchema = createInsertSchema(
   orderStatusTable,
