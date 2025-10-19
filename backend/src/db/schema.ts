@@ -65,6 +65,7 @@ export const productTable = sqliteTable('product', {
     .references(() => productDetailsTable.id),
 })
 
+// We want the order status to be independent of the customer_order because if a customer is deleted we want to be able to give the customer the status CANCELLED or similar.
 export const orderStatusTable = sqliteTable('order_status', {
   id: int().primaryKey({ autoIncrement: true }),
   status: text({ length: 50 }).notNull(),
@@ -79,7 +80,7 @@ export const orderStatusTable = sqliteTable('order_status', {
 // IDEA: Maybe the order and product concept could be generalized to be reused
 // Or, it might be better to keep two distinct tables since they represent very different things
 // Two separate tables make it easier to change
-export const orderTable = sqliteTable('customer_order', {
+export const customerOrderTable = sqliteTable('customer_order', {
   id: int().primaryKey({ autoIncrement: true }),
   createdAt: dateField()
     .notNull()
@@ -104,7 +105,7 @@ export const orderItemTable = sqliteTable('order_item', {
     .references(() => productTable.id),
   orderId: int()
     .notNull()
-    .references(() => orderTable.id, { onDelete: 'cascade' }),
+    .references(() => customerOrderTable.id, { onDelete: 'cascade' }),
 })
 
 export const sessionTable = sqliteTable('session', {
