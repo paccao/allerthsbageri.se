@@ -11,6 +11,9 @@ const openAPITagDefinitions = {
     description:
       'Orders made by the customers. Contains relations to all order individual order items and to the status of the order.',
   },
+  orderStatus: {
+    description:
+      'The status of an order. It can be completed, in progress and cancelled',
   },
   pickups: {
     description:
