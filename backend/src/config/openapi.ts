@@ -7,8 +7,10 @@ const openAPITagDefinitions = {
   customers: {
     description: 'Customers who order products or activities',
   },
-  orders: {
-    description: 'Customer orders',
+  customerOrders: {
+    description:
+      'Orders made by the customers. Contains relations to all order individual order items and to the status of the order.',
+  },
   },
   pickups: {
     description:
