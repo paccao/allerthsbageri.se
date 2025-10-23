@@ -65,7 +65,7 @@ export const productTable = sqliteTable('product', {
     .references(() => productDetailsTable.id),
 })
 
-// We want the order status to be independent of the customer_order because if a customer is deleted we want to be able to give the customer the status CANCELLED or similar.
+// We want the order status to be independent of the customer_order because if a customer is deleted we want to be able to give the customer the status Avbokad or similar.
 export const orderStatusTable = sqliteTable('order_status', {
   id: int().primaryKey({ autoIncrement: true }),
   status: text({ length: 50 }).notNull(),

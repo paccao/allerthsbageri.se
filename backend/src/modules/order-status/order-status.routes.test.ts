@@ -46,7 +46,7 @@ suite.only('order status routes', () => {
     )
 
     const goodOrderStatus: CreateOrderStatusBody = {
-      status: 'IN_PROGRESS',
+      status: 'Bokad',
       color: 'blue',
     }
 
@@ -99,7 +99,7 @@ suite.only('order status routes', () => {
   // todo: make sure the ID has not been updated when patched
   test.only('can update order statuses', async (t: TestContext) => {
     const orderStatus: CreateOrderStatusBody = {
-      status: 'IN_PROGRESS',
+      status: 'Bokad',
       color: 'green',
     }
 
@@ -124,14 +124,14 @@ suite.only('order status routes', () => {
       {
         id: createdOrderStatusDeserialized.id,
         body: {
-          status: 'IN_PROGRESS',
+          status: 'Bokad',
           color: 1203910293,
         },
       },
       {
         id: 'aoskdoaskd',
         body: {
-          status: 'IN_PROGRESS',
+          status: 'Bokad',
         },
       },
     ]
@@ -191,7 +191,7 @@ suite.only('order status routes', () => {
     )
 
     const goodUpdate: UpdateOrderStatusBody = {
-      status: 'COMPLETED',
+      status: 'Upphämtad',
       color: 'green',
     }
 
