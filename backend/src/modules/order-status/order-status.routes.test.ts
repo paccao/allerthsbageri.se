@@ -95,8 +95,6 @@ suite.only('order status routes', () => {
     )
   })
 
-  // todo: test what happens when no properties in the body is passed
-  // todo: make sure the ID has not been updated when patched
   test('can update order statuses', async (t: TestContext) => {
     const orderStatus: CreateOrderStatusBody = {
       status: 'Bokad',
