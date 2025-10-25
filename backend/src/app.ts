@@ -54,7 +54,7 @@ async function authenticatedContext(app: FastifyInstance) {
   app.register(pickupRoutes, { prefix: 'api/pickups' })
   app.register(customerRoutes, { prefix: 'api/customers' })
   app.register(customerOrderRoutes, { prefix: 'api/customer-orders' })
-  app.register(orderStatusRoutes, { prefix: 'api/order-status' })
+  app.register(orderStatusRoutes, { prefix: 'api/order-status' }) // todo: This API should be READ-only by the app. Create, Patch (and Delete) should only be available by System admins
   app.register(productRoutes, { prefix: 'api/products' })
   app.register(productDetailsRoutes, { prefix: 'api/product-details' })
 }

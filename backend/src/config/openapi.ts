@@ -13,7 +13,7 @@ const openAPITagDefinitions = {
   },
   orderStatus: {
     description:
-      'The status of an order. Its value can be set to Betald, Bekräftad, Upphämtad and Avbokad',
+      'The status of an order. Its value can be set to Bokad, Bekräftad, Upphämtad and Avbokad',
   },
   pickups: {
     description:

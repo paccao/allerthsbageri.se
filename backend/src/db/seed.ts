@@ -13,6 +13,7 @@ import {
   userTable,
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
+import type { CreateOrderStatusBody } from '#src/modules/order-status/order-status.schemas.ts'
 
 const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
   {
@@ -102,21 +103,26 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   },
 ]
 
-const defaultOrderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
+const defaultOrderStatuses: CreateOrderStatusBody[] = [
   {
     status: 'Bokad',
+    isDefault: true,
+    color: 'yellow',
   },
   {
     status: 'Bekräftad',
-  },
-  {
-    status: 'Betald',
+    isDefault: false,
+    color: 'blue',
   },
   {
     status: 'Upphämtad',
+    isDefault: false,
+    color: 'green',
   },
   {
     status: 'Avbokad',
+    isDefault: false,
+    color: 'red',
   },
 ]
 
