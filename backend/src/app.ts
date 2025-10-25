@@ -11,9 +11,10 @@ import { sessionPlugin, authenticationRequiredPlugin } from './utils/auth.ts'
 import { authRoutes } from './modules/auth/auth.routes.ts'
 import { pickupRoutes } from './modules/pickup/pickup.routes.ts'
 import { customerRoutes } from './modules/customer/customer.routes.ts'
-import { orderRoutes } from './modules/order/order.routes.ts'
+import { customerOrderRoutes } from './modules/order/customer-order.routes.ts'
 import { productRoutes } from './modules/product/product.routes.ts'
 import { productDetailsRoutes } from './modules/product-details/product-details.routes.ts'
+import { orderStatusRoutes } from './modules/order-status/order-status.routes.ts'
 
 async function startApp() {
   const app = Fastify({
@@ -52,7 +53,8 @@ async function authenticatedContext(app: FastifyInstance) {
   app.register(authenticationRequiredPlugin)
   app.register(pickupRoutes, { prefix: 'api/pickups' })
   app.register(customerRoutes, { prefix: 'api/customers' })
-  app.register(orderRoutes, { prefix: 'api/orders' })
+  app.register(customerOrderRoutes, { prefix: 'api/customer-orders' })
+  app.register(orderStatusRoutes, { prefix: 'api/order-status' })
   app.register(productRoutes, { prefix: 'api/products' })
   app.register(productDetailsRoutes, { prefix: 'api/product-details' })
 }
