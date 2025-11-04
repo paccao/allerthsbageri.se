@@ -7,6 +7,4 @@ type Props = {
 const { class: className } = Astro.props
 ---
 
-<span class="flex justify-center">
-  <hr class={cn('my-12 w-7 text-center text-gray-200', className)} />
-</span>
+<span class={cn('my-12 w-7 mx-auto border-t flex', className)}></span>
