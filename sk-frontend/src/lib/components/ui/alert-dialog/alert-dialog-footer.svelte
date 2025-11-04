@@ -14,7 +14,7 @@
   bind:this={ref}
   data-slot="alert-dialog-footer"
   class={cn(
-    'flex flex-col-reverse gap-2 sm:flex-row sm:justify-end max-w-xs sm:max-w-full w-full justify-self-center',
+    'flex w-full max-w-xs flex-col-reverse gap-2 justify-self-center sm:max-w-full sm:flex-row sm:justify-end',
     className,
   )}
   {...restProps}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import * as Card from '$components/ui/card'
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
   import { toSEKString } from '$lib/currency'
   import type { Product } from './booking-form.svelte'
   import ProductCount from './product-count.svelte'
@@ -9,7 +9,7 @@
   import Label from '$components/ui/label/label.svelte'
   import Input, { inputClasses } from '$components/ui/input/input.svelte'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 
   const orderItems = $derived(
     Object.entries(ctx.order.items).reduce<(Product & { count: number })[]>(
@@ -53,10 +53,10 @@
 </script>
 
 <div
-  class="flex gap-8 max-w-(--breakpoint-lg) w-full mx-auto md:flex-row flex-col justify-center md:px-4"
+  class="mx-auto flex w-full max-w-(--breakpoint-lg) flex-col justify-center gap-8 md:flex-row md:px-4"
 >
   <div
-    class="grid w-full gap-4 px-4 md:px-0 md:pb-0 pb-8 max-w-xs self-center md:self-start"
+    class="grid w-full max-w-xs gap-4 self-center px-4 pb-8 md:self-start md:px-0 md:pb-0"
   >
     <!--
     TODO: Add proper validation for customer data
@@ -83,13 +83,13 @@
     </div>
   </div>
 
-  <div class="grow max-w-md self-center w-full px-0 2xs:px-4">
-    <Card.Root class="gap-4 h-min pb-0">
+  <div class="w-full max-w-md grow self-center px-0 2xs:px-4">
+    <Card.Root class="h-min gap-4 pb-0">
       <Card.Header class="gap-4">
-        <Card.Title class="font-bold text-lg">Varukorg</Card.Title>
+        <Card.Title class="text-lg font-bold">Varukorg</Card.Title>
 
         <p
-          class="bg-accent rounded-md grid grid-cols-[max-content_1fr] p-2 shadow-sm text-sm"
+          class="grid grid-cols-[max-content_1fr] rounded-md bg-accent p-2 text-sm shadow-sm"
         >
           <span class="font-bold">Upphämtning:</span>
           <span class="text-right">{dateTime}</span>
@@ -105,18 +105,18 @@
               {#each orderItems as { id, name, count, price } (id)}
                 {@const productTotalPrice = toSEKString(BigInt(count) * price)}
                 <li
-                  class="grid gap-4 xs:gap-0 xs:grid-cols-[1fr_max-content] items-center not-last:border-b pb-4"
+                  class="grid items-center gap-4 pb-4 not-last:border-b xs:grid-cols-[1fr_max-content] xs:gap-0"
                 >
-                  <h2 class="font-bold text-sm lg:text-base">{name}</h2>
+                  <h2 class="text-sm font-bold lg:text-base">{name}</h2>
                   <div
-                    class="grid xs:max-w-32 w-full grid-cols-[1fr_max-content] xs:grid-cols-1 items-end xs:justify-self-end xs:col-span-full"
+                    class="grid w-full grid-cols-[1fr_max-content] items-end xs:col-span-full xs:max-w-32 xs:grid-cols-1 xs:justify-self-end"
                   >
                     <span
-                      class="hidden xs:flex justify-self-end pb-1 pr-1 text-sm"
+                      class="hidden justify-self-end pr-1 pb-1 text-sm xs:flex"
                       >{productTotalPrice}</span
                     >
                     <ProductCount productId={id} size="md" class="max-w-32" />
-                    <span class="xs:hidden text-sm">{productTotalPrice}</span>
+                    <span class="text-sm xs:hidden">{productTotalPrice}</span>
                   </div>
                 </li>
               {/each}
@@ -136,7 +136,7 @@
         <Card.Footer
           as="output"
           class={orderItems.length
-            ? 'bg-accent py-4 font-bold justify-between'
+            ? 'justify-between bg-accent py-4 font-bold'
             : 'pb-6'}
         >
           {#if orderItems.length}

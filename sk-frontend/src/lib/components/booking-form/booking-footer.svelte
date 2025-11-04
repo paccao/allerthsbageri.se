@@ -1,20 +1,20 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 </script>
 
 <footer
-  class="flex justify-center fixed bottom-0 w-full left-0 right-0 bg-background z-50"
+  class="fixed right-0 bottom-0 left-0 z-50 flex w-full justify-center bg-background"
 >
   <div
-    class="fixed bottom-14 z-20 bg-gradient-to-t from-black/5 to-transparent h-8 w-full left-0 right-0 pointer-events-none"
+    class="pointer-events-none fixed right-0 bottom-14 left-0 z-20 h-8 w-full bg-linear-to-t from-black/5 to-transparent"
   ></div>
 
   <nav
-    class="max-w-[var(--breakpoint-sm)] grid grid-cols-[1fr_max-content_1fr] gap-2 items-center py-2 px-4 w-full"
+    class="grid w-full max-w-(--breakpoint-sm) grid-cols-[1fr_max-content_1fr] items-center gap-2 px-4 py-2"
   >
     {#if ctx.prevStepId}
       <a
@@ -32,20 +32,20 @@
     {/if}
 
     <div>
-      <span class="xs:hidden text-sm"
+      <span class="text-sm xs:hidden"
         >{ctx.stepIndex + 1}/{ctx.visibleSteps.length}</span
       >
 
-      <nav class="items-center gap-1 xs:flex hidden">
+      <nav class="hidden items-center gap-1 xs:flex">
         {#each ctx.visibleSteps as { id, title }}
           {@const enabled = ctx.canNavigateToStep(id)}
           <a
             class={cn([
-              'rounded-full size-4 border border-black select-none',
+              'size-4 rounded-full border border-black select-none',
               id === ctx.stepId
                 ? 'bg-black'
                 : 'hover:bg-black/20 focus:bg-black/20',
-              !enabled && 'opacity-50 pointer-events-none border-black/50',
+              !enabled && 'pointer-events-none border-black/50 opacity-50',
             ])}
             href={enabled ? `#${id}` : 'javascript:void(0)'}
             aria-label="Gå till steg: {title}"

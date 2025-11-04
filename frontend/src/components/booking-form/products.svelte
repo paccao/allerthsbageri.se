@@ -2,7 +2,7 @@
   import { Button } from '$components/ui/button'
   import * as Card from '$components/ui/card'
   import { toSEKString } from '$lib/currency'
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
   import ProductCount from './product-count.svelte'
   import { draw } from 'svelte/transition'
   import ConfirmDialog from './confirm-dialog.svelte'
@@ -13,7 +13,7 @@
     weekdayShort,
   } from '$lib/datetime'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 </script>
 
 <!--

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 </script>
 
 <footer

@@ -1,4 +1,5 @@
-import { Context } from 'runed'
+import { createContext } from 'svelte'
 import type { BookingState } from './booking.svelte'
 
-export const bookingContext = new Context<BookingState>('booking')
+export const [getBookingContext, setBookingContext] =
+  createContext<BookingState>()

@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Button } from '$components/ui/button'
 
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
   import type { Product } from './booking-form.svelte'
   import { inputClasses } from '$components/ui/input/input.svelte'
   import { cn } from '$lib/utils'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 
   const sizes = {
     md: {
@@ -33,7 +33,7 @@
 
 <div
   class={[
-    'gap-1 flex justify-between items-stretch text-center outline-black rounded-2xl w-full outline-1 -outline-offset-1',
+    'flex w-full items-stretch justify-between gap-1 rounded-2xl text-center outline-1 -outline-offset-1 outline-black',
     sizes[size].container,
     className,
   ]}
@@ -82,7 +82,7 @@
     }}
     class={cn([
       inputClasses,
-      'text-center reset-style p-0 shadow-none border-0 h-full !text-base',
+      'reset-style h-full border-0 p-0 text-center text-base! shadow-none',
     ])}
   />
   <Button

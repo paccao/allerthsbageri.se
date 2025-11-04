@@ -17,7 +17,7 @@
       loading="eager"
       fetchpriority="high"
     />
-    <h1 class="font-display xs:text-4xl pt-2 text-3xl font-bold">
+    <h1 class="pt-2 font-display text-3xl font-bold xs:text-4xl">
       {SITE_NAME}
     </h1>
   </a>

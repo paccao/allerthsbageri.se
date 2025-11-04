@@ -86,12 +86,12 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import { bookingContext } from './context'
+  import { setBookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
   import Order from './order.svelte'
 
-  const ctx = bookingContext.set(new BookingState(randomPickups))
+  const ctx = setBookingContext(new BookingState(randomPickups))
 
   // NOTE: Temoporary for testing
   if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {

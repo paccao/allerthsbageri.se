@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Button } from '$components/ui/button'
 
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
   import type { Product } from './booking-form.svelte'
   import { inputClasses } from '$components/ui/input/input.svelte'
   import { cn } from '$lib/utils'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 
   const sizes = {
     md: {

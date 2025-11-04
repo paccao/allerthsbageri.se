@@ -86,12 +86,12 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import { bookingContext } from './context'
+  import { setBookingContext } from './context'
   import BookingFooter from './booking-footer.svelte'
   import Products from './products.svelte'
   import Order from './order.svelte'
 
-  const ctx = bookingContext.set(new BookingState(randomPickups))
+  const ctx = setBookingContext(new BookingState(randomPickups))
 
   // NOTE: Temoporary for testing
   if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {
@@ -130,20 +130,20 @@ IDEA: Maybe we could simplify the state management with the steps
   We could also show a button to go back to the start page and order from other pickup occasions.
 -->
 
-<section class="w-full grid justify-items-center">
+<section class="grid w-full justify-items-center">
   <header class="w-full border-t">
-    <div class="relative p-4 bg-background">
-      <h2 class="text-center text-balance font-semibold text-xl px-4">
+    <div class="relative bg-background p-4">
+      <h2 class="px-4 text-center text-xl font-semibold text-balance">
         {ctx.step.title}
       </h2>
 
       <div
-        class="absolute top-full bg-gradient-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
+        class="pointer-events-none absolute top-full right-0 left-0 h-8 w-full bg-linear-to-t from-transparent to-black/5"
       ></div>
     </div>
   </header>
 
-  <div class="pb-26 pt-8 w-full">
+  <div class="w-full pt-8 pb-26">
     {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
@@ -152,7 +152,7 @@ IDEA: Maybe we could simplify the state management with the steps
       <a
         href="/"
         class={cn([
-          'flex items-center gap-2 mt-8 place-self-center',
+          'mt-8 flex items-center gap-2 place-self-center',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}>Till startsidan</a
       >

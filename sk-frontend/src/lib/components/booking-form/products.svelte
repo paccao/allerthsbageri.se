@@ -2,7 +2,7 @@
   import { Button } from '$components/ui/button'
   import * as Card from '$components/ui/card'
   import { toSEKString } from '$lib/currency'
-  import { bookingContext } from './context'
+  import { getBookingContext } from './context'
   import ProductCount from './product-count.svelte'
   import { draw } from 'svelte/transition'
   import ConfirmDialog from './confirm-dialog.svelte'
@@ -13,7 +13,7 @@
     weekdayShort,
   } from '$lib/datetime'
 
-  const ctx = bookingContext.get()
+  const ctx = getBookingContext()
 </script>
 
 <!--
@@ -27,7 +27,7 @@ IDEA: Show a table of contents at the top with anchor links to every pickup occa
 Or rather than anchor links, clicking the links scrolls the page using JS since we use the URL hash for stepper navigation.
 -->
 
-<div class="grid gap-8 w-full">
+<div class="grid w-full gap-8">
   {#each ctx.pickupOccasions as pickup (pickup.id)}
     {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
     {@const ariaLabel = `Välj upphämtningstillfälle ${dateTimeFormatter.formatRange(
@@ -35,20 +35,20 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
       pickup.endTime,
     )}`}
     <div class="grid w-full">
-      <div class="w-full sticky top-0 z-50 bg-background border-y">
+      <div class="sticky top-0 z-50 w-full border-y bg-background">
         <label class="sr-only" for="pickup-{pickup.id}">{ariaLabel}</label>
         <button
           id="pickup-{pickup.id}"
           onclick={() => ctx.selectPickupOccasion(pickup.id)}
-          class="group w-full cursor-pointer py-2 px-4 flex xs:justify-center justify-between items-center relative"
+          class="group relative flex w-full cursor-pointer items-center justify-between px-4 py-2 xs:justify-center"
           aria-checked={isSelected}
           role="checkbox"
         >
           <div
-            class="grid xs:grid-cols-[minmax(70px,max-content)_1fr] text-sm sm:text-base xs:border-r border-black xs:pr-6 sm:pr-8 xs:mr-6 sm:mr-8"
+            class="grid border-black text-sm xs:mr-6 xs:grid-cols-[minmax(70px,max-content)_1fr] xs:border-r xs:pr-6 sm:mr-8 sm:pr-8 sm:text-base"
           >
             <span
-              class="text-base xs:text-2xl font-bold xs:row-span-2 grid-cols-[max-content_max-content] xs:grid-cols-1 content-center grid place-items-center xs:pr-6 sm:pr-8 xs:border-r border-black xs:mr-6 sm:mr-8"
+              class="grid grid-cols-[max-content_max-content] place-items-center content-center border-black text-base font-bold xs:row-span-2 xs:mr-6 xs:grid-cols-1 xs:border-r xs:pr-6 xs:text-2xl sm:mr-8 sm:pr-8"
             >
               <span
                 >{weekdayShort.format(pickup.startTime)}<span class="xs:hidden"
@@ -58,21 +58,21 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
               <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
             </span>
             <h2 class="flex items-center">
-              <span class="i-[lucide--clock] size-4 mr-2"></span>
+              <span class="mr-2 i-[lucide--clock] size-4"></span>
               <span class="pr-1">Upphämtning:</span>
               <span>
                 {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
               >
             </h2>
             <p class="flex items-center">
-              <span class="i-[lucide--map-pin] size-4 mr-2"></span>
+              <span class="mr-2 i-[lucide--map-pin] size-4"></span>
               <span>Plats: {pickup.location}</span>
             </p>
           </div>
 
           <div
             class={[
-              'rounded-full size-8 p-2 flex border border-black/25',
+              'flex size-8 rounded-full border border-black/25 p-2',
               isSelected ? 'bg-green' : 'bg-white text-muted-foreground',
             ]}
             aria-label={isSelected ? 'Vald' : ''}
@@ -80,10 +80,10 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
             {#key isSelected}
               <svg
                 class={[
-                  'w-full h-full',
+                  'h-full w-full',
                   isSelected
                     ? 'visible'
-                    : 'invisible group-hover:visible group-focus-within:visible',
+                    : 'invisible group-focus-within:visible group-hover:visible',
                 ]}
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
@@ -105,21 +105,21 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
           </div>
 
           <div
-            class="absolute top-full bg-gradient-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
+            class="pointer-events-none absolute top-full right-0 left-0 h-8 w-full bg-linear-to-t from-transparent to-black/5"
           ></div>
         </button>
       </div>
 
       <div
-        class="products-grid flex flex-wrap justify-center py-2 w-full max-w-(--breakpoint-2xl) mx-auto"
+        class="products-grid mx-auto flex w-full max-w-(--breakpoint-2xl) flex-wrap justify-center py-2"
       >
         <!-- IDEA: Allow opening a modal to see product details like ingredients -->
         {#each pickup.products as { id, name, description, price } (id)}
           <Card.Root class="product">
             <Card.Header>
-              <Card.Title class="font-bold text-lg">{name}</Card.Title>
+              <Card.Title class="text-lg font-bold">{name}</Card.Title>
             </Card.Header>
-            <Card.Content class="grow grid grid-rows-[1fr_min-content] gap-2">
+            <Card.Content class="grid grow grid-rows-[1fr_min-content] gap-2">
               <Card.Description class="text-black/85"
                 >{description}</Card.Description
               >
@@ -144,7 +144,7 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
       </div>
 
       <div
-        class="mt-8 mb-4 flex justify-center text-black/25 gap-4 items-center max-w-full"
+        class="mt-8 mb-4 flex max-w-full items-center justify-center gap-4 text-black/25"
         aria-hidden="true"
       >
         <span class="i-[game-icons--wheat] size-3"></span>
