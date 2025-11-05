@@ -1,0 +1,109 @@
+import { db } from '#db/index.ts'
+import {
+  pickupOccasionTable,
+  productDetailsTable,
+  productTable,
+} from '#db/schema.ts'
+import { eq, TransactionRollbackError } from 'drizzle-orm'
+import { type CreateProductBody } from './product.schemas.ts'
+
+export async function getProductById(id: number) {
+  const results = await db
+    .select()
+    .from(productTable)
+    .where(eq(productTable.id, id))
+
+  return results[0]
+}
+
+export async function listProducts() {
+  return await db.select().from(productTable)
+}
+
+export function createProduct({ ...data }: CreateProductBody) {
+  return db.transaction((tx) => {
+    try {
+      const [productDetail] = tx
+        .select()
+        .from(productDetailsTable)
+        .where(eq(productDetailsTable.id, data.productDetailsId))
+        .all()
+
+      if (!productDetail?.id) {
+        tx.rollback()
+      }
+
+      const [pickupOccasion] = tx
+        .select()
+        .from(pickupOccasionTable)
+        .where(eq(pickupOccasionTable.id, data.pickupOccasionId))
+        .all()
+
+      if (!pickupOccasion?.id) {
+        tx.rollback()
+      }
+
+      const results = tx
+        .insert(productTable)
+        .values({ ...data })
+        .returning()
+        .all()
+
+      return results[0]!
+    } catch (error) {
+      if (error instanceof TransactionRollbackError) {
+        return null
+      } else {
+        throw new Error('Unexpected error')
+      }
+    }
+  })
+}
+
+export function updateProduct(
+  id: number,
+  data: Partial<typeof productTable.$inferInsert>,
+) {
+  return db.transaction((tx) => {
+    try {
+      if (data.productDetailsId) {
+        const [productDetail] = tx
+          .select()
+          .from(productDetailsTable)
+          .where(eq(productDetailsTable.id, data.productDetailsId))
+          .all()
+
+        if (!productDetail?.id) {
+          tx.rollback()
+        }
+      }
+
+      if (data.pickupOccasionId) {
+        const [pickupOccasion] = tx
+          .select()
+          .from(pickupOccasionTable)
+          .where(eq(pickupOccasionTable.id, data.pickupOccasionId))
+          .all()
+
+        if (!pickupOccasion?.id) {
+          tx.rollback()
+        }
+      }
+
+      const results = tx
+        .update(productTable)
+        .set(data)
+        .where(eq(productTable.id, id))
+        .returning()
+        .all()
+
+      return results[0]!
+    } catch (error) {
+      if (error instanceof TransactionRollbackError) {
+        return null
+      } else {
+        throw new Error('Unexpected error')
+      }
+    }
+  })
+}

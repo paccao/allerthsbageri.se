@@ -63,7 +63,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
     id: 1,
     stock: 5,
-    price: 4000n,
+    price: 4000,
     maxPerCustomer: 2,
     pickupOccasionId: 1,
     productDetailsId: 1,
@@ -71,7 +71,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
     id: 2,
     stock: 15,
-    price: 6800n,
+    price: 6800,
     maxPerCustomer: 1,
     pickupOccasionId: 1,
     productDetailsId: 2,
@@ -79,7 +79,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
     id: 3,
     stock: 10,
-    price: 5800n,
+    price: 5800,
     maxPerCustomer: 2,
     pickupOccasionId: 2,
     productDetailsId: 1,
@@ -87,7 +87,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
     id: 4,
     stock: 3,
-    price: 7000n,
+    price: 7000,
     maxPerCustomer: 1,
     pickupOccasionId: 2,
     productDetailsId: 2,
@@ -95,7 +95,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
     id: 5,
     stock: 22,
-    price: 8900n,
+    price: 8900,
     maxPerCustomer: 2,
     pickupOccasionId: 2,
     productDetailsId: 3,

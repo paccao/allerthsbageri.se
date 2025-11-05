@@ -1,5 +1,5 @@
 import { type InferSelectModel } from 'drizzle-orm'
-import { sqliteTable, int, text, numeric } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, int, text } from 'drizzle-orm/sqlite-core'
 
 const ISO_DATE_LENGTH = 30
 const dateField = () => text({ length: ISO_DATE_LENGTH })
@@ -46,8 +46,7 @@ export const productDetailsTable = sqliteTable('product_details', {
 export const productTable = sqliteTable('product', {
   id: int().primaryKey({ autoIncrement: true }),
   stock: int().notNull(),
-  /** Store as BigInt where a value of 100n means 100 ören = 1 SEK */
-  price: numeric({ mode: 'bigint' }).notNull(),
+  price: int().notNull(),
   // TODO: Limit how many products of a certain kind that a customer should be allowed to order for the same pickupOccasion
   // For example, it's better to allow
   // NOTE: important to limit by customer and pickup occasion, rather than by order and pickup occasion.
@@ -99,8 +98,7 @@ export const orderTable = sqliteTable('customer_order', {
 export const orderItemTable = sqliteTable('order_item', {
   id: int().primaryKey({ autoIncrement: true }),
   count: int().notNull(),
-  /** Store as BigInt where a value of 100n means 100 ören = 1 SEK */
-  price: numeric({ mode: 'bigint' }).notNull(),
+  price: int().notNull(),
   productId: int()
     .notNull()
     .references(() => productTable.id),

@@ -14,7 +14,7 @@ import breadMarketPlace from '$assets/brod-i-lada.jpeg'
 import fika from '$assets/fika.jpg'
 import kakaobrod from '$assets/kakaobrod.jpg'
 import kladdkakekakor from '$assets/kladdkakekakor.jpg'
-import fifthHantverksbrod from '$assets/hantverksbrod5.jpeg'
+import sourdoughBowlForBakingCourse from '$assets/bunke-surdegsbakning-kurs.jpeg'
 import sixthHantverksbrod from '$assets/hantverksbrod6.jpg'
 import herbBowl from '$assets/herb-bowl-portrait2.jpg'
 import mariaBlender from '$assets/maria-blender.jpg'
@@ -25,7 +25,7 @@ import breadPrenumeration from '$assets/brod-prenumeration.jpeg'
 import breadMarket from '$assets/brod-marknad.jpeg'
 import leaderSjuharad from '$assets/leader-sjuharad.png'
 
-const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
+const bakingCourseDate = new Date('2025-11-23').toLocaleString('sv-SE', {
   dateStyle: 'full',
 })
 ---
@@ -91,9 +91,9 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
         <div class="mx-auto max-w-sm text-balance text-center" id="intro">
           <p class="font-display text-3xl font-bold">Hantverksbröd</p>
           <p class="pt-4">
-            Jag bakar med färskmalen ekologisk kultursäd - exempelvis emmer
-            eller purpurvete. Emmer började odlas för 8000 år sedan och är en
-            korsning mellan enkorn och vildgräs.
+            Jag bakar med färskmalen kultursäd - exempelvis emmer eller
+            purpurvete. Emmer började odlas för 8000 år sedan och är en korsning
+            mellan enkorn och vildgräs.
           </p>
         </div>
         <Divider class="my-8" />
@@ -339,14 +339,14 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
                 21 september 2025
               </p>
               <p class="my-2">
-                <span class="font-bold">Kostnad: </span>222 kr
+                <span class="font-bold">Kostnad: </span>220 kr
               </p>
               <p class="my-2">
                 <span class="font-bold">Var: </span>Grovare Spången 101, utanför
                 Hökerum
               </p>
 
-              <p class="my-4">Kommande meditiationer: 19/10, 16/11</p>
+              <p class="my-4">Kommande meditiationer: 19/10, 2/11, 16/11</p>
 
               <p class="text-center font-bold">
                 Välkommen med din anmälan till:
@@ -396,7 +396,7 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
               <p class="my-2">
                 <span class="font-bold">När:</span>
                 <!-- <span class="capitalize">{bakingCourseDate}</span> kl 10.00 - ca 14.00 eller tills vi känner oss klara. -->
-                12:e Oktober 2025
+                <span class="capitalize">{bakingCourseDate}</span>
               </p>
               <p class="my-2">
                 <span class="font-bold">Kursavgift: </span>1200 kr, betalas via
@@ -415,8 +415,8 @@ const bakingCourseDate = new Date('2025-07-13').toLocaleString('sv-SE', {
 
             <div class="mt-8 flex justify-center">
               <Image
-                class="h-auto w-full rounded-md object-cover shadow-md"
-                src={fifthHantverksbrod}
+                class="h-auto w-2/3 rounded-md object-cover shadow-md"
+                src={sourdoughBowlForBakingCourse}
                 alt="Kulturbröd uppställt för försäljning"
               />
             </div>
