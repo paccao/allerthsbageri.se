@@ -100,7 +100,6 @@
   }
 
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
-  const url = new URL(window.location.href)
 </script>
 
 <!--
@@ -112,10 +111,7 @@ IDEA: Maybe we could simplify the state management with the steps
 <svelte:window
   onhashchange={ctx.isLastStep
     ? null
-    : ({ newURL }) => {
-        url.href = newURL
-        ctx.setStepIdFromHash(url.hash)
-      }}
+    : ({ newURL }) => ctx.setStepIdFromHash(new URL(newURL).hash)}
 />
 
 <!-- TODO: Step 2: show customer form -->

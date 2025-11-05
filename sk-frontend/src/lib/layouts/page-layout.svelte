@@ -12,7 +12,7 @@
   }
 
   let {
-    class: className = '',
+    class: className,
     header = true,
     footer = true,
     children,

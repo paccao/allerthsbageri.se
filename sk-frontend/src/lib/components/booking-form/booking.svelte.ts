@@ -3,6 +3,9 @@ import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './booking-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
 import { weekdayAndDate } from '$lib/datetime'
+import { browser } from '$app/environment'
+import { replaceState } from '$app/navigation'
+import { tick } from 'svelte'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -45,11 +48,10 @@ function getConfirmDialogTexts(next: PickupOccasion) {
 }
 
 function clearHash() {
-  history.replaceState(
-    '',
-    document.title,
-    window.location.pathname + window.location.search,
-  )
+  // Ensure SvelteKit router is initialized.
+  tick().then(() => {
+    replaceState(window.location.pathname + window.location.search, {})
+  })
 }
 
 export class BookingState {
@@ -116,7 +118,7 @@ export class BookingState {
       {} as Record<StepId, boolean>,
     ),
   )
-  stepId = $state(this.getStepIdFromHash(window.location.hash))
+  stepId = $state(this.getStepIdFromHash(browser ? window.location.hash : ''))
   step = $derived(steps[this.stepId])
   stepIndex = $derived(orderedSteps.findIndex(({ id }) => id === this.stepId))
   prevStepId = $derived(orderedSteps[this.stepIndex - 1]?.id)
@@ -137,7 +139,7 @@ export class BookingState {
       return id
     }
     // Don't show a hash for the default stepId
-    clearHash()
+    if (browser) clearHash()
     return defaultStepId
   }
 

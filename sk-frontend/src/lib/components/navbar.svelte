@@ -1,5 +1,5 @@
 <script lang="ts">
-  import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg'
+  import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg?enhanced'
   import { SITE_NAME } from '$lib/constants'
   import { cn } from '$lib/utils'
   import { buttonVariants } from '$components/ui/button'
