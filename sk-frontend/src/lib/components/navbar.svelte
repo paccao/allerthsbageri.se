@@ -4,8 +4,6 @@
   import { cn } from '$lib/utils'
   import { buttonVariants } from '$components/ui/button'
   import { page } from '$app/state'
-
-  page.url.pathname
 </script>
 
 <nav class="flex items-center justify-between px-4 py-2 shadow-sm">
@@ -23,7 +21,7 @@
   </a>
 
   <ul class="flex items-center gap-4">
-    {#if page.url.pathname !== '/bokning/'}
+    {#if page.route.id !== '/bokning'}
       <li>
         <a
           href="/bokning"
