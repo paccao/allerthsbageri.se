@@ -11,7 +11,7 @@
       <ul class="mb-4 list-none gap-y-2">
         <li>
           <a
-            href="#"
+            href="/#"
             class="text-green-500 underline-offset-2 hover:underline focus:underline"
             >Upp till toppen</a
           >
