@@ -1,10 +1,11 @@
 <script lang="ts" module>
   import { parse } from '$lib/base64'
+  import { PUBLIC_PASSWORD, PUBLIC_PAYLOAD } from '$env/static/public'
 
   let decrypted: Promise<string> | undefined = undefined
 
-  const pl = import.meta.env.PUBLIC_PAYLOAD
-  const pwd = import.meta.env.PUBLIC_PASSWORD
+  const pl = PUBLIC_PAYLOAD
+  const pwd = PUBLIC_PASSWORD
 
   if (!pl || !pwd) throw new Error('EncryptedEmail.svelte: Missing data')
 
