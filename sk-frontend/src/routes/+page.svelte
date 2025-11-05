@@ -2,7 +2,7 @@
   import Layout from '$layouts/page-layout.svelte'
 
   import EncryptedEmail from '$components/encrypted-email.svelte'
-  import { SITE_NAME } from '$lib/constants'
+  import { SITE_NAME, instagramProfileLink } from '$lib/constants'
   import Divider from '$components/divider.svelte'
   import { cn } from '$lib/utils'
   import { buttonVariants } from '$components/ui/button'
@@ -28,7 +28,6 @@
   const bakingCourseDate = new Date('2025-11-23').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
-  const instagramProfileLink = 'https://www.instagram.com/allerthsbageri'
 </script>
 
 <Layout class="max-w-3xl xs:px-4" header={false}>
