@@ -231,7 +231,7 @@
                 alt="Surdegsbröd med kakao som dekoration för halloween."
               />
               <enhanced:img
-                class="aspect-square h-auto w-full rounded-md object-cover shadow-md"
+                class="aspect-square h-full w-full rounded-md object-cover shadow-md"
                 src={kladdkakekakor}
                 alt="Kakor gjorda på kladdkaka"
               />
