@@ -3,6 +3,6 @@
   import BookingForm from '$components/booking-form/booking-form.svelte'
 </script>
 
-<Layout footer={false}>
+<Layout header>
   <BookingForm />
 </Layout>

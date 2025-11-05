@@ -13,8 +13,8 @@
 
   let {
     class: className,
-    header = true,
-    footer = true,
+    header = false,
+    footer = false,
     children,
   }: Props = $props()
 </script>

@@ -30,7 +30,7 @@
   })
 </script>
 
-<Layout class="max-w-3xl xs:px-4" header={false}>
+<Layout class="max-w-3xl xs:px-4" footer>
   <header class="py-8 text-center">
     {#if import.meta.env.DEV}
       <div class="grid w-full grid-cols-[1fr_3fr_1fr] place-items-center gap-4">
