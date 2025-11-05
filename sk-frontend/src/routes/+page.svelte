@@ -350,11 +350,12 @@
                   21 september 2025
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Kostnad: </span>220 kr
+                  <span class="font-bold">Kostnad:</span>
+                  220 kr
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Var: </span>Grovare Spången 101,
-                  utanför Hökerum
+                  <span class="font-bold">Var: </span>
+                  Grovare Spången 101, utanför Hökerum
                 </p>
 
                 <p class="my-4">Kommande meditiationer: 19/10, 2/11, 16/11</p>
