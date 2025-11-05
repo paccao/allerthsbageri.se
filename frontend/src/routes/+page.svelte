@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Layout from '$layouts/page-layout.svelte'
+  import Layout from '$layouts/main-layout.svelte'
 
   import EncryptedEmail from '$components/encrypted-email.svelte'
   import { SITE_NAME, instagramProfileLink } from '$lib/constants'
