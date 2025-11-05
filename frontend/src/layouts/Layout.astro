@@ -37,7 +37,7 @@ let { class: className = '', header = true, footer = true } = Astro.props
 
     <title>{SITE_NAME}</title>
   </head>
-  <body class="!font-serif bg-background text-foreground">
+  <body class="font-serif! bg-background text-foreground">
     {header && <Navbar />}
 
     <main class={cn('mx-auto w-full', className)}>

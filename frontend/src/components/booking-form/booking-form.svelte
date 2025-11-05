@@ -138,7 +138,7 @@ IDEA: Maybe we could simplify the state management with the steps
       </h2>
 
       <div
-        class="absolute top-full bg-gradient-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
+        class="absolute top-full bg-linear-to-t from-transparent to-black/5 h-8 w-full left-0 right-0 pointer-events-none"
       ></div>
     </div>
   </header>
