@@ -1,9 +1,9 @@
 <script lang="ts">
   import Layout from '$layouts/page-layout.svelte'
 
-  import EncryptedEmail from '$components/EncryptedEmail.svelte'
+  import EncryptedEmail from '$components/encrypted-email.svelte'
   import { SITE_NAME } from '$lib/constants'
-  import Divider from '$components/Divider.svelte'
+  import Divider from '$components/divider.svelte'
   import { cn } from '$lib/utils'
   import { buttonVariants } from '$components/ui/button'
 
