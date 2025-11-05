@@ -209,7 +209,7 @@
                 <p class="mt-4 px-4 text-center">
                   Du har nu möjlighet att starta en brödprenumeration: 2 till
                   10/15 bröd per månad eller varannan månad så du är säker på
-                  att alltid ha tillgång till bra hantverksbröd.
+                  att alltid ha tillgång till goda hantverksbröd.
                 </p>
               </div>
             </article>
