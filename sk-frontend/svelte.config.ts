@@ -15,6 +15,8 @@ const config: Config = {
       '$components/*': './src/lib/components/*',
       $assets: './src/lib/assets',
       '$assets/*': './src/lib/assets/*',
+      $layouts: './src/lib/layouts',
+      '$layouts/*': './src/lib/layouts/*',
     },
   },
 }
