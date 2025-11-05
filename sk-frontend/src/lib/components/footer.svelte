@@ -5,7 +5,7 @@
 </script>
 
 <footer class="mt-8 border-t border-stone-400 px-4 py-8">
-  <div class="mx-auto flex max-w-screen-lg flex-wrap justify-between">
+  <div class="mx-auto flex max-w-5xl flex-wrap justify-between">
     <div class="mb-8 w-full text-center sm:mb-0 sm:w-1/2 md:w-1/4 lg:w-1/5">
       <h3 class="mb-4 text-lg font-bold">Sidolänkar</h3>
       <ul class="mb-4 list-none gap-y-2">
@@ -62,7 +62,7 @@
       <EncryptedEmail />
     </div>
   </div>
-  <div class="mx-auto mt-8 max-w-screen-lg pt-4 text-center">
+  <div class="mx-auto mt-8 max-w-5xl pt-4 text-center">
     <p>
       © <span id="year">{new Date().getFullYear().toString()}</span>
       {SITE_NAME}
