@@ -226,12 +226,12 @@
 
             <div class="mt-8 flex justify-center">
               <enhanced:img
-                class="h-auto w-full rounded-md object-cover shadow-md"
+                class="h-auto w-full rounded-l-md object-cover shadow-md"
                 src={kakaobrod}
                 alt="Surdegsbröd med kakao som dekoration för halloween."
               />
               <enhanced:img
-                class="aspect-square h-full w-full rounded-md object-cover shadow-md"
+                class="aspect-square h-full w-full rounded-r-md object-cover shadow-md"
                 src={kladdkakekakor}
                 alt="Kakor gjorda på kladdkaka"
               />
