@@ -46,6 +46,7 @@
             alt="Profilbild för Allerths Bageri"
             class="aspect-square size-20 rounded-full object-cover shadow-md"
             loading="eager"
+            fetchpriority="high"
           />
           <h1
             class="inline-flex pt-2 font-display text-2xl font-bold 2xs:text-3xl xs:text-4xl sm:text-5xl md:text-6xl"
@@ -71,6 +72,7 @@
             alt="Profilbild för Allerths Bageri"
             class="aspect-square size-20 rounded-full object-cover shadow-md"
             loading="eager"
+            fetchpriority="high"
           />
           <h1
             class="inline-flex pt-2 font-display text-4xl font-bold sm:text-6xl"
@@ -87,6 +89,7 @@
     src={breadMarketPlace}
     alt="Surdegsbröd från Allerths Bageri"
     loading="eager"
+    fetchpriority="high"
   />
   <section class="relative">
     <section id="main-content">
