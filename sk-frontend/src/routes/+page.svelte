@@ -425,13 +425,11 @@
                 <p class="my-2 text-center text-lg">Välkommen!</p>
               </div>
 
-              <div class="mt-8 flex justify-center">
-                <enhanced:img
-                  class="h-auto w-2/3 rounded-md object-cover shadow-md"
-                  src={sourdoughBowlForBakingCourse}
-                  alt="Kulturbröd uppställt för försäljning"
-                />
-              </div>
+              <enhanced:img
+                class="mx-auto mt-8 h-auto w-2/3 rounded-md object-cover shadow-md"
+                src={sourdoughBowlForBakingCourse}
+                alt="Kulturbröd uppställt för försäljning"
+              />
             </section>
 
             <Divider />
