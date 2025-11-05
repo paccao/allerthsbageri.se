@@ -449,12 +449,12 @@
               <div class="my-4">
                 <div class="flex justify-center">
                   <enhanced:img
-                    class="w-1/2 max-w-[250px] items-center rounded-l-md object-cover shadow-md"
+                    class="max-w-[250px] rounded-l-md object-cover shadow-md"
                     src={mariaBlender}
                     alt="Maria mixar ört-smoothie."
                   />
                   <enhanced:img
-                    class="w-1/2 max-w-[250px] items-center rounded-r-md object-cover shadow-md"
+                    class="max-w-[250px] rounded-r-md object-cover shadow-md"
                     src={vitsippor}
                     alt="Vandring bland vitsippor."
                   />
