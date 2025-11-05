@@ -28,6 +28,7 @@
   const bakingCourseDate = new Date('2025-11-23').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
+  const instagramProfileLink = 'https://www.instagram.com/allerthsbageri'
 </script>
 
 <Layout class="max-w-3xl xs:px-4" header={false}>
@@ -127,7 +128,7 @@
                   class="mr-2 inline-block h-8 w-8 rounded-full object-cover shadow-md"
                 />
                 <a
-                  href="https://www.instagram.com/allerthsbageri/"
+                  href={instagramProfileLink}
                   class="inline-block font-medium underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
                 >
                   @allerthsbageri
@@ -281,7 +282,7 @@
                 <li>
                   Torsdagar från kl 09.00 finns färskt surdegsbröd vid Tolkabro
                   handel. Kolla instagram för eventuella ändringar <a
-                    href="https://www.instagram.com/allerthsbageri/"
+                    href={instagramProfileLink}
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
@@ -333,7 +334,7 @@
                 <p class="my-2 max-w-screen-sm">
                   Vid alltför dåligt väder är vi inomhus. Efteråt fikar vi
                   tillsammans surdegsmacka från <a
-                    href="https://www.instagram.com/allerthsbageri/"
+                    href={instagramProfileLink}
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
@@ -504,7 +505,7 @@
                 <li>
                   Vissa lördagar säljer jag mitt hantverksbröd direkt vid
                   bageriet, för exakt info om försäljningen följ på instagram <a
-                    href="https://www.instagram.com/allerthsbageri/"
+                    href={instagramProfileLink}
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
