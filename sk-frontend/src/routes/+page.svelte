@@ -324,7 +324,6 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  <!-- <span class="capitalize">{bakingCourseDate}</span> blir det kurs -->
                   Den 21/9 blir det återigen saxofonmeditation i skogen, fast denna
                   gång närmare sjö än skog.
                 </p>
@@ -347,7 +346,6 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  <!-- <span class="capitalize">{bakingCourseDate}</span> kl 10.00 - ca 14.00 eller tills vi känner oss klara. -->
                   21 september 2025
                 </p>
                 <p class="my-2">
@@ -379,7 +377,6 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  <!-- <span class="capitalize">{bakingCourseDate}</span> blir det kurs -->
                   I oktober blir det nya kurser i hur du bakar surdegsbröd på enbart
                   ekologiskt och kravmärkt mjöl. Vi lär oss mata surdegen, forma
                   och snitta bröd. Sätta en ny deg som du kan grädda hemma nästa
@@ -409,7 +406,6 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  <!-- <span class="capitalize">{bakingCourseDate}</span> kl 10.00 - ca 14.00 eller tills vi känner oss klara. -->
                   <span class="capitalize">{bakingCourseDate}</span>
                 </p>
                 <p class="my-2">
