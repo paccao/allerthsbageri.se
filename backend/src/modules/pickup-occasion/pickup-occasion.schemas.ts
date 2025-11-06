@@ -2,11 +2,11 @@ import { pickupOccasionTable } from '#db/schema.ts'
 import { createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
-export const getPickupSchema = createSelectSchema(pickupOccasionTable)
-export const listPickupSchema = z.array(getPickupSchema)
-export type GetPickup = z.infer<typeof getPickupSchema>
+export const getPickupOccasionSchema = createSelectSchema(pickupOccasionTable)
+export const listPickupOccasionsSchema = z.array(getPickupOccasionSchema)
+export type GetPickupOccasion = z.infer<typeof getPickupOccasionSchema>
 
-export const updatePickupBodySchema = z
+export const updatePickupOccasionBodySchema = z
   .object({
     name: z.string().max(200).optional(),
     location: z.string().max(150).optional(),
@@ -49,9 +49,11 @@ export const updatePickupBodySchema = z
     }
   })
 
-export type UpdatePickupBody = z.infer<typeof updatePickupBodySchema>
+export type UpdatePickupOccasionBody = z.infer<
+  typeof updatePickupOccasionBodySchema
+>
 
-export const createPickupBodySchema = z
+export const createPickupOccasionBodySchema = z
   .object({
     name: z.string().max(200),
     location: z.string().max(150),
@@ -76,4 +78,6 @@ export const createPickupBodySchema = z
     }
   })
 
-export type CreatePickupBody = z.infer<typeof createPickupBodySchema>
+export type CreatePickupOccasionBody = z.infer<
+  typeof createPickupOccasionBodySchema
+>
