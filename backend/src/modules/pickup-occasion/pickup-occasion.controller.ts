@@ -1,37 +1,36 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { CreatePickupBody } from './pickup.schemas.ts'
+import type { CreatePickupOccasionBody } from './pickup-occasion.schemas.ts'
 import {
-  listPickups,
-  createPickup,
-  updatePickup,
-  deletePickup,
-} from './pickup.service.ts'
+  listPickupOccasions,
+  createPickupOccasion,
+  updatePickupOccasion,
+} from './pickup-occasion.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
-import type { UpdatePickupBody } from './pickup.schemas.ts'
+import type { UpdatePickupOccasionBody } from './pickup-occasion.schemas.ts'
 
-export async function listPickupsHandler(
+export async function listPickupOccasionsHandler(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
   try {
-    const pickups = await listPickups()
+    const pickups = await listPickupOccasions()
 
     return pickups
   } catch (error: any) {
     request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to list pickups' })
+    return reply.code(500).send({ message: 'Failed to list pickup occasions' })
   }
 }
 
-export async function createPickupHandler(
-  request: FastifyRequest<{ Body: CreatePickupBody }>,
+export async function createPickupOccasionHandler(
+  request: FastifyRequest<{ Body: CreatePickupOccasionBody }>,
   reply: FastifyReply,
 ) {
   const { name, location, bookingStart, bookingEnd, pickupStart, pickupEnd } =
     request.body
 
   try {
-    const pickup = await createPickup({
+    const pickup = await createPickupOccasion({
       name,
       location,
       bookingStart,
@@ -42,14 +41,14 @@ export async function createPickupHandler(
     return reply.code(201).send(pickup)
   } catch (error: any) {
     request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to create pickup' })
+    return reply.code(500).send({ message: 'Failed to create pickup occasion' })
   }
 }
 
 export async function updatePickupHandler(
   request: FastifyRequest<{
     Params: IdParams
-    Body: UpdatePickupBody
+    Body: UpdatePickupOccasionBody
   }>,
   reply: FastifyReply,
 ) {
@@ -57,7 +56,7 @@ export async function updatePickupHandler(
     request.body
 
   try {
-    const pickup = await updatePickup(request.params.id, {
+    const pickup = await updatePickupOccasion(request.params.id, {
       name,
       location,
       bookingStart: bookingStart?.toISOString(),
@@ -67,27 +66,12 @@ export async function updatePickupHandler(
     })
 
     if (!pickup) {
-      return reply.code(404).send({ message: 'Pickup does not exist' })
+      return reply.code(404).send({ message: 'Pickup occasion does not exist' })
     }
 
     return pickup
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to update pickup occasion' })
-  }
-}
-
-export async function deletePickupHandler(
-  request: FastifyRequest<{
-    Params: IdParams
-  }>,
-  reply: FastifyReply,
-) {
-  try {
-    await deletePickup(request.params.id)
-    return reply.code(204).send()
-  } catch (error: any) {
-    request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to delete pickup' })
   }
 }

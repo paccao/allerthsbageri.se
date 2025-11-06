@@ -2,11 +2,11 @@ import { db } from '#db/index.ts'
 import { pickupOccasionTable } from '#db/schema.ts'
 import { eq } from 'drizzle-orm'
 
-export async function listPickups() {
+export async function listPickupOccasions() {
   return db.select().from(pickupOccasionTable)
 }
 
-export async function createPickup({
+export async function createPickupOccasion({
   bookingStart,
   bookingEnd,
   pickupStart,
@@ -32,7 +32,7 @@ export async function createPickup({
   return results[0]!
 }
 
-export async function updatePickup(
+export async function updatePickupOccasion(
   id: number,
   data: Partial<typeof pickupOccasionTable.$inferInsert>,
 ) {
@@ -43,9 +43,4 @@ export async function updatePickup(
     .returning()
 
   return results[0]
-}
-
-export async function deletePickup(id: number) {
-  // TODO: Implement cascading delete since ProductTable is dependent on pickup occasions
-  await db.delete(pickupOccasionTable).where(eq(pickupOccasionTable.id, id))
 }

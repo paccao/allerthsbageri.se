@@ -9,7 +9,7 @@ import { getTestingUtils } from '#utils/testing-utils.ts'
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
-suite('pickup routes', () => {
+suite('pickup occasion routes', () => {
   const admin4 = {
     username: 'admin4',
     name: 'Admin4',

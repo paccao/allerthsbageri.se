@@ -9,7 +9,7 @@ import {
 import apiConfig from './config/api.ts'
 import { sessionPlugin, authenticationRequiredPlugin } from './utils/auth.ts'
 import { authRoutes } from './modules/auth/auth.routes.ts'
-import { pickupRoutes } from './modules/pickup/pickup.routes.ts'
+import { pickupOccasionRoutes } from './modules/pickup-occasion/pickup-occasion.routes.ts'
 import { customerRoutes } from './modules/customer/customer.routes.ts'
 import { orderRoutes } from './modules/order/order.routes.ts'
 import { productRoutes } from './modules/product/product.routes.ts'
@@ -50,7 +50,7 @@ async function publicContext(app: FastifyInstance) {
  */
 async function authenticatedContext(app: FastifyInstance) {
   app.register(authenticationRequiredPlugin)
-  app.register(pickupRoutes, { prefix: 'api/pickups' })
+  app.register(pickupOccasionRoutes, { prefix: 'api/pickups' })
   app.register(customerRoutes, { prefix: 'api/customers' })
   app.register(orderRoutes, { prefix: 'api/orders' })
   app.register(productRoutes, { prefix: 'api/products' })
