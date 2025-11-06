@@ -47,6 +47,7 @@ suite.only('order status routes', () => {
 
     const goodOrderStatus: CreateOrderStatusBody = {
       status: 'Bokad',
+      isDefault: true,
       color: 'blue',
     }
 
@@ -98,6 +99,7 @@ suite.only('order status routes', () => {
   test('can update order statuses', async (t: TestContext) => {
     const orderStatus: CreateOrderStatusBody = {
       status: 'Bokad',
+      isDefault: true,
       color: 'green',
     }
 

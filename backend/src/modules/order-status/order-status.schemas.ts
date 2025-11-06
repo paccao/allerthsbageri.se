@@ -32,23 +32,25 @@ export type CreateOrderStatusBody = z.infer<typeof createOrderStatusBodySchema>
 
 export const updateOrderStatusBodySchema = createUpdateSchema(orderStatusTable)
   .extend({
-    status: z.union(
-      [
-        z.literal('Bokad'),
-        z.literal('Bekräftad'),
-        z.literal('Upphämtad'),
-        z.literal('Avbokad'),
-      ],
-      {
-        error:
-          'The property status must be capitalized and one of the literals: Bokad, Bekräftad, Upphämtad, Avbokad',
-      },
-    ),
-    isDefault: z.boolean().default(false).nonoptional(),
+    status: z
+      .union(
+        [
+          z.literal('Bokad'),
+          z.literal('Bekräftad'),
+          z.literal('Upphämtad'),
+          z.literal('Avbokad'),
+        ],
+        {
+          error:
+            'The property status must be capitalized and one of the literals: Bokad, Bekräftad, Upphämtad, Avbokad',
+        },
+      )
+      .optional(),
+    isDefault: z.boolean().default(false).optional(),
     color: z.string().max(50).optional().nullable(),
   })
-  .superRefine(({ status, color }, ctx) => {
-    if (Object.keys({ status, color }).some((entry) => !entry)) {
+  .superRefine(({ status, isDefault, color }, ctx) => {
+    if (Object.keys({ status, isDefault, color }).some((entry) => !entry)) {
       ctx.addIssue({
         code: 'custom',
         message:
