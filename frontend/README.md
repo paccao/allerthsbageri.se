@@ -24,7 +24,7 @@ pnpm outdated
 pnpm up
 ```
 
-### `shadcn-svelte` components
+### Updating `shadcn-svelte` components
 
 1. Start by making sure your local git state is clean. Then, update one [shadcn-svelte](https://shadcn-svelte.com) component at a time with this command:
 
@@ -39,14 +39,6 @@ pnpm format
 ```
 
 3. Finally, review the git diffs and manually merge the changes from remote with our local project customisations.
-
-### Astro
-
-Check Astrojs [upgrade guides](https://docs.astro.build/en/upgrade-astro/#upgrade-guides) to upgrade major versions
-
-```sh
-pnpm dlx @astrojs/upgrade
-```
 
 ---
 
