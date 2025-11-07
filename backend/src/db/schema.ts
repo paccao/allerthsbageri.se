@@ -79,8 +79,11 @@ export const orderStatusTable = sqliteTable('order_status', {
 // IDEA: Maybe the order and product concept could be generalized to be reused
 // Or, it might be better to keep two distinct tables since they represent very different things
 // Two separate tables make it easier to change
-export const orderTable = sqliteTable('customer_order', {
-  id: int().primaryKey({ autoIncrement: true }),
+export const orderTable = sqliteTable('order_table', {
+  id: text()
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   createdAt: dateField()
     .notNull()
     .$defaultFn(() => new Date().toISOString()),
