@@ -96,7 +96,7 @@ suite.only('order routes', () => {
   })
 
   test('should return 400 when incorrect orderItems was passed', async (t: TestContext) => {
-    const order = {
+    const incorrectOrder1 = {
       customer: {
         name: 'John Doe',
         phone: '+46703666666',
@@ -115,14 +115,37 @@ suite.only('order routes', () => {
       ],
     }
 
-    const response = await app.inject({
+    let response = await app.inject({
       method: 'POST',
       url: '/api/orders/',
-      body: order,
+      body: incorrectOrder1,
       headers: { cookie },
     })
 
     t.assert.strictEqual(response.statusCode, 400)
+
+    const incorrectOrder2 = {
+      customer: {
+        name: 'John Doe',
+        phone: '+46703666666',
+      },
+      pickupOccasionId: 1,
+      statusId: 1,
+      orderItems: {},
+    }
+
+    response = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: incorrectOrder2,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      response.statusCode,
+      400,
+      'The orderItems should be an array of Orders (count, productId)',
+    )
   })
 
   test('should return 400 when incorrect pickupOccasion was passed', async (t: TestContext) => {
@@ -161,7 +184,7 @@ suite.only('order routes', () => {
         name: 'John Doe',
         phone: '+46703666666',
       },
-      pickupOccasion: 493940394,
+      pickupOccasionId: 493940394,
       statusId: 1,
       orderItems: [
         {
