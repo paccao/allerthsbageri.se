@@ -354,8 +354,10 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
+    const deserialized = response.json()
+
     t.assert.strictEqual(response.statusCode, 201)
-    t.assert.strictEqual(typeof response.json().orderId, 'string') // checks if its a uuid
+    t.assert.strictEqual(deserialized.orderId, 'string') // checks if its a uuid
   })
 
   after(async () => {
