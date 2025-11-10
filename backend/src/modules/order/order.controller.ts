@@ -57,6 +57,7 @@ export async function createOrderHandler(
         // IDEA: If you can only order a smaller amount, should we let the order go through but only order the available amount?
         // In that case we need to show a message and clearly indicate that we changed the order.
         // NOTE: Probably better to error and let the customer see the error client-side and decide if they want to order the remaining products.
+        // This kind of feature only makes sense if customers could update their orders, but we don't want this for now to keep things simple.
         return reply.code(401).send({
           message:
             product.stock > 0
@@ -67,7 +68,10 @@ export async function createOrderHandler(
       }
     }
 
-    // TODO: If products are valid, create the customer
+    // If the execution gets this far, the input is valid and we can create the customer
+    // TODO: Maybe add upsert method for customer to allow reusing the existing customer
+    // Or if we don't want to overwrite the name, we could use getCustomer() and then createCustomer(). However, upsert would be faster and cover more cases.
+    // const createdCustomer = upsertCustomer()
 
     // TODO: If customer and order items are all valid
     // 1) create the order
