@@ -178,7 +178,7 @@ suite.only('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test('should return 404 when specified pickupOccasionId is not found', async (t: TestContext) => {
+  test('should return 401 when specified pickupOccasionId is not found', async (t: TestContext) => {
     const order = {
       customer: {
         name: 'John Doe',
@@ -205,7 +205,7 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 404)
+    t.assert.strictEqual(response.statusCode, 401)
   })
 
   test('should return 400 when incorrect customer was passed', async (t: TestContext) => {
@@ -328,7 +328,39 @@ suite.only('order routes', () => {
       })
       .then((res) => res.json())
 
-    const order: _CreateOrderBody = {
+    const badOrder: _CreateOrderBody = {
+      customer: {
+        name: 'John Doe',
+        phone: '+46703666666',
+      },
+      pickupOccasionId: createdPickupResponse.id + 10,
+      statusId: 1,
+      orderItems: [
+        {
+          count: 2,
+          productId: firstProductResponse.id,
+        },
+        {
+          count: 1,
+          productId: secondProductResponse.id,
+        },
+      ],
+    }
+
+    const badResponse = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse.statusCode,
+      401,
+      'should return 401 when any of the order items productIds are not from the specified pickup occasion',
+    )
+
+    const goodOrder: _CreateOrderBody = {
       customer: {
         name: 'John Doe',
         phone: '+46703666666',
@@ -350,13 +382,13 @@ suite.only('order routes', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/orders/',
-      body: order,
+      body: goodOrder,
       headers: { cookie },
     })
 
     const deserialized = response.json()
 
-    t.assert.strictEqual(response.statusCode, 201)
+    t.assert.strictEqual(badResponse.statusCode, 201)
     t.assert.strictEqual(deserialized.orderId, 'string') // checks if its a uuid
   })
 
