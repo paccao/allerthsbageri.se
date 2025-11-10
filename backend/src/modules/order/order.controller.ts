@@ -42,6 +42,16 @@ export async function createOrderHandler(
         })
       }
 
+      if (
+        product.maxPerCustomer !== null &&
+        item.count > product.maxPerCustomer
+      ) {
+        return reply.code(401).send({
+          message: `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
+          details: { productId: product.id },
+        })
+      }
+
       if (product.stock < item.count) {
         // TODO: Send more detailed information here about which product is missing so we can improve the error on the client
         // IDEA: If you can only order a smaller amount, should we let the order go through but only order the available amount?
@@ -53,16 +63,6 @@ export async function createOrderHandler(
               ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
               : `Unable to order ${item.count} of product is out of stock`,
           details: { productId: product.id, stock: product.stock },
-        })
-      }
-
-      if (
-        product.maxPerCustomer !== null &&
-        item.count > product.maxPerCustomer
-      ) {
-        return reply.code(401).send({
-          message: `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
-          details: { productId: product.id },
         })
       }
     }
