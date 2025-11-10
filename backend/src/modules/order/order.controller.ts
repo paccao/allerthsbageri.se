@@ -22,10 +22,10 @@ export async function createOrderHandler(
         .send({ message: 'Specified pickup occasion not found' })
     }
 
-    const statusRes = await getOrderStatus(statusId)
-    if (!statusRes) {
+    const orderStatus = await getOrderStatus(statusId)
+    if (!orderStatus) {
       return reply
-        .code(404)
+        .code(401)
         .send({ message: 'Specified order status not found' })
     }
 
