@@ -18,7 +18,7 @@ export async function orderRoutes(app: FastifyInstance) {
         body: createOrderBodySchema,
         response: {
           201: orderSchema,
-          ...getErrorResponseSchemas(400, 401, 500),
+          ...getErrorResponseSchemas(400, 401, 404, 500),
         },
         tags,
       },

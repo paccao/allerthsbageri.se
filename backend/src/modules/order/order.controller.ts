@@ -34,7 +34,7 @@ export async function createOrderHandler(
     for (const item of orderItems) {
       const product = await getProductById(item.productId)
       if (!product)
-        return reply.code(401).send({ message: 'Product not found' })
+        return reply.code(404).send({ message: 'Product not found' })
 
       if (product?.pickupOccasionId !== pickupOccasionId) {
         return reply.code(401).send({
@@ -79,6 +79,12 @@ export async function createOrderHandler(
 
     // TODO: respond with the { orderId } of the created order
     return reply.code(201).send({ orderId: 'TODO' })
+    // TODO: Move this early since it's a simple check that affects everything else
+    const pickupRes = await getPickupOccasion(pickupOccasionId)
+    if (!pickupRes)
+      return reply.code(404).send('Specified pickup occasion not found')
+
+    return reply.code(201).send()
   } catch (error: any) {
     request.log.error(error, error?.message)
     return reply.code(500).send({ message: 'Failed to create order' })
