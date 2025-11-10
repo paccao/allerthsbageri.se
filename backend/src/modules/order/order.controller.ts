@@ -15,6 +15,13 @@ export async function createOrderHandler(
   const { customer, pickupOccasionId, orderItems, statusId } = request.body
 
   try {
+    const pickup = await getPickupOccasion(pickupOccasionId)
+    if (!pickup) {
+      return reply
+        .code(401)
+        .send({ message: 'Specified pickup occasion not found' })
+    }
+
     const statusRes = await getOrderStatus(statusId)
     if (!statusRes) {
       return reply
@@ -63,13 +70,6 @@ export async function createOrderHandler(
         })
       }
     }
-
-    // TODO: Move this early since it's a simple check that affects everything else
-    const pickupRes = await getPickupOccasion(pickupOccasionId)
-    if (!pickupRes)
-      return reply
-        .code(404)
-        .send({ message: 'Specified pickup occasion not found' })
 
     // TODO: If products are valid, create the customer
 
