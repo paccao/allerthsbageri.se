@@ -48,14 +48,20 @@ export async function createOrderHandler(
         // TODO: If you can only order a smaller amount, let the order go through but only order the available amount?
         // In that case we need to show a message and clearly indicate that we changed the order. Probably better to error and let the customer decide if they want to order the remaining products.
         return reply.code(401).send({
-          message:
-            'Unable to order {X} of product because only {Y} remains in stock',
-          message2: `Unable to order ${item.count} of product because only ${product.stock} remains in stock`,
+          message: `Unable to order ${item.count} of product because only ${product.stock} remains in stock`,
           details: { productId: product.id, stock: product.stock },
         })
       }
 
-      // TODO: Validate maxPerCustomer for the product
+      if (
+        product.maxPerCustomer !== null &&
+        item.count > product.maxPerCustomer
+      ) {
+        return reply.code(401).send({
+          message: `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
+          details: { productId: product.id },
+        })
+      }
     }
 
     // TODO: Move this early since it's a simple check that affects everything else
