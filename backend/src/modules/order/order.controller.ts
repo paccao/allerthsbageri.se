@@ -2,7 +2,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreateOrderBody } from './order.schemas.ts'
 import { createOrder } from './order.service.ts'
 import { getProductById } from '../product/product.service.ts'
-import { getOrderStatus } from '../order-status/order-status.service.ts'
+import {
+  getOrderStatus,
+  listOrderStatuses,
+} from '../order-status/order-status.service.ts'
 import { getPickupOccasion } from '../pickup-occasion/pickup-occasion.service.ts'
 
 // TODO: Should we let the API decide the statusId, and remove that from the request body?
@@ -12,7 +15,7 @@ export async function createOrderHandler(
   request: FastifyRequest<{ Body: CreateOrderBody }>,
   reply: FastifyReply,
 ) {
-  const { customer, pickupOccasionId, orderItems, statusId } = request.body
+  let { customer, pickupOccasionId, statusId, orderItems } = request.body
 
   try {
     const pickup = await getPickupOccasion(pickupOccasionId)
@@ -20,6 +23,22 @@ export async function createOrderHandler(
       return reply
         .code(401)
         .send({ message: 'Specified pickup occasion not found' })
+    }
+
+    if (!statusId) {
+      const statuses = await listOrderStatuses()
+
+      // Find all default values set in the db
+      const defaultValues = statuses.filter((s) => s.isDefault === true)
+
+      // Make sure we only have 1 default order status and set statusId
+      if (defaultValues.length === 1) {
+        statusId = statuses.find((status) => status.isDefault === true)!.id
+      } else {
+        return reply.code(500).send({
+          message: 'An unexpected amount of default order statuses were found',
+        })
+      }
     }
 
     const orderStatus = await getOrderStatus(statusId)

@@ -1,8 +1,7 @@
-import { orderStatusTable } from '#db/schema.ts'
-import { createInsertSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
 export const orderStatusSchema = z.object({
+  id: z.int().min(1),
   status: z.union(
     [
       z.literal('Bokad'),
@@ -19,3 +18,6 @@ export const orderStatusSchema = z.object({
   color: z.string().max(50).optional().nullable(),
 })
 export type OrderStatusSchema = z.infer<typeof orderStatusSchema>
+
+export const createOrderStatusSchema = orderStatusSchema.omit({ id: true })
+export type CreateOrderStatusSchema = z.infer<typeof createOrderStatusSchema>

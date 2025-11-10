@@ -35,7 +35,7 @@ suite.only('order routes', () => {
     cookie = await createAdminUser(orderAdmin)
   })
 
-  test('should return 404 when the specified statusId is not found', async (t: TestContext) => {
+  test('should return 401 when the specified statusId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
       customer: {
         name: 'John Doe',
@@ -62,7 +62,7 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 404)
+    t.assert.strictEqual(response.statusCode, 401)
   })
 
   test('should return 404 when any of the specified productId is not found', async (t: TestContext) => {

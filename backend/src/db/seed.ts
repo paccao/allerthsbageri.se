@@ -5,14 +5,14 @@ import type {
 
 import { db } from './index.ts'
 import { orderStatusTable } from './schema.ts'
-import type { OrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
+import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
 
 /**
  * This seed file is used for data that should always be in the database, configuration for the application.
  */
 
 // Only 1 isDefault should be set to true
-const defaultOrderStatuses: OrderStatusSchema[] = [
+const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   {
     status: 'Bokad',
     isDefault: true,

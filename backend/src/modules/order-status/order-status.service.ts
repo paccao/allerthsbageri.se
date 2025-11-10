@@ -10,3 +10,10 @@ export async function getOrderStatus(id: number) {
 
   return results[0]
 }
+
+export async function listOrderStatuses() {
+  return await db
+    .select()
+    .from(orderStatusTable)
+    .where(eq(orderStatusTable.isDefault, true))
+}

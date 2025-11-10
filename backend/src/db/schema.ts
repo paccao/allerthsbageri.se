@@ -68,6 +68,7 @@ export const productTable = sqliteTable('product', {
 export const orderStatusTable = sqliteTable('order_status', {
   id: int().primaryKey({ autoIncrement: true }),
   status: text({ length: 50 }).notNull(),
+  isDefault: int({ mode: 'boolean' }).default(false).notNull(),
   color: text({ length: 50 }),
 })
 

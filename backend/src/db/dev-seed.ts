@@ -13,7 +13,7 @@ import {
   userTable,
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
-import type { OrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
+import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
 import env from '#config/env.ts'
 
 /**
@@ -109,7 +109,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
 ]
 
 // Only 1 isDefault should be set to true
-const defaultOrderStatuses: OrderStatusSchema[] = [
+const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   {
     status: 'Bokad',
     isDefault: true,

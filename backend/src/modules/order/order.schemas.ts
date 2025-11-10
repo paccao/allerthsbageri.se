@@ -21,7 +21,7 @@ export type OrderBody = z.infer<typeof orderSchema>
 export const createOrderBodySchema = z.object({
   customer: createCustomerBodySchema,
   pickupOccasionId: z.int().min(1),
-  statusId: z.int().min(1),
+  statusId: z.int().min(1).optional(),
   orderItems: z.array(createOrderitemBodySchema),
 })
 export type CreateOrderBody = z.infer<typeof createOrderBodySchema>
