@@ -348,7 +348,7 @@
                   Grovare Spången 101, utanför Hökerum
                 </p>
 
-                <p class="my-4">Kommande meditiationer: 19/10, 2/11, 16/11</p>
+                <p class="my-4">Kommande meditiationer: 19/10, 2/11, 16/11, 7/12</p>
 
                 <p class="text-center font-bold">
                   Välkommen med din anmälan till:
