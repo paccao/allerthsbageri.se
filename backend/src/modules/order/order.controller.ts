@@ -42,20 +42,16 @@ export async function createOrderHandler(
         })
       }
 
-      if (product.stock === 0) {
-        return reply.code(401).send({
-          message: 'Product is out of stock',
-          details: { productId: product.id },
-        })
-      }
-
       if (product.stock < item.count) {
         // TODO: Send more detailed information here about which product is missing so we can improve the error on the client
-        // TODO: If stock is 0, then error with out of stock
-        // TODO: If you can only order a smaller amount, let the order go through but only order the available amount?
-        // In that case we need to show a message and clearly indicate that we changed the order. Probably better to error and let the customer decide if they want to order the remaining products.
+        // IDEA: If you can only order a smaller amount, should we let the order go through but only order the available amount?
+        // In that case we need to show a message and clearly indicate that we changed the order.
+        // NOTE: Probably better to error and let the customer see the error client-side and decide if they want to order the remaining products.
         return reply.code(401).send({
-          message: `Unable to order ${item.count} of product because only ${product.stock} remains in stock`,
+          message:
+            product.stock > 0
+              ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
+              : `Unable to order ${item.count} of product is out of stock`,
           details: { productId: product.id, stock: product.stock },
         })
       }
