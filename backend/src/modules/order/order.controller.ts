@@ -5,9 +5,6 @@ import { getProductById } from '../product/product.service.ts'
 import { getOrderStatusOrDefault } from '../order-status/order-status.service.ts'
 import { getPickupOccasion } from '../pickup-occasion/pickup-occasion.service.ts'
 
-// TODO: Should we let the API decide the statusId, and remove that from the request body?
-// When calling the API from the public frontend, we always want to create a new order with the default status
-
 export async function createOrderHandler(
   request: FastifyRequest<{ Body: CreateOrderBody }>,
   reply: FastifyReply,
@@ -37,6 +34,9 @@ export async function createOrderHandler(
         })
       }
 
+      // TODO: Handle "concurrent orders" so that if stock runs out when a customer has ordered, they will not get a product doesnt exist
+      // Transactions? BullMQ? RabbitMQ?
+
       if (
         product.maxPerCustomer !== null &&
         item.count > product.maxPerCustomer
@@ -47,6 +47,8 @@ export async function createOrderHandler(
         })
       }
 
+      // TODO: Add tests for ordering 3 when stock is 2 and verify error
+      // TODO: Add tests for ordering 3 when stock is 0 and verify error
       if (product.stock < item.count) {
         // TODO: Send more detailed information here about which product is missing so we can improve the error on the client
         // IDEA: If you can only order a smaller amount, should we let the order go through but only order the available amount?

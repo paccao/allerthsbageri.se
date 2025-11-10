@@ -35,7 +35,10 @@ suite.only('order routes', () => {
     cookie = await createAdminUser(orderAdmin)
   })
 
+  // TODO: Fix status codes in all relevant tests
+
   test('should return 401 when the specified statusId is not found', async (t: TestContext) => {
+    // TODO: test that the default status id is used
     const order: _CreateOrderBody = {
       customer: {
         name: 'John Doe',
@@ -64,6 +67,8 @@ suite.only('order routes', () => {
 
     t.assert.strictEqual(response.statusCode, 401)
   })
+
+  // TODO: test that two default status IDs cause an error
 
   test('should return 404 when any of the specified productId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
@@ -312,7 +317,7 @@ suite.only('order routes', () => {
 
     const product2: Product = {
       id: 2,
-      stock: 40,
+      stock: 2,
       price: 6600,
       maxPerCustomer: 3,
       pickupOccasionId: createdPickupResponse.id,
@@ -333,7 +338,7 @@ suite.only('order routes', () => {
         name: 'John Doe',
         phone: '+46703666666',
       },
-      pickupOccasionId: createdPickupResponse.id + 10,
+      pickupOccasionId: createdPickupResponse.id + 999, // pickup occasion ID is wrong here
       statusId: 1,
       orderItems: [
         {
@@ -347,6 +352,10 @@ suite.only('order routes', () => {
       ],
     }
 
+    // TODO: add tests without statusId to verify cases when defaultStatusId kicks in.
+    // TODO: should we test the case when we multiple orderStatusId
+    // TODO: test when
+
     const badResponse = await app.inject({
       method: 'POST',
       url: '/api/orders/',
@@ -354,10 +363,77 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
+    // TODO: Use staus codes 400 bad request instead of 401 unauthorized
     t.assert.strictEqual(
       badResponse.statusCode,
       401,
       'should return 401 when any of the order items productIds are not from the specified pickup occasion',
+    )
+
+    // Too many orderItems of one kind (maxPerCustomer)
+    const badOrder1: _CreateOrderBody = {
+      customer: {
+        name: 'John Doe',
+        phone: '+46703666666',
+      },
+      pickupOccasionId: createdPickupResponse.id,
+      statusId: 1,
+      orderItems: [
+        {
+          count: 999, // count is greater than maxPerCustomer
+          productId: firstProductResponse.id,
+        },
+        {
+          count: 1,
+          productId: secondProductResponse.id,
+        },
+      ],
+    }
+
+    const badResponse1 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder1,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse1.statusCode,
+      400,
+      'should return 400 when the order items count exceed maxPerCustomer',
+    )
+
+    // Too many orderItems of one kind (maxPerCustomer)
+    const badOrder2: _CreateOrderBody = {
+      customer: {
+        name: 'John Doe',
+        phone: '+46703666666',
+      },
+      pickupOccasionId: createdPickupResponse.id,
+      statusId: 1,
+      orderItems: [
+        {
+          count: 2,
+          productId: firstProductResponse.id,
+        },
+        {
+          count: 3, // count is greater than stock size
+          productId: secondProductResponse.id,
+        },
+      ],
+    }
+
+    const badResponse2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder2,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse2.statusCode,
+      400,
+      'should return 400 when the order items count exceed the stock',
     )
 
     const goodOrder: _CreateOrderBody = {
@@ -389,7 +465,86 @@ suite.only('order routes', () => {
     const deserialized = response.json()
 
     t.assert.strictEqual(badResponse.statusCode, 201)
-    t.assert.strictEqual(deserialized.orderId, 'string') // checks if its a uuid
+    t.assert.strictEqual(deserialized.orderId, 'string') // TODO: assert that orderId is an UUID
+  })
+
+  test('can order when maxPerCustomer is null item count is <= stock', async (t: TestContext) => {
+    const pickupOccasion = {
+      name: 'Hässleholmens marknad',
+      location: 'Hässleholms torget',
+      bookingStart: new Date('2025-04-23T08:00:00.000Z'),
+      bookingEnd: new Date('2025-04-28T17:00:00.000Z'),
+      pickupStart: new Date('2025-04-29T09:00:00.000Z'),
+      pickupEnd: new Date('2025-04-29T15:30:00.000Z'),
+    }
+
+    const createdPickupResponse: GetPickupOccasion = await app
+      .inject({
+        method: 'POST',
+        url: '/api/pickups/',
+        body: pickupOccasion,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const productDetail: GetProductDetail = {
+      id: 1,
+      name: 'Surdegsbröd',
+      description: 'Bread made of sourdough',
+      image: 'https://allerthsbageri.se/image55',
+      vatPercentage: 16,
+    }
+
+    const secondProductDetailResponse = await app
+      .inject({
+        method: 'POST',
+        url: '/api/product-details/',
+        body: productDetail,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product: Product = {
+      id: 2,
+      stock: 2,
+      price: 6600,
+      maxPerCustomer: null,
+      pickupOccasionId: createdPickupResponse.id,
+      productDetailsId: secondProductDetailResponse.id,
+    }
+
+    const productResponse = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const goodOrder: _CreateOrderBody = {
+      customer: {
+        name: 'John Doe',
+        phone: '+46703666666',
+      },
+      pickupOccasionId: createdPickupResponse.id,
+      statusId: 1,
+      orderItems: [
+        {
+          count: 2,
+          productId: productResponse.id,
+        },
+      ],
+    }
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: goodOrder,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(response.statusCode, 201)
   })
 
   after(async () => {
