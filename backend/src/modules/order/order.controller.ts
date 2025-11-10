@@ -23,7 +23,7 @@ export async function createOrderHandler(
     const pickup = await getPickupOccasion(pickupOccasionId)
     if (!pickup) {
       return reply
-        .code(401)
+        .code(400)
         .send({ message: 'Specified pickup occasion not found' })
     }
 
@@ -62,10 +62,10 @@ export async function createOrderHandler(
     for (const item of orderItems) {
       const product = await getProductById(item.productId)
       if (!product)
-        return reply.code(404).send({ message: 'Product not found' })
+        return reply.code(400).send({ message: 'Product not found' })
 
       if (product?.pickupOccasionId !== pickupOccasionId) {
-        return reply.code(401).send({
+        return reply.code(400).send({
           message: 'Order items should be from the selected pickup occasion',
         })
       }
@@ -74,7 +74,7 @@ export async function createOrderHandler(
         product.maxPerCustomer !== null &&
         item.count > product.maxPerCustomer
       ) {
-        return reply.code(401).send({
+        return reply.code(400).send({
           message: `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
           details: { productId: product.id },
         })
@@ -86,7 +86,7 @@ export async function createOrderHandler(
         // In that case we need to show a message and clearly indicate that we changed the order.
         // NOTE: Probably better to error and let the customer see the error client-side and decide if they want to order the remaining products.
         // This kind of feature only makes sense if customers could update their orders, but we don't want this for now to keep things simple.
-        return reply.code(401).send({
+        return reply.code(400).send({
           message:
             product.stock > 0
               ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
