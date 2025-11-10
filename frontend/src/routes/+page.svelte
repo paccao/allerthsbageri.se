@@ -414,7 +414,7 @@
                   betalning på plats.
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Var: </span> Meddelas senare
+                  <span class="font-bold">Var: </span> Equmeniakyrkans kök, Hökerum
                 </p>
                 <p class="text-center font-bold">Anmälan & frågor:</p>
                 <div class="flex justify-center text-center">
