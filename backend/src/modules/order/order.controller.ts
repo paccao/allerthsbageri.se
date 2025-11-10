@@ -2,10 +2,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreateOrderBody } from './order.schemas.ts'
 import { createOrder } from './order.service.ts'
 import { getProductById } from '../product/product.service.ts'
-import {
-  getOrderStatus,
-  listOrderStatuses,
-} from '../order-status/order-status.service.ts'
+import { getOrderStatusOrDefault } from '../order-status/order-status.service.ts'
 import { getPickupOccasion } from '../pickup-occasion/pickup-occasion.service.ts'
 
 // TODO: Should we let the API decide the statusId, and remove that from the request body?
@@ -17,8 +14,6 @@ export async function createOrderHandler(
 ) {
   let { customer, pickupOccasionId, statusId, orderItems } = request.body
 
-  let usedDefaultStatus = false
-
   try {
     const pickup = await getPickupOccasion(pickupOccasionId)
     if (!pickup) {
@@ -27,35 +22,7 @@ export async function createOrderHandler(
         .send({ message: 'Specified pickup occasion not found' })
     }
 
-    let defaultOrderStatusId: number
-
-    if (!statusId) {
-      const statuses = await listOrderStatuses()
-
-      // Find all default values set in the db
-      const defaultValues = statuses.filter((s) => s.isDefault === true)
-
-      // Make sure we only have 1 default order status and set statusId
-      if (defaultValues.length === 1) {
-        defaultOrderStatusId = statuses.find(
-          (status) => status.isDefault === true,
-        )!.id
-        statusId = defaultOrderStatusId
-        usedDefaultStatus = true
-      } else {
-        return reply.code(500).send({
-          message: 'An unexpected amount of default order statuses were found',
-        })
-      }
-    }
-
-    if (!usedDefaultStatus) {
-      const orderStatus = await getOrderStatus(statusId)
-      if (!orderStatus) {
-        // fallback to the default order status if the user-provided StatusID doesnt exist
-        statusId = defaultOrderStatusId
-      }
-    }
+    let orderStatus = await getOrderStatusOrDefault(statusId)
 
     // TODO: make the product checks parallel and abort early if anything errors.
     // Maybe use Promise.all().catch() and throw errors with the messages, to abort execution
