@@ -17,6 +17,8 @@ export async function createOrderHandler(
 ) {
   let { customer, pickupOccasionId, statusId, orderItems } = request.body
 
+  let usedDefaultStatus = false
+
   try {
     const pickup = await getPickupOccasion(pickupOccasionId)
     if (!pickup) {
@@ -24,6 +26,8 @@ export async function createOrderHandler(
         .code(401)
         .send({ message: 'Specified pickup occasion not found' })
     }
+
+    let defaultOrderStatusId: number
 
     if (!statusId) {
       const statuses = await listOrderStatuses()
@@ -33,7 +37,11 @@ export async function createOrderHandler(
 
       // Make sure we only have 1 default order status and set statusId
       if (defaultValues.length === 1) {
-        statusId = statuses.find((status) => status.isDefault === true)!.id
+        defaultOrderStatusId = statuses.find(
+          (status) => status.isDefault === true,
+        )!.id
+        statusId = defaultOrderStatusId
+        usedDefaultStatus = true
       } else {
         return reply.code(500).send({
           message: 'An unexpected amount of default order statuses were found',
@@ -41,11 +49,12 @@ export async function createOrderHandler(
       }
     }
 
-    const orderStatus = await getOrderStatus(statusId)
-    if (!orderStatus) {
-      return reply
-        .code(401)
-        .send({ message: 'Specified order status not found' })
+    if (!usedDefaultStatus) {
+      const orderStatus = await getOrderStatus(statusId)
+      if (!orderStatus) {
+        // fallback to the default order status if the user-provided StatusID doesnt exist
+        statusId = defaultOrderStatusId
+      }
     }
 
     // TODO: make the product checks parallel and abort early if anything errors.
