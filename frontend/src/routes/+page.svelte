@@ -304,15 +304,7 @@
 
           <Divider />
 
-          <article class="my-4 w-full px-4 pt-4">
-            <div class="my-8 grid justify-center" id="event">
-              <enhanced:img
-                class="h-auto w-full rounded-md object-cover shadow-md"
-                src={kursinbjudan}
-                alt="Inbjudan till kurs"
-              />
-            </div>
-
+          <article class="my-4 w-full px-4 pt-4" id='event'>
             <h4 class="mb-4 text-center font-display text-2xl">
               Kommande event:
             </h4>
@@ -371,12 +363,21 @@
             <Divider />
 
             <section>
+
+              <div class="my-8 grid justify-center" id="event">
+                <enhanced:img
+                  class="h-auto w-full rounded-md object-cover shadow-md"
+                  src={kursinbjudan}
+                  alt="Inbjudan till kurs"
+                />
+              </div>
+
               <h2 class="mb-4 text-center font-display text-4xl font-bold">
                 Nu kan du anmäla dig till kurs i surdegsbakning
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  I oktober blir det nya kurser i hur du bakar surdegsbröd på
+                  I november, januari blir det nya kurser i hur du bakar surdegsbröd på
                   enbart ekologiskt och kravmärkt mjöl. Vi lär oss mata
                   surdegen, forma och snitta bröd. Sätta en ny deg som du kan
                   grädda hemma nästa dag.
@@ -408,12 +409,12 @@
                   <span class="capitalize">{bakingCourseDate}</span>
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Kursavgift: </span>1200 kr, betalas
+                  <span class="font-bold">Kursavgift: </span> 1200 kr, betalas
                   via Swish i samband med anmälan. Vid överenskommelse kontant
                   betalning på plats.
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Var: </span>Meddelas senare
+                  <span class="font-bold">Var: </span> Meddelas senare
                 </p>
                 <p class="text-center font-bold">Anmälan & frågor:</p>
                 <div class="flex justify-center text-center">
