@@ -36,9 +36,9 @@ suite.only('order routes', () => {
   })
 
   // TODO: Fix status codes in all relevant tests
+  // TODO: test that the default status id is used - unit test needed since we dont return status id?
 
-  test('should return 401 when the specified statusId is not found', async (t: TestContext) => {
-    // TODO: test that the default status id is used
+  test('should return 400 when the specified statusId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
       customer: {
         name: 'John Doe',
@@ -65,12 +65,12 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 401)
+    t.assert.strictEqual(response.statusCode, 400)
   })
 
   // TODO: test that two default status IDs cause an error
 
-  test('should return 404 when any of the specified productId is not found', async (t: TestContext) => {
+  test('should return 400 when any of the specified productId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
       customer: {
         name: 'John Doe',
@@ -97,7 +97,7 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 404)
+    t.assert.strictEqual(response.statusCode, 400)
   })
 
   test('should return 400 when incorrect orderItems was passed', async (t: TestContext) => {
@@ -183,7 +183,7 @@ suite.only('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test('should return 401 when specified pickupOccasionId is not found', async (t: TestContext) => {
+  test('should return 400 when specified pickupOccasionId is not found', async (t: TestContext) => {
     const order = {
       customer: {
         name: 'John Doe',
@@ -210,7 +210,7 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 401)
+    t.assert.strictEqual(response.statusCode, 400)
   })
 
   test('should return 400 when incorrect customer was passed', async (t: TestContext) => {
@@ -354,7 +354,6 @@ suite.only('order routes', () => {
 
     // TODO: add tests without statusId to verify cases when defaultStatusId kicks in.
     // TODO: should we test the case when we multiple orderStatusId
-    // TODO: test when
 
     const badResponse = await app.inject({
       method: 'POST',
@@ -363,11 +362,10 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    // TODO: Use staus codes 400 bad request instead of 401 unauthorized
     t.assert.strictEqual(
       badResponse.statusCode,
-      401,
-      'should return 401 when any of the order items productIds are not from the specified pickup occasion',
+      400,
+      'should return 400 when any of the order items productIds are not from the specified pickup occasion',
     )
 
     // Too many orderItems of one kind (maxPerCustomer)
@@ -544,6 +542,7 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
+    // Todo: fix, should return 201
     t.assert.strictEqual(response.statusCode, 201)
   })
 

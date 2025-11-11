@@ -23,6 +23,10 @@ export async function createOrderHandler(
 
     // TODO: make the product checks parallel and abort early if anything errors.
     // Maybe use Promise.all().catch() and throw errors with the messages, to abort execution
+
+    // TODO: Handle "concurrent orders" so that if stock runs out when a customer has ordered, they will not get a product doesnt exist
+    // BullMQ
+
     for (const item of orderItems) {
       const product = await getProductById(item.productId)
       if (!product)
@@ -33,9 +37,6 @@ export async function createOrderHandler(
           message: 'Order items should be from the selected pickup occasion',
         })
       }
-
-      // TODO: Handle "concurrent orders" so that if stock runs out when a customer has ordered, they will not get a product doesnt exist
-      // Transactions? BullMQ? RabbitMQ?
 
       if (
         product.maxPerCustomer !== null &&
