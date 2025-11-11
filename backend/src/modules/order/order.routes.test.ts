@@ -431,7 +431,7 @@ suite.only('order routes', () => {
     t.assert.strictEqual(
       badResponse2.statusCode,
       400,
-      'should return 400 when the order items count exceed the stock',
+      'should return 400 when the order items count exceed the stock, but not maxPerCustomer',
     )
 
     const goodOrder: _CreateOrderBody = {

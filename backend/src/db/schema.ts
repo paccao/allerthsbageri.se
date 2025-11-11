@@ -106,7 +106,7 @@ export const orderItemTable = sqliteTable('order_item', {
   productId: int()
     .notNull()
     .references(() => productTable.id),
-  orderId: int()
+  orderId: text()
     .notNull()
     .references(() => orderTable.id, { onDelete: 'cascade' }),
 })
