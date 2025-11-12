@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { createCustomerBodySchema } from '../customer/customer.schemas.ts'
-import { createOrderitemBodySchema } from '../order-item/order-item.schemas.ts'
+import { createOrderItemBodySchema } from '../order-item/order-item.schemas.ts'
 
 export const getOrderSchema = z.object({
   id: z.string(),
@@ -22,6 +22,6 @@ export const createOrderBodySchema = z.object({
   customer: createCustomerBodySchema,
   pickupOccasionId: z.int().min(1),
   statusId: z.int().min(1).optional(),
-  orderItems: z.array(createOrderitemBodySchema),
+  orderItems: z.array(createOrderItemBodySchema),
 })
 export type CreateOrderBody = z.infer<typeof createOrderBodySchema>
