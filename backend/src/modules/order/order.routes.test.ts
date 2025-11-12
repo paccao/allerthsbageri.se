@@ -10,11 +10,14 @@ import { createOrderBodySchema } from './order.schemas.ts'
 import type { Product } from '../product/product.schemas.ts'
 import type { GetProductDetail } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
+import { getProductById } from '../product/product.service.ts'
 
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
-suite.only('order routes', () => {
+const UNIX_HOUR_MS = 3600000 // 3600000  is 1 hour in unix time in milliseconds
+
+suite('order routes', () => {
   const orderAdmin = {
     username: 'orderAdmin',
     name: 'orderAdmin',
@@ -243,15 +246,15 @@ suite.only('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test('should be possible to create an order', async (t: TestContext) => {
+  test.only('should be possible to create an order', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
-      pickupStart: new Date('2025-08-29T09:00:00.000Z'),
-      pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
+      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS),
+      pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 2),
+      pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }
 
     const createdPickupResponse: GetPickupOccasion = await app
@@ -466,14 +469,14 @@ suite.only('order routes', () => {
     t.assert.strictEqual(deserialized.orderId, 'string') // TODO: assert that orderId is an UUID
   })
 
-  test('can order when maxPerCustomer is null item count is <= stock', async (t: TestContext) => {
+  test.only('can order when maxPerCustomer is null item count is <= stock', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Hässleholmens marknad',
       location: 'Hässleholms torget',
-      bookingStart: new Date('2025-04-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-04-28T17:00:00.000Z'),
-      pickupStart: new Date('2025-04-29T09:00:00.000Z'),
-      pickupEnd: new Date('2025-04-29T15:30:00.000Z'),
+      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS),
+      pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 2),
+      pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }
 
     const createdPickupResponse: GetPickupOccasion = await app
@@ -485,37 +488,107 @@ suite.only('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetail: GetProductDetail = {
+    const productDetail1: GetProductDetail = {
       id: 1,
-      name: 'Surdegsbröd',
+      name: 'Surdegsbröd1',
       description: 'Bread made of sourdough',
       image: 'https://allerthsbageri.se/image55',
       vatPercentage: 16,
     }
 
-    const secondProductDetailResponse = await app
+    const productDetailResponse1 = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail,
+        body: productDetail1,
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    const product: Product = {
+    const productDetail2: GetProductDetail = {
+      id: 1,
+      name: 'Surdegsbröd2',
+      description: 'Bread made of sourdough',
+      image: 'https://allerthsbageri.se/image55',
+      vatPercentage: 16,
+    }
+
+    const productDetailResponse2 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/product-details/',
+        body: productDetail2,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const productDetail3: GetProductDetail = {
+      id: 1,
+      name: 'Surdegsbröd3',
+      description: 'Bread made of sourdough',
+      image: 'https://allerthsbageri.se/image55',
+      vatPercentage: 16,
+    }
+
+    const productDetailResponse3 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/product-details/',
+        body: productDetail3,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product1: Product = {
       id: 2,
       stock: 2,
       price: 6600,
       maxPerCustomer: null,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: secondProductDetailResponse.id,
+      productDetailsId: productDetailResponse1.id,
     }
 
-    const productResponse = await app
+    const productResponse1 = await app
       .inject({
         method: 'POST',
         url: '/api/products/',
-        body: product,
+        body: product1,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product2: Product = {
+      id: 2,
+      stock: 2,
+      price: 6600,
+      maxPerCustomer: null,
+      pickupOccasionId: createdPickupResponse.id,
+      productDetailsId: productDetailResponse2.id,
+    }
+
+    const productResponse2 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product2,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product3: Product = {
+      id: 2,
+      stock: 10,
+      price: 6600,
+      maxPerCustomer: 1,
+      pickupOccasionId: createdPickupResponse.id,
+      productDetailsId: productDetailResponse3.id,
+    }
+
+    const productResponse3 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product3,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -530,7 +603,15 @@ suite.only('order routes', () => {
       orderItems: [
         {
           count: 2,
-          productId: productResponse.id,
+          productId: productResponse1.id,
+        },
+        {
+          count: 5,
+          productId: productResponse2.id,
+        },
+        {
+          count: 3,
+          productId: productResponse3.id,
         },
       ],
     }
@@ -542,12 +623,29 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    // TODO: fix, should return 201
+    // TODO: fix, 'Transaction function cannot return a promise' - its from createOrder
     t.assert.strictEqual(response.statusCode, 201)
-  })
 
-  // TODO: Test if products stock is updated after a create Order.
-  // We dont know if drizzle&sqllite transactions support Promise.all(), some say the queries inside will just not execute.
+    const afterCreationProduct1 = await getProductById(productResponse1.id)
+    const afterCreationProduct2 = await getProductById(productResponse2.id)
+    const afterCreationProduct3 = await getProductById(productResponse3.id)
+
+    t.assert.strictEqual(
+      afterCreationProduct1?.stock,
+      (product1.stock -= goodOrder.orderItems[0]!?.count),
+      'Test if products stock is updated after a create Order properly.',
+    )
+    t.assert.strictEqual(
+      afterCreationProduct2?.stock,
+      (product2.stock -= goodOrder.orderItems[1]!?.count),
+      'Test if products stock is updated after a create Order properly.',
+    )
+    t.assert.strictEqual(
+      afterCreationProduct3?.stock,
+      (product3.stock -= goodOrder.orderItems[2]!?.count),
+      'Test if products stock is updated after a create Order properly.',
+    )
+  })
 
   after(async () => {
     await db
