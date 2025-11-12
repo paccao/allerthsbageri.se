@@ -27,9 +27,6 @@ export async function createOrderHandler(
     // Maybe use Promise.all().catch() and throw errors with the messages, to abort execution
     // IDEA: Or maybe fetch all products at the same time - then we could still use the regular for loop for easy validation
 
-    // TODO: Handle "concurrent orders" so that if stock runs out when a customer has ordered, they will not get a product doesnt exist
-    // BullMQ
-
     const products: Record<Product['id'], Product> = {}
 
     for (const item of orderItems) {
