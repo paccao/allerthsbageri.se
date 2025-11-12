@@ -3,7 +3,6 @@ import type { CreateOrderBody } from './order.schemas.ts'
 import { createOrder } from './order.service.ts'
 import { getProductById } from '../product/product.service.ts'
 import { getOrderStatusOrDefault } from '../order-status/order-status.service.ts'
-import { createOrderItems } from '../order-item/order-item.service.ts'
 import { getPickupOccasion } from '../pickup-occasion/pickup-occasion.service.ts'
 import { getOrCreateCustomer } from '../customer/customer.service.ts'
 import type { Product } from '../product/product.schemas.ts'
@@ -26,6 +25,7 @@ export async function createOrderHandler(
 
     // TODO: make the product checks parallel and abort early if anything errors.
     // Maybe use Promise.all().catch() and throw errors with the messages, to abort execution
+    // IDEA: Or maybe fetch all products at the same time - then we could still use the regular for loop for easy validation
 
     // TODO: Handle "concurrent orders" so that if stock runs out when a customer has ordered, they will not get a product doesnt exist
     // BullMQ
@@ -77,20 +77,19 @@ export async function createOrderHandler(
 
     // TODO: Use a transaction to create order, order items and update products to ensure the DB is consistent.
 
-    const createdOrder = await createOrder({
-      customerId: createdCustomer.id,
-      pickupOccasionId,
-      statusId: orderStatus.id,
-      createdAt: Date.now().toString(),
-    })
-
-    await createOrderItems(
-      orderItems.map((item) => ({
-        ...item,
-        orderId: createdOrder.id,
-        price: products[item.productId]!.price,
-      })),
+    const createdOrder = await createOrder(
+      {
+        customerId: createdCustomer.id,
+        pickupOccasionId,
+        statusId: orderStatus.id,
+      },
+      orderItems,
+      products,
     )
+
+    if (!createdOrder) {
+      return reply.code(500).send({ message: 'Failed to create order' })
+    }
 
     // TODO: update products for the pickup occasion to reduce the available stock
 

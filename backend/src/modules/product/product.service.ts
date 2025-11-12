@@ -20,6 +20,7 @@ export async function listProducts() {
   return await db.select().from(productTable)
 }
 
+// TODO: update to use async transaction and debug
 export function createProduct({ ...data }: CreateProductBody) {
   return db.transaction((tx) => {
     try {
@@ -60,6 +61,7 @@ export function createProduct({ ...data }: CreateProductBody) {
   })
 }
 
+// TODO: update to use async transaction and debug
 export function updateProduct(
   id: number,
   data: Partial<typeof productTable.$inferInsert>,
