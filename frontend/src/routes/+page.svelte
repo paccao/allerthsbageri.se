@@ -406,7 +406,8 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  <span class="capitalize">{bakingCourseDate} 13.30 - 16.30 eller tills vi känner oss klara.</span>
+                  <span class="capitalize">{bakingCourseDate}</span>
+                  <span> 13.30 - 16.30 eller tills vi känner oss klara.</span>
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kursavgift: </span> 1200 kr, betalas
