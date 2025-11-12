@@ -542,9 +542,12 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    // Todo: fix, should return 201
+    // TODO: fix, should return 201
     t.assert.strictEqual(response.statusCode, 201)
   })
+
+  // TODO: Test if products stock is updated after a create Order.
+  // We dont know if drizzle&sqllite transactions support Promise.all(), some say the queries inside will just not execute.
 
   after(async () => {
     await db

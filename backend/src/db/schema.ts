@@ -25,6 +25,7 @@ export const pickupOccasionTable = sqliteTable('pickup_occasion', {
   id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
   location: text({ length: 150 }).notNull(),
+  // IDEA: Maybe rename to bookingStart/bookingEnd to orderStart/orderEnd
   bookingStart: dateField().notNull(),
   bookingEnd: dateField().notNull(),
   pickupStart: dateField().notNull(),
