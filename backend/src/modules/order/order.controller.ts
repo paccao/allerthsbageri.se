@@ -17,9 +17,23 @@ export async function createOrderHandler(
     // TODO: Add test to ensure orders can NOT be created after the bookingEnd
     const pickup = await getPickupOccasion(pickupOccasionId)
     if (!pickup) {
-      return reply
-        .code(400)
-        .send({ message: 'Specified pickup occasion not found' })
+      throw new Error('Specified pickup occasion not found', {
+        cause: { status: 400 },
+      })
+    }
+
+    const now = Date.now()
+
+    if (now < new Date(pickup.bookingStart).getTime()) {
+      throw new Error('Orders can not be created before bookingStart', {
+        cause: { status: 400 },
+      })
+    }
+
+    if (now > new Date(pickup.bookingEnd).getTime()) {
+      throw new Error('Orders can not be created after bookingEnd', {
+        cause: { status: 400 },
+      })
     }
 
     let orderStatus = await getOrderStatusOrDefault(statusId)
