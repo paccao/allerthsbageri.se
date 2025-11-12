@@ -1,6 +1,6 @@
 import { db } from '#db/index.ts'
 import { orderTable, orderItemTable, productTable } from '#db/schema.ts'
-import { eq, inArray } from 'drizzle-orm'
+import { eq, inArray, type SQL } from 'drizzle-orm'
 import type { Product } from '../product/product.schemas.ts'
 
 type OrderedProduct = Omit<Product, 'productDetailsId'>
@@ -128,4 +128,17 @@ export function createOrder(
 
     return createdOrder
   })
+}
+
+async function updateProducts(
+  tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
+  updatedProducts: OrderedProduct[],
+) {
+  // TODO: make updates like here: // https://orm.drizzle.team/docs/guides/update-many-with-different-value
+
+  if (updatedProducts.length === 0) {
+    return
+  }
+
+  const sqlChunks: SQL[] = []
 }
