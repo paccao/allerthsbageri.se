@@ -1,6 +1,8 @@
+import { type RunResult } from 'better-sqlite3'
+import { inArray, sql, type SQL } from 'drizzle-orm'
+
 import { db } from '#db/index.ts'
 import { orderTable, orderItemTable, productTable } from '#db/schema.ts'
-import { eq, inArray, type SQL } from 'drizzle-orm'
 import type { Product } from '../product/product.schemas.ts'
 
 type OrderedProduct = Omit<Product, 'productDetailsId'>
@@ -9,6 +11,7 @@ export function createOrder(
   order: typeof orderTable.$inferInsert,
   orderItems: Pick<typeof orderItemTable.$inferInsert, 'count' | 'productId'>[],
 ) {
+  // TODO: Make transaction entirely synchronous since the underlying DB driver is sync
   return db.transaction(async (tx) => {
     // Get the ordered product and store them as a record for quick lookups
     const products: Record<OrderedProduct['id'], OrderedProduct> = (
@@ -107,21 +110,16 @@ export function createOrder(
       })
     }
 
-    // TODO: Investigate if we need to use another method for updating many rows:
-    // https://orm.drizzle.team/docs/guides/update-many-with-different-value
-    const updatedProducts = await Promise.all(
-      orderItems.map(({ productId, count }) =>
-        tx
-          .update(productTable)
-          .set({ stock: products[productId]!.stock - count })
-          .where(eq(productTable.id, productId))
-          .execute(),
-      ),
-    )
+    const updatedProducts = orderItems.map(({ count, productId }) => {
+      const product = products[productId]!
+      return { ...product, stock: product.stock - count }
+    })
 
-    if (updatedProducts.some(({ changes }) => changes === 0)) {
+    const { changes } = updateProductStocksAfterOrder(tx, updatedProducts)
+
+    if (changes === 0) {
       tx.rollback()
-      throw new Error('Failed to update products after', {
+      throw new Error('Failed to update products after creating order', {
         cause: { status: 500 },
       })
     }
@@ -130,15 +128,33 @@ export function createOrder(
   })
 }
 
-async function updateProducts(
+function updateProductStocksAfterOrder(
   tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
   updatedProducts: OrderedProduct[],
 ) {
-  // TODO: make updates like here: // https://orm.drizzle.team/docs/guides/update-many-with-different-value
-
   if (updatedProducts.length === 0) {
-    return
+    return { changes: 0 } as RunResult
   }
 
   const sqlChunks: SQL[] = []
+  const ids: OrderedProduct['id'][] = []
+
+  sqlChunks.push(sql`(case`)
+
+  for (const product of updatedProducts) {
+    sqlChunks.push(
+      sql`when ${productTable.id} = ${product.id} then ${product.stock}`,
+    )
+    ids.push(product.id)
+  }
+
+  sqlChunks.push(sql`end)`)
+
+  const finalSQL: SQL = sql.join(sqlChunks, sql.raw(' '))
+
+  return tx
+    .update(productTable)
+    .set({ stock: finalSQL })
+    .where(inArray(productTable.id, ids))
+    .run()
 }
