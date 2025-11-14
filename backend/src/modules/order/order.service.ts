@@ -24,7 +24,7 @@ export function createOrder(
       .from(productTable)
       .where(
         inArray(
-          productTable,
+          productTable.id,
           orderItems.map(({ productId }) => productId),
         ),
       )
