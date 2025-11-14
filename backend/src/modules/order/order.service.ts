@@ -7,6 +7,22 @@ import type { Product } from '../product/product.schemas.ts'
 
 type OrderedProduct = Omit<Product, 'productDetailsId'>
 
+type Transaction = Parameters<Parameters<typeof db.transaction>[0]>[0]
+
+/**
+ * Rollback a transaction, replacing the less useful TransactionError with a more specific error.
+ *
+ * @param tx The DB transaction
+ * @param error The error that should be returned to API users
+ */
+function rollbackWithError(tx: Transaction, error: Error): never {
+  try {
+    tx.rollback()
+  } finally {
+    throw error
+  }
+}
+
 export function createOrder(
   order: typeof orderTable.$inferInsert,
   orderItems: Pick<typeof orderItemTable.$inferInsert, 'count' | 'productId'>[],
@@ -40,15 +56,18 @@ export function createOrder(
     for (const item of orderItems) {
       const product = products[item.productId]
       if (!product) {
-        tx.rollback()
-        throw new Error('Product not found', { cause: { status: 400 } })
+        return rollbackWithError(
+          tx,
+          new Error('Product not found', { cause: { status: 400 } }),
+        )
       }
 
       if (product?.pickupOccasionId !== order.pickupOccasionId) {
-        tx.rollback()
-        throw new Error(
-          'Order items should be from the selected pickup occasion',
-          { cause: { status: 400 } },
+        return rollbackWithError(
+          tx,
+          new Error('Order items should be from the selected pickup occasion', {
+            cause: { status: 400 },
+          }),
         )
       }
 
@@ -56,25 +75,29 @@ export function createOrder(
         product.maxPerCustomer !== null &&
         item.count > product.maxPerCustomer
       ) {
-        tx.rollback()
-        throw new Error(
-          `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
-          { cause: { status: 400, details: { productId: product.id } } },
+        return rollbackWithError(
+          tx,
+          new Error(
+            `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
+            { cause: { status: 400, details: { productId: product.id } } },
+          ),
         )
       }
 
       if (product.stock < item.count) {
-        tx.rollback()
-        throw new Error(
-          product.stock > 0
-            ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
-            : `Unable to order ${item.count} of product is out of stock`,
-          {
-            cause: {
-              status: 400,
-              details: { productId: product.id, stock: product.stock },
+        return rollbackWithError(
+          tx,
+          new Error(
+            product.stock > 0
+              ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
+              : `Unable to order ${item.count} of product is out of stock`,
+            {
+              cause: {
+                status: 400,
+                details: { productId: product.id, stock: product.stock },
+              },
             },
-          },
+          ),
         )
       }
     }
@@ -82,8 +105,10 @@ export function createOrder(
     const [createdOrder] = tx.insert(orderTable).values(order).returning().all()
 
     if (!createdOrder) {
-      tx.rollback()
-      throw new Error('Failed to create order', { cause: { status: 500 } })
+      return rollbackWithError(
+        tx,
+        new Error('Failed to create order', { cause: { status: 500 } }),
+      )
     }
 
     const createdOrderItems = tx
@@ -99,10 +124,12 @@ export function createOrder(
       .all()
 
     if (createdOrderItems.length === 0) {
-      tx.rollback()
-      throw new Error('Failed to create order items', {
-        cause: { status: 500 },
-      })
+      return rollbackWithError(
+        tx,
+        new Error('Failed to create order items', {
+          cause: { status: 500 },
+        }),
+      )
     }
 
     const updatedProducts = orderItems.map(({ count, productId }) => {
@@ -113,10 +140,12 @@ export function createOrder(
     const { changes } = updateProductStocksAfterOrder(tx, updatedProducts)
 
     if (changes === 0) {
-      tx.rollback()
-      throw new Error('Failed to update products after creating order', {
-        cause: { status: 500 },
-      })
+      return rollbackWithError(
+        tx,
+        new Error('Failed to update products after creating order', {
+          cause: { status: 500 },
+        }),
+      )
     }
 
     return createdOrder
@@ -124,7 +153,7 @@ export function createOrder(
 }
 
 function updateProductStocksAfterOrder(
-  tx: Parameters<Parameters<typeof db.transaction>[0]>[0],
+  tx: Transaction,
   updatedProducts: OrderedProduct[],
 ) {
   if (updatedProducts.length === 0) {
