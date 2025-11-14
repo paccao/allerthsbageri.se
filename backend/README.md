@@ -49,6 +49,14 @@ act --workflows ".github/workflows/test-backend.yaml" \
     -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:runner-24.04
 ```
 
+## Run only one test suite in the debug console (vs code)
+
+Open the debug console view (not the terminal) and enter the following in the prompt at the bottom
+
+```bash
+pnpm test:only -- **/order.routes*
+```
+
 ## Documentation
 
 ### Customer orders
