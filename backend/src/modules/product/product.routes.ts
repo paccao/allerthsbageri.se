@@ -23,21 +23,6 @@ import {
 const tags = getTags('products')
 
 export async function productRoutes(app: FastifyInstance) {
-  app.get<{ Params: IdParams }>(
-    '/:id',
-    {
-      schema: {
-        params: idParamsSchema,
-        response: {
-          200: getProductSchema,
-          ...getErrorResponseSchemas(401, 404, 500),
-        },
-        tags,
-      },
-    },
-    getProductByIdHandler,
-  )
-
   app.get(
     '/',
     {
@@ -65,6 +50,21 @@ export async function productRoutes(app: FastifyInstance) {
       },
     },
     createProductHandler,
+  )
+
+  app.get<{ Params: IdParams }>(
+    '/:id',
+    {
+      schema: {
+        params: idParamsSchema,
+        response: {
+          200: getProductSchema,
+          ...getErrorResponseSchemas(401, 404, 500),
+        },
+        tags,
+      },
+    },
+    getProductByIdHandler,
   )
 
   app.patch<{ Body: UpdateProductBody; Params: IdParams }>(
