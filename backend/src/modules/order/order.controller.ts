@@ -45,7 +45,7 @@ export async function createOrderHandler(
       phone: customer.phone,
     })
 
-    const createdOrder = await createOrder(
+    const createdOrder = createOrder(
       {
         customerId: createdCustomer.id,
         pickupOccasionId,

@@ -11,33 +11,31 @@ export function createOrder(
   order: typeof orderTable.$inferInsert,
   orderItems: Pick<typeof orderItemTable.$inferInsert, 'count' | 'productId'>[],
 ) {
-  // TODO: Make transaction entirely synchronous since the underlying DB driver is sync
-  return db.transaction(async (tx) => {
+  return db.transaction((tx) => {
     // Get the ordered product and store them as a record for quick lookups
-    const products: Record<OrderedProduct['id'], OrderedProduct> = (
-      await tx
-        .select({
-          id: productTable.id,
-          pickupOccasionId: productTable.pickupOccasionId,
-          maxPerCustomer: productTable.maxPerCustomer,
-          stock: productTable.stock,
-          price: productTable.price,
-        })
-        .from(productTable)
-        .where(
-          inArray(
-            productTable,
-            orderItems.map(({ productId }) => productId),
-          ),
-        )
-        .execute()
-    ).reduce(
-      (products, product) => {
-        products[product.id] = product
-        return products
-      },
-      {} as Record<OrderedProduct['id'], OrderedProduct>,
-    )
+    const products: Record<OrderedProduct['id'], OrderedProduct> = tx
+      .select({
+        id: productTable.id,
+        pickupOccasionId: productTable.pickupOccasionId,
+        maxPerCustomer: productTable.maxPerCustomer,
+        stock: productTable.stock,
+        price: productTable.price,
+      })
+      .from(productTable)
+      .where(
+        inArray(
+          productTable,
+          orderItems.map(({ productId }) => productId),
+        ),
+      )
+      .all()
+      .reduce(
+        (products, product) => {
+          products[product.id] = product
+          return products
+        },
+        {} as Record<OrderedProduct['id'], OrderedProduct>,
+      )
 
     for (const item of orderItems) {
       const product = products[item.productId]
@@ -81,18 +79,14 @@ export function createOrder(
       }
     }
 
-    const [createdOrder] = await tx
-      .insert(orderTable)
-      .values(order)
-      .returning()
-      .execute()
+    const [createdOrder] = tx.insert(orderTable).values(order).returning().all()
 
     if (!createdOrder) {
       tx.rollback()
       throw new Error('Failed to create order', { cause: { status: 500 } })
     }
 
-    const createdOrderItems = await tx
+    const createdOrderItems = tx
       .insert(orderItemTable)
       .values(
         orderItems.map((item) => ({
@@ -101,9 +95,10 @@ export function createOrder(
           price: products[item.productId]!.price,
         })),
       )
-      .execute()
+      .returning()
+      .all()
 
-    if (createdOrderItems.changes < 1) {
+    if (createdOrderItems.length === 0) {
       tx.rollback()
       throw new Error('Failed to create order items', {
         cause: { status: 500 },
