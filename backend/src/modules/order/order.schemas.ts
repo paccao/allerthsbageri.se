@@ -1,22 +1,14 @@
 import { z } from 'zod'
+import { createSelectSchema } from 'drizzle-zod'
+
 import { createCustomerBodySchema } from '../customer/customer.schemas.ts'
 import { createOrderItemBodySchema } from '../order-item/order-item.schemas.ts'
+import { orderTable } from '#db/schema.ts'
 
-export const getOrderSchema = z.object({
-  id: z.string(),
-  createdAt: z.date(),
-  customerId: z.int().min(1),
-  pickupOccasionId: z.int().min(1),
-  statusId: z.int().min(1),
-})
+export const getOrderSchema = createSelectSchema(orderTable)
+
 export type Order = z.infer<typeof getOrderSchema>
 export const listOrdersSchema = z.array(getOrderSchema)
-
-export const orderSchema = getOrderSchema.omit({
-  id: true,
-  createdAt: true,
-})
-export type OrderBody = z.infer<typeof orderSchema>
 
 export const createOrderBodySchema = z.object({
   customer: createCustomerBodySchema,
