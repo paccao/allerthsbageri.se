@@ -7,7 +7,7 @@ import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import { createOrderBodySchema } from './order.schemas.ts'
-import type { Product } from '../product/product.schemas.ts'
+import type { CreateProductBody } from '../product/product.schemas.ts'
 import type { GetProductDetail } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
 import { getProductById } from '../product/product.service.ts'
@@ -300,8 +300,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const product1: Product = {
-      id: 1,
+    const product1: CreateProductBody = {
       stock: 5,
       price: 2000,
       maxPerCustomer: 2,
@@ -318,8 +317,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const product2: Product = {
-      id: 2,
+    const product2: CreateProductBody = {
       stock: 2,
       price: 6600,
       maxPerCustomer: 3,
@@ -539,8 +537,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const product1: Product = {
-      id: 2,
+    const product1: CreateProductBody = {
       stock: 2,
       price: 6600,
       maxPerCustomer: null,
@@ -557,8 +554,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const product2: Product = {
-      id: 2,
+    const product2: CreateProductBody = {
       stock: 2,
       price: 6600,
       maxPerCustomer: null,
@@ -575,8 +571,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const product3: Product = {
-      id: 2,
+    const product3: CreateProductBody = {
       stock: 10,
       price: 6600,
       maxPerCustomer: 1,
