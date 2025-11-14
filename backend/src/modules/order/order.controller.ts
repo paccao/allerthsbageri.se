@@ -54,7 +54,7 @@ export async function createOrderHandler(
       orderItems,
     )
 
-    return reply.code(201).send({ orderId: createdOrder.id })
+    return reply.code(201).send(createdOrder)
   } catch (error: any) {
     request.log.error(error, error?.message)
 
