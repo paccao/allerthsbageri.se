@@ -54,7 +54,7 @@ act --workflows ".github/workflows/test-backend.yaml" \
 Open the debug console view (not the terminal) and enter the following in the prompt at the bottom
 
 ```bash
-pnpm test:only -- **/order.routes*
+pnpm test:only -- **/order.routes*.test.ts
 ```
 
 ## Documentation
