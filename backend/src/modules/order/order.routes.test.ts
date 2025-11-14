@@ -246,7 +246,7 @@ suite('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test.only('should be possible to create an order when order item count <= maxPerCustomer', async (t: TestContext) => {
+  test('should be possible to create an order when order item count <= maxPerCustomer', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Särlatorgets marknad',
       location:
@@ -464,10 +464,14 @@ suite('order routes', () => {
     const deserialized = response.json()
 
     t.assert.strictEqual(response.statusCode, 201)
-    t.assert.strictEqual(deserialized.id, 'string') // TODO: assert that orderId is an UUID
+    t.assert.strictEqual(
+      z.uuidv4().safeParse(deserialized.id).success,
+      true,
+      'order id should be a valid UUID v4',
+    )
   })
 
-  test.only('can order when order item count is <= stock, also when maxPerCustomer is null', async (t: TestContext) => {
+  test('can order when order item count is <= stock, also when maxPerCustomer is null', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Hässleholmens marknad',
       location: 'Hässleholms torget',
