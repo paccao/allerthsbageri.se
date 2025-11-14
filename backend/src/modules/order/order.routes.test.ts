@@ -246,7 +246,7 @@ suite('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test.only('should be possible to create an order', async (t: TestContext) => {
+  test.only('should be possible to create an order when order item count <= maxPerCustomer', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Särlatorgets marknad',
       location:
@@ -463,11 +463,11 @@ suite('order routes', () => {
 
     const deserialized = response.json()
 
-    t.assert.strictEqual(badResponse.statusCode, 201)
-    t.assert.strictEqual(deserialized.orderId, 'string') // TODO: assert that orderId is an UUID
+    t.assert.strictEqual(response.statusCode, 201)
+    t.assert.strictEqual(deserialized.id, 'string') // TODO: assert that orderId is an UUID
   })
 
-  test.only('can order when maxPerCustomer is null item count is <= stock', async (t: TestContext) => {
+  test.only('can order when order item count is <= stock, also when maxPerCustomer is null', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Hässleholmens marknad',
       location: 'Hässleholms torget',
@@ -555,7 +555,7 @@ suite('order routes', () => {
       .then((res) => res.json())
 
     const product2: CreateProductBody = {
-      stock: 2,
+      stock: 10,
       price: 6600,
       maxPerCustomer: null,
       pickupOccasionId: createdPickupResponse.id,
@@ -605,7 +605,7 @@ suite('order routes', () => {
           productId: productResponse2.id,
         },
         {
-          count: 3,
+          count: 1,
           productId: productResponse3.id,
         },
       ],
@@ -622,23 +622,24 @@ suite('order routes', () => {
     t.assert.strictEqual(response.statusCode, 201)
 
     const afterCreationProduct1 = await getProductById(productResponse1.id)
-    const afterCreationProduct2 = await getProductById(productResponse2.id)
-    const afterCreationProduct3 = await getProductById(productResponse3.id)
-
     t.assert.strictEqual(
       afterCreationProduct1?.stock,
       (product1.stock -= goodOrder.orderItems[0]!?.count),
-      'Test if products stock is updated after a create Order properly.',
+      'product stock should be updated after successful order',
     )
+
+    const afterCreationProduct2 = await getProductById(productResponse2.id)
     t.assert.strictEqual(
       afterCreationProduct2?.stock,
       (product2.stock -= goodOrder.orderItems[1]!?.count),
-      'Test if products stock is updated after a create Order properly.',
+      'product stock should be updated after successful order',
     )
+
+    const afterCreationProduct3 = await getProductById(productResponse3.id)
     t.assert.strictEqual(
       afterCreationProduct3?.stock,
       (product3.stock -= goodOrder.orderItems[2]!?.count),
-      'Test if products stock is updated after a create Order properly.',
+      'product stock should be updated after successful order, even when maxPerCustomer is set',
     )
   })
 
