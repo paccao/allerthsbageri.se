@@ -28,6 +28,13 @@ export function createOrder(
   orderItems: Pick<typeof orderItemTable.$inferInsert, 'count' | 'productId'>[],
 ) {
   return db.transaction((tx) => {
+    // TODO: read all orders with the same customerId and pickupOccasionId
+    // include orderItems
+    // alreadyOrderedProducts = reduce all orderItems and count, grouped by productId
+
+    // if alreadyOrderedProducts[productId] + products[productId] > product.maxPerCustomer
+    //    error: maxPerCustomer - can not order X (new) + Y (already ordered) when Z is max per customer for this product and pickup occasion
+
     // Get the ordered product and store them as a record for quick lookups
     const products: Record<OrderedProduct['id'], OrderedProduct> = tx
       .select({
