@@ -29,7 +29,8 @@ suite('order routes', () => {
     phone: '+46703666666',
   }
 
-  // have to extend the schema here because the type didnt recognize numbers as strings even though that is what we are supposed to send in the request for creating customers
+  // NOTE: We have to extend the schema here because the type didnt recognize numbers as strings
+  // even though that is what we are supposed to send in the request for creating customers
   const _orderBody = createOrderBodySchema.extend({
     customer: {
       phone: z.string(), // e164number
@@ -42,9 +43,6 @@ suite('order routes', () => {
   before(async () => {
     cookie = await createAdminUser(orderAdmin)
   })
-
-  // TODO: Fix status codes in all relevant tests
-  // TODO: test that the default status id is used - unit test needed since we dont return status id?
 
   test('should return 400 when the specified statusId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
@@ -79,7 +77,6 @@ suite('order routes', () => {
     const order: _CreateOrderBody = {
       customer,
       pickupOccasionId: 1,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -106,7 +103,6 @@ suite('order routes', () => {
     const incorrectOrder1 = {
       customer,
       pickupOccasionId: 1,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -131,7 +127,6 @@ suite('order routes', () => {
     const incorrectOrder2 = {
       customer,
       pickupOccasionId: 1,
-      statusId: 1,
       orderItems: {},
     }
 
@@ -153,7 +148,6 @@ suite('order routes', () => {
     const order = {
       customer,
       pickupOccasion: 'test_wrong',
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -180,7 +174,6 @@ suite('order routes', () => {
     const order = {
       customer,
       pickupOccasionId: 493940394,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -210,7 +203,6 @@ suite('order routes', () => {
         phone: '-',
       },
       pickupOccasionId: 1,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -324,7 +316,6 @@ suite('order routes', () => {
     const badOrder: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id + 999, // pickup occasion ID is wrong here
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -336,9 +327,6 @@ suite('order routes', () => {
         },
       ],
     }
-
-    // TODO: add tests without statusId to verify cases when defaultStatusId kicks in.
-    // TODO: should we test the case when we multiple orderStatusId
 
     const badResponse = await app.inject({
       method: 'POST',
@@ -570,7 +558,6 @@ suite('order routes', () => {
     const goodOrder: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
