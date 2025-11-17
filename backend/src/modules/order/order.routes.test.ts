@@ -397,6 +397,26 @@ suite('order routes', () => {
       'should return 400 when the order items count exceed the stock, but not maxPerCustomer',
     )
 
+    // At least one order item must be provided
+    const badOrder3: _CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [],
+    }
+
+    const badResponse3 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder3,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse3.statusCode,
+      400,
+      'should return 400 when no order items are provided',
+    )
+
     const goodOrder: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,

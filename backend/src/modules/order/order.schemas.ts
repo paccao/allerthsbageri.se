@@ -14,7 +14,6 @@ export const createOrderBodySchema = z.object({
   customer: createCustomerBodySchema,
   pickupOccasionId: z.int().min(1),
   statusId: z.int().min(1).optional(),
-  // TODO: Add test to verify that at least one orderItem is provided
   orderItems: z
     .array(createOrderItemBodySchema)
     .min(1, 'Must contain at least one order item'),
