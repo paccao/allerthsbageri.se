@@ -505,7 +505,7 @@ suite('order routes', () => {
       .then((res) => res.json())
 
     const product1: CreateProductBody = {
-      stock: 2,
+      stock: 4,
       price: 6600,
       maxPerCustomer: null,
       pickupOccasionId: createdPickupResponse.id,
@@ -603,6 +603,51 @@ suite('order routes', () => {
       (product3.stock -= goodOrder.orderItems[2]!?.count),
       'product stock should be updated after successful order, even when maxPerCustomer is set',
     )
+
+    const goodOrder2: _CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 1,
+          productId: productResponse1.id,
+        },
+        {
+          count: 1,
+          productId: productResponse2.id,
+        },
+        {
+          count: 1,
+          productId: productResponse3.id,
+        },
+      ],
+    }
+
+    const response2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: goodOrder2,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      response2.statusCode,
+      201,
+      'it should be possible to create another order for the same customer and pickup occasion as long as maxPerCustomer is not reached for any order item',
+    )
+
+    // TODO: create another order for the same customer
+    // Verify that maxPerCustomer is correctly validated across multiple orders
+
+    // TODO: rename this test case to "test multiple consecutive orders" or similar
+
+    // TODO: Add detailed error messages ("test case descriptions") to when we assert order responses. This allows us to reduce repetition while still keeping separate test cases that build on each other.
+
+    // TODO: create another customer and verify that they can still make orders even when other customers have reached their maxPerCustomer limit in their orders
+
+    // TODO: create a successful order for customer2
+
+    // TODO: create a failing order for customer2 even though their maxPerCustomer is not yet reached, because the product stock for some product they try to order is out.
   })
 
   after(async () => {

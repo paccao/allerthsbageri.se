@@ -1,5 +1,5 @@
 import { type RunResult } from 'better-sqlite3'
-import { inArray, sql, type SQL } from 'drizzle-orm'
+import { eq, and, inArray, sql, type SQL } from 'drizzle-orm'
 
 import { db } from '#db/index.ts'
 import { orderTable, orderItemTable, productTable } from '#db/schema.ts'
@@ -34,6 +34,30 @@ export function createOrder(
 
     // if alreadyOrderedProducts[productId] + products[productId] > product.maxPerCustomer
     //    error: maxPerCustomer - can not order X (new) + Y (already ordered) when Z is max per customer for this product and pickup occasion
+
+    // To properly validate maxPerCustomer, we need to aggregate all the customer's orders for the same pickup occasion.
+    const previousOrders = tx
+      .select()
+      .from(orderTable)
+      .where(
+        and(
+          eq(orderTable.pickupOccasionId, order.pickupOccasionId),
+          eq(orderTable.customerId, order.customerId),
+        ),
+      )
+      .leftJoin(orderItemTable, eq(orderTable.id, orderItemTable.orderId))
+      .all()
+
+    if (previousOrders) {
+      console.dir(
+        { PREVIOUS_ORDERS: previousOrders },
+        { colors: true, depth: 8 },
+      )
+      debugger
+    }
+
+    // TODO: reduce the previous order items, grouped per productId and summarize the total counts.
+    // TODO: Update calculations below to use previousOrderedProducts[id] + products[id] < product[id].stock or similar
 
     // Get the ordered product and store them as a record for quick lookups
     const products: Record<OrderedProduct['id'], OrderedProduct> = tx
