@@ -71,8 +71,6 @@ suite('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  // TODO: test that two default status IDs cause an error
-
   test('should return 400 when any of the specified productId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
       customer,
@@ -345,7 +343,6 @@ suite('order routes', () => {
     const badOrder1: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
-      statusId: 1,
       orderItems: [
         {
           count: 999, // count is greater than maxPerCustomer
@@ -375,7 +372,6 @@ suite('order routes', () => {
     const badOrder2: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
@@ -404,7 +400,6 @@ suite('order routes', () => {
     const goodOrder: _CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
-      statusId: 1,
       orderItems: [
         {
           count: 2,
