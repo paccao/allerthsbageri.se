@@ -6,7 +6,7 @@ import startApp from '#src/app.ts'
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
-import { createOrderBodySchema } from './order.schemas.ts'
+import type { CreateOrderBody } from './order.schemas.ts'
 import type { CreateProductBody } from '../product/product.schemas.ts'
 import type { GetProductDetail } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
@@ -29,15 +29,6 @@ suite('order routes', () => {
     phone: '+46703666666',
   }
 
-  // NOTE: We have to extend the schema here because the type didnt recognize numbers as strings
-  // even though that is what we are supposed to send in the request for creating customers
-  const _orderBody = createOrderBodySchema.extend({
-    customer: {
-      phone: z.string(), // e164number
-    },
-  })
-  type _CreateOrderBody = z.infer<typeof _orderBody>
-
   let cookie: string
 
   before(async () => {
@@ -45,7 +36,7 @@ suite('order routes', () => {
   })
 
   test('should return 400 when the specified statusId is not found', async (t: TestContext) => {
-    const order: _CreateOrderBody = {
+    const order: CreateOrderBody = {
       customer,
       pickupOccasionId: 1,
       statusId: 88889,
@@ -72,7 +63,7 @@ suite('order routes', () => {
   })
 
   test('should return 400 when any of the specified productId is not found', async (t: TestContext) => {
-    const order: _CreateOrderBody = {
+    const order: CreateOrderBody = {
       customer,
       pickupOccasionId: 1,
       orderItems: [
@@ -195,7 +186,7 @@ suite('order routes', () => {
   })
 
   test('should return 400 when incorrect customer was passed', async (t: TestContext) => {
-    const order: _CreateOrderBody = {
+    const order: CreateOrderBody = {
       customer: {
         name: 'John Doe',
         phone: '-',
@@ -311,7 +302,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const badOrder: _CreateOrderBody = {
+    const badOrder: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id + 999, // pickup occasion ID is wrong here
       orderItems: [
@@ -340,7 +331,7 @@ suite('order routes', () => {
     )
 
     // Too many orderItems of one kind (maxPerCustomer)
-    const badOrder1: _CreateOrderBody = {
+    const badOrder1: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [
@@ -369,7 +360,7 @@ suite('order routes', () => {
     )
 
     // Too many orderItems of one kind (maxPerCustomer)
-    const badOrder2: _CreateOrderBody = {
+    const badOrder2: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [
@@ -398,7 +389,7 @@ suite('order routes', () => {
     )
 
     // At least one order item must be provided
-    const badOrder3: _CreateOrderBody = {
+    const badOrder3: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [],
@@ -417,7 +408,7 @@ suite('order routes', () => {
       'should return 400 when no order items are provided',
     )
 
-    const goodOrder: _CreateOrderBody = {
+    const goodOrder: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [
@@ -570,7 +561,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const goodOrder: _CreateOrderBody = {
+    const goodOrder: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [
@@ -619,7 +610,7 @@ suite('order routes', () => {
       'product stock should be updated after successful order, even when maxPerCustomer is set',
     )
 
-    const goodOrder2: _CreateOrderBody = {
+    const goodOrder2: CreateOrderBody = {
       customer,
       pickupOccasionId: createdPickupResponse.id,
       orderItems: [
