@@ -24,6 +24,11 @@ suite('order routes', () => {
     password: '123456',
   }
 
+  const customer = {
+    name: 'John Doe',
+    phone: '+46703666666',
+  }
+
   // have to extend the schema here because the type didnt recognize numbers as strings even though that is what we are supposed to send in the request for creating customers
   const _orderBody = createOrderBodySchema.extend({
     customer: {
@@ -43,10 +48,7 @@ suite('order routes', () => {
 
   test('should return 400 when the specified statusId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: 1,
       statusId: 88889,
       orderItems: [
@@ -75,10 +77,7 @@ suite('order routes', () => {
 
   test('should return 400 when any of the specified productId is not found', async (t: TestContext) => {
     const order: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: 1,
       statusId: 1,
       orderItems: [
@@ -105,10 +104,7 @@ suite('order routes', () => {
 
   test('should return 400 when incorrect orderItems was passed', async (t: TestContext) => {
     const incorrectOrder1 = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: 1,
       statusId: 1,
       orderItems: [
@@ -133,10 +129,7 @@ suite('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
 
     const incorrectOrder2 = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: 1,
       statusId: 1,
       orderItems: {},
@@ -158,10 +151,7 @@ suite('order routes', () => {
 
   test('should return 400 when incorrect pickupOccasion was passed', async (t: TestContext) => {
     const order = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasion: 'test_wrong',
       statusId: 1,
       orderItems: [
@@ -188,10 +178,7 @@ suite('order routes', () => {
 
   test('should return 400 when specified pickupOccasionId is not found', async (t: TestContext) => {
     const order = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: 493940394,
       statusId: 1,
       orderItems: [
@@ -335,10 +322,7 @@ suite('order routes', () => {
       .then((res) => res.json())
 
     const badOrder: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: createdPickupResponse.id + 999, // pickup occasion ID is wrong here
       statusId: 1,
       orderItems: [
@@ -371,10 +355,7 @@ suite('order routes', () => {
 
     // Too many orderItems of one kind (maxPerCustomer)
     const badOrder1: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: createdPickupResponse.id,
       statusId: 1,
       orderItems: [
@@ -404,10 +385,7 @@ suite('order routes', () => {
 
     // Too many orderItems of one kind (maxPerCustomer)
     const badOrder2: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: createdPickupResponse.id,
       statusId: 1,
       orderItems: [
@@ -436,10 +414,7 @@ suite('order routes', () => {
     )
 
     const goodOrder: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: createdPickupResponse.id,
       statusId: 1,
       orderItems: [
@@ -593,10 +568,7 @@ suite('order routes', () => {
       .then((res) => res.json())
 
     const goodOrder: _CreateOrderBody = {
-      customer: {
-        name: 'John Doe',
-        phone: '+46703666666',
-      },
+      customer,
       pickupOccasionId: createdPickupResponse.id,
       statusId: 1,
       orderItems: [
@@ -622,7 +594,6 @@ suite('order routes', () => {
       headers: { cookie },
     })
 
-    // TODO: fix, 'Transaction function cannot return a promise' - its from createOrder
     t.assert.strictEqual(response.statusCode, 201)
 
     const afterCreationProduct1 = await getProductById(productResponse1.id)
