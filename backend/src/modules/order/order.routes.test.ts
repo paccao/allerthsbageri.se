@@ -437,7 +437,11 @@ suite.only('order routes', () => {
 
     const deserialized = response.json()
 
-    t.assert.strictEqual(response.statusCode, 201)
+    t.assert.strictEqual(
+      response.statusCode,
+      201,
+      'can create an order when the body is valid and neither stock has run out or maxPerCustomer is exceeded',
+    )
     t.assert.strictEqual(
       z.uuidv4().safeParse(deserialized.id).success,
       true,
@@ -772,8 +776,6 @@ suite.only('order routes', () => {
       'customer2 can order productA even if another customer has reached maxPerCustomer for it, as long as productA remains in stock',
     )
 
-    // TODO: test that customer2 can not order productA when it has run out of stock
-
     const badOrderCustomer2: CreateOrderBody = {
       customer: customer2,
       pickupOccasionId: createdPickupResponse.id,
@@ -792,15 +794,11 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    // TODO: Isolate test suites (separate db) - This test could fail if other test suites modify products that we created in this suite
-
     t.assert.strictEqual(
       badResponseCustomer2.statusCode,
       400,
       'customer2 can not order product if it has run out of stock size',
     )
-
-    // TODO: Add detailed error messages ("test case descriptions") to when we assert order responses. This allows us to reduce repetition while still keeping separate test cases that build on each other.
   })
 
   after(async () => {
