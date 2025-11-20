@@ -912,8 +912,6 @@ suite.only('order routes', () => {
       headers: { cookie },
     })
 
-    // TODO: Isolate test suites (separate db) - This test could fail if other test suites modify products that we created in this suite
-
     t.assert.strictEqual(
       goodResponseCustomer2.statusCode,
       201,

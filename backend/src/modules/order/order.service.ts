@@ -4,6 +4,7 @@ import { eq, and, inArray, sql, type SQL } from 'drizzle-orm'
 import { db } from '#db/index.ts'
 import { orderTable, orderItemTable, productTable } from '#db/schema.ts'
 import type { Product } from '../product/product.schemas.ts'
+import type { OrderItem } from '../order-item/order-item.schemas.ts'
 
 type OrderedProduct = Omit<Product, 'productDetailsId'>
 
@@ -42,16 +43,15 @@ export function createOrder(
       .all()
 
     // Aggregate previous orders item count per productId in a record
-    type ProductCountMap = Record<number, number>
-    const previousOrderedProducts: ProductCountMap = {}
+    const previousOrderItems: Record<OrderItem['id'], OrderItem['count']> = {}
 
     for (const row of previousOrders) {
       const item = row.order_item
       if (!item) continue // a left‑joined row may be null
       const { productId, count } = item
 
-      previousOrderedProducts[productId] =
-        (previousOrderedProducts[productId] ?? 0) + count
+      previousOrderItems[productId] =
+        (previousOrderItems[productId] ?? 0) + count
     }
 
     // Get the ordered product and store them as a record for quick lookups
@@ -101,7 +101,7 @@ export function createOrder(
         )
       }
 
-      alreadyOrdered = previousOrderedProducts[item.productId] ?? 0
+      alreadyOrdered = previousOrderItems[item.productId] ?? 0
       totalCount = alreadyOrdered + item.count
 
       if (
