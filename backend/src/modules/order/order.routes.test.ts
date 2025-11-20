@@ -660,6 +660,7 @@ suite.only('order routes', () => {
 
     t.assert.strictEqual(
       totalOrderOfProduct3 <= product3.maxPerCustomer!,
+      true,
       'second consecutive order for the same customer does not exceed maxPerCustomer',
     )
 
