@@ -48,16 +48,18 @@ export function createOrder(
       .leftJoin(orderItemTable, eq(orderTable.id, orderItemTable.orderId))
       .all()
 
-    if (previousOrders) {
-      console.dir(
-        { PREVIOUS_ORDERS: previousOrders },
-        { colors: true, depth: 8 },
-      )
-      debugger
-    }
+    // Aggregate previous orders item count per productId in a record
+    type ProductCountMap = Record<number, number>
+    const previousOrderedProducts: ProductCountMap = {}
 
-    // TODO: reduce the previous order items, grouped per productId and summarize the total counts.
-    // TODO: Update calculations below to use previousOrderedProducts[id] + products[id] < product[id].stock or similar
+    for (const row of previousOrders) {
+      const item = row.order_item
+      if (!item) continue // a left‑joined row may be null
+      const { productId, count } = item
+
+      previousOrderedProducts[productId] =
+        (previousOrderedProducts[productId] ?? 0) + count
+    }
 
     // Get the ordered product and store them as a record for quick lookups
     const products: Record<OrderedProduct['id'], OrderedProduct> = tx
@@ -84,6 +86,9 @@ export function createOrder(
         {} as Record<OrderedProduct['id'], OrderedProduct>,
       )
 
+    let alreadyOrdered
+    let totalCount
+
     for (const item of orderItems) {
       const product = products[item.productId]
       if (!product) {
@@ -102,14 +107,17 @@ export function createOrder(
         )
       }
 
+      alreadyOrdered = previousOrderedProducts[item.productId] ?? 0
+      totalCount = alreadyOrdered + item.count
+
       if (
         product.maxPerCustomer !== null &&
-        item.count > product.maxPerCustomer
+        totalCount > product.maxPerCustomer
       ) {
         return rollbackWithError(
           tx,
           new Error(
-            `Unable to order ${item.count} of product because max per customer is ${product.maxPerCustomer}`,
+            `Unable to order ${totalCount} of product because max per customer is ${product.maxPerCustomer}`,
             { cause: { status: 400, details: { productId: product.id } } },
           ),
         )
