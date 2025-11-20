@@ -592,21 +592,21 @@ suite('order routes', () => {
     const afterCreationProduct1 = await getProductById(productResponse1.id)
     t.assert.strictEqual(
       afterCreationProduct1?.stock,
-      (product1.stock -= goodOrder.orderItems[0]!?.count),
+      product1.stock - goodOrder.orderItems[0]!.count,
       'product stock should be updated after successful order',
     )
 
     const afterCreationProduct2 = await getProductById(productResponse2.id)
     t.assert.strictEqual(
       afterCreationProduct2?.stock,
-      (product2.stock -= goodOrder.orderItems[1]!?.count),
+      product2.stock - goodOrder.orderItems[1]!.count,
       'product stock should be updated after successful order',
     )
 
     const afterCreationProduct3 = await getProductById(productResponse3.id)
     t.assert.strictEqual(
       afterCreationProduct3?.stock,
-      (product3.stock -= goodOrder.orderItems[2]!?.count),
+      product3.stock - goodOrder.orderItems[2]!.count,
       'product stock should be updated after successful order, even when maxPerCustomer is set',
     )
 
