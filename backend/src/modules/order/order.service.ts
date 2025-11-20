@@ -28,13 +28,6 @@ export function createOrder(
   orderItems: Pick<typeof orderItemTable.$inferInsert, 'count' | 'productId'>[],
 ) {
   return db.transaction((tx) => {
-    // TODO: read all orders with the same customerId and pickupOccasionId
-    // include orderItems
-    // alreadyOrderedProducts = reduce all orderItems and count, grouped by productId
-
-    // if alreadyOrderedProducts[productId] + products[productId] > product.maxPerCustomer
-    //    error: maxPerCustomer - can not order X (new) + Y (already ordered) when Z is max per customer for this product and pickup occasion
-
     // To properly validate maxPerCustomer, we need to aggregate all the customer's orders for the same pickup occasion.
     const previousOrders = tx
       .select()
@@ -102,6 +95,7 @@ export function createOrder(
         return rollbackWithError(
           tx,
           new Error('Order items should be from the selected pickup occasion', {
+            // TODO: Fix? This might not be a user inflicted error
             cause: { status: 400 },
           }),
         )
@@ -117,7 +111,7 @@ export function createOrder(
         return rollbackWithError(
           tx,
           new Error(
-            `Unable to order ${totalCount} of product because max per customer is ${product.maxPerCustomer}`,
+            `Unable to order because total count of orders, ${totalCount}, exceeds max per customer limit: ${product.maxPerCustomer}`,
             { cause: { status: 400, details: { productId: product.id } } },
           ),
         )
@@ -129,7 +123,7 @@ export function createOrder(
           new Error(
             product.stock > 0
               ? `Unable to order ${item.count} of product because only ${product.stock} remains in stock`
-              : `Unable to order ${item.count} of product is out of stock`,
+              : `Unable to order ${item.count} of product because there is not enough stock`,
             {
               cause: {
                 status: 400,
