@@ -311,7 +311,7 @@
 
             <section>
               <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                Saxofonmeditation vid sjön
+                Saxofonmeditation
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
@@ -337,7 +337,7 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  21 september 2025
+                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11, 7/12
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -345,10 +345,8 @@
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span>
-                  Grovare Spången 101, utanför Hökerum
+                  Grovare Spången 101, utanför Hökerum. Vintertid, Equmeniakyrkan, Hökerum.
                 </p>
-
-                <p class="my-4">Kommande meditiationer: 19/10, 2/11, 16/11, 7/12</p>
 
                 <p class="text-center font-bold">
                   Välkommen med din anmälan till:
@@ -356,7 +354,6 @@
                 <div class="flex justify-center text-center">
                   <EncryptedEmail />
                 </div>
-                <p class="my-2 text-center text-lg">Välkommen!</p>
               </div>
             </section>
 
