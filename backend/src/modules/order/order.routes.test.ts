@@ -17,7 +17,7 @@ const { createAdminUser } = getTestingUtils(app)
 
 const UNIX_HOUR_MS = 3600000 // 3600000  is 1 hour in unix time in milliseconds
 
-suite('order routes', () => {
+suite.only('order routes', () => {
   const orderAdmin = {
     username: 'orderAdmin',
     name: 'orderAdmin',
@@ -27,6 +27,11 @@ suite('order routes', () => {
   const customer = {
     name: 'John Doe',
     phone: '+46703666666',
+  }
+
+  const customer2 = {
+    name: 'Angela Lawson',
+    phone: '+46704555555',
   }
 
   let cookie: string
@@ -440,7 +445,7 @@ suite('order routes', () => {
     )
   })
 
-  test('can order when order item count is <= stock, also when maxPerCustomer is null', async (t: TestContext) => {
+  test('can handle multiple consecutive orders', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Hässleholmens marknad',
       location: 'Hässleholms torget',
@@ -547,7 +552,7 @@ suite('order routes', () => {
     const product3: CreateProductBody = {
       stock: 10,
       price: 6600,
-      maxPerCustomer: 1,
+      maxPerCustomer: 2,
       pickupOccasionId: createdPickupResponse.id,
       productDetailsId: productDetailResponse3.id,
     }
@@ -587,7 +592,11 @@ suite('order routes', () => {
       headers: { cookie },
     })
 
-    t.assert.strictEqual(response.statusCode, 201)
+    t.assert.strictEqual(
+      response.statusCode,
+      201,
+      'customer can create an order',
+    )
 
     const afterCreationProduct1 = await getProductById(productResponse1.id)
     t.assert.strictEqual(
@@ -642,18 +651,156 @@ suite('order routes', () => {
       'it should be possible to create another order for the same customer and pickup occasion as long as maxPerCustomer is not reached for any order item',
     )
 
-    // TODO: create another order for the same customer
-    // Verify that maxPerCustomer is correctly validated across multiple orders
+    const totalOrderOfProduct3 =
+      goodOrder.orderItems[2]!.count + goodOrder2.orderItems[2]!.count
 
-    // TODO: rename this test case to "test multiple consecutive orders" or similar
+    t.assert.strictEqual(
+      totalOrderOfProduct3 <= product3.maxPerCustomer!,
+      'second consecutive order for the same customer does not exceed maxPerCustomer',
+    )
+
+    const afterOrder2product1 = await getProductById(productResponse1.id)
+    t.assert.strictEqual(
+      afterOrder2product1?.stock,
+      product1.stock -
+        goodOrder.orderItems[0]!.count -
+        goodOrder2.orderItems[0]!.count,
+      'product stock should be updated after 2 successful orders',
+    )
+
+    const afterOrder2product2 = await getProductById(productResponse2.id)
+    t.assert.strictEqual(
+      afterOrder2product2?.stock,
+      product2.stock -
+        goodOrder.orderItems[1]!.count -
+        goodOrder2.orderItems[1]!.count,
+      'product stock should be updated after 2 successful orders',
+    )
+
+    const afterOrder2product3 = await getProductById(productResponse3.id)
+    t.assert.strictEqual(
+      afterOrder2product3?.stock,
+      product3.stock -
+        goodOrder.orderItems[2]!.count -
+        goodOrder2.orderItems[2]!.count,
+      'product stock should be updated after 2 successful orders, even when maxPerCustomer is set',
+    )
+
+    const badOrderCustomer1: CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 1,
+          productId: productResponse1.id,
+        },
+        {
+          count: 1,
+          productId: productResponse2.id,
+        },
+        {
+          count: 1, // this will exceed maxPerCustomer
+          productId: productResponse3.id,
+        },
+      ],
+    }
+
+    const badResponseCustomer1 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrderCustomer1,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponseCustomer1.statusCode,
+      400,
+      'it should not be possible to exceed maxPerCustomer across multiple orders, despite the request body being type-valid',
+    )
+
+    const goodOrderAfterMaxPerCustomerExceeded: CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 1,
+          productId: productResponse1.id,
+        },
+        {
+          count: 1,
+          productId: productResponse2.id,
+        },
+      ],
+    }
+
+    const goodResponseAfterMaxPerCustomerExceeded = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: goodOrderAfterMaxPerCustomerExceeded,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      goodResponseAfterMaxPerCustomerExceeded.statusCode,
+      201,
+      'customer1 can create an order if they order other products than the one where they reached maxPerCustomer',
+    )
+
+    const goodOrderCustomer2: CreateOrderBody = {
+      customer: customer2,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 1,
+          productId: productResponse3.id,
+        },
+      ],
+    }
+
+    const goodResponseCustomer2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: goodOrderCustomer2,
+      headers: { cookie },
+    })
+
+    // TODO: Isolate test suites (separate db) - This test could fail if other test suites modify products that we created in this suite
+
+    t.assert.strictEqual(
+      goodResponseCustomer2.statusCode,
+      201,
+      'customer2 can order productA even if another customer has reached maxPerCustomer for it, as long as productA remains in stock',
+    )
+
+    // TODO: test that customer2 can not order productA when it has run out of stock
+
+    const badOrderCustomer2: CreateOrderBody = {
+      customer: customer2,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 2, // Exceed stock size
+          productId: productResponse1.id,
+        },
+      ],
+    }
+
+    const badResponseCustomer2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrderCustomer2,
+      headers: { cookie },
+    })
+
+    // TODO: Isolate test suites (separate db) - This test could fail if other test suites modify products that we created in this suite
+
+    t.assert.strictEqual(
+      badResponseCustomer2.statusCode,
+      400,
+      'customer2 can not order product if it has run out of stock size',
+    )
 
     // TODO: Add detailed error messages ("test case descriptions") to when we assert order responses. This allows us to reduce repetition while still keeping separate test cases that build on each other.
-
-    // TODO: create another customer and verify that they can still make orders even when other customers have reached their maxPerCustomer limit in their orders
-
-    // TODO: create a successful order for customer2
-
-    // TODO: create a failing order for customer2 even though their maxPerCustomer is not yet reached, because the product stock for some product they try to order is out.
   })
 
   after(async () => {
