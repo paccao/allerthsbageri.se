@@ -446,14 +446,14 @@
               </div>
 
               <div class="my-4">
-                <div class="flex justify-center">
+                <div class="flex justify-center max-w-[320px]-sm w-full">
                   <enhanced:img
-                    class="max-w-[250px] rounded-l-md object-cover shadow-md"
+                    class="w-full rounded-l-md object-cover shadow-md"
                     src={mariaBlender}
                     alt="Maria mixar ört-smoothie."
                   />
                   <enhanced:img
-                    class="max-w-[250px] rounded-r-md object-cover shadow-md"
+                    class="w-full rounded-r-md object-cover shadow-md"
                     src={vitsippor}
                     alt="Vandring bland vitsippor."
                   />
