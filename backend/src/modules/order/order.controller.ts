@@ -12,9 +12,6 @@ export async function createOrderHandler(
   let { customer, pickupOccasionId, statusId, orderItems } = request.body
 
   try {
-    // TODO: Verify that it's only possible to order from this pickup occasion between bookingStart and bookingEnd
-    // TODO: Add test to ensure orders can NOT be created before the bookingStart
-    // TODO: Add test to ensure orders can NOT be created after the bookingEnd
     const pickup = await getPickupOccasion(pickupOccasionId)
     if (!pickup) {
       throw new Error('Specified pickup occasion not found', {

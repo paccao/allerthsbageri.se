@@ -219,6 +219,149 @@ suite.only('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
+  test('should only be possible to order from a pickup occasion between bookingStart and bookingEnd', async (t: TestContext) => {
+    // attempt creating order before bookingStart
+    const pickupOccasion1 = {
+      name: 'Särlatorgets marknad',
+      location:
+        'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
+      bookingStart: new Date(Date.now() + UNIX_HOUR_MS),
+      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS * 2),
+      pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 3),
+      pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
+    }
+
+    const createdPickupResponse1: GetPickupOccasion = await app
+      .inject({
+        method: 'POST',
+        url: '/api/pickups/',
+        body: pickupOccasion1,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const productDetail: GetProductDetail = {
+      id: 1,
+      name: 'Kärleksbröd med Emmer',
+      description: 'En limpa perfekt som en gåva på alla hjärtans dag',
+      image: 'https://allerthsbageri.se/love',
+      vatPercentage: 10,
+    }
+
+    const productDetailResponse = await app
+      .inject({
+        method: 'POST',
+        url: '/api/product-details/',
+        body: productDetail,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product1: CreateProductBody = {
+      stock: 5,
+      price: 2000,
+      maxPerCustomer: 2,
+      pickupOccasionId: createdPickupResponse1.id,
+      productDetailsId: productDetailResponse.id,
+    }
+
+    const productResponse1 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product1,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    // Date time is wrong here, check pickup occasion above
+    const badOrder1: CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse1.id,
+      orderItems: [
+        {
+          count: 2,
+          productId: productResponse1.id,
+        },
+      ],
+    }
+
+    const badResponse1 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder1,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse1.statusCode,
+      400,
+      'orders can not be created before the bookingStart of a pickup occasion',
+    )
+
+    // attempt creating order after bookingEnd
+    const pickupOccasion2 = {
+      name: 'Särlatorgets marknad',
+      location:
+        'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
+      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      bookingEnd: new Date(Date.now() - UNIX_HOUR_MS),
+      pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 3),
+      pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
+    }
+
+    const createdPickupResponse2: GetPickupOccasion = await app
+      .inject({
+        method: 'POST',
+        url: '/api/pickups/',
+        body: pickupOccasion2,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    const product2: CreateProductBody = {
+      stock: 5,
+      price: 2000,
+      maxPerCustomer: 2,
+      pickupOccasionId: createdPickupResponse1.id,
+      productDetailsId: productDetailResponse.id,
+    }
+
+    const productResponse2 = await app
+      .inject({
+        method: 'POST',
+        url: '/api/products/',
+        body: product2,
+        headers: { cookie },
+      })
+      .then((res) => res.json())
+
+    // Date time is wrong here, check pickup occasion above
+    const badOrder2: CreateOrderBody = {
+      customer,
+      pickupOccasionId: createdPickupResponse2.id,
+      orderItems: [
+        {
+          count: 2,
+          productId: productResponse2.id,
+        },
+      ],
+    }
+
+    const badResponse2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: badOrder2,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      badResponse2.statusCode,
+      400,
+      'orders can not be created after the bookingEnd of a pickup occasion',
+    )
+  })
+
   test('should be possible to create an order when order item count <= maxPerCustomer', async (t: TestContext) => {
     const pickupOccasion = {
       name: 'Särlatorgets marknad',
