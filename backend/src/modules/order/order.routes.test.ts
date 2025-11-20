@@ -800,6 +800,34 @@ suite.only('order routes', () => {
       400,
       'customer2 can not order product if it has run out of stock size',
     )
+
+    const goodOrder2Customer2: CreateOrderBody = {
+      customer: customer2,
+      pickupOccasionId: createdPickupResponse.id,
+      orderItems: [
+        {
+          count: 2,
+          productId: productResponse2.id,
+        },
+        {
+          count: 2,
+          productId: productResponse2.id,
+        },
+      ],
+    }
+
+    const goodResponse2Customer2 = await app.inject({
+      method: 'POST',
+      url: '/api/orders/',
+      body: goodOrder2Customer2,
+      headers: { cookie },
+    })
+
+    t.assert.strictEqual(
+      goodResponse2Customer2.statusCode,
+      201,
+      'can order with multiple orderItems of the same ID',
+    )
   })
 
   after(async () => {
