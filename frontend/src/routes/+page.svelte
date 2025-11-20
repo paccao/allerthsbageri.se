@@ -24,6 +24,8 @@
   import breadPrenumeration from '$assets/brod-prenumeration.jpeg?enhanced'
   import breadMarket from '$assets/brod-marknad.jpeg?enhanced'
   import leaderSjuharad from '$assets/leader-sjuharad.png?enhanced'
+  import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
+  import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
 
   const bakingCourseDate = new Date('2025-11-23').toLocaleString('sv-SE', {
     dateStyle: 'full',
@@ -308,6 +310,92 @@
             <h4 class="mb-4 text-center font-display text-2xl">
               Kommande event:
             </h4>
+
+            <section>
+              <h2 class="mb-4 text-center font-display text-4xl font-bold">Är du redo för positiv förändring?</h2>
+              <div class="flex justify-center">
+                <p class="my-2 max-w-screen-sm text-2xl">
+                  SAXOFONRETREAT 20/12 kl 9.30 - ca 17.00
+                </p>
+              </div>
+
+              <div class="flex justify-center">
+                <p class="my-2 max-w-screen-sm">
+                  Ge dej själv den bästa julklappen - kreativ tid för din själ
+                </p>
+              </div>
+
+              <div class="flex justify-center">
+                <p class="my-2 max-w-screen-sm">
+                  Välkommen till en magisk dag där du får chans att släppa vardagens stress och måsten och istället påbörja din inre resa mot ett sannare jag.
+                </p>
+              </div>
+
+              <enhanced:img
+                class="mx-auto mt-8 my-8 h-auto object-cover max-w-[500px] w-full"
+                src={saxophoneRetreat}
+                alt="Välkommen till en saxofonretreat"
+              />
+
+              <div class="flex justify-center">
+                <p class="my-2 max-w-screen-sm">
+                  I denna endagsretreat får du nya insikter, du får möta andra likasinnade och om du själv vill så öppnas nya dörrar för dej, du får växa som människa.
+                </p>
+              </div>
+              <div class="mx-auto my-2 max-w-screen-sm">Denna dag är djupt transformerande/ett identitetsskifte. Det blir magiskt.</div>
+
+              <div class="flex justify-center">
+                <p class="my-2 max-w-screen-sm">
+                  Maggan Allerth heter jag som leder dagen. Du får del av mina saxofoners rogivande toners musik, kristallskålarnas milda mjuka helande, läkande sång, dikter och rörelse. Du får med dej nya verktyg hem som du kan använda i din vardag såsom färgövning, andning bland annat. Ett yogapass med Lotta Andersson som yogainstruktör och gongspel ingår också.
+                </p>
+              </div>
+
+              <enhanced:img
+                class="mx-auto my-8 h-auto object-cover max-w-[350px] w-full"
+                src={saxophoneRetreatBread}
+                alt="Bild på bröd vid saxofonretreat"
+              />
+              <div class="mx-auto max-w-screen-sm mb-2">Min intention med dagen är att du ska få ta emot, få vila i dej själv, känna glädje och stilla ro mitt i allt det du står i just nu och upptäcka nya sidor hos dej själv.</div>
+
+              <div class="mx-auto max-w-screen-sm my-2">
+                <p>
+                  Denna heldag inkluderar mat, <a
+                    href={instagramProfileLink}
+                    target="_blank"
+                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                    >@allerthsbageri</a
+                  > står för surdegsbröd till lunch & även något gott till eftermiddagsfikat.
+                </p>
+                <p>Investeringen i dej själv kostar 2222 kr, anmälan senast den 16/12 kl 18.00.
+                </p>
+                <p>Det finns möjlighet till boka tidigt rabatt 1990 kr senast 30/11.</p>
+              </div>
+
+              <Divider class="my-5" />
+
+              <div class="mx-auto max-w-screen-sm my-2">
+                <p>
+                  Betalning sker vid ankomst. Swish eller kontant.
+                </p>
+                <p>Meddela gärna allergier i god tid.</p>
+              </div>
+
+              <div class="mx-auto max-w-screen-sm">
+                <p class="my-2">
+                  <span class="font-bold">Var:</span>
+                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad
+                </p>
+
+                <p class="text-center font-bold">
+                  Välkommen med din anmälan eller frågor till:
+                </p>
+                <div class="flex justify-center text-center">
+                  <EncryptedEmail />
+                </div>
+              </div>
+            </section>
+
+            <Divider />
 
             <section>
               <h2 class="mb-4 text-center font-display text-4xl font-bold">
