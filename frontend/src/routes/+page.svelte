@@ -342,7 +342,6 @@
                   I denna endagsretreat får du nya insikter, du får möta andra likasinnade och om du själv vill så öppnas nya dörrar för dej, du får växa som människa.
                 </p>
               </div>
-              <div class="mx-auto my-2 max-w-screen-sm">Denna dag är djupt transformerande/ett identitetsskifte. Det blir magiskt.</div>
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
@@ -425,7 +424,7 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11, 7/12
+                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11, <span class="font-bold">7/12</span>
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -433,7 +432,7 @@
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span>
-                  Grovare Spången 101, utanför Hökerum. Vintertid, Equmeniakyrkan, Hökerum.
+                  Grovare Spången 101, utanför Hökerum. <span class="font-bold">Vintertid:</span> Equmeniakyrkan, Hökerum.
                 </p>
 
                 <p class="text-center font-bold">
