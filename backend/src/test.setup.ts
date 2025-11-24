@@ -19,6 +19,7 @@ async function setup() {
 
   // Create a new test DB, push the schema, and seed it with common data
   await execAsync('node --run db -- push', { env: process.env })
+  await execAsync('node src/db/seed.ts', { env: process.env })
 }
 
 await setup()

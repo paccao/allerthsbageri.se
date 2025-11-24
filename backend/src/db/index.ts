@@ -7,4 +7,10 @@ export const db = drizzle({
   connection: { source: apiConfig.dbConnection },
   casing: 'snake_case',
   schema,
+  // This can be useful to debug SQL statements run against the DB
+  // logger: {
+  //   logQuery(query, params) {
+  //     console.dir({ query, params })
+  //   },
+  // },
 })

@@ -1,7 +1,7 @@
 import parsePhoneNumberFromString from 'libphonenumber-js'
 import { z } from 'zod'
 
-export const zPhone = z.string().transform((arg, ctx) => {
+export const zPhone = z.string().transform<string>((arg, ctx) => {
   const phone = parsePhoneNumberFromString(arg.trim(), {
     // Use this default country when the phone number omits country code
     defaultCountry: 'SE',

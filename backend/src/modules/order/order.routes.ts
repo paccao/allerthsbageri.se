@@ -1,7 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 import { createOrderHandler } from './order.controller.ts'
-import { type CreateOrderBody, createOrderBodySchema } from './order.schemas.ts'
+import {
+  type CreateOrderBody,
+  createOrderBodySchema,
+  getOrderSchema,
+} from './order.schemas.ts'
 import { getTags } from '#config/openapi.ts'
+import { getErrorResponseSchemas } from '#utils/common.schemas.ts'
 
 const tags = getTags('orders')
 
@@ -11,6 +16,10 @@ export async function orderRoutes(app: FastifyInstance) {
     {
       schema: {
         body: createOrderBodySchema,
+        response: {
+          201: getOrderSchema,
+          ...getErrorResponseSchemas(400, 401, 500),
+        },
         tags,
       },
     },

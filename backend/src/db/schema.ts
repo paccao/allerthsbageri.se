@@ -25,6 +25,7 @@ export const pickupOccasionTable = sqliteTable('pickup_occasion', {
   id: int().primaryKey({ autoIncrement: true }),
   name: text({ length: 200 }).notNull(),
   location: text({ length: 150 }).notNull(),
+  // IDEA: Maybe rename to bookingStart/bookingEnd to orderStart/orderEnd
   bookingStart: dateField().notNull(),
   bookingEnd: dateField().notNull(),
   pickupStart: dateField().notNull(),
@@ -47,15 +48,10 @@ export const productTable = sqliteTable('product', {
   id: int().primaryKey({ autoIncrement: true }),
   stock: int().notNull(),
   price: int().notNull(),
-  // TODO: Limit how many products of a certain kind that a customer should be allowed to order for the same pickupOccasion
-  // For example, it's better to allow
-  // NOTE: important to limit by customer and pickup occasion, rather than by order and pickup occasion.
-  // Otherwise, a customer could create multiple orders to effectively bypass the limit
-  // So, the endpoint should ensure the ordered product count is available in the stock.
-  // It should also ensure the customer so far have ordered less than the specified maxPerCustomer.
-  // Otherwise, show a friendly error message, and offer to order the other products
-  // TODO: We also need to handle what happens if there are multiple orders at the same time and the stock just run out.
-  // In that case, we should show a message to reach out to see if it can be solved in another way.
+  /**
+   * This limits how many items of this kind of product that can be ordered per customer per pickup occasion.
+   * Note that this applies is both applies in the same order, or if there are multiple orders from the same customer.
+   */
   maxPerCustomer: int(),
   pickupOccasionId: int()
     .notNull()
@@ -68,6 +64,11 @@ export const productTable = sqliteTable('product', {
 export const orderStatusTable = sqliteTable('order_status', {
   id: int().primaryKey({ autoIncrement: true }),
   status: text({ length: 50 }).notNull(),
+  /**
+   * The default order status for new orders.
+   * There should only be one.
+   */
+  isDefault: int({ mode: 'boolean' }).default(false).notNull(),
   color: text({ length: 50 }),
 })
 
@@ -79,8 +80,11 @@ export const orderStatusTable = sqliteTable('order_status', {
 // IDEA: Maybe the order and product concept could be generalized to be reused
 // Or, it might be better to keep two distinct tables since they represent very different things
 // Two separate tables make it easier to change
-export const orderTable = sqliteTable('customer_order', {
-  id: int().primaryKey({ autoIncrement: true }),
+export const orderTable = sqliteTable('order_table', {
+  id: text()
+    .notNull()
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   createdAt: dateField()
     .notNull()
     .$defaultFn(() => new Date().toISOString()),
@@ -102,7 +106,7 @@ export const orderItemTable = sqliteTable('order_item', {
   productId: int()
     .notNull()
     .references(() => productTable.id),
-  orderId: int()
+  orderId: text()
     .notNull()
     .references(() => orderTable.id, { onDelete: 'cascade' }),
 })

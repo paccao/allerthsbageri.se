@@ -2,6 +2,15 @@ import { db } from '#db/index.ts'
 import { pickupOccasionTable } from '#db/schema.ts'
 import { eq } from 'drizzle-orm'
 
+export async function getPickupOccasion(id: number) {
+  const results = await db
+    .select()
+    .from(pickupOccasionTable)
+    .where(eq(pickupOccasionTable.id, id))
+
+  return results[0]
+}
+
 export async function listPickupOccasions() {
   return db.select().from(pickupOccasionTable)
 }

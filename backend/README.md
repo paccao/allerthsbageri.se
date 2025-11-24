@@ -48,3 +48,19 @@ act --workflows ".github/workflows/test-backend.yaml" \
     --container-architecture linux/amd64 \
     -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:runner-24.04
 ```
+
+## Run only one test suite in the debug console (vs code)
+
+Open the debug console view (not the terminal) and enter the following in the prompt at the bottom
+
+```bash
+pnpm test:only -- **/order.routes*.test.ts
+```
+
+## Documentation
+
+### Customer orders
+
+Customer fills in the pickup occasion, pick the products and go to to next page. They fill in their contact details and click order.
+`POST /api/order` gets sent and creates the customer, order and order item. No email verification or login required.
+If a customer does not follow through with their order, the seller has to flag them manually, its not built into the system initially.
