@@ -95,7 +95,6 @@ export function createOrder(
         return rollbackWithError(
           tx,
           new Error('Order items should be from the selected pickup occasion', {
-            // TODO: Fix? This might not be a user inflicted error
             cause: { status: 400 },
           }),
         )
