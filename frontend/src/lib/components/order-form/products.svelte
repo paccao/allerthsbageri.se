@@ -2,7 +2,7 @@
   import { Button } from '$components/ui/button'
   import * as Card from '$components/ui/card'
   import { toSEKString } from '$lib/currency'
-  import { getBookingContext } from './context'
+  import { getOrderContext } from './context'
   import ProductCount from './product-count.svelte'
   import { draw } from 'svelte/transition'
   import ConfirmDialog from './confirm-dialog.svelte'
@@ -13,11 +13,11 @@
     weekdayShort,
   } from '$lib/datetime'
 
-  const ctx = getBookingContext()
+  const ctx = getOrderContext()
 </script>
 
 <!--
-IDEA: Maybe add a short description at the top to give instructions on how to make a booking
+IDEA: Maybe add a short description at the top to give instructions on how to make an order
 This could be an expandable section with a help icon or similar. Expanded by default and dismissed after the first visit.
 Basically a welcome message that explains how it works with as few words as possible.
 -->

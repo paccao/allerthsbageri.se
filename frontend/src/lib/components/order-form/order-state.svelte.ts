@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { PersistedState } from 'runed'
-import type { PickupOccasion, Product } from './booking-form.svelte'
+import type { PickupOccasion, Product } from './order-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
 import { weekdayAndDate } from '$lib/datetime'
 import { browser } from '$app/environment'
@@ -54,7 +54,7 @@ function clearHash() {
   })
 }
 
-export class BookingState {
+export class OrderState {
   #order = new PersistedState<Order>('order', {
     pickupOccasionId: null,
     items: {},

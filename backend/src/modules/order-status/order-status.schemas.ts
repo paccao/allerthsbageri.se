@@ -4,14 +4,14 @@ export const orderStatusSchema = z.object({
   id: z.int().min(1),
   status: z.union(
     [
-      z.literal('Bokad'),
+      z.literal('Skapad'),
       z.literal('Bekräftad'),
       z.literal('Upphämtad'),
       z.literal('Avbokad'),
     ],
     {
       error:
-        'The property status must be capitalized and one of the literals: Bokad, Bekräftad, Upphämtad, Avbokad',
+        'The property status must be capitalized and one of the literals: Skapad, Bekräftad, Upphämtad, Avbokad',
     },
   ),
   isDefault: z.boolean().default(false).nonoptional(),

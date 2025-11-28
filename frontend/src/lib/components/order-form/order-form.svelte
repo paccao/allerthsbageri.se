@@ -1,7 +1,6 @@
 <script lang="ts" module>
-  import { BookingState } from './booking.svelte'
+  import { OrderState } from './order-state.svelte'
 
-  // NOTE: Maybe rename booking/bokning to order/beställning?
   const pickupOccasions = [
     {
       id: 1,
@@ -86,12 +85,12 @@
 <script lang="ts">
   import { buttonVariants } from '$components/ui/button'
   import { cn } from '$lib/utils'
-  import { setBookingContext } from './context'
-  import BookingFooter from './booking-footer.svelte'
+  import { setOrderContext } from './context'
+  import OrderFooter from './order-footer.svelte'
   import Products from './products.svelte'
-  import Order from './order.svelte'
+  import OrderSummary from './order-summary.svelte'
 
-  const ctx = setBookingContext(new BookingState(randomPickups))
+  const ctx = setOrderContext(new OrderState(randomPickups))
 
   // NOTE: Temoporary for testing
   if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {
@@ -143,7 +142,7 @@ IDEA: Maybe we could simplify the state management with the steps
     {#if ctx.stepId === 'varor'}
       <Products />
     {:else if ctx.stepId === 'order'}
-      <Order />
+      <OrderSummary />
     {:else if ctx.isLastStep}
       <a
         href="/"
@@ -156,6 +155,6 @@ IDEA: Maybe we could simplify the state management with the steps
   </div>
 
   {#if !ctx.isLastStep}
-    <BookingFooter />
+    <OrderFooter />
   {/if}
 </section>

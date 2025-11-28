@@ -58,10 +58,10 @@
         </div>
         <nav class="flex flex-col justify-center">
           <a
-            href="/bokning"
+            href="/order"
             class={cn([buttonVariants({ variant: 'outline', size: 'xl' })])}
           >
-            Boka bröd
+            Beställ bröd
           </a>
         </nav>
       </div>
@@ -591,7 +591,7 @@
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
                   >. Ett surdegsbröd bakat på kultursäd, så som Emmer och
-                  vetemjöl special. Du kan förhandsboka via <EncryptedEmail />
+                  vetemjöl special. Du kan beställa via <EncryptedEmail />
                 </li>
                 <li>
                   Levererar örter och bröd till Grovare Event & kafé, Marie

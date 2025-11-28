@@ -14,7 +14,7 @@ import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-st
 // Only 1 isDefault should be set to true
 const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   {
-    status: 'Bokad',
+    status: 'Skapad',
     isDefault: true,
     color: 'yellow',
   },

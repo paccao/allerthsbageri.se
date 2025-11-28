@@ -26,15 +26,15 @@ export async function createPickupOccasionHandler(
   request: FastifyRequest<{ Body: CreatePickupOccasionBody }>,
   reply: FastifyReply,
 ) {
-  const { name, location, bookingStart, bookingEnd, pickupStart, pickupEnd } =
+  const { name, location, orderStart, orderEnd, pickupStart, pickupEnd } =
     request.body
 
   try {
     const pickup = await createPickupOccasion({
       name,
       location,
-      bookingStart,
-      bookingEnd,
+      orderStart,
+      orderEnd,
       pickupStart,
       pickupEnd,
     })
@@ -52,15 +52,15 @@ export async function updatePickupHandler(
   }>,
   reply: FastifyReply,
 ) {
-  const { name, location, bookingStart, bookingEnd, pickupStart, pickupEnd } =
+  const { name, location, orderStart, orderEnd, pickupStart, pickupEnd } =
     request.body
 
   try {
     const pickup = await updatePickupOccasion(request.params.id, {
       name,
       location,
-      bookingStart: bookingStart?.toISOString(),
-      bookingEnd: bookingEnd?.toISOString(),
+      orderStart: orderStart?.toISOString(),
+      orderEnd: orderEnd?.toISOString(),
       pickupStart: pickupStart?.toISOString(),
       pickupEnd: pickupEnd?.toISOString(),
     })

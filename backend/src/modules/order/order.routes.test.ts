@@ -219,14 +219,14 @@ suite.only('order routes', () => {
     t.assert.strictEqual(response.statusCode, 400)
   })
 
-  test('should only be possible to order from a pickup occasion between bookingStart and bookingEnd', async (t: TestContext) => {
-    // attempt creating order before bookingStart
+  test('should only be possible to order from a pickup occasion between orderStart and orderEnd', async (t: TestContext) => {
+    // attempt creating order before orderStart
     const pickupOccasion1 = {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date(Date.now() + UNIX_HOUR_MS),
-      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS * 2),
+      orderStart: new Date(Date.now() + UNIX_HOUR_MS),
+      orderEnd: new Date(Date.now() + UNIX_HOUR_MS * 2),
       pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 3),
       pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }
@@ -296,16 +296,16 @@ suite.only('order routes', () => {
     t.assert.strictEqual(
       badResponse1.statusCode,
       400,
-      'orders can not be created before the bookingStart of a pickup occasion',
+      'orders can not be created before the orderStart of a pickup occasion',
     )
 
-    // attempt creating order after bookingEnd
+    // attempt creating order after orderEnd
     const pickupOccasion2 = {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
-      bookingEnd: new Date(Date.now() - UNIX_HOUR_MS),
+      orderStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      orderEnd: new Date(Date.now() - UNIX_HOUR_MS),
       pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 3),
       pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }
@@ -358,7 +358,7 @@ suite.only('order routes', () => {
     t.assert.strictEqual(
       badResponse2.statusCode,
       400,
-      'orders can not be created after the bookingEnd of a pickup occasion',
+      'orders can not be created after the orderEnd of a pickup occasion',
     )
   })
 
@@ -367,8 +367,8 @@ suite.only('order routes', () => {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
-      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS),
+      orderStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      orderEnd: new Date(Date.now() + UNIX_HOUR_MS),
       pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 2),
       pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }
@@ -596,8 +596,8 @@ suite.only('order routes', () => {
     const pickupOccasion = {
       name: 'Hässleholmens marknad',
       location: 'Hässleholms torget',
-      bookingStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
-      bookingEnd: new Date(Date.now() + UNIX_HOUR_MS),
+      orderStart: new Date(Date.now() - UNIX_HOUR_MS * 2),
+      orderEnd: new Date(Date.now() + UNIX_HOUR_MS),
       pickupStart: new Date(Date.now() + UNIX_HOUR_MS * 2),
       pickupEnd: new Date(Date.now() + UNIX_HOUR_MS * 4),
     }

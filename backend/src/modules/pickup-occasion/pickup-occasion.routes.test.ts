@@ -27,8 +27,8 @@ suite('pickup occasion routes', () => {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
+      orderStart: new Date('2025-08-23T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-28T17:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
     }
@@ -45,8 +45,8 @@ suite('pickup occasion routes', () => {
     t.assert.strictEqual(response.statusCode, 201)
     t.assert.strictEqual(deserialized.name, pickup.name)
     t.assert.strictEqual(
-      new Date(deserialized.bookingEnd).getTime() >
-        new Date(deserialized.bookingStart).getTime(),
+      new Date(deserialized.orderEnd).getTime() >
+        new Date(deserialized.orderStart).getTime(),
       true,
     )
     t.assert.strictEqual(
@@ -60,8 +60,8 @@ suite('pickup occasion routes', () => {
     const pickup = {
       name: 'testData namn',
       location: 'Kakor, bröd, kex. Kom och köp!',
-      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
+      orderStart: new Date('2025-08-23T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-28T17:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-29T15:30:00.000Z'),
     }
@@ -117,8 +117,8 @@ suite('pickup occasion routes', () => {
     const badPickup = {
       name: 'Testmarknaden',
       location: 'Testa mera tester',
-      bookingStart: new Date('2025-08-28T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-23T08:00:00.000Z'),
+      orderStart: new Date('2025-08-28T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-23T08:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-29T08:59:59.999Z'),
     }
@@ -141,8 +141,8 @@ suite('pickup occasion routes', () => {
     const goodPickup = {
       name: 'Den bästa marknaden som finns',
       location: 'Bröd',
-      bookingStart: new Date('2025-08-22T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-26T17:00:00.000Z'),
+      orderStart: new Date('2025-08-22T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-26T17:00:00.000Z'),
       pickupStart: new Date('2025-08-28T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-28T16:59:59.999Z'),
     }
@@ -159,8 +159,8 @@ suite('pickup occasion routes', () => {
     const badPickup = {
       pickupStart: new Date('2025-08-23T08:00:00.000Z'),
       pickupEnd: new Date('2025-08-23T08:00:00.000Z'),
-      bookingStart: new Date('2025-08-25T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-25T07:59:59.000Z'),
+      orderStart: new Date('2025-08-25T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-25T07:59:59.000Z'),
     }
 
     const updatedPickup = await app.inject({
