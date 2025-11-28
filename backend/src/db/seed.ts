@@ -3,7 +3,7 @@ import type {
   TableConfig,
 } from 'drizzle-orm/sqlite-core'
 
-import { db } from './index.ts'
+import { db } from '#db/index.ts'
 import { orderStatusTable } from './schema.ts'
 import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
 

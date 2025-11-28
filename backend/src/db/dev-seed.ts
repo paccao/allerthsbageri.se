@@ -4,7 +4,7 @@ import type {
 } from 'drizzle-orm/sqlite-core'
 import { hash } from '@node-rs/argon2'
 
-import { db } from './index.ts'
+import { db } from '#db/index.ts'
 import {
   orderStatusTable,
   pickupOccasionTable,

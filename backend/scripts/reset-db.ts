@@ -1,7 +1,7 @@
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'node:url'
 import { sql } from 'drizzle-orm'
 
-import { db } from '../src/db/index.ts'
+import { db } from '#db/index.ts'
 
 async function resetDB() {
   const allTables = (
@@ -34,7 +34,7 @@ async function resetDB() {
   if (unknownTables.length) {
     throw new Error(
       'Please add the following unknown tables to the DB reset script (and delete them in the right order):' +
-      unknownTables.join(', '),
+        unknownTables.join(', '),
     )
   }
 
@@ -57,7 +57,7 @@ async function resetDB() {
 
 // Checks if this script was executed directly to prevent accidental DB resets in prod
 if (import.meta.url.startsWith('file:')) {
-  const modulePath = fileURLToPath(import.meta.url);
+  const modulePath = fileURLToPath(import.meta.url)
   if (process.argv[1] === modulePath) {
     await resetDB()
   }
