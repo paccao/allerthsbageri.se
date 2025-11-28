@@ -24,7 +24,10 @@ export async function setupMockedInMemoryTestDB() {
   // Maybe we could use pushSQLiteSchema()?
   // TODO: Search in the Drizzle codebase for pushSQLiteSchema() usage examples
   // Maybe we could use it to easily prepare the in-memory DB
-  // However, a more future-proof approach could be to just generate the migration files and run them one statement at a time.
+
+  // IDEA: Alternatively, take inspiration from https://github.com/drizzle-team/drizzle-orm/blob/main/drizzle-kit/src/cli/commands/push.ts
+
+  // IDEA: However, a more future-proof approach could be to just generate the migration files and run them one statement at a time.
   // One approach to running the statements: https://www.answeroverflow.com/m/1307948769480015883
 
   // TODO: empty the tmp migrations directory if it exists
