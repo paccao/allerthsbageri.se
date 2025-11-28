@@ -1,15 +1,15 @@
 <script lang="ts">
   import * as Card from '$components/ui/card'
-  import { getBookingContext } from './context'
+  import { getOrderContext } from './context'
   import { toSEKString } from '$lib/currency'
-  import type { Product } from './booking-form.svelte'
+  import type { Product } from './order-form.svelte'
   import ProductCount from './product-count.svelte'
   import { buttonVariants } from '$components/ui/button'
   import PhoneInput from '$components/phone-input.svelte'
   import Label from '$components/ui/label/label.svelte'
   import Input, { inputClasses } from '$components/ui/input/input.svelte'
 
-  const ctx = getBookingContext()
+  const ctx = getOrderContext()
 
   const orderItems = $derived(
     Object.entries(ctx.order.items).reduce<(Product & { count: number })[]>(

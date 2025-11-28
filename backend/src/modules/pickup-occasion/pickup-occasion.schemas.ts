@@ -10,16 +10,16 @@ export const updatePickupOccasionBodySchema = z
   .object({
     name: z.string().max(200).optional(),
     location: z.string().max(150).optional(),
-    bookingStart: z.coerce.date().optional(),
-    bookingEnd: z.coerce.date().optional(),
+    orderStart: z.coerce.date().optional(),
+    orderEnd: z.coerce.date().optional(),
     pickupStart: z.coerce.date().optional(),
     pickupEnd: z.coerce.date().optional(),
   })
-  .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
-    if ((bookingStart || bookingEnd) && !(bookingStart && bookingEnd)) {
+  .superRefine(({ orderStart, orderEnd, pickupStart, pickupEnd }, ctx) => {
+    if ((orderStart || orderEnd) && !(orderStart && orderEnd)) {
       ctx.addIssue({
         code: 'custom',
-        message: 'both bookingStart and bookingEnd must be provided together',
+        message: 'both orderStart and orderEnd must be provided together',
       })
     }
 
@@ -30,11 +30,11 @@ export const updatePickupOccasionBodySchema = z
       })
     }
 
-    if (bookingStart && bookingEnd) {
-      if (bookingStart.getTime() >= bookingEnd.getTime()) {
+    if (orderStart && orderEnd) {
+      if (orderStart.getTime() >= orderEnd.getTime()) {
         ctx.addIssue({
           code: 'custom',
-          message: 'bookingStart must be before bookingEnd',
+          message: 'orderStart must be before orderEnd',
         })
       }
     }
@@ -57,16 +57,16 @@ export const createPickupOccasionBodySchema = z
   .object({
     name: z.string().max(200),
     location: z.string().max(150),
-    bookingStart: z.coerce.date(),
-    bookingEnd: z.coerce.date(),
+    orderStart: z.coerce.date(),
+    orderEnd: z.coerce.date(),
     pickupStart: z.coerce.date(),
     pickupEnd: z.coerce.date(),
   })
-  .superRefine(({ bookingStart, bookingEnd, pickupStart, pickupEnd }, ctx) => {
-    if (bookingStart.getTime() >= bookingEnd.getTime()) {
+  .superRefine(({ orderStart, orderEnd, pickupStart, pickupEnd }, ctx) => {
+    if (orderStart.getTime() >= orderEnd.getTime()) {
       ctx.addIssue({
         code: 'custom',
-        message: 'bookingStart must be before bookingEnd',
+        message: 'orderStart must be before orderEnd',
       })
     }
 

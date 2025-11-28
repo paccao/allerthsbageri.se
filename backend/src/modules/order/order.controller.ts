@@ -21,14 +21,14 @@ export async function createOrderHandler(
 
     const now = Date.now()
 
-    if (now < new Date(pickup.bookingStart).getTime()) {
-      throw new Error('Orders can not be created before bookingStart', {
+    if (now < new Date(pickup.orderStart).getTime()) {
+      throw new Error('Orders can not be created before orderStart', {
         cause: { status: 400 },
       })
     }
 
-    if (now > new Date(pickup.bookingEnd).getTime()) {
-      throw new Error('Orders can not be created after bookingEnd', {
+    if (now > new Date(pickup.orderEnd).getTime()) {
+      throw new Error('Orders can not be created after orderEnd', {
         cause: { status: 400 },
       })
     }

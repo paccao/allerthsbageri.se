@@ -16,14 +16,14 @@ export async function listPickupOccasions() {
 }
 
 export async function createPickupOccasion({
-  bookingStart,
-  bookingEnd,
+  orderStart,
+  orderEnd,
   pickupStart,
   pickupEnd,
   ...data
 }: Pick<typeof pickupOccasionTable.$inferInsert, 'name' | 'location'> & {
-  bookingStart: Date
-  bookingEnd: Date
+  orderStart: Date
+  orderEnd: Date
   pickupStart: Date
   pickupEnd: Date
 }) {
@@ -31,8 +31,8 @@ export async function createPickupOccasion({
     .insert(pickupOccasionTable)
     .values({
       ...data,
-      bookingStart: bookingStart.toISOString(),
-      bookingEnd: bookingEnd.toISOString(),
+      orderStart: orderStart.toISOString(),
+      orderEnd: orderEnd.toISOString(),
       pickupStart: pickupStart.toISOString(),
       pickupEnd: pickupEnd.toISOString(),
     })

@@ -21,13 +21,13 @@
   </a>
 
   <ul class="flex items-center gap-4">
-    {#if page.route.id !== '/bokning'}
+    {#if page.route.id !== '/order'}
       <li>
         <a
-          href="/bokning"
+          href="/order"
           class={cn([buttonVariants({ variant: 'outline', size: 'lg' })])}
         >
-          Boka ditt bröd!
+          Beställ ditt bröd!
         </a>
       </li>
     {/if}

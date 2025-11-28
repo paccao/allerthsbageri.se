@@ -56,8 +56,8 @@ suite('product routes', () => {
     const pickup = {
       name: 'Allerths bageri',
       location: 'Bröd bakat med kärlek',
-      bookingStart: new Date('2025-11-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-11-28T17:00:00.000Z'),
+      orderStart: new Date('2025-11-23T08:00:00.000Z'),
+      orderEnd: new Date('2025-11-28T17:00:00.000Z'),
       pickupStart: new Date('2025-11-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-11-29T16:30:00.000Z'),
     }
@@ -171,8 +171,8 @@ suite('product routes', () => {
       name: 'Särlatorgets marknad',
       location:
         'Kakor, bröd, kex. Kom och hälsa på mig på särlatorgets marknad vetja!',
-      bookingStart: new Date('2025-08-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-08-28T17:00:00.000Z'),
+      orderStart: new Date('2025-08-23T08:00:00.000Z'),
+      orderEnd: new Date('2025-08-28T17:00:00.000Z'),
       pickupStart: new Date('2025-08-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-08-29T16:30:00.000Z'),
     }
@@ -294,8 +294,8 @@ suite('product routes', () => {
     const pickup = {
       name: 'Allerths bageri',
       location: 'Bröd bakat med kärlek',
-      bookingStart: new Date('2025-11-23T08:00:00.000Z'),
-      bookingEnd: new Date('2025-11-28T17:00:00.000Z'),
+      orderStart: new Date('2025-11-23T08:00:00.000Z'),
+      orderEnd: new Date('2025-11-28T17:00:00.000Z'),
       pickupStart: new Date('2025-11-29T09:00:00.000Z'),
       pickupEnd: new Date('2025-11-29T16:30:00.000Z'),
     }

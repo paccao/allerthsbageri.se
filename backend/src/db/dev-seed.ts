@@ -25,8 +25,8 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
     id: 1,
     name: 'Brödbakarnas dag',
     location: 'Stora torget, Borås',
-    bookingStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
-    bookingEnd: new Date('2025-08-28T17:00:00.000Z').toISOString(),
+    orderStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
+    orderEnd: new Date('2025-08-28T17:00:00.000Z').toISOString(),
     pickupStart: new Date('2025-08-29T09:00:00.000Z').toISOString(),
     pickupEnd: new Date('2025-08-29T15:30:00.000Z').toISOString(),
   },
@@ -34,8 +34,8 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
     id: 2,
     name: 'Bäckängsgymnasiets marknad',
     location: 'Lokal marknad på gården utanför Bäckängsgymnasiet',
-    bookingStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
-    bookingEnd: new Date('2025-09-17T23:59:59.999Z').toISOString(),
+    orderStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
+    orderEnd: new Date('2025-09-17T23:59:59.999Z').toISOString(),
     pickupStart: new Date('2025-09-07T10:30:00.000Z').toISOString(),
     pickupEnd: new Date('2025-09-07T16:30:00.000Z').toISOString(),
   },
@@ -111,7 +111,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
 // Only 1 isDefault should be set to true
 const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   {
-    status: 'Bokad',
+    status: 'Skapad',
     isDefault: true,
     color: 'yellow',
   },

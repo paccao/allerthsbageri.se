@@ -1,8 +1,8 @@
 <script lang="ts">
   import Layout from '$layouts/main-layout.svelte'
-  import BookingForm from '$components/booking-form/booking-form.svelte'
+  import OrderForm from '$components/order-form/order-form.svelte'
 </script>
 
 <Layout header>
-  <BookingForm />
+  <OrderForm />
 </Layout>
