@@ -1,9 +1,6 @@
-import { after, before, suite, test, type TestContext } from 'node:test'
-import { eq } from 'drizzle-orm'
+import { before, suite, test, type TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
-import { db } from '#db/index.ts'
-import { userTable } from '#db/schema.ts'
+import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import type {
   CreateProductBody,
@@ -11,6 +8,10 @@ import type {
   UpdateProductBody,
 } from './product.schemas.ts'
 
+// NOTE: important to setup the test DB before importing the app since this module
+await setupMockedInMemoryTestDB()
+
+const startApp = (await import('#src/app.ts')).default
 const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
@@ -24,6 +25,10 @@ suite('product routes', () => {
   let cookie: string
 
   before(async () => {
+    // either mock the sqlite DB here
+    // or set up the mock in the test setup
+    // db = createTestDB()
+
     cookie = await createAdminUser(productAdmin)
   })
 
@@ -459,9 +464,10 @@ suite('product routes', () => {
     t.assert.strictEqual(goodUpdateResponse.json().stock, goodUpdate.stock)
   })
 
-  after(async () => {
-    await db
-      .delete(userTable)
-      .where(eq(userTable.username, productAdmin.username))
-  })
+  // NOTE: This won't be needed since we use a in-memory DB
+  // after(async () => {
+  //   await db
+  //     .delete(userTable)
+  //     .where(eq(userTable.username, productAdmin.username))
+  // })
 })
