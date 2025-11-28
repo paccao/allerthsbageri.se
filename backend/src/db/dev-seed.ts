@@ -13,7 +13,6 @@ import {
   userTable,
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
-import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
 import env from '#config/env.ts'
 
 /**
@@ -109,7 +108,7 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
 ]
 
 // Only 1 isDefault should be set to true
-const defaultOrderStatuses: CreateOrderStatusSchema[] = [
+const defaultOrderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
   {
     status: 'Skapad',
     isDefault: true,
@@ -117,17 +116,14 @@ const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   },
   {
     status: 'Bekräftad',
-    isDefault: false,
     color: 'blue',
   },
   {
     status: 'Upphämtad',
-    isDefault: false,
     color: 'green',
   },
   {
     status: 'Avbokad',
-    isDefault: false,
     color: 'red',
   },
 ]
