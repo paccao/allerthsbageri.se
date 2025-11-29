@@ -51,6 +51,7 @@ export function createProduct(data: CreateProductBody) {
       if (error instanceof TransactionRollbackError) {
         return null
       } else {
+        console.error(error)
         throw new Error('Unexpected error')
       }
     }

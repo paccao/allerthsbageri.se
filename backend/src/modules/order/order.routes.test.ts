@@ -1,10 +1,13 @@
-import { after, before, suite, test, type TestContext } from 'node:test'
-import { eq } from 'drizzle-orm'
+import { before, suite, test, type TestContext } from 'node:test'
 import z from 'zod'
 
-import startApp from '#src/app.ts'
-import { db } from '#db/index.ts'
-import { userTable } from '#db/schema.ts'
+import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
+
+await setupMockedInMemoryTestDB()
+
+const startApp = (await import('#src/app.ts')).default
+const app = await startApp()
+
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import type { CreateOrderBody } from './order.schemas.ts'
 import type { CreateProductBody } from '../product/product.schemas.ts'
@@ -12,7 +15,6 @@ import type { GetProductDetail } from '../product-details/product-details.schema
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
 import { getProductById } from '../product/product.service.ts'
 
-const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
 const UNIX_HOUR_MS = 3600000 // 3600000  is 1 hour in unix time in milliseconds
@@ -732,6 +734,17 @@ suite.only('order routes', () => {
       ],
     }
 
+    // TODO: Fix the error { message: 'Failed to create product' }
+    // It was caused by a missing table. Seems like some mocking of the DB didn't work
+    // We might need to rewrite the product service to use sync transactions to match the DB driver
+    // console.dir(productResponse2)
+
+    // Since the databse suddently disappears, maybe it is caused by the fact that we import the DB instance
+    // rather than access it via dependency injection into the controller and service?
+
+    // The strange thing is that the product tests work when calling them
+    // however, the order route tests, which depend on the product routes do not work
+
     const response = await app.inject({
       method: 'POST',
       url: '/api/orders/',
@@ -969,11 +982,5 @@ suite.only('order routes', () => {
       201,
       'can order with multiple orderItems of the same ID',
     )
-  })
-
-  after(async () => {
-    await db
-      .delete(userTable)
-      .where(eq(userTable.username, orderAdmin.username))
   })
 })
