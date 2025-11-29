@@ -11,10 +11,10 @@
     "db:seed": "node --env-file=.env src/db/dev-seed.ts",
     "db:reset": "node --env-file=.env scripts/reset-db.ts",
     "test:setup": "node --env-file=.env.test ./src/test.setup.ts",
-    "test": "node --env-file=.env.test --test --experimental-test-module-mocks --disable-warning=ExperimentalWarning",
-    "test:only": "node --env-file=.env.test --test --test-only --experimental-test-module-mocks --disable-warning=ExperimentalWarning",
-    "test:watch": "node --env-file=.env.test --test --watch --experimental-test-module-mocks --disable-warning=ExperimentalWarning",
-    "test:only:watch": "node --env-file=.env.test --test --test-only --watch --experimental-test-module-mocks --disable-warning=ExperimentalWarning"
+    "test": "node --env-file=.env.test --test --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
+    "test:only": "node --env-file=.env.test --test --test-only --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
+    "test:watch": "node --env-file=.env.test --test --watch --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
+    "test:only:watch": "node --env-file=.env.test --test --test-only --watch --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
