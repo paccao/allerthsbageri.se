@@ -24,10 +24,6 @@ suite('product routes', () => {
   let cookie: string
 
   before(async () => {
-    // either mock the sqlite DB here
-    // or set up the mock in the test setup
-    // db = createTestDB()
-
     cookie = await createAdminUser(productAdmin)
   })
 

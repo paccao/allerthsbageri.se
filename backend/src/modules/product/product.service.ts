@@ -20,7 +20,6 @@ export async function listProducts() {
   return await db.select().from(productTable)
 }
 
-// TODO: update to use async transaction and debug
 export function createProduct({ ...data }: CreateProductBody) {
   return db.transaction((tx) => {
     try {
