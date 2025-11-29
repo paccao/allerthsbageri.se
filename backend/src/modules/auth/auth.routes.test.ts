@@ -1,11 +1,16 @@
-import { after, suite, test, type TestContext } from 'node:test'
-import { eq, or } from 'drizzle-orm'
+import { suite, test, type TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
+import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
 import apiConfig from '#config/api.ts'
-import { db } from '#db/index.ts'
-import { userTable } from '#db/schema.ts'
 
+// IDEA: If we execute on import, this could just be the first import and the rest would work as normal
+// This would remove the need for dynamic imports of the app. Just add the test db mock at the top of the test suite imports and you're good to go
+// A simpler API is much better, especially since we don't need to return the refercene to the `db` instance. We can just use it from the DB module as normal.
+// import '#db/setup-test-db.ts'
+
+await setupMockedInMemoryTestDB()
+
+const startApp = (await import('#src/app.ts')).default
 const app = await startApp()
 
 function getSessionCookie(response: Awaited<ReturnType<typeof app.inject>>) {
@@ -96,17 +101,5 @@ suite('auth routes', () => {
 
     t.assert.notStrictEqual(signOutSessionCookie, undefined)
     t.assert.strictEqual(signOutSessionCookie?.maxAge, 0)
-  })
-
-  after(async () => {
-    await db
-      .delete(userTable)
-      .where(
-        or(
-          ...[admin1, admin2, admin3].map(({ username }) =>
-            eq(userTable.username, username),
-          ),
-        ),
-      )
   })
 })

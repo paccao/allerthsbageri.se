@@ -25,6 +25,12 @@ function formatSQLWithSnakeCaseColumnNames(rawSQL: string) {
   )
 }
 
+/**
+ * Create a testing DB.
+ *
+ * NOTE: This should be called before importing any modules that uses the DB.
+ * Otherwise, the tests will fail
+ */
 export async function setupMockedInMemoryTestDB() {
   const db = drizzle({
     connection: { source: ':memory:' },

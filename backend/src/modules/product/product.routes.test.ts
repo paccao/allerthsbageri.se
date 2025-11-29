@@ -8,7 +8,6 @@ import type {
   UpdateProductBody,
 } from './product.schemas.ts'
 
-// NOTE: important to setup the test DB before importing the app since this module
 await setupMockedInMemoryTestDB()
 
 const startApp = (await import('#src/app.ts')).default
@@ -463,11 +462,4 @@ suite('product routes', () => {
     )
     t.assert.strictEqual(goodUpdateResponse.json().stock, goodUpdate.stock)
   })
-
-  // NOTE: This won't be needed since we use a in-memory DB
-  // after(async () => {
-  //   await db
-  //     .delete(userTable)
-  //     .where(eq(userTable.username, productAdmin.username))
-  // })
 })
