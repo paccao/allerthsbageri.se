@@ -6,10 +6,9 @@ import apiConfig from '#config/api.ts'
 import * as schema from '#db/schema.ts'
 import { addSeedingData } from './seed.ts'
 
-// TODO: Re-enable when done
-// if (!apiConfig.env.TEST) {
-//   throw new Error('This module should only be used for tests')
-// }
+if (!apiConfig.env.TEST) {
+  throw new Error('This module should only be used for tests')
+}
 
 function convertCamelToSnakeCase(str: string) {
   return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toLowerCase()
@@ -28,8 +27,6 @@ function formatSQLWithSnakeCaseColumnNames(rawSQL: string) {
 
 export async function setupMockedInMemoryTestDB() {
   const db = drizzle({
-    // TODO: Switch back when done
-    // connection: { source: apiConfig.dbConnection },
     connection: { source: ':memory:' },
     casing: 'snake_case',
     schema,
@@ -55,16 +52,8 @@ export async function setupMockedInMemoryTestDB() {
 
   await addSeedingData(db)
 
-  // TODO: verify the order statuses were seeded as expected. Remove this when done.
-  console.log(
-    'order statuses:',
-    db.select().from(schema.orderStatusTable).all(),
-  )
-
   // TODO: Is it possible to mock the #db/index.ts module directly in here?
   // since it is imported by the same process as the node:test suite
   // OR do we need to create the mock in the suite itself?
   // mock.module('#db/index.ts', { cache: true, namedExports: { db } })
 }
-
-await setupMockedInMemoryTestDB()
