@@ -21,7 +21,7 @@ export async function listProducts() {
   return await db.select().from(productTable)
 }
 
-export function createProduct({ ...data }: CreateProductBody) {
+export function createProduct(data: CreateProductBody) {
   return db.transaction((tx) => {
     try {
       const [productDetail] = tx
@@ -44,11 +44,7 @@ export function createProduct({ ...data }: CreateProductBody) {
         tx.rollback()
       }
 
-      const results = tx
-        .insert(productTable)
-        .values({ ...data })
-        .returning()
-        .all()
+      const results = tx.insert(productTable).values(data).returning().all()
 
       return results[0]!
     } catch (error) {
@@ -61,7 +57,6 @@ export function createProduct({ ...data }: CreateProductBody) {
   })
 }
 
-// TODO: update to use async transaction and debug
 export function updateProduct(
   id: number,
   data: Partial<typeof productTable.$inferInsert>,
