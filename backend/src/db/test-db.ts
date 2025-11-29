@@ -35,8 +35,18 @@ export async function setupMockedInMemoryTestDB() {
     schema,
   })
 
+  let originalWrite = process.stdout.write.bind(process.stdout)
+
+  /** @ts-expect-error Mock implementation to temporarily ignore unwanted output */
+  process.stdout.write = (_chunk, _encoding, callback) => {
+    callback?.()
+    return true
+  }
+
   // Use the latest DB schema to generate a SQL migration for our empty testing DB
   const { statementsToExecute } = await pushSQLiteSchema(schema, db as any)
+
+  process.stdout.write = originalWrite
 
   const migration = formatSQLWithSnakeCaseColumnNames(
     statementsToExecute.join('\n'),
