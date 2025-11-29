@@ -52,8 +52,6 @@ export async function setupMockedInMemoryTestDB() {
 
   await addSeedingData(db)
 
-  // TODO: Is it possible to mock the #db/index.ts module directly in here?
-  // since it is imported by the same process as the node:test suite
-  // OR do we need to create the mock in the suite itself?
-  // mock.module('#db/index.ts', { cache: true, namedExports: { db } })
+  // Make the temporary testing DB shared across the entire test suite by caching the mocked module.
+  mock.module('#db/index.ts', { cache: true, namedExports: { db } })
 }
