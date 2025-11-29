@@ -1,8 +1,8 @@
 import { hash, verify } from '@node-rs/argon2'
+import { eq } from 'drizzle-orm'
 
 import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
-import { eq } from 'drizzle-orm'
 import apiConfig from '#config/api.ts'
 
 export async function signUpUser({

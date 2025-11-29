@@ -1,10 +1,11 @@
-import { productDetailsTable } from '#db/schema.ts'
 import {
   createSelectSchema,
   createInsertSchema,
   createUpdateSchema,
 } from 'drizzle-zod'
 import { z } from 'zod'
+
+import { productDetailsTable } from '#db/schema.ts'
 
 export const getProductDetailSchema = createSelectSchema(productDetailsTable)
 export const listProductDetailsSchema = z.array(getProductDetailSchema)

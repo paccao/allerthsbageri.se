@@ -1,10 +1,11 @@
+import { eq, TransactionRollbackError } from 'drizzle-orm'
+
 import { db } from '#db/index.ts'
 import {
   pickupOccasionTable,
   productDetailsTable,
   productTable,
 } from '#db/schema.ts'
-import { eq, TransactionRollbackError } from 'drizzle-orm'
 import { type CreateProductBody } from './product.schemas.ts'
 
 export async function getProductById(id: number) {

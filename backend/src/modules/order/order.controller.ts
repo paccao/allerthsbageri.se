@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
+
 import type { CreateOrderBody } from './order.schemas.ts'
 import { createOrder } from './order.service.ts'
 import { getOrderStatusOrDefault } from '../order-status/order-status.service.ts'
