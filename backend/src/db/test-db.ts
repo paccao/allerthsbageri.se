@@ -11,6 +11,21 @@ import { addSeedingData } from './seed.ts'
 //   throw new Error('This module should only be used for tests')
 // }
 
+function convertCamelToSnakeCase(str: string) {
+  return str.replace(/([a-zA-Z])(?=[A-Z])/g, '$1_').toLowerCase()
+}
+
+/**
+ * Format to ensure snake_case is used for all column names in a Drizzle SQLite migration.
+ */
+function formatSQLWithSnakeCaseColumnNames(rawSQL: string) {
+  // Since all column names are wrapped in backticks, we can replace any non-whitespace characters
+  // and convert camelCase to snake_case.
+  return rawSQL.replaceAll(/\`\S+\`/g, (columnName) =>
+    convertCamelToSnakeCase(columnName),
+  )
+}
+
 export async function setupMockedInMemoryTestDB() {
   const db = drizzle({
     // TODO: Switch back when done
@@ -23,15 +38,16 @@ export async function setupMockedInMemoryTestDB() {
   // Use the latest DB schema to generate a SQL migration for our empty testing DB
   const { statementsToExecute } = await pushSQLiteSchema(schema, db as any)
 
-  // TODO: The columns are using `camel_case` instead of `snake_case`
-  console.log(statementsToExecute.join('\n'))
+  const migration = formatSQLWithSnakeCaseColumnNames(
+    statementsToExecute.join('\n'),
+  )
 
   // TODO: Verify if pushSQLiteSchema supports the `casing` option and try to set it to `snake_case`
   // TODO: If that doesn't work, maybe we could manually create the JSON snapshots together with the migration files?
   // I think I saw some of those methods supporting the `casing` option.
 
   // Apply the migration to the temporary testing DB
-  db.$client.exec(statementsToExecute.join('\n'))
+  db.$client.exec(migration)
 
   // Add common seeding data which is needed by the application
   // IDEA: What if we add an admin user by default so test suites don't have to do that?
