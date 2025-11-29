@@ -41,17 +41,8 @@ export async function setupMockedInMemoryTestDB() {
   const migration = formatSQLWithSnakeCaseColumnNames(
     statementsToExecute.join('\n'),
   )
-
-  // TODO: Verify if pushSQLiteSchema supports the `casing` option and try to set it to `snake_case`
-  // TODO: If that doesn't work, maybe we could manually create the JSON snapshots together with the migration files?
-  // I think I saw some of those methods supporting the `casing` option.
-
-  // Apply the migration to the temporary testing DB
   db.$client.exec(migration)
 
-  // Add common seeding data which is needed by the application
-  // IDEA: What if we add an admin user by default so test suites don't have to do that?
-  // However, then we use different
   await addSeedingData(db)
 
   // TODO: verify the order statuses were seeded as expected. Remove this when done.
