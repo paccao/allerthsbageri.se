@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify'
+
 import { signInBodySchema, signUpBodySchema } from './auth.schemas.ts'
 import {
   signInHandler,

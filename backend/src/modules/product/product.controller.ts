@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
+
 import {
   createProduct,
   getProductById,
@@ -56,6 +57,7 @@ export async function createProductHandler(
       productDetailsId,
     })
 
+    // TODO: Throw detailed errors in the service instead and only handle the generic error up here
     if (product === null) {
       return reply.code(400).send({
         message:

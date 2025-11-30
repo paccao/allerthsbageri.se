@@ -1,10 +1,11 @@
+import { eq, TransactionRollbackError } from 'drizzle-orm'
+
 import { db } from '#db/index.ts'
 import {
   pickupOccasionTable,
   productDetailsTable,
   productTable,
 } from '#db/schema.ts'
-import { eq, TransactionRollbackError } from 'drizzle-orm'
 import { type CreateProductBody } from './product.schemas.ts'
 
 export async function getProductById(id: number) {
@@ -20,8 +21,7 @@ export async function listProducts() {
   return await db.select().from(productTable)
 }
 
-// TODO: update to use async transaction and debug
-export function createProduct({ ...data }: CreateProductBody) {
+export function createProduct(data: CreateProductBody) {
   return db.transaction((tx) => {
     try {
       const [productDetail] = tx
@@ -44,24 +44,20 @@ export function createProduct({ ...data }: CreateProductBody) {
         tx.rollback()
       }
 
-      const results = tx
-        .insert(productTable)
-        .values({ ...data })
-        .returning()
-        .all()
+      const results = tx.insert(productTable).values(data).returning().all()
 
       return results[0]!
     } catch (error) {
       if (error instanceof TransactionRollbackError) {
         return null
       } else {
+        console.error(error)
         throw new Error('Unexpected error')
       }
     }
   })
 }
 
-// TODO: update to use async transaction and debug
 export function updateProduct(
   id: number,
   data: Partial<typeof productTable.$inferInsert>,

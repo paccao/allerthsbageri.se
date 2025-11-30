@@ -1,12 +1,14 @@
-import { after, before, suite, test, type TestContext } from 'node:test'
-import { eq } from 'drizzle-orm'
+import { before, suite, test, type TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
-import { db } from '#db/index.ts'
-import { userTable } from '#db/schema.ts'
+import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
+
+await setupMockedInMemoryTestDB()
+
+const startApp = (await import('#src/app.ts')).default
+const app = await startApp()
+
 import { getTestingUtils } from '#utils/testing-utils.ts'
 
-const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
 suite('pickup occasion routes', () => {
@@ -175,9 +177,5 @@ suite('pickup occasion routes', () => {
       400,
       'should return status code 400 for incorrect dates',
     )
-  })
-
-  after(async () => {
-    await db.delete(userTable).where(eq(userTable.username, admin4.username))
   })
 })

@@ -3,16 +3,15 @@ import type {
   TableConfig,
 } from 'drizzle-orm/sqlite-core'
 
-import { db } from './index.ts'
-import { orderStatusTable } from './schema.ts'
-import type { CreateOrderStatusSchema } from '#src/modules/order-status/order-status.schemas.ts'
+import * as schema from './schema.ts'
+import type { drizzle } from 'drizzle-orm/better-sqlite3'
 
 /**
  * This seed file is used for data that should always be in the database, configuration for the application.
  */
 
 // Only 1 isDefault should be set to true
-const defaultOrderStatuses: CreateOrderStatusSchema[] = [
+const defaultOrderStatuses: (typeof schema.orderStatusTable.$inferInsert)[] = [
   {
     status: 'Skapad',
     isDefault: true,
@@ -20,43 +19,37 @@ const defaultOrderStatuses: CreateOrderStatusSchema[] = [
   },
   {
     status: 'Bekräftad',
-    isDefault: false,
     color: 'blue',
   },
   {
     status: 'Upphämtad',
-    isDefault: false,
     color: 'green',
   },
   {
     status: 'Avbokad',
-    isDefault: false,
     color: 'red',
   },
 ]
 
-async function seedIfEmpty<T extends TableConfig>(
-  table: SQLiteTableWithColumns<T>,
-  seedingData: {
-    [K in keyof {
-      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-    }]: {
-      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-    }[K]
-  }[],
+export async function addSeedingData(
+  db: ReturnType<typeof drizzle<typeof schema>>,
 ) {
-  if ((await db.$count(table)) === 0) {
-    await db.insert(table).values(seedingData)
+  /**
+   * Add seeding data to a table, but only if it's empty.
+   */
+  async function seedIfEmpty<T extends TableConfig>(
+    table: SQLiteTableWithColumns<T>,
+    seedingData: {
+      [K in keyof {
+        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+      }]: {
+        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+      }[K]
+    }[],
+  ) {
+    if ((await db.$count(table)) === 0) {
+      await db.insert(table).values(seedingData)
+    }
   }
+  await seedIfEmpty(schema.orderStatusTable, defaultOrderStatuses)
 }
-
-async function main() {
-  await seedIfEmpty(orderStatusTable, defaultOrderStatuses)
-
-  console.log(`🌱 Successfully seeded the database`)
-}
-
-await main().catch((e) => {
-  console.error(e)
-  process.exit(1)
-})

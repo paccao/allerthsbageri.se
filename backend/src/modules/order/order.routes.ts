@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify'
+
 import { createOrderHandler } from './order.controller.ts'
 import {
   type CreateOrderBody,

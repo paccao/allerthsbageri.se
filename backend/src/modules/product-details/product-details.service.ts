@@ -1,6 +1,7 @@
+import { eq } from 'drizzle-orm'
+
 import { db } from '#db/index.ts'
 import { productDetailsTable } from '#db/schema.ts'
-import { eq } from 'drizzle-orm'
 import type { CreateProductDetailBody } from './product-details.schemas.ts'
 
 export async function getProductDetail(id: number) {

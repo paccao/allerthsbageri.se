@@ -34,6 +34,14 @@ pnpm outdated
 pnpm up
 ```
 
+## How our tests work
+
+We use the Node.js test runner (`node:test`) to run test suites in parallel. See the `test*` scripts in `package.json` for details.
+
+Each suite will use their own in-memory mock-database so that each test suite's data is independent from each other.
+
+This solves the issue of SQLite deadlocks, since SQLite can only handle 1 write to the database at a time.
+
 ## Test github workflow locally
 
 1. Install docker rootless https://docs.docker.com/engine/security/rootless/

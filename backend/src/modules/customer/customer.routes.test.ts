@@ -1,11 +1,12 @@
-import { after, before, suite, test, type TestContext } from 'node:test'
-import { eq, or } from 'drizzle-orm'
+import { before, suite, test, type TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
-import { db } from '#db/index.ts'
-import { customerTable, userTable, type Customer } from '#db/schema.ts'
+import type { Customer } from '#db/schema.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
+import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
 
+await setupMockedInMemoryTestDB()
+
+const startApp = (await import('#src/app.ts')).default
 const app = await startApp()
 const { assertAuthRequired, createAdminUser } = getTestingUtils(app)
 
@@ -247,32 +248,5 @@ suite('customer routes', () => {
     )
 
     t.assert.strictEqual(wanted.length, 2)
-  })
-
-  after(async () => {
-    await db.delete(userTable).where(eq(userTable.username, admin1.username))
-
-    await db
-      .delete(customerTable)
-      .where(
-        or(
-          ...[
-            customer1,
-            customer2,
-            customer3,
-            customer4,
-            customer5,
-            customer6,
-          ].map(
-            ({
-              phone,
-              updatedPhone,
-            }: {
-              phone: string
-              updatedPhone?: string
-            }) => eq(customerTable.phone, updatedPhone ?? phone),
-          ),
-        ),
-      )
   })
 })
