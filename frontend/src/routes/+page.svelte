@@ -306,13 +306,15 @@
 
           <Divider />
 
-          <article class="my-4 w-full px-4 pt-4" id='event'>
+          <article class="my-4 w-full px-4 pt-4" id="event">
             <h4 class="mb-4 text-center font-display text-2xl">
               Kommande event:
             </h4>
 
             <section>
-              <h2 class="mb-4 text-center font-display text-4xl font-bold">Är du redo för positiv förändring?</h2>
+              <h2 class="mb-4 text-center font-display text-4xl font-bold">
+                Är du redo för positiv förändring?
+              </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm text-2xl">
                   SAXOFONRETREAT 20/12 kl 9.30 - ca 17.00
@@ -327,36 +329,49 @@
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  Välkommen till en magisk dag där du får chans att släppa vardagens stress och måsten och istället påbörja din inre resa mot ett sannare jag.
+                  Välkommen till en magisk dag där du får chans att släppa
+                  vardagens stress och måsten och istället påbörja din inre resa
+                  mot ett sannare jag.
                 </p>
               </div>
 
               <enhanced:img
-                class="mx-auto mt-8 my-8 h-auto object-cover max-w-[500px] w-full"
+                class="mx-auto my-8 mt-8 h-auto w-full max-w-[500px] object-cover"
                 src={saxophoneRetreat}
                 alt="Välkommen till en saxofonretreat"
               />
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  I denna endagsretreat får du nya insikter, du får möta andra likasinnade och om du själv vill så öppnas nya dörrar för dej, du får växa som människa.
+                  I denna endagsretreat får du nya insikter, du får möta andra
+                  likasinnade och om du själv vill så öppnas nya dörrar för dej,
+                  du får växa som människa.
                 </p>
               </div>
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  Maggan Allerth heter jag som leder dagen. Du får del av mina saxofoners rogivande toners musik, kristallskålarnas milda mjuka helande, läkande sång, dikter och rörelse. Du får med dej nya verktyg hem som du kan använda i din vardag såsom färgövning, andning bland annat. Ett yogapass med Lotta Andersson som yogainstruktör och gongspel ingår också.
+                  Maggan Allerth heter jag som leder dagen. Du får del av mina
+                  saxofoners rogivande toners musik, kristallskålarnas milda
+                  mjuka helande, läkande sång, dikter och rörelse. Du får med
+                  dej nya verktyg hem som du kan använda i din vardag såsom
+                  färgövning, andning bland annat. Ett yogapass med Lotta
+                  Andersson som yogainstruktör och gongspel ingår också.
                 </p>
               </div>
 
               <enhanced:img
-                class="mx-auto my-8 h-auto object-cover max-w-[350px] w-full"
+                class="mx-auto my-8 h-auto w-full max-w-[350px] object-cover"
                 src={saxophoneRetreatBread}
                 alt="Bild på bröd vid saxofonretreat"
               />
-              <div class="mx-auto max-w-screen-sm mb-2">Min intention med dagen är att du ska få ta emot, få vila i dej själv, känna glädje och stilla ro mitt i allt det du står i just nu och upptäcka nya sidor hos dej själv.</div>
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                Min intention med dagen är att du ska få ta emot, få vila i dej
+                själv, känna glädje och stilla ro mitt i allt det du står i just
+                nu och upptäcka nya sidor hos dej själv.
+              </div>
 
-              <div class="mx-auto max-w-screen-sm my-2">
+              <div class="mx-auto my-2 max-w-screen-sm">
                 <p>
                   Denna heldag inkluderar mat, <a
                     href={instagramProfileLink}
@@ -365,17 +380,20 @@
                     >@allerthsbageri</a
                   > står för surdegsbröd till lunch & även något gott till eftermiddagsfikat.
                 </p>
-                <p>Investeringen i dej själv kostar 2222 kr, anmälan senast den 16/12 kl 18.00.
+                <p>
+                  Investeringen i dej själv kostar 2222 kr, anmälan senast den
+                  16/12 kl 18.00.
                 </p>
-                <p>Det finns möjlighet till boka tidigt rabatt 1990 kr senast 30/11.</p>
+                <p>
+                  Det finns möjlighet till boka tidigt rabatt 1990 kr senast
+                  30/11.
+                </p>
               </div>
 
               <Divider class="my-5" />
 
-              <div class="mx-auto max-w-screen-sm my-2">
-                <p>
-                  Betalning sker vid ankomst. Swish eller kontant.
-                </p>
+              <div class="mx-auto my-2 max-w-screen-sm">
+                <p>Betalning sker vid ankomst. Swish eller kontant.</p>
                 <p>Meddela gärna allergier i god tid.</p>
               </div>
 
@@ -424,7 +442,8 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11, <span class="font-bold">7/12</span>
+                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11,
+                  <span class="font-bold">7/12</span>
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -432,7 +451,8 @@
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span>
-                  Grovare Spången 101, utanför Hökerum. <span class="font-bold">Vintertid:</span> Equmeniakyrkan, Hökerum.
+                  Grovare Spången 101, utanför Hökerum.
+                  <span class="font-bold">Vintertid:</span> Equmeniakyrkan, Hökerum.
                 </p>
 
                 <p class="text-center font-bold">
@@ -447,7 +467,6 @@
             <Divider />
 
             <section>
-
               <div class="my-8 grid justify-center" id="event">
                 <enhanced:img
                   class="h-auto w-full rounded-md object-cover shadow-md"
@@ -461,10 +480,10 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  I november, januari blir det nya kurser i hur du bakar surdegsbröd på
-                  enbart ekologiskt och kravmärkt mjöl. Vi lär oss mata
-                  surdegen, forma och snitta bröd. Sätta en ny deg som du kan
-                  grädda hemma nästa dag.
+                  I november, januari blir det nya kurser i hur du bakar
+                  surdegsbröd på enbart ekologiskt och kravmärkt mjöl. Vi lär
+                  oss mata surdegen, forma och snitta bröd. Sätta en ny deg som
+                  du kan grädda hemma nästa dag.
                 </p>
               </div>
 
@@ -494,9 +513,9 @@
                   <span> 13.30 - 17.30 eller tills vi känner oss klara.</span>
                 </p>
                 <p class="my-2">
-                  <span class="font-bold">Kursavgift: </span> 1200 kr, betalas
-                  via Swish i samband med anmälan. Vid överenskommelse kontant
-                  betalning på plats.
+                  <span class="font-bold">Kursavgift: </span> 1200 kr, betalas via
+                  Swish i samband med anmälan. Vid överenskommelse kontant betalning
+                  på plats.
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span> Equmeniakyrkans kök, Hökerum
@@ -530,7 +549,7 @@
               </div>
 
               <div class="my-4">
-                <div class="flex justify-center max-w-[320px]-sm w-full">
+                <div class="max-w-[320px]-sm flex w-full justify-center">
                   <enhanced:img
                     class="w-full rounded-l-md object-cover shadow-md"
                     src={mariaBlender}
