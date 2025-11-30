@@ -18,25 +18,25 @@
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
-    "better-sqlite3": "^12.4.1",
-    "cookie": "^1.0.2",
+    "better-sqlite3": "^12.5.0",
+    "cookie": "^1.1.1",
     "drizzle-orm": "^0.44.7",
     "drizzle-zod": "^0.8.3",
     "fastify": "^5.6.2",
     "fastify-plugin": "^5.1.0",
     "fastify-type-provider-zod": "^6.1.0",
-    "libphonenumber-js": "^1.12.26",
+    "libphonenumber-js": "^1.12.29",
     "pino": "^10.1.0",
     "pino-pretty": "^13.1.2",
-    "zod": "^4.1.12"
+    "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@fastify/swagger": "^9.6.0",
+    "@fastify/swagger": "^9.6.1",
     "@fastify/swagger-ui": "^5.2.3",
     "@types/better-sqlite3": "^7.6.13",
-    "@types/node": "^24.10.0",
-    "drizzle-kit": "^0.31.6",
-    "prettier": "^3.6.2",
+    "@types/node": "^24.10.1",
+    "drizzle-kit": "^0.31.7",
+    "prettier": "3.6.2",
     "typescript": "^5.9.3"
   },
   "imports": {
