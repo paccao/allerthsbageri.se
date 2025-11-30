@@ -18,7 +18,7 @@ const { createAdminUser } = getTestingUtils(app)
 
 const UNIX_HOUR_MS = 3600000 // 3600000  is 1 hour in unix time in milliseconds
 
-suite.only('order routes', () => {
+suite('order routes', () => {
   const orderAdmin = {
     username: 'orderAdmin',
     name: 'orderAdmin',
