@@ -34,6 +34,9 @@ const defaultOrderStatuses: (typeof schema.orderStatusTable.$inferInsert)[] = [
 export async function addSeedingData(
   db: ReturnType<typeof drizzle<typeof schema>>,
 ) {
+  /**
+   * Add seeding data to a table, but only if it's empty.
+   */
   async function seedIfEmpty<T extends TableConfig>(
     table: SQLiteTableWithColumns<T>,
     seedingData: {
