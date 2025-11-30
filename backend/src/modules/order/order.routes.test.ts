@@ -10,10 +10,9 @@ const app = await startApp()
 
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import type { CreateOrderBody } from './order.schemas.ts'
-import type { CreateProductBody } from '../product/product.schemas.ts'
+import type { CreateProductBody, Product } from '../product/product.schemas.ts'
 import type { GetProductDetail } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
-import { getProductById } from '../product/product.service.ts'
 
 const { createAdminUser } = getTestingUtils(app)
 
@@ -758,21 +757,42 @@ suite.only('order routes', () => {
       'customer can create an order',
     )
 
-    const afterCreationProduct1 = await getProductById(productResponse1.id)
+    const afterCreationProduct1: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse1.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
       afterCreationProduct1?.stock,
       product1.stock - goodOrder.orderItems[0]!.count,
       'product stock should be updated after successful order',
     )
 
-    const afterCreationProduct2 = await getProductById(productResponse2.id)
+    const afterCreationProduct2: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse2.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
       afterCreationProduct2?.stock,
       product2.stock - goodOrder.orderItems[1]!.count,
       'product stock should be updated after successful order',
     )
 
-    const afterCreationProduct3 = await getProductById(productResponse3.id)
+    const afterCreationProduct3: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse3.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
       afterCreationProduct3?.stock,
       product3.stock - goodOrder.orderItems[2]!.count,
@@ -820,27 +840,48 @@ suite.only('order routes', () => {
       'second consecutive order for the same customer does not exceed maxPerCustomer',
     )
 
-    const afterOrder2product1 = await getProductById(productResponse1.id)
+    const afterOrder2Product1: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse1.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
-      afterOrder2product1?.stock,
+      afterOrder2Product1?.stock,
       product1.stock -
         goodOrder.orderItems[0]!.count -
         goodOrder2.orderItems[0]!.count,
       'product stock should be updated after 2 successful orders',
     )
 
-    const afterOrder2product2 = await getProductById(productResponse2.id)
+    const afterOrder2Product2: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse2.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
-      afterOrder2product2?.stock,
+      afterOrder2Product2?.stock,
       product2.stock -
         goodOrder.orderItems[1]!.count -
         goodOrder2.orderItems[1]!.count,
       'product stock should be updated after 2 successful orders',
     )
 
-    const afterOrder2product3 = await getProductById(productResponse3.id)
+    const afterOrder2Product3: Product = (
+      await app.inject({
+        method: 'GET',
+        url: `/api/products/${productResponse3.id}`,
+        headers: { cookie },
+      })
+    ).json()
+
     t.assert.strictEqual(
-      afterOrder2product3?.stock,
+      afterOrder2Product3?.stock,
       product3.stock -
         goodOrder.orderItems[2]!.count -
         goodOrder2.orderItems[2]!.count,
