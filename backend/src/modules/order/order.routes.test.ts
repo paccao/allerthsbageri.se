@@ -733,17 +733,6 @@ suite('order routes', () => {
       ],
     }
 
-    // TODO: Fix the error { message: 'Failed to create product' }
-    // It was caused by a missing table. Seems like some mocking of the DB didn't work
-    // We might need to rewrite the product service to use sync transactions to match the DB driver
-    // console.dir(productResponse2)
-
-    // Since the databse suddently disappears, maybe it is caused by the fact that we import the DB instance
-    // rather than access it via dependency injection into the controller and service?
-
-    // The strange thing is that the product tests work when calling them
-    // however, the order route tests, which depend on the product routes do not work
-
     const response = await app.inject({
       method: 'POST',
       url: '/api/orders/',
