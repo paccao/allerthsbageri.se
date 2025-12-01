@@ -90,7 +90,8 @@ export class SessionService {
     return { session, user, refreshed }
   }
 
-  async invalidateSession(sessionId: string): Promise<void> {
+  async invalidateSession(token: string): Promise<void> {
+    const sessionId = await getSHA256Hash(token)
     await this.#db.delete(sessionTable).where(eq(sessionTable.id, sessionId))
   }
 

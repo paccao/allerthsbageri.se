@@ -1,7 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import type { SignInBody, SignUpBody } from './auth.schemas.ts'
-import { getSHA256Hash } from '#utils/crypto.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
 export function createAuthController({
@@ -69,8 +68,7 @@ export function createAuthController({
     const token = sessionService.parseSessionTokenFromCookie(request)
     if (token) {
       try {
-        const sessionId = await getSHA256Hash(token)
-        await sessionService.invalidateSession(sessionId)
+        await sessionService.invalidateSession(token)
         sessionService.deleteSessionTokenCookie(reply)
       } catch (e: any) {
         request.log.error(e, e?.message)
