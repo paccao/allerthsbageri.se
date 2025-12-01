@@ -1,6 +1,7 @@
-import startApp from '#src/app.ts'
 import type { FastifyInstance, InjectOptions } from 'fastify'
 import type { TestContext } from 'node:test'
+
+import startApp from '#src/app.ts'
 import {
   createDependencyContainer,
   type DependencyContainer,
