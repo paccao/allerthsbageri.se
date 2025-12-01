@@ -1,13 +1,9 @@
 import { suite, test, type TestContext } from 'node:test'
 
-import { createInMemoryTestDB } from '#db/test-db.ts'
 import apiConfig from '#config/api.ts'
-import startApp from '#src/app.ts'
-import { createDependencyContainer } from '#src/di-container.ts'
+import { startTestApp } from '#utils/testing-utils.ts'
 
-const app = await startApp(
-  createDependencyContainer({ db: await createInMemoryTestDB() }),
-)
+const app = await startTestApp()
 
 function getSessionCookie(response: Awaited<ReturnType<typeof app.inject>>) {
   return response.cookies.find((c) => c.name === apiConfig.sessionCookieName)

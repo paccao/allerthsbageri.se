@@ -1,12 +1,8 @@
 import { suite, test, type TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
-import { createDependencyContainer } from './di-container.ts'
-import { createInMemoryTestDB } from '#db/test-db.ts'
+import { startTestApp } from '#utils/testing-utils.ts'
 
-const app = await startApp(
-  createDependencyContainer({ db: await createInMemoryTestDB() }),
-)
+const app = await startTestApp()
 
 suite('app setup', () => {
   test('GET /health-check should return status OK', async (t: TestContext) => {

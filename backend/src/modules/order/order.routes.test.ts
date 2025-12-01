@@ -1,18 +1,13 @@
 import { before, suite, test, type TestContext } from 'node:test'
 import z from 'zod'
 
-import { createInMemoryTestDB } from '#db/test-db.ts'
-import { getTestingUtils } from '#utils/testing-utils.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 import type { CreateOrderBody } from './order.schemas.ts'
 import type { CreateProductBody, Product } from '../product/product.schemas.ts'
 import type { GetProductDetails } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
-import startApp from '#src/app.ts'
-import { createDependencyContainer } from '#src/di-container.ts'
 
-const app = await startApp(
-  createDependencyContainer({ db: await createInMemoryTestDB() }),
-)
+const app = await startTestApp()
 
 const { createAdminUser } = getTestingUtils(app)
 

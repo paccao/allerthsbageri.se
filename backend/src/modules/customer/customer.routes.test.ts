@@ -1,14 +1,9 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
 import type { Customer } from '#db/schema.ts'
-import { getTestingUtils } from '#utils/testing-utils.ts'
-import { createInMemoryTestDB } from '#db/test-db.ts'
-import startApp from '#src/app.ts'
-import { createDependencyContainer } from '#src/di-container.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 
-const app = await startApp(
-  createDependencyContainer({ db: await createInMemoryTestDB() }),
-)
+const app = await startTestApp()
 const { assertAuthRequired, createAdminUser } = getTestingUtils(app)
 
 suite('customer routes', () => {

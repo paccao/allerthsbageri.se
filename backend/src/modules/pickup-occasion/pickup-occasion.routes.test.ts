@@ -1,13 +1,8 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import { createInMemoryTestDB } from '#db/test-db.ts'
-import { createDependencyContainer } from '#src/di-container.ts'
-import { getTestingUtils } from '#utils/testing-utils.ts'
-import startApp from '#src/app.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 
-const app = await startApp(
-  createDependencyContainer({ db: await createInMemoryTestDB() }),
-)
+const app = await startTestApp()
 
 const { createAdminUser } = getTestingUtils(app)
 
