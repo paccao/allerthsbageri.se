@@ -179,6 +179,8 @@ Modules are implemented in `src/modules/*` and contain the following types of fi
 
 - **Tests** - Right now, the most valuable kinds of backend tests are integration tests for modules that verify the API routes work as expected, including all other modules they use internally. We use the built-in Fastify HTTP injection to rapidly test with realistic conditions, but without the overhead of starting actual HTTP servers. Additional unit tests could be useful, but since integration tests gives the largest code coverage with minimal effort, they are more valuable to guarantee the API works as expected.
 
+- **Plugins** - Fastify plugins to add additional functionality to specific routes. It's useful to group together all code related to the same problem domain in the same module, to make it easier to reason about and find what you are looking for.
+
 #### Configuration
 
 In the `src/config/*` directory, we load all configuration centrally and use schemas for validation and type safety. This ensures the backend has a correct environment before starting, helping us catch potential errors. It's also a good place to document how to configure the backend.
