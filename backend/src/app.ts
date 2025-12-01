@@ -7,7 +7,10 @@ import {
 } from 'fastify-type-provider-zod'
 
 import apiConfig from './config/api.ts'
-import { sessionPlugin, authenticationRequiredPlugin } from './utils/auth.ts'
+import {
+  sessionPlugin,
+  authenticationRequiredPlugin,
+} from './modules/auth/auth.plugins.ts'
 import { authRoutes } from './modules/auth/auth.routes.ts'
 import { pickupOccasionRoutes } from './modules/pickup-occasion/pickup-occasion.routes.ts'
 import { customerRoutes } from './modules/customer/customer.routes.ts'
