@@ -137,6 +137,26 @@ This section describes how the backend is structured, and some of the reasoning 
 
 In order to decouple various parts of the backend, we use a minimal DI implementation to manage dependencies with enough flexibility for our needs. If we need more advanced features in the future, we could use the built-in features of Fastify, or switch to a DI framework. But for now, it's good to minimise the number of dependencies and avoid unnecessary complexity.
 
+#### Best practices
+
+When creating a function or class that expects the `DependencyContainer` as an argument, it's recommended to narrow the type with something like `Pick<DependencyContainer, 'db'>` to clearly document which dependencies are needed:
+
+```ts
+export function createSomeService({ db }: Pick<DependencyContainer, 'db'>) {
+  // ...
+}
+
+// or
+
+export class SomeService {
+  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+    // ...
+  }
+}
+```
+
+By narrowing the type, and destructuring the expected dependencies, the code clearly communicates what it depends on. This also makes it possible to call the function or instantiate the class with partial dependencies, with TypeScript checking that we provide the expected dependencies.
+
 ---
 
 ### Codebase structure
