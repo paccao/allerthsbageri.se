@@ -9,7 +9,6 @@ import {
   type Session,
 } from '#db/schema.ts'
 import apiConfig from '#config/api.ts'
-import { getSHA256Hash } from './crypto.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
 const DAY = 1000 * 60 * 60 * 24
@@ -115,3 +114,16 @@ export class SessionService {
 export type SessionValidationResult =
   | { session: Session; user: Omit<User, 'password'>; refreshed: boolean }
   | { session: null; user: null; refreshed: false }
+
+const encoder = new TextEncoder()
+
+async function getSHA256Hash(input: string) {
+  const hashBuffer = await crypto.subtle.digest(
+    'SHA-256',
+    encoder.encode(input),
+  )
+
+  return Array.from(new Uint8Array(hashBuffer))
+    .map((item) => item.toString(16).padStart(2, '0'))
+    .join('')
+}
