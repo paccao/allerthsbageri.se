@@ -1,6 +1,7 @@
+import { eq } from 'drizzle-orm'
+
 import { db } from '#db/index.ts'
 import { pickupOccasionTable } from '#db/schema.ts'
-import { eq } from 'drizzle-orm'
 
 export async function getPickupOccasion(id: number) {
   const results = await db

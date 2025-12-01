@@ -1,4 +1,5 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
+
 import type { CreatePickupOccasionBody } from './pickup-occasion.schemas.ts'
 import {
   listPickupOccasions,
