@@ -4,7 +4,7 @@ import type {
 } from 'drizzle-orm/sqlite-core'
 import { hash } from '@node-rs/argon2'
 
-import { db } from '#db/index.ts'
+import { createDBConnection } from '#db/index.ts'
 import {
   orderStatusTable,
   pickupOccasionTable,
@@ -14,6 +14,8 @@ import {
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
 import env from '#config/env.ts'
+
+const db = createDBConnection()
 
 /**
  * This seed file is used for testing data in the development environment only.
