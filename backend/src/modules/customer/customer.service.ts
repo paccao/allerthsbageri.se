@@ -1,55 +1,77 @@
 import { eq } from 'drizzle-orm'
 
-import { db } from '#db/index.ts'
 import { customerTable } from '#db/schema.ts'
+import type { DependencyContainer } from '#src/di-container.ts'
 
-export async function createCustomer(data: typeof customerTable.$inferInsert) {
-  const [customer] = await db.insert(customerTable).values(data).returning()
+// IDEA: Maybe rename methods to follow a common pattern like the following?
+// customerService.create(data)
+// customerService.list()
+// customerService.get(id)
+// customerService.update(id, data)
+// customerService.delete(id)
+// customerService.getOrCreate(data)
 
-  return customer!
-}
+// We could use a similar pattern in other services too
+// Maybe also for controllers, simplifying the handlers
 
-export async function listCustomers() {
-  return db.select().from(customerTable)
-}
+export class CustomerService {
+  #db: DependencyContainer['db']
 
-export async function getCustomer(id: number) {
-  const results = await db
-    .select()
-    .from(customerTable)
-    .where(eq(customerTable.id, id))
-
-  return results[0]
-}
-
-export async function updateCustomer(
-  id: number,
-  data: Partial<typeof customerTable.$inferInsert>,
-) {
-  const results = await db
-    .update(customerTable)
-    .set(data)
-    .where(eq(customerTable.id, id))
-    .returning()
-
-  return results[0]
-}
-
-export async function deleteCustomer(id: number) {
-  await db.delete(customerTable).where(eq(customerTable.id, id))
-}
-
-export async function getOrCreateCustomer(
-  data: Omit<typeof customerTable.$inferInsert, 'id'>,
-) {
-  let [customer] = await db
-    .select()
-    .from(customerTable)
-    .where(eq(customerTable.phone, data.phone))
-
-  if (customer) {
-    return customer
+  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+    this.#db = db
   }
 
-  return createCustomer(data)
+  async createCustomer(data: typeof customerTable.$inferInsert) {
+    const [customer] = await this.#db
+      .insert(customerTable)
+      .values(data)
+      .returning()
+
+    return customer!
+  }
+
+  listCustomers() {
+    return this.#db.select().from(customerTable)
+  }
+
+  async getCustomer(id: number) {
+    const results = await this.#db
+      .select()
+      .from(customerTable)
+      .where(eq(customerTable.id, id))
+
+    return results[0]
+  }
+
+  async updateCustomer(
+    id: number,
+    data: Partial<typeof customerTable.$inferInsert>,
+  ) {
+    const results = await this.#db
+      .update(customerTable)
+      .set(data)
+      .where(eq(customerTable.id, id))
+      .returning()
+
+    return results[0]
+  }
+
+  async deleteCustomer(id: number) {
+    await this.#db.delete(customerTable).where(eq(customerTable.id, id))
+  }
+
+  async getOrCreateCustomer(
+    data: Omit<typeof customerTable.$inferInsert, 'id'>,
+  ) {
+    let [customer] = await this.#db
+      .select()
+      .from(customerTable)
+      .where(eq(customerTable.phone, data.phone))
+
+    if (customer) {
+      return customer
+    }
+
+    return this.createCustomer(data)
+  }
 }

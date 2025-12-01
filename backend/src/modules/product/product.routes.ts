@@ -1,12 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 
 import {
-  getProductByIdHandler,
-  createProductHandler,
-  updateProductHandler,
-  listProductsHandler,
-} from './product.controller.ts'
-import {
   createProductBodySchema,
   getProductSchema,
   listProductsSchema,
@@ -24,6 +18,8 @@ import {
 const tags = getTags('products')
 
 export async function productRoutes(app: FastifyInstance) {
+  const { productController } = app.diContainer
+
   app.get(
     '/',
     {
@@ -35,7 +31,7 @@ export async function productRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    listProductsHandler,
+    productController.listProductsHandler,
   )
 
   app.post<{ Body: CreateProductBody }>(
@@ -50,7 +46,7 @@ export async function productRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    createProductHandler,
+    productController.createProductHandler,
   )
 
   app.get<{ Params: IdParams }>(
@@ -65,7 +61,7 @@ export async function productRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    getProductByIdHandler,
+    productController.getProductByIdHandler,
   )
 
   app.patch<{ Body: UpdateProductBody; Params: IdParams }>(
@@ -81,6 +77,6 @@ export async function productRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    updateProductHandler,
+    productController.updateProductHandler,
   )
 }

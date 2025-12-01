@@ -14,11 +14,22 @@ import { customerRoutes } from './modules/customer/customer.routes.ts'
 import { orderRoutes } from './modules/order/order.routes.ts'
 import { productRoutes } from './modules/product/product.routes.ts'
 import { productDetailsRoutes } from './modules/product-details/product-details.routes.ts'
+import type { DependencyContainer } from './di-container.ts'
 
-async function startApp() {
+declare module 'fastify' {
+  export interface FastifyInstance {
+    /** Global dependencies that should be available across the app */
+    diContainer: DependencyContainer
+  }
+}
+
+async function startApp(diContainer: DependencyContainer) {
   const app = Fastify({
     logger: apiConfig.logger,
   }).withTypeProvider<ZodTypeProvider>()
+
+  // Make global dependencies available on the app instance
+  app.decorate('diContainer', diContainer)
 
   app.setValidatorCompiler(validatorCompiler)
   app.setSerializerCompiler(serializerCompiler)
@@ -26,9 +37,10 @@ async function startApp() {
   app.register(sessionPlugin)
 
   if (apiConfig.env.DEV) {
-    const developmentContext = await import('./utils/development-context.ts')
+    const developmentContext = (await import('./utils/development-context.ts'))
+      .default
 
-    app.register(fp(developmentContext.default))
+    app.register(fp(developmentContext))
   }
 
   app.register(publicContext)

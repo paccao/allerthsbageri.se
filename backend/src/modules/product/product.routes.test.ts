@@ -1,17 +1,19 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
+import { createInMemoryTestDB } from '#db/test-db.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import type {
   CreateProductBody,
   Product,
   UpdateProductBody,
 } from './product.schemas.ts'
+import startApp from '#src/app.ts'
+import { createDependencyContainer } from '#src/di-container.ts'
 
-await setupMockedInMemoryTestDB()
+const app = await startApp(
+  createDependencyContainer({ db: await createInMemoryTestDB() }),
+)
 
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
 const { createAdminUser } = getTestingUtils(app)
 
 suite('product routes', () => {
@@ -36,7 +38,7 @@ suite('product routes', () => {
 
     t.assert.strictEqual(getResponse1.statusCode, 404)
 
-    const productDetail = {
+    const productDetails = {
       name: 'testkaka',
       description:
         'En kaka gjord på surdeg med konsistensen av en kladdkaka och test',
@@ -44,11 +46,11 @@ suite('product routes', () => {
       vatPercentage: 16,
     }
 
-    const productDetailResponse = await app
+    const productDetailsResponse = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail,
+        body: productDetails,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -76,7 +78,7 @@ suite('product routes', () => {
       price: 4444,
       maxPerCustomer: 2,
       pickupOccasionId: pickupResponse.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const createdProduct = await app
@@ -102,7 +104,7 @@ suite('product routes', () => {
       price: 4444,
       maxPerCustomer: 2,
       pickupOccasionId: pickupResponse.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const createdProduct2 = await app
@@ -151,21 +153,21 @@ suite('product routes', () => {
       'should be a bad request when either a pickup occasion or product detail in the product request body does not exist',
     )
 
-    const productDetail = {
+    const productDetails = {
       name: 'kladdkakekaka',
       description: 'En kaka gjord på surdeg med konsistensen av en kladdkaka',
       image: null,
       vatPercentage: 13,
     }
 
-    const productDetailResponse = await app.inject({
+    const productDetailsResponse = await app.inject({
       method: 'POST',
       url: '/api/product-details/',
-      body: productDetail,
+      body: productDetails,
       headers: { cookie },
     })
 
-    t.assert.strictEqual(productDetailResponse.statusCode, 201)
+    t.assert.strictEqual(productDetailsResponse.statusCode, 201)
 
     const pickup = {
       name: 'Särlatorgets marknad',
@@ -191,7 +193,7 @@ suite('product routes', () => {
       price: 9000,
       maxPerCustomer: 2,
       pickupOccasionId: pickupResponse.json().id,
-      productDetailsId: productDetailResponse.json().id,
+      productDetailsId: productDetailsResponse.json().id,
     }
 
     const goodProductResponse = await app.inject({
@@ -208,7 +210,7 @@ suite('product routes', () => {
       stock: 13,
       price: 9000,
       pickupOccasionId: pickupResponse.json().id,
-      productDetailsId: productDetailResponse.json().id,
+      productDetailsId: productDetailsResponse.json().id,
     }
 
     const res1 = await app
@@ -231,7 +233,7 @@ suite('product routes', () => {
       price: 9000,
       maxPerCustomer: undefined,
       pickupOccasionId: pickupResponse.json().id,
-      productDetailsId: productDetailResponse.json().id,
+      productDetailsId: productDetailsResponse.json().id,
     }
 
     const res2 = await app
@@ -254,7 +256,7 @@ suite('product routes', () => {
       price: 9000,
       maxPerCustomer: null,
       pickupOccasionId: pickupResponse.json().id,
-      productDetailsId: productDetailResponse.json().id,
+      productDetailsId: productDetailsResponse.json().id,
     }
 
     const res3 = await app
@@ -274,7 +276,7 @@ suite('product routes', () => {
   })
 
   test('products can be updated', async (t: TestContext) => {
-    const productDetail = {
+    const productDetails = {
       name: 'testkaka',
       description:
         'En kaka gjord på surdeg med konsistensen av en kladdkaka och test',
@@ -282,11 +284,11 @@ suite('product routes', () => {
       vatPercentage: 16,
     }
 
-    const productDetailResponse = await app
+    const productDetailsResponse = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail,
+        body: productDetails,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -314,7 +316,7 @@ suite('product routes', () => {
       price: 9000,
       maxPerCustomer: 2,
       pickupOccasionId: pickupResponse.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const productResponse = await app.inject({
@@ -333,7 +335,7 @@ suite('product routes', () => {
       price: '9000',
       maxPerCustomer: 6,
       pickupOccasionId: pickupResponse.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const badUpdate1 = await app.inject({
@@ -354,7 +356,7 @@ suite('product routes', () => {
       price: 4800,
       maxPerCustomer: 4,
       pickupOccasionId: 9090909,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const badUpdate2 = await app.inject({

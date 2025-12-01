@@ -1,18 +1,18 @@
 import { before, suite, test, type TestContext } from 'node:test'
 import z from 'zod'
 
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
-
-await setupMockedInMemoryTestDB()
-
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
-
+import { createInMemoryTestDB } from '#db/test-db.ts'
 import { getTestingUtils } from '#utils/testing-utils.ts'
 import type { CreateOrderBody } from './order.schemas.ts'
 import type { CreateProductBody, Product } from '../product/product.schemas.ts'
-import type { GetProductDetail } from '../product-details/product-details.schemas.ts'
+import type { GetProductDetails } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
+import startApp from '#src/app.ts'
+import { createDependencyContainer } from '#src/di-container.ts'
+
+const app = await startApp(
+  createDependencyContainer({ db: await createInMemoryTestDB() }),
+)
 
 const { createAdminUser } = getTestingUtils(app)
 
@@ -241,7 +241,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetail: GetProductDetail = {
+    const productDetails: GetProductDetails = {
       id: 1,
       name: 'Kärleksbröd med Emmer',
       description: 'En limpa perfekt som en gåva på alla hjärtans dag',
@@ -249,11 +249,11 @@ suite('order routes', () => {
       vatPercentage: 10,
     }
 
-    const productDetailResponse = await app
+    const productDetailsResponse = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail,
+        body: productDetails,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -263,7 +263,7 @@ suite('order routes', () => {
       price: 2000,
       maxPerCustomer: 2,
       pickupOccasionId: createdPickupResponse1.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const productResponse1 = await app
@@ -325,7 +325,7 @@ suite('order routes', () => {
       price: 2000,
       maxPerCustomer: 2,
       pickupOccasionId: createdPickupResponse1.id,
-      productDetailsId: productDetailResponse.id,
+      productDetailsId: productDetailsResponse.id,
     }
 
     const productResponse2 = await app
@@ -383,7 +383,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetail1: GetProductDetail = {
+    const productDetails1: GetProductDetails = {
       id: 1,
       name: 'Blåbärssoppa',
       description: 'a soup of blueberries',
@@ -391,16 +391,16 @@ suite('order routes', () => {
       vatPercentage: 14,
     }
 
-    const firstProductDetailResponse = await app
+    const firstProductDetailsResponse = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail1,
+        body: productDetails1,
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    const productDetail2: GetProductDetail = {
+    const productDetaisl2: GetProductDetails = {
       id: 1,
       name: 'Surdegsbröd',
       description: 'Bread made of sourdough',
@@ -408,11 +408,11 @@ suite('order routes', () => {
       vatPercentage: 16,
     }
 
-    const secondProductDetailResponse = await app
+    const secondProductDetailsResponse = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail2,
+        body: productDetaisl2,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -422,7 +422,7 @@ suite('order routes', () => {
       price: 2000,
       maxPerCustomer: 2,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: firstProductDetailResponse.id,
+      productDetailsId: firstProductDetailsResponse.id,
     }
 
     const firstProductResponse = await app
@@ -439,7 +439,7 @@ suite('order routes', () => {
       price: 6600,
       maxPerCustomer: 3,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: secondProductDetailResponse.id,
+      productDetailsId: secondProductDetailsResponse.id,
     }
 
     const secondProductResponse = await app
@@ -612,7 +612,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetail1: GetProductDetail = {
+    const productDetails1: GetProductDetails = {
       id: 1,
       name: 'Surdegsbröd1',
       description: 'Bread made of sourdough',
@@ -620,16 +620,16 @@ suite('order routes', () => {
       vatPercentage: 16,
     }
 
-    const productDetailResponse1 = await app
+    const productDetailsResponse1 = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail1,
+        body: productDetails1,
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    const productDetail2: GetProductDetail = {
+    const productDetails2: GetProductDetails = {
       id: 1,
       name: 'Surdegsbröd2',
       description: 'Bread made of sourdough',
@@ -637,16 +637,16 @@ suite('order routes', () => {
       vatPercentage: 16,
     }
 
-    const productDetailResponse2 = await app
+    const productDetailsResponse2 = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail2,
+        body: productDetails2,
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    const productDetail3: GetProductDetail = {
+    const productDetails3: GetProductDetails = {
       id: 1,
       name: 'Surdegsbröd3',
       description: 'Bread made of sourdough',
@@ -654,11 +654,11 @@ suite('order routes', () => {
       vatPercentage: 16,
     }
 
-    const productDetailResponse3 = await app
+    const productDetailsResponse3 = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail3,
+        body: productDetails3,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -668,7 +668,7 @@ suite('order routes', () => {
       price: 6600,
       maxPerCustomer: null,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: productDetailResponse1.id,
+      productDetailsId: productDetailsResponse1.id,
     }
 
     const productResponse1 = await app
@@ -685,7 +685,7 @@ suite('order routes', () => {
       price: 6600,
       maxPerCustomer: null,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: productDetailResponse2.id,
+      productDetailsId: productDetailsResponse2.id,
     }
 
     const productResponse2 = await app
@@ -702,7 +702,7 @@ suite('order routes', () => {
       price: 6600,
       maxPerCustomer: 2,
       pickupOccasionId: createdPickupResponse.id,
-      productDetailsId: productDetailResponse3.id,
+      productDetailsId: productDetailsResponse3.id,
     }
 
     const productResponse3 = await app

@@ -1,8 +1,9 @@
 import startApp from './app.ts'
 import apiConfig from './config/api.ts'
 import openAPIConfig from '#config/openapi.ts'
+import { createDependencyContainer } from './di-container.ts'
 
-const app = await startApp()
+const app = await startApp(createDependencyContainer())
 
 async function main() {
   try {

@@ -1,11 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 
 import {
-  listPickupOccasionsHandler,
-  createPickupOccasionHandler,
-  updatePickupHandler,
-} from './pickup-occasion.controller.ts'
-import {
   type CreatePickupOccasionBody,
   createPickupOccasionBodySchema,
   getPickupOccasionSchema,
@@ -23,6 +18,7 @@ import {
 const tags = getTags('pickups')
 
 export async function pickupOccasionRoutes(app: FastifyInstance) {
+  const { pickupOccasionController } = app.diContainer
   app.get(
     '/',
     {
@@ -34,7 +30,7 @@ export async function pickupOccasionRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    listPickupOccasionsHandler,
+    pickupOccasionController.listPickupOccasionsHandler,
   )
 
   app.post<{ Body: CreatePickupOccasionBody }>(
@@ -49,7 +45,7 @@ export async function pickupOccasionRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    createPickupOccasionHandler,
+    pickupOccasionController.createPickupOccasionHandler,
   )
 
   app.patch<{ Body: UpdatePickupOccasionBody; Params: IdParams }>(
@@ -65,6 +61,6 @@ export async function pickupOccasionRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    updatePickupHandler,
+    pickupOccasionController.updatePickupHandler,
   )
 }

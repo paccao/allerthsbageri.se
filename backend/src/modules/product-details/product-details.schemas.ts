@@ -7,22 +7,22 @@ import { z } from 'zod'
 
 import { productDetailsTable } from '#db/schema.ts'
 
-export const getProductDetailSchema = createSelectSchema(productDetailsTable)
-export const listProductDetailsSchema = z.array(getProductDetailSchema)
-export type GetProductDetail = z.infer<typeof getProductDetailSchema>
+export const getProductDetailsSchema = createSelectSchema(productDetailsTable)
+export const listProductDetailsSchema = z.array(getProductDetailsSchema)
+export type GetProductDetails = z.infer<typeof getProductDetailsSchema>
 
-export const createProductDetailBodySchema = createInsertSchema(
+export const createProductDetailsBodySchema = createInsertSchema(
   productDetailsTable,
 ).extend({
   image: z.string().nullable().default(null),
   vatPercentage: z.int().min(1).max(100),
 })
-export type CreateProductDetailBody = z.infer<
-  typeof createProductDetailBodySchema
+export type CreateProductDetailsBody = z.infer<
+  typeof createProductDetailsBodySchema
 >
 
-export const updateProductDetailBodySchema =
+export const updateProductDetailsBodySchema =
   createUpdateSchema(productDetailsTable)
-export type UpdateProductDetailBody = z.infer<
-  typeof updateProductDetailBodySchema
+export type UpdateProductDetailsBody = z.infer<
+  typeof updateProductDetailsBodySchema
 >
