@@ -1,5 +1,5 @@
 import { createDBConnection } from '#db/index.ts'
-import { SessionService } from '#utils/session.ts'
+import { SessionService } from '#src/modules/auth/session.service.ts'
 import { AuthService } from './modules/auth/auth.service.ts'
 import { createAuthController } from './modules/auth/auth.controller.ts'
 import { CustomerService } from './modules/customer/customer.service.ts'

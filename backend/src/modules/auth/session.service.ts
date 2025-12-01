@@ -13,8 +13,6 @@ import type { DependencyContainer } from '#src/di-container.ts'
 
 const DAY = 1000 * 60 * 60 * 24
 
-// IDEA: Move Session to a separate module since it is not an util
-// Suggestion: modules/session/session.service.ts
 // IDEA: Maybe use a cleaner API for session?:
 // session.create()
 // session.deleteCookie()
