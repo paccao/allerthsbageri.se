@@ -1,13 +1,8 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 
-await setupMockedInMemoryTestDB()
-
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
-
-import { getTestingUtils } from '#utils/testing-utils.ts'
+const app = await startTestApp()
 
 const { createAdminUser } = getTestingUtils(app)
 

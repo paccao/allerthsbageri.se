@@ -3,12 +3,6 @@ import fp from 'fastify-plugin'
 
 import type { User } from '#db/schema.ts'
 import apiConfig from '#config/api.ts'
-import {
-  validateSessionToken,
-  deleteSessionTokenCookie,
-  setSessionTokenCookie,
-  parseSessionTokenFromCookie,
-} from '#utils/session.ts'
 
 declare module 'fastify' {
   export interface FastifyRequest {
@@ -42,19 +36,22 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
       }
     }
 
+    const { sessionService } = app.diContainer
+
     // Validate session
-    const token = parseSessionTokenFromCookie(request)
+    const token = sessionService.parseSessionTokenFromCookie(request)
 
     if (token) {
-      const { session, user, refreshed } = await validateSessionToken(token)
+      const { session, user, refreshed } =
+        await sessionService.validateSessionToken(token)
       if (session) {
         request.user = user
 
         if (refreshed) {
-          setSessionTokenCookie(reply, token, session.expiresAt)
+          sessionService.setSessionTokenCookie(reply, token, session.expiresAt)
         }
       } else {
-        deleteSessionTokenCookie(reply)
+        sessionService.deleteSessionTokenCookie(reply)
       }
     }
   })

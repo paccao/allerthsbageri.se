@@ -1,19 +1,9 @@
 import { suite, test, type TestContext } from 'node:test'
 
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
 import apiConfig from '#config/api.ts'
+import { startTestApp } from '#utils/testing-utils.ts'
 
-// TODO: Simplify how the testing DB is set up by allowing it to be passed as a dependency to the app instance.
-// The app instance would then make the DB connection available for all services and controllers
-// which would remove the need for explicit imports of the DB module.
-// By using Dependency Injection (DI), we would make testing much easier too,
-// since we could just create a testing DB and pass it to the app instance.
-// We should evaluate options, and find a simple solution that helps us create a good structure for the backend.
-
-await setupMockedInMemoryTestDB()
-
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
+const app = await startTestApp()
 
 function getSessionCookie(response: Awaited<ReturnType<typeof app.inject>>) {
   return response.cookies.find((c) => c.name === apiConfig.sessionCookieName)

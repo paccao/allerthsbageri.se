@@ -1,65 +1,67 @@
 import { hash, verify } from '@node-rs/argon2'
 import { eq } from 'drizzle-orm'
 
-import { db } from '#db/index.ts'
 import { userTable } from '#db/schema.ts'
 import apiConfig from '#config/api.ts'
+import type { DependencyContainer } from '#src/di-container.ts'
 
-export async function signUpUser({
-  username,
-  password,
-  name,
-}: typeof userTable.$inferInsert) {
-  const [existingUser] = await db
-    .select()
-    .from(userTable)
-    .where(eq(userTable.username, username))
+export class AuthService {
+  #db: DependencyContainer['db']
 
-  if (existingUser?.username == username) {
-    return { error: 'Username already taken', status: 422 }
+  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+    this.#db = db
   }
 
-  const hashedPassword = await hash(password, apiConfig.passwordHashingConfig)
+  async signUpUser({
+    username,
+    password,
+    name,
+  }: typeof userTable.$inferInsert) {
+    const [existingUser] = await this.#db
+      .select()
+      .from(userTable)
+      .where(eq(userTable.username, username))
 
-  const [newUser] = await db
-    .insert(userTable)
-    .values({
-      username,
-      password: hashedPassword,
-      name,
-    })
-    .returning({ id: userTable.id })
+    if (existingUser?.username == username) {
+      return { error: 'Username already taken', status: 422 }
+    }
 
-  if (!newUser) {
-    return { error: 'Failed to create user', status: 500 }
+    const hashedPassword = await hash(password, apiConfig.passwordHashingConfig)
+
+    const [newUser] = await this.#db
+      .insert(userTable)
+      .values({
+        username,
+        password: hashedPassword,
+        name,
+      })
+      .returning({ id: userTable.id })
+
+    if (!newUser) {
+      return { error: 'Failed to create user', status: 500 }
+    }
+
+    return { user: newUser }
   }
 
-  return { user: newUser }
+  async signInUser(username: string, password: string) {
+    const [existingUser] = await this.#db
+      .select()
+      .from(userTable)
+      .where(eq(userTable.username, username))
+
+    const isValidPassword =
+      existingUser &&
+      (await verify(
+        existingUser.password,
+        password,
+        apiConfig.passwordHashingConfig,
+      ))
+
+    if (!existingUser || !isValidPassword) {
+      return { error: 'Invalid username or password', status: 422 }
+    }
+
+    return { user: existingUser }
+  }
 }
-
-export async function signInUser(username: string, password: string) {
-  const [existingUser] = await db
-    .select()
-    .from(userTable)
-    .where(eq(userTable.username, username))
-
-  const isValidPassword =
-    existingUser &&
-    (await verify(
-      existingUser.password,
-      password,
-      apiConfig.passwordHashingConfig,
-    ))
-
-  if (!existingUser || !isValidPassword) {
-    return { error: 'Invalid username or password', status: 422 }
-  }
-
-  return { user: existingUser }
-}
-
-// export async function signOutUser(sessionId: string) {
-//   await lucia.invalidateSession(sessionId)
-
-//   return lucia.createBlankSessionCookie()
-// }

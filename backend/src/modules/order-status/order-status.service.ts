@@ -1,55 +1,65 @@
 import { eq } from 'drizzle-orm'
 
-import { db } from '#db/index.ts'
 import { orderStatusTable } from '#db/schema.ts'
+import type { DependencyContainer } from '#src/di-container.ts'
 
-export async function getOrderStatus(id: number) {
-  const results = await db
-    .select()
-    .from(orderStatusTable)
-    .where(eq(orderStatusTable.id, id))
+export class OrderStatusService {
+  #db: DependencyContainer['db']
 
-  return results[0]
-}
+  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+    this.#db = db
+  }
 
-export async function listOrderStatuses() {
-  return await db
-    .select()
-    .from(orderStatusTable)
-    .where(eq(orderStatusTable.isDefault, true))
-}
+  async getOrderStatus(id: number) {
+    const results = await this.#db
+      .select()
+      .from(orderStatusTable)
+      .where(eq(orderStatusTable.id, id))
 
-export async function getDefaultOrderStatus() {
-  const defaultStatus = await db
-    .select()
-    .from(orderStatusTable)
-    .where(eq(orderStatusTable.isDefault, true))
+    return results[0]
+  }
 
-  if (defaultStatus.length > 1) {
-    // IDEA: use custom error to allow setting HTTP 500 status code
-    throw new Error('More than one default order status found', {
+  async listOrderStatuses() {
+    return await this.#db
+      .select()
+      .from(orderStatusTable)
+      .where(eq(orderStatusTable.isDefault, true))
+  }
+
+  async getDefaultOrderStatus() {
+    const defaultStatus = await this.#db
+      .select()
+      .from(orderStatusTable)
+      .where(eq(orderStatusTable.isDefault, true))
+
+    if (defaultStatus.length > 1) {
+      // IDEA: use custom error to allow setting HTTP 500 status code
+      throw new Error('More than one default order status found', {
+        cause: { defaultStatus },
+      })
+    }
+
+    if (defaultStatus[0]) {
+      return defaultStatus[0]
+    }
+
+    throw new Error('No default order status found', {
       cause: { defaultStatus },
     })
   }
 
-  if (defaultStatus[0]) {
-    return defaultStatus[0]
+  /**
+   * Get an order status and fallback to default if it does not exist or the id was missing
+   */
+  async getOrderStatusOrDefault(id?: number) {
+    if (!id) return this.getDefaultOrderStatus()
+
+    let orderStatus = await this.getOrderStatus(id)
+    // IDEA: Give services access to the app logger even outside of controllers
+    // This would make the API easier to debug since logs would be connected with specific requests
+    console.warn(`orderStatus not found: ${id}. Falling back to default`)
+    if (orderStatus) return orderStatus
+
+    return this.getDefaultOrderStatus()
   }
-
-  throw new Error('No default order status found', { cause: { defaultStatus } })
-}
-
-/**
- * Get an order status and fallback to default if it does not exist or the id was missing
- */
-export async function getOrderStatusOrDefault(id?: number) {
-  if (!id) return getDefaultOrderStatus()
-
-  let orderStatus = await getOrderStatus(id)
-  // IDEA: Give services access to the app logger even outside of controllers
-  // This would make the API easier to debug since logs would be connected with specific requests
-  console.warn(`orderStatus not found: ${id}. Falling back to default`)
-  if (orderStatus) return orderStatus
-
-  return getDefaultOrderStatus()
 }

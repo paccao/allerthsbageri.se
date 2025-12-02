@@ -1,95 +1,112 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import {
-  createProductDetail,
-  getProductDetail,
-  listProductDetails,
-  updateProductDetail,
-} from './product-details.service.ts'
 import type { IdParams } from '#utils/common.schemas.ts'
 import type {
-  CreateProductDetailBody,
-  UpdateProductDetailBody,
+  CreateProductDetailsBody,
+  UpdateProductDetailsBody,
 } from './product-details.schemas.ts'
+import type { DependencyContainer } from '#src/di-container.ts'
 
-export async function getProductDetailHandler(
-  request: FastifyRequest<{ Params: IdParams }>,
-  reply: FastifyReply,
-) {
-  try {
-    const productDetail = await getProductDetail(request.params.id)
+export function createProductDetailsController({
+  productDetailsService,
+}: Pick<DependencyContainer, 'productDetailsService'>) {
+  async function getProductDetailsHandler(
+    request: FastifyRequest<{ Params: IdParams }>,
+    reply: FastifyReply,
+  ) {
+    try {
+      const productDetails = await productDetailsService.getProductDetails(
+        request.params.id,
+      )
 
-    if (!productDetail) {
-      return reply.code(404).send({
-        message: 'Product detail not found',
+      if (!productDetails) {
+        return reply.code(404).send({
+          message: 'Product detail not found',
+        })
+      }
+
+      return productDetails
+    } catch (error: any) {
+      request.log.error(error, error?.message)
+      return reply.code(500).send({ message: 'Failed to get product detail' })
+    }
+  }
+
+  async function listProductDetailsHandler(
+    request: FastifyRequest,
+    reply: FastifyReply,
+  ) {
+    try {
+      const productDetails = await productDetailsService.listProductDetails()
+
+      return productDetails
+    } catch (error: any) {
+      request.log.error(error, error?.message)
+      return reply.code(500).send({ message: 'Failed to list product details' })
+    }
+  }
+
+  async function createProductDetailsHandler(
+    request: FastifyRequest<{ Body: CreateProductDetailsBody }>,
+    reply: FastifyReply,
+  ) {
+    const { name, description, image, vatPercentage } = request.body
+
+    try {
+      const productDetails = await productDetailsService.createProductDetails({
+        name,
+        description,
+        image,
+        vatPercentage,
       })
+      return reply.code(201).send(productDetails)
+    } catch (error: any) {
+      request.log.error(error, error?.message)
+      return reply
+        .code(500)
+        .send({ message: 'Failed to create product detail' })
     }
-
-    return productDetail
-  } catch (error: any) {
-    request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to get product detail' })
   }
-}
 
-export async function listProductDetailsHandler(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
-  try {
-    const productDetails = await listProductDetails()
+  async function updateProductDetailsHandler(
+    request: FastifyRequest<{
+      Params: IdParams
+      Body: UpdateProductDetailsBody
+    }>,
+    reply: FastifyReply,
+  ) {
+    const { name, description, image, vatPercentage } = request.body
 
-    return productDetails
-  } catch (error: any) {
-    request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to list product details' })
-  }
-}
+    try {
+      const productDetails = await productDetailsService.updateProductDetails(
+        request.params.id,
+        {
+          name,
+          description,
+          image,
+          vatPercentage,
+        },
+      )
 
-export async function createProductDetailHandler(
-  request: FastifyRequest<{ Body: CreateProductDetailBody }>,
-  reply: FastifyReply,
-) {
-  const { name, description, image, vatPercentage } = request.body
+      if (!productDetails) {
+        return reply
+          .code(404)
+          .send({ message: 'Product detail does not exist' })
+      }
 
-  try {
-    const productDetail = await createProductDetail({
-      name,
-      description,
-      image,
-      vatPercentage,
-    })
-    return reply.code(201).send(productDetail)
-  } catch (error: any) {
-    request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to create product detail' })
-  }
-}
-
-export async function updateProductDetailHandler(
-  request: FastifyRequest<{
-    Params: IdParams
-    Body: UpdateProductDetailBody
-  }>,
-  reply: FastifyReply,
-) {
-  const { name, description, image, vatPercentage } = request.body
-
-  try {
-    const productDetail = await updateProductDetail(request.params.id, {
-      name,
-      description,
-      image,
-      vatPercentage,
-    })
-
-    if (!productDetail) {
-      return reply.code(404).send({ message: 'Product detail does not exist' })
+      return productDetails
+    } catch (error: any) {
+      request.log.error(error, error?.message)
+      return reply
+        .code(500)
+        .send({ message: 'Failed to update product detail' })
     }
+  }
 
-    return productDetail
-  } catch (error: any) {
-    request.log.error(error, error?.message)
-    return reply.code(500).send({ message: 'Failed to update product detail' })
+  return {
+    getProductDetailsHandler,
+    listProductDetailsHandler,
+    createProductDetailsHandler,
+    updateProductDetailsHandler,
   }
 }

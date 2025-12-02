@@ -1,13 +1,9 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
 import type { Customer } from '#db/schema.ts'
-import { getTestingUtils } from '#utils/testing-utils.ts'
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 
-await setupMockedInMemoryTestDB()
-
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
+const app = await startTestApp()
 const { assertAuthRequired, createAdminUser } = getTestingUtils(app)
 
 suite('customer routes', () => {

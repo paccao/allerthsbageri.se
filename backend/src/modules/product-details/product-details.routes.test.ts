@@ -1,13 +1,9 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import { setupMockedInMemoryTestDB } from '#db/test-db.ts'
-import { getTestingUtils } from '#utils/testing-utils.ts'
-import type { GetProductDetail } from './product-details.schemas.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
+import type { GetProductDetails } from './product-details.schemas.ts'
 
-await setupMockedInMemoryTestDB()
-
-const startApp = (await import('#src/app.ts')).default
-const app = await startApp()
+const app = await startTestApp()
 
 const { createAdminUser } = getTestingUtils(app)
 
@@ -25,7 +21,7 @@ suite('product details routes', () => {
   })
 
   test('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
-    const productDetail = {
+    const productDetails = {
       name: 'banankaka123',
       description: 'gjord på banan, surdeg och vaniljsocker',
       image: null,
@@ -36,14 +32,14 @@ suite('product details routes', () => {
     const createResponse = await app.inject({
       method: 'POST',
       url: '/api/product-details/',
-      body: productDetail,
+      body: productDetails,
       headers: { cookie },
     })
 
     const createDeserialized = createResponse.json()
 
     t.assert.strictEqual(createResponse.statusCode, 201)
-    t.assert.strictEqual(createDeserialized.name, productDetail.name)
+    t.assert.strictEqual(createDeserialized.name, productDetails.name)
     t.assert.strictEqual(
       createDeserialized.description.length <= DESCRIPTION_LENGTH,
       true,
@@ -63,18 +59,18 @@ suite('product details routes', () => {
       })
       .then((res) => res.json())
 
-    const listDeserialized = listResponse.json() as Array<GetProductDetail>
+    const listDeserialized = listResponse.json() as Array<GetProductDetails>
 
     t.assert.strictEqual(listResponse.statusCode, 200)
     t.assert.strictEqual(createDeserialized.id, getByIdResponse.id)
     t.assert.strictEqual(
-      listDeserialized.some((item) => item.name === productDetail.name),
+      listDeserialized.some((item) => item.name === productDetails.name),
       true,
     )
   })
 
   test('should only patch data that was sent', async (t: TestContext) => {
-    const productDetail = {
+    const productDetails = {
       name: 'blåbärmuffin',
       description: 'Gjord på blåbär, surdeg och kärlek',
       image: null,
@@ -84,7 +80,7 @@ suite('product details routes', () => {
     const createResponse = await app.inject({
       method: 'POST',
       url: '/api/product-details/',
-      body: productDetail,
+      body: productDetails,
       headers: { cookie },
     })
 
@@ -92,18 +88,18 @@ suite('product details routes', () => {
 
     t.assert.strictEqual(createResponse.statusCode, 201)
 
-    const productDetail2 = {
+    const productDetails2 = {
       name: 'hallonmuffin',
       description: 'Gjord på hallon, surdeg och kärlek',
       image: 'hej',
       vatPercentage: 15,
     }
 
-    const anotherCreatedProductDetail = await app
+    const anotherCreatedProductDetails = await app
       .inject({
         method: 'POST',
         url: '/api/product-details/',
-        body: productDetail2,
+        body: productDetails2,
         headers: { cookie },
       })
       .then((res) => res.json())
@@ -124,15 +120,15 @@ suite('product details routes', () => {
 
     const patchedDeserialized = afterUpdate.json()
 
-    const getProductDetail2 = await app
+    const getProductDetails2 = await app
       .inject({
         method: 'GET',
-        url: `/api/product-details/${anotherCreatedProductDetail.id}`,
+        url: `/api/product-details/${anotherCreatedProductDetails.id}`,
         headers: { cookie },
       })
       .then((res) => res.json())
 
-    t.assert.strictEqual(anotherCreatedProductDetail.id, getProductDetail2.id)
+    t.assert.strictEqual(anotherCreatedProductDetails.id, getProductDetails2.id)
 
     t.assert.strictEqual(afterUpdate.statusCode, 200)
     t.assert.strictEqual(

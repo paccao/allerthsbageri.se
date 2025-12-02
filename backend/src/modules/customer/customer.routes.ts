@@ -1,13 +1,6 @@
 import type { FastifyInstance } from 'fastify'
 
 import {
-  createCustomerHandler,
-  deleteCustomerHandler,
-  getCustomerHandler,
-  listCustomersHandler,
-  updateCustomerHandler,
-} from './customer.controller.ts'
-import {
   type CreateCustomerBody,
   createCustomerBodySchema,
   getCustomerSchema,
@@ -28,6 +21,8 @@ const tags = getTags('customers')
 // TODO: Define responses for HTTP 400 errors
 // There might be a common schema that could be used.
 export async function customerRoutes(app: FastifyInstance) {
+  const { customerController } = app.diContainer
+
   app.post<{ Body: CreateCustomerBody }>(
     '/',
     {
@@ -40,7 +35,7 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    createCustomerHandler,
+    customerController.createCustomerHandler,
   )
 
   app.get(
@@ -54,7 +49,7 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    listCustomersHandler,
+    customerController.listCustomersHandler,
   )
 
   app.get<{ Params: IdParams }>(
@@ -69,7 +64,7 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    getCustomerHandler,
+    customerController.getCustomerHandler,
   )
 
   app.patch<{ Body: UpdateCustomerBody; Params: IdParams }>(
@@ -85,7 +80,7 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    updateCustomerHandler,
+    customerController.updateCustomerHandler,
   )
 
   app.delete<{ Params: IdParams }>(
@@ -100,6 +95,6 @@ export async function customerRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    deleteCustomerHandler,
+    customerController.deleteCustomerHandler,
   )
 }

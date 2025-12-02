@@ -1,42 +1,51 @@
 import { eq } from 'drizzle-orm'
 
-import { db } from '#db/index.ts'
 import { productDetailsTable } from '#db/schema.ts'
-import type { CreateProductDetailBody } from './product-details.schemas.ts'
+import type { CreateProductDetailsBody } from './product-details.schemas.ts'
+import type { DependencyContainer } from '#src/di-container.ts'
 
-export async function getProductDetail(id: number) {
-  const results = await db
-    .select()
-    .from(productDetailsTable)
-    .where(eq(productDetailsTable.id, id))
+// IDEA: Rename service methods to use common names like `get()`, `list()` and similar.
+// Since we always call the methods for the service, we can make the code shorter without losing information.
 
-  return results[0]
-}
+export class ProductDetailsService {
+  #db: DependencyContainer['db']
 
-export async function listProductDetails() {
-  return db.select().from(productDetailsTable)
-}
+  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+    this.#db = db
+  }
 
-export async function createProductDetail({
-  ...data
-}: CreateProductDetailBody) {
-  const results = await db
-    .insert(productDetailsTable)
-    .values({ ...data })
-    .returning()
+  async getProductDetails(id: number) {
+    const results = await this.#db
+      .select()
+      .from(productDetailsTable)
+      .where(eq(productDetailsTable.id, id))
 
-  return results[0]!
-}
+    return results[0]
+  }
 
-export async function updateProductDetail(
-  id: number,
-  data: Partial<typeof productDetailsTable.$inferInsert>,
-) {
-  const results = await db
-    .update(productDetailsTable)
-    .set(data)
-    .where(eq(productDetailsTable.id, id))
-    .returning()
+  async listProductDetails() {
+    return this.#db.select().from(productDetailsTable)
+  }
 
-  return results[0]
+  async createProductDetails({ ...data }: CreateProductDetailsBody) {
+    const results = await this.#db
+      .insert(productDetailsTable)
+      .values({ ...data })
+      .returning()
+
+    return results[0]!
+  }
+
+  async updateProductDetails(
+    id: number,
+    data: Partial<typeof productDetailsTable.$inferInsert>,
+  ) {
+    const results = await this.#db
+      .update(productDetailsTable)
+      .set(data)
+      .where(eq(productDetailsTable.id, id))
+      .returning()
+
+    return results[0]
+  }
 }

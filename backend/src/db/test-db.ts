@@ -1,4 +1,3 @@
-import { mock } from 'node:test'
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 import { pushSQLiteSchema } from 'drizzle-kit/api'
 
@@ -28,10 +27,9 @@ function formatSQLWithSnakeCaseColumnNames(rawSQL: string) {
 /**
  * Create a testing DB.
  *
- * NOTE: This should be called before importing any modules that uses the DB.
- * Otherwise, the tests will fail
+ * @returns DB instance which should be passed to the dependency container to oveerride the default DB during tests.
  */
-export async function setupMockedInMemoryTestDB() {
+export async function createInMemoryTestDB() {
   const db = drizzle({
     connection: { source: ':memory:' },
     casing: 'snake_case',
@@ -58,6 +56,5 @@ export async function setupMockedInMemoryTestDB() {
 
   await addSeedingData(db)
 
-  // Make the temporary testing DB shared across the entire test suite by caching the mocked module.
-  mock.module('#db/index.ts', { cache: true, namedExports: { db } })
+  return db
 }

@@ -1,6 +1,5 @@
 import type { FastifyInstance } from 'fastify'
 
-import { createOrderHandler } from './order.controller.ts'
 import {
   type CreateOrderBody,
   createOrderBodySchema,
@@ -12,6 +11,8 @@ import { getErrorResponseSchemas } from '#utils/common.schemas.ts'
 const tags = getTags('orders')
 
 export async function orderRoutes(app: FastifyInstance) {
+  const { orderController } = app.diContainer
+
   app.post<{ Body: CreateOrderBody }>(
     '/',
     {
@@ -24,6 +25,6 @@ export async function orderRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    createOrderHandler,
+    orderController.createOrderHandler,
   )
 }

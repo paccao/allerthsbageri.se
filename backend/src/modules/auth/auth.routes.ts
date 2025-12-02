@@ -1,16 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 
 import { signInBodySchema, signUpBodySchema } from './auth.schemas.ts'
-import {
-  signInHandler,
-  signOutHandler,
-  signUpHandler,
-} from './auth.controller.ts'
 import { getTags } from '#config/openapi.ts'
 
 const tags = getTags('auth')
 
 export async function authRoutes(app: FastifyInstance) {
+  const { authController } = app.diContainer
   // TODO: Only allow signed-in admin users to use this route to add more users
   app.post(
     '/sign-up',
@@ -20,7 +16,7 @@ export async function authRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    signUpHandler,
+    authController.signUpHandler,
   )
 
   app.post(
@@ -31,7 +27,7 @@ export async function authRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    signInHandler,
+    authController.signInHandler,
   )
 
   app.post(
@@ -41,6 +37,6 @@ export async function authRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    signOutHandler,
+    authController.signOutHandler,
   )
 }

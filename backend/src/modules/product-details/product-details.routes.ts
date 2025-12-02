@@ -1,18 +1,12 @@
 import type { FastifyInstance } from 'fastify'
 
 import {
-  createProductDetailHandler,
-  getProductDetailHandler,
-  listProductDetailsHandler,
-  updateProductDetailHandler,
-} from './product-details.controller.ts'
-import {
-  createProductDetailBodySchema,
-  getProductDetailSchema,
+  createProductDetailsBodySchema,
+  getProductDetailsSchema,
   listProductDetailsSchema,
-  updateProductDetailBodySchema,
-  type CreateProductDetailBody,
-  type UpdateProductDetailBody,
+  updateProductDetailsBodySchema,
+  type CreateProductDetailsBody,
+  type UpdateProductDetailsBody,
 } from './product-details.schemas.ts'
 import { getTags } from '#config/openapi.ts'
 import {
@@ -24,6 +18,8 @@ import {
 const tags = getTags('product_details')
 
 export async function productDetailsRoutes(app: FastifyInstance) {
+  const { productDetailsController } = app.diContainer
+
   app.get(
     '/',
     {
@@ -35,7 +31,7 @@ export async function productDetailsRoutes(app: FastifyInstance) {
         tags,
       },
     },
-    listProductDetailsHandler,
+    productDetailsController.listProductDetailsHandler,
   )
 
   app.get<{ Params: IdParams }>(
@@ -44,43 +40,43 @@ export async function productDetailsRoutes(app: FastifyInstance) {
       schema: {
         params: idParamsSchema,
         response: {
-          200: getProductDetailSchema,
+          200: getProductDetailsSchema,
           ...getErrorResponseSchemas(401, 404, 500),
         },
         tags,
       },
     },
-    getProductDetailHandler,
+    productDetailsController.getProductDetailsHandler,
   )
 
-  app.post<{ Body: CreateProductDetailBody }>(
+  app.post<{ Body: CreateProductDetailsBody }>(
     '/',
     {
       schema: {
-        body: createProductDetailBodySchema,
+        body: createProductDetailsBodySchema,
         response: {
-          201: createProductDetailBodySchema,
+          201: createProductDetailsBodySchema,
           ...getErrorResponseSchemas(401, 500),
         },
         tags,
       },
     },
-    createProductDetailHandler,
+    productDetailsController.createProductDetailsHandler,
   )
 
-  app.patch<{ Body: UpdateProductDetailBody; Params: IdParams }>(
+  app.patch<{ Body: UpdateProductDetailsBody; Params: IdParams }>(
     '/:id',
     {
       schema: {
-        body: updateProductDetailBodySchema,
+        body: updateProductDetailsBodySchema,
         params: idParamsSchema,
         response: {
-          200: getProductDetailSchema,
+          200: getProductDetailsSchema,
           ...getErrorResponseSchemas(401, 404, 500),
         },
         tags,
       },
     },
-    updateProductDetailHandler,
+    productDetailsController.updateProductDetailsHandler,
   )
 }

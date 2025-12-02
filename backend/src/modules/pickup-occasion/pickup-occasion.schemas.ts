@@ -1,6 +1,7 @@
-import { pickupOccasionTable } from '#db/schema.ts'
 import { createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
+
+import { pickupOccasionTable } from '#db/schema.ts'
 
 export const getPickupOccasionSchema = createSelectSchema(pickupOccasionTable)
 export const listPickupOccasionsSchema = z.array(getPickupOccasionSchema)
