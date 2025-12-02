@@ -1,3 +1,4 @@
+import { createLogger } from './logger.ts'
 import { createDBConnection } from '#db/index.ts'
 import { SessionService } from '#src/modules/auth/session.service.ts'
 import { AuthService } from './modules/auth/auth.service.ts'
@@ -23,6 +24,7 @@ import { createProductController } from './modules/product/product.controller.ts
  * NOTE: The order is important as it reflects what depends on what.
  */
 export type DependencyContainer = {
+  logger: ReturnType<typeof createLogger>
   // Ideally, types should not be tied to the actual implementations but rather define the shared interfaces.
   // However, since we want full type safety for the DB connection, we use the expected shape of the actual DB driver and DB schema.
   // This still allows replacing the DB during testing, since we use the same DB driver and schema, although not the exact same implementation.
@@ -89,6 +91,8 @@ export function createDependencyContainer(
     keyof DependencyContainer,
     FunctionFactory | ClassFactory
   > = {
+    logger: createLogger,
+
     db: createDBConnection,
 
     sessionService: SessionService,

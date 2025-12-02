@@ -28,7 +28,7 @@ declare module 'fastify' {
 
 async function startApp(diContainer: DependencyContainer) {
   const app = Fastify({
-    logger: apiConfig.logger,
+    loggerInstance: diContainer.logger,
   }).withTypeProvider<ZodTypeProvider>()
 
   // Make global dependencies available on the app instance
