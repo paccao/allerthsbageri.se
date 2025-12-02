@@ -154,9 +154,8 @@
             <p class="mt-4">
               Min mormor och morfar, Sven och <span class="whitespace-nowrap"
                 >Maj-Britt</span
-              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som
-              skapade minnen för livet. Det var fyllt med generationer av kunskap
-              och engagemang.
+              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som skapade
+              minnen för livet. Det var fyllt med generationer av kunskap och engagemang.
             </p>
             <p class="mt-4">
               Nu kommer morfars brödlådor med telefonnummer 14 till användning
