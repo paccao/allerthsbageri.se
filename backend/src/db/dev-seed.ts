@@ -15,6 +15,12 @@ import {
 import apiConfig from '#config/api.ts'
 import env from '#config/env.ts'
 
+if (env.NODE_ENV != 'development') {
+  throw new Error(
+    'The specified seed script should only be run in development.',
+  )
+}
+
 const db = createDBConnection()
 
 /**
