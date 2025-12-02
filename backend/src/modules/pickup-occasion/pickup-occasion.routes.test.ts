@@ -32,7 +32,7 @@ suite('pickup occasion routes', () => {
 
     const response = await app.inject({
       method: 'POST',
-      url: '/api/pickups/',
+      url: '/api/pickup-occasions/',
       body: pickup,
       headers: { cookie },
     })
@@ -65,7 +65,7 @@ suite('pickup occasion routes', () => {
 
     const createdPickup = await app.inject({
       method: 'POST',
-      url: '/api/pickups/',
+      url: '/api/pickup-occasions/',
       body: pickup,
       headers: { cookie },
     })
@@ -84,7 +84,7 @@ suite('pickup occasion routes', () => {
     const afterUpdate = await app
       .inject({
         method: 'PATCH',
-        url: `/api/pickups/${createdPickupDeserialized.id}`,
+        url: `/api/pickup-occasions/${createdPickupDeserialized.id}`,
         body: pickupUpdate,
         headers: { cookie },
       })
@@ -122,7 +122,7 @@ suite('pickup occasion routes', () => {
 
     const createdPickup = await app.inject({
       method: 'POST',
-      url: '/api/pickups/',
+      url: '/api/pickup-occasions/',
       body: badPickup,
       headers: { cookie },
     })
@@ -146,7 +146,7 @@ suite('pickup occasion routes', () => {
 
     const createdPickup = await app.inject({
       method: 'POST',
-      url: '/api/pickups/',
+      url: '/api/pickup-occasions/',
       body: goodPickup,
       headers: { cookie },
     })
@@ -162,7 +162,7 @@ suite('pickup occasion routes', () => {
 
     const updatedPickup = await app.inject({
       method: 'PATCH',
-      url: `/api/pickups/${createdPickup.json().id}`,
+      url: `/api/pickup-occasions/${createdPickup.json().id}`,
       body: badPickup,
       headers: { cookie },
     })
