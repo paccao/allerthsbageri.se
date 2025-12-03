@@ -230,7 +230,7 @@ suite('order routes', () => {
     const createdPickupResponse1: GetPickupOccasion = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickupOccasion1,
         headers: { cookie },
       })
@@ -309,7 +309,7 @@ suite('order routes', () => {
     const createdPickupResponse2: GetPickupOccasion = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickupOccasion2,
         headers: { cookie },
       })
@@ -372,7 +372,7 @@ suite('order routes', () => {
     const createdPickupResponse: GetPickupOccasion = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickupOccasion,
         headers: { cookie },
       })
@@ -601,7 +601,7 @@ suite('order routes', () => {
     const createdPickupResponse: GetPickupOccasion = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickupOccasion,
         headers: { cookie },
       })

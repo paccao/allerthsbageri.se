@@ -65,7 +65,7 @@ async function publicContext(app: FastifyInstance) {
  */
 async function authenticatedContext(app: FastifyInstance) {
   app.register(authenticationRequiredPlugin)
-  app.register(pickupOccasionRoutes, { prefix: 'api/pickups' })
+  app.register(pickupOccasionRoutes, { prefix: 'api/pickup-occasions' })
   app.register(customerRoutes, { prefix: 'api/customers' })
   app.register(orderRoutes, { prefix: 'api/orders' })
   app.register(productRoutes, { prefix: 'api/products' })

@@ -62,7 +62,7 @@ suite('product routes', () => {
     const pickupResponse = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickup,
         headers: { cookie },
       })
@@ -176,7 +176,7 @@ suite('product routes', () => {
 
     const pickupResponse = await app.inject({
       method: 'POST',
-      url: '/api/pickups/',
+      url: '/api/pickup-occasions/',
       body: pickup,
       headers: { cookie },
     })
@@ -300,7 +300,7 @@ suite('product routes', () => {
     const pickupResponse = await app
       .inject({
         method: 'POST',
-        url: '/api/pickups/',
+        url: '/api/pickup-occasions/',
         body: pickup,
         headers: { cookie },
       })
