@@ -12,6 +12,7 @@ export const listProductsSchema = z.array(getProductSchema)
 export type Product = z.infer<typeof getProductSchema>
 
 export const createProductBodySchema = createInsertSchema(productTable)
+  .omit({ id: true })
   .extend({
     stock: z.int().min(0),
     price: z.int().min(0),
@@ -19,10 +20,11 @@ export const createProductBodySchema = createInsertSchema(productTable)
     pickupOccasionId: z.int().min(1),
     productDetailsId: z.int().min(1),
   })
-  .omit({ id: true })
+
 export type CreateProductBody = z.infer<typeof createProductBodySchema>
 
 export const updateProductBodySchema = createUpdateSchema(productTable)
+  .omit({ id: true })
   .superRefine(
     (
       { stock, price, maxPerCustomer, pickupOccasionId, productDetailsId },
@@ -43,5 +45,4 @@ export const updateProductBodySchema = createUpdateSchema(productTable)
       }
     },
   )
-  .omit({ id: true })
 export type UpdateProductBody = z.infer<typeof updateProductBodySchema>
