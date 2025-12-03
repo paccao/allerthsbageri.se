@@ -24,8 +24,9 @@ export type CreateProductDetailsBody = z.infer<
   typeof createProductDetailsBodySchema
 >
 
-export const updateProductDetailsBodySchema =
-  createUpdateSchema(productDetailsTable)
+export const updateProductDetailsBodySchema = createUpdateSchema(
+  productDetailsTable,
+).omit({ id: true })
 export type UpdateProductDetailsBody = z.infer<
   typeof updateProductDetailsBodySchema
 >
