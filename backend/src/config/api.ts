@@ -1,14 +1,14 @@
 import { type Options } from '@node-rs/argon2'
-import { type FastifyServerOptions } from 'fastify'
+import type { LoggerOptions } from 'pino'
 
 import env, { DEV, TEST } from './env.ts'
 
-const baseLoggerOptions: FastifyServerOptions['logger'] = {
+const baseLoggerOptions: LoggerOptions = {
   // TODO: Redact all sensitive data
   redact: ['DATABASE_URL', 'SESSION_SECRET', 'req.headers.cookie'],
 }
 
-const getLoggerOptions = (): FastifyServerOptions['logger'] => {
+const getLoggerOptions = (): LoggerOptions => {
   if (DEV && process.stdout.isTTY) {
     return {
       level: 'trace',
@@ -38,7 +38,11 @@ const apiConfig = {
     TEST,
   },
   allowedOrigins: DEV
-    ? ['http://localhost:4321', 'http://localhost:3000']
+    ? [
+        'http://localhost:3000', // API server
+        'http://localhost:5173', // SvelteKit Dev
+        'http://localhost:4173', // SvelteKit Preview
+      ]
     : ['https://allerthsbageri.se'],
   logger: getLoggerOptions(),
   dbConnection: env.DATABASE_URL,

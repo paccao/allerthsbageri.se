@@ -142,6 +142,7 @@ In order to decouple various parts of the backend, we use a minimal DI implement
 In our current implementation, we create one instance of all our dependencies in the dependency container which are shared for the entire app instance by default. They can be overridden for specific modules as needed.
 
 For example, the app instance by default uses the same connection to the database, making the DB connection act like a singleton.
+
 #### Best practices
 
 When creating a function or class that expects the `DependencyContainer` as an argument, it's recommended to narrow the type with something like `Pick<DependencyContainer, 'db'>` to clearly document which dependencies are needed:
@@ -185,6 +186,12 @@ Modules are implemented in `src/modules/*` and contain the following types of fi
 - **Tests** - Right now, the most valuable kinds of backend tests are integration tests for modules that verify the API routes work as expected, including all other modules they use internally. We use the built-in Fastify HTTP injection to rapidly test with realistic conditions, but without the overhead of starting actual HTTP servers. Additional unit tests could be useful, but since integration tests gives the largest code coverage with minimal effort, they are more valuable to guarantee the API works as expected.
 
 - **Plugins** - Fastify plugins, also known as middleware, are used to add additional functionality to specific routes. It's useful to group together all code related to the same problem domain in the same module, to make it easier to reason about and find what you are looking for.
+
+#### Logger
+
+The project uses a shared logger instance, accessible via the dependency container.
+
+All logging related to the API and backend services should use the shared logger, to make it easy to adapt logs based on the environment, config and capture logs.
 
 #### Configuration
 

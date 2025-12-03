@@ -10,9 +10,11 @@ import type { DependencyContainer } from '#src/di-container.ts'
 
 export class ProductService {
   #db: DependencyContainer['db']
+  log: DependencyContainer['log']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor({ db, log }: Pick<DependencyContainer, 'db' | 'log'>) {
     this.#db = db
+    this.log = log
   }
 
   async getProductById(id: number) {
@@ -58,7 +60,7 @@ export class ProductService {
         if (error instanceof TransactionRollbackError) {
           return null
         } else {
-          console.error(error)
+          this.log.error(error)
           throw new Error('Unexpected error')
         }
       }
