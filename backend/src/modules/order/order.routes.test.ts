@@ -4,7 +4,7 @@ import z from 'zod'
 import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
 import type { CreateOrderBody } from './order.schemas.ts'
 import type { CreateProductBody, Product } from '../product/product.schemas.ts'
-import type { GetProductDetails } from '../product-details/product-details.schemas.ts'
+import type { CreateProductDetailsBody } from '../product-details/product-details.schemas.ts'
 import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
 
 const app = await startTestApp()
@@ -236,8 +236,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetails: GetProductDetails = {
-      id: 1,
+    const productDetails: CreateProductDetailsBody = {
       name: 'Kärleksbröd med Emmer',
       description: 'En limpa perfekt som en gåva på alla hjärtans dag',
       image: 'https://allerthsbageri.se/love',
@@ -378,8 +377,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetails1: GetProductDetails = {
-      id: 1,
+    const productDetails1: CreateProductDetailsBody = {
       name: 'Blåbärssoppa',
       description: 'a soup of blueberries',
       image: 'https://allerthsbageri.se/image1',
@@ -395,8 +393,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetaisl2: GetProductDetails = {
-      id: 1,
+    const productDetaisl2: CreateProductDetailsBody = {
       name: 'Surdegsbröd',
       description: 'Bread made of sourdough',
       image: 'https://allerthsbageri.se/image2',
@@ -607,8 +604,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetails1: GetProductDetails = {
-      id: 1,
+    const productDetails1: CreateProductDetailsBody = {
       name: 'Surdegsbröd1',
       description: 'Bread made of sourdough',
       image: 'https://allerthsbageri.se/image55',
@@ -624,8 +620,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetails2: GetProductDetails = {
-      id: 1,
+    const productDetails2: CreateProductDetailsBody = {
       name: 'Surdegsbröd2',
       description: 'Bread made of sourdough',
       image: 'https://allerthsbageri.se/image55',
@@ -641,8 +636,7 @@ suite('order routes', () => {
       })
       .then((res) => res.json())
 
-    const productDetails3: GetProductDetails = {
-      id: 1,
+    const productDetails3: CreateProductDetailsBody = {
       name: 'Surdegsbröd3',
       description: 'Bread made of sourdough',
       image: 'https://allerthsbageri.se/image55',

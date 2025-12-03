@@ -20,7 +20,7 @@ suite('product details routes', () => {
     cookie = await createAdminUser(productDetailsAdmin)
   })
 
-  test.only('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
+  test('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
     const productDetails = {
       name: 'banankaka123',
       description: 'gjord på banan, surdeg och vaniljsocker',
