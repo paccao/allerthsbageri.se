@@ -22,26 +22,26 @@ export const createProductBodySchema = createInsertSchema(productTable)
   .omit({ id: true })
 export type CreateProductBody = z.infer<typeof createProductBodySchema>
 
-export const updateProductBodySchema = createUpdateSchema(
-  productTable,
-).superRefine(
-  (
-    { stock, price, maxPerCustomer, pickupOccasionId, productDetailsId },
-    ctx,
-  ) => {
-    if (
-      !stock &&
-      !price &&
-      !maxPerCustomer &&
-      !pickupOccasionId &&
-      !productDetailsId
-    ) {
-      ctx.addIssue({
-        code: 'custom',
-        message:
-          'At least 1 of the parameters must be provided in order to update a product',
-      })
-    }
-  },
-)
+export const updateProductBodySchema = createUpdateSchema(productTable)
+  .superRefine(
+    (
+      { stock, price, maxPerCustomer, pickupOccasionId, productDetailsId },
+      ctx,
+    ) => {
+      if (
+        !stock &&
+        !price &&
+        !maxPerCustomer &&
+        !pickupOccasionId &&
+        !productDetailsId
+      ) {
+        ctx.addIssue({
+          code: 'custom',
+          message:
+            'At least 1 of the parameters must be provided in order to update a product',
+        })
+      }
+    },
+  )
+  .omit({ id: true })
 export type UpdateProductBody = z.infer<typeof updateProductBodySchema>
