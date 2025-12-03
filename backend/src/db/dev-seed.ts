@@ -14,6 +14,7 @@ import {
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
 import env from '#config/env.ts'
+import { createLogger } from '#src/logger.ts'
 
 if (env.NODE_ENV != 'development') {
   throw new Error(
@@ -21,7 +22,7 @@ if (env.NODE_ENV != 'development') {
   )
 }
 
-const db = createDBConnection()
+const db = createDBConnection({ log: createLogger() })
 
 /**
  * This seed file is used for testing data in the development environment only.
