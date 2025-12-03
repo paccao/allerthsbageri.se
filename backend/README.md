@@ -207,6 +207,8 @@ The project uses a shared logger instance, accessible via the dependency contain
 
 All logging related to the API and backend services should use the shared logger, to make it easy to adapt logs based on the environment, config and capture logs.
 
+However, scripts and dev/test utils are fine to use regular `console` logging.
+
 #### Configuration
 
 In the `src/config/*` directory, we load all configuration centrally and use schemas for validation and type safety. This ensures the backend has a correct environment before starting, helping us catch potential errors. It's also a good place to document how to configure the backend.
