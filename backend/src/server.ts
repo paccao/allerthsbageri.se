@@ -1,5 +1,11 @@
-import startApp from './app.ts'
 import apiConfig from './config/api.ts'
+
+if (apiConfig.env.DEV) {
+  await import('#src/utils/dev-db-check.ts')
+}
+
+// Perform the main imports after we have validated the environment
+import startApp from './app.ts'
 import openAPIConfig from '#config/openapi.ts'
 import { createDependencyContainer } from './di-container.ts'
 
