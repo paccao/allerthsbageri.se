@@ -11,13 +11,15 @@ export const getProductSchema = createSelectSchema(productTable)
 export const listProductsSchema = z.array(getProductSchema)
 export type Product = z.infer<typeof getProductSchema>
 
-export const createProductBodySchema = createInsertSchema(productTable).extend({
-  stock: z.int().min(0),
-  price: z.int().min(0),
-  maxPerCustomer: z.int().min(1).optional().nullable(),
-  pickupOccasionId: z.int().min(1),
-  productDetailsId: z.int().min(1),
-})
+export const createProductBodySchema = createInsertSchema(productTable)
+  .extend({
+    stock: z.int().min(0),
+    price: z.int().min(0),
+    maxPerCustomer: z.int().min(1).optional().nullable(),
+    pickupOccasionId: z.int().min(1),
+    productDetailsId: z.int().min(1),
+  })
+  .omit({ id: true })
 export type CreateProductBody = z.infer<typeof createProductBodySchema>
 
 export const updateProductBodySchema = createUpdateSchema(
