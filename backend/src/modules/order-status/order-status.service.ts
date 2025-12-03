@@ -5,9 +5,11 @@ import type { DependencyContainer } from '#src/di-container.ts'
 
 export class OrderStatusService {
   #db: DependencyContainer['db']
+  log: DependencyContainer['log']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor({ db, log }: Pick<DependencyContainer, 'db' | 'log'>) {
     this.#db = db
+    this.log = log
   }
 
   async getOrderStatus(id: number) {
@@ -57,7 +59,7 @@ export class OrderStatusService {
     let orderStatus = await this.getOrderStatus(id)
     // IDEA: Give services access to the app logger even outside of controllers
     // This would make the API easier to debug since logs would be connected with specific requests
-    console.warn(`orderStatus not found: ${id}. Falling back to default`)
+    this.log.warn(`orderStatus not found: ${id}. Falling back to default`)
     if (orderStatus) return orderStatus
 
     return this.getDefaultOrderStatus()
