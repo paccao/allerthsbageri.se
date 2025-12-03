@@ -25,6 +25,10 @@ async function ensureCorrectDatabaseState() {
   // then we need to add seeding data later
   const shouldAddSeedingData = !existsSync(resolve(apiConfig.dbConnection))
 
+  // db push will first validate the DB schema changes and then then try to update the the new version.
+  // For changes without risk for data loss, changes are automatically applied.
+  // This effectively works like a "hot reload" for the DB schema, which is very useful during development.
+  // However, if there are changes that will cause data loss, we abort with an error further down.
   const dbCheckResult = execSync('node --run db -- push').toString()
 
   if (/warning|data loss|revert|abort/gi.test(dbCheckResult)) {
