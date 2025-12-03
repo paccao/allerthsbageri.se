@@ -26,12 +26,6 @@ pnpm i
 1. Make a copy of `.env.example` and name it `.env`.
 2. Nothing else needed for the dev environment, modify as needed for other environments.
 
-#### Setup database first time
-
-```sh
-pnpm run db push && pnpm run db:seed
-```
-
 #### Run the backend
 
 ```sh
@@ -43,6 +37,26 @@ You can now find the OpenAPI documentation at <http://localhost:3000/api/docs>, 
 Great job, you're now ready to start developing!
 
 ---
+
+### Updating the DB schema during development
+
+After modifying the DB schema, you need to apply the changes to the database. For simple DB schema updates, this is automatically handled automatically if you run `pnpm dev`.
+
+For some changes, you need to apply the DB changes manually. Usually this happens when there's a risk for data loss.
+
+During early development, we can push the DB schema changes and interactively resolve most issues.
+
+> [!TIP]
+> If you want to avoid data loss, you could find ways to copy the data over to the new schema. Though it's generally easier to just remove old inaccurate data and add new entries manually. Alternatively, you could consider extending the seeding data with more useful data for local development.
+
+To start the interactive schema migration:
+
+```sh
+pnpm run db push
+```
+
+> [!NOTE]
+> In the future, this workflow will be replaced by proper DB migrations, stored in Git together with the code and automatically run before app startup.
 
 ### How our tests work
 
