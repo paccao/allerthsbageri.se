@@ -30,7 +30,6 @@ const db = createDBConnection({ log: createLogger() })
 
 const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
   {
-    id: 1,
     name: 'Brödbakarnas dag',
     location: 'Stora torget, Borås',
     orderStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
@@ -39,7 +38,6 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
     pickupEnd: new Date('2025-08-29T15:30:00.000Z').toISOString(),
   },
   {
-    id: 2,
     name: 'Bäckängsgymnasiets marknad',
     location: 'Lokal marknad på gården utanför Bäckängsgymnasiet',
     orderStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
@@ -51,21 +49,18 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
 
 const defaultProductDetails: (typeof productDetailsTable.$inferInsert)[] = [
   {
-    id: 1,
     name: 'Surdegsbröd med Emmer',
     description: 'Ett surdegsbröd med färskmalen ekologisk kultursäd, Emmer.',
     image: null,
     vatPercentage: 6,
   },
   {
-    id: 2,
     name: 'Surdegsbröd med rågsikt',
     description: 'Ett surdegsbröd med ekologisk rågsikt',
     image: null,
     vatPercentage: 12,
   },
   {
-    id: 3,
     name: 'Surdegsbröd med Vänga kvarns samsikt',
     description: 'Detta bröd är bakat med lokalt mjöl från Vänga kvarn',
     image: null,
@@ -75,7 +70,6 @@ const defaultProductDetails: (typeof productDetailsTable.$inferInsert)[] = [
 
 const defaultProducts: (typeof productTable.$inferInsert)[] = [
   {
-    id: 1,
     stock: 5,
     price: 4000,
     maxPerCustomer: 2,
@@ -83,7 +77,6 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     productDetailsId: 1,
   },
   {
-    id: 2,
     stock: 15,
     price: 6800,
     maxPerCustomer: 1,
@@ -91,7 +84,6 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     productDetailsId: 2,
   },
   {
-    id: 3,
     stock: 10,
     price: 5800,
     maxPerCustomer: 2,
@@ -99,7 +91,6 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     productDetailsId: 1,
   },
   {
-    id: 4,
     stock: 3,
     price: 7000,
     maxPerCustomer: 1,
@@ -107,7 +98,6 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     productDetailsId: 2,
   },
   {
-    id: 5,
     stock: 22,
     price: 8900,
     maxPerCustomer: 2,
