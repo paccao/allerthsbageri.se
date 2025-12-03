@@ -20,7 +20,7 @@ suite('product details routes', () => {
     cookie = await createAdminUser(productDetailsAdmin)
   })
 
-  test('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
+  test.only('should be possible to create a product detail and retrieve it after', async (t: TestContext) => {
     const productDetails = {
       name: 'banankaka123',
       description: 'gjord på banan, surdeg och vaniljsocker',
@@ -40,6 +40,11 @@ suite('product details routes', () => {
 
     t.assert.strictEqual(createResponse.statusCode, 201)
     t.assert.strictEqual(createDeserialized.name, productDetails.name)
+    t.assert.strictEqual(
+      Number.isInteger(createDeserialized.id),
+      true,
+      'valid id should be returned',
+    )
     t.assert.strictEqual(
       createDeserialized.description.length <= DESCRIPTION_LENGTH,
       true,
