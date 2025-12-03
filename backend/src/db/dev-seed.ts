@@ -15,6 +15,7 @@ import {
 import apiConfig from '#config/api.ts'
 import env from '#config/env.ts'
 import { createLogger } from '#src/logger.ts'
+import { createSeedingUtils, defaultOrderStatuses } from './seed.ts'
 
 if (env.NODE_ENV != 'development') {
   throw new Error(
@@ -106,27 +107,6 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
   },
 ]
 
-// Only 1 isDefault should be set to true
-const defaultOrderStatuses: (typeof orderStatusTable.$inferInsert)[] = [
-  {
-    status: 'Skapad',
-    isDefault: true,
-    color: 'yellow',
-  },
-  {
-    status: 'Bekräftad',
-    color: 'blue',
-  },
-  {
-    status: 'Upphämtad',
-    color: 'green',
-  },
-  {
-    status: 'Avbokad',
-    color: 'red',
-  },
-]
-
 const defaultUsers = await Promise.all(
   [
     {
@@ -143,27 +123,14 @@ const defaultUsers = await Promise.all(
   }),
 )
 
-async function seedIfEmpty<T extends TableConfig>(
-  table: SQLiteTableWithColumns<T>,
-  seedingData: {
-    [K in keyof {
-      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-    }]: {
-      [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-    }[K]
-  }[],
-) {
-  if ((await db.$count(table)) === 0) {
-    await db.insert(table).values(seedingData)
-  }
-}
-
 async function main() {
   if (env.NODE_ENV != 'development') {
     throw new Error(
       'The specified seed script should only be run in development.',
     )
   }
+
+  const { seedIfEmpty } = createSeedingUtils(db)
 
   await seedIfEmpty(userTable, defaultUsers)
   await seedIfEmpty(orderStatusTable, defaultOrderStatuses)
