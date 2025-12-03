@@ -81,7 +81,6 @@ export const orderStatusTable = sqliteTable('order_status', {
 // Two separate tables make it easier to change
 export const orderTable = sqliteTable('order_table', {
   id: text()
-    .notNull()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   createdAt: dateField()
