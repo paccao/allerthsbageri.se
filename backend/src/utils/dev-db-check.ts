@@ -41,7 +41,7 @@ async function ensureCorrectDatabaseState() {
       ),
     )
     console.error(dbCheckResult + '\n')
-    process.exit(0)
+    process.exit(1)
   }
 
   // Add seeding data after we just created the DB.
