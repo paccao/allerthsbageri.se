@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --env-file=.env --watch src/server.ts",
     "lint": "prettier --check . --log-level warn",
-    "format": "prettier --write .",
+    "format": "prettier -l --write .",
     "db": "drizzle-kit",
     "db:seed": "node --env-file=.env src/db/dev-seed.ts",
     "test:setup": "node --env-file=.env.test ./src/test.setup.ts",
