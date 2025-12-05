@@ -13,16 +13,20 @@ export type GetProductDetails = z.infer<typeof getProductDetailsSchema>
 
 export const createProductDetailsBodySchema = createInsertSchema(
   productDetailsTable,
-).extend({
-  image: z.string().nullable().default(null),
-  vatPercentage: z.int().min(1).max(100),
-})
+)
+  .omit({ id: true })
+  .extend({
+    // Override with more specific validation
+    image: z.string().nullable().default(null),
+    vatPercentage: z.int().min(1).max(100),
+  })
 export type CreateProductDetailsBody = z.infer<
   typeof createProductDetailsBodySchema
 >
 
-export const updateProductDetailsBodySchema =
-  createUpdateSchema(productDetailsTable)
+export const updateProductDetailsBodySchema = createUpdateSchema(
+  productDetailsTable,
+).omit({ id: true })
 export type UpdateProductDetailsBody = z.infer<
   typeof updateProductDetailsBodySchema
 >

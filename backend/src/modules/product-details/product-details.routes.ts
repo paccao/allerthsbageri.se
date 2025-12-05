@@ -55,7 +55,7 @@ export async function productDetailsRoutes(app: FastifyInstance) {
       schema: {
         body: createProductDetailsBodySchema,
         response: {
-          201: createProductDetailsBodySchema,
+          201: getProductDetailsSchema,
           ...getErrorResponseSchemas(401, 500),
         },
         tags,

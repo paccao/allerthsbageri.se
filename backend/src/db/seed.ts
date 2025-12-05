@@ -2,36 +2,38 @@ import type {
   SQLiteTableWithColumns,
   TableConfig,
 } from 'drizzle-orm/sqlite-core'
-
-import * as schema from './schema.ts'
 import type { drizzle } from 'drizzle-orm/better-sqlite3'
 
+import * as schema from './schema.ts'
+
 /**
- * This seed file is used for data that should always be in the database, configuration for the application.
+ * This seed file is used for data that should always be in the database.
+ * For example configuration for the application.
  */
 
 // Only 1 isDefault should be set to true
-const defaultOrderStatuses: (typeof schema.orderStatusTable.$inferInsert)[] = [
-  {
-    status: 'Skapad',
-    isDefault: true,
-    color: 'yellow',
-  },
-  {
-    status: 'Bekräftad',
-    color: 'blue',
-  },
-  {
-    status: 'Upphämtad',
-    color: 'green',
-  },
-  {
-    status: 'Avbokad',
-    color: 'red',
-  },
-]
+export const defaultOrderStatuses: (typeof schema.orderStatusTable.$inferInsert)[] =
+  [
+    {
+      status: 'Skapad',
+      isDefault: true,
+      color: 'yellow',
+    },
+    {
+      status: 'Bekräftad',
+      color: 'blue',
+    },
+    {
+      status: 'Upphämtad',
+      color: 'green',
+    },
+    {
+      status: 'Avbokad',
+      color: 'red',
+    },
+  ]
 
-export async function addSeedingData(
+export function createSeedingUtils(
   db: ReturnType<typeof drizzle<typeof schema>>,
 ) {
   /**
@@ -51,5 +53,13 @@ export async function addSeedingData(
       await db.insert(table).values(seedingData)
     }
   }
+
+  return { seedIfEmpty }
+}
+
+export async function addSeedingData(
+  db: ReturnType<typeof drizzle<typeof schema>>,
+) {
+  const { seedIfEmpty } = createSeedingUtils(db)
   await seedIfEmpty(schema.orderStatusTable, defaultOrderStatuses)
 }

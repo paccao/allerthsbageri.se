@@ -81,7 +81,7 @@ export function createProductController({
       request.body
 
     try {
-      const product = await productService.updateProduct(request.params.id, {
+      const product = productService.updateProduct(request.params.id, {
         stock,
         price,
         maxPerCustomer,

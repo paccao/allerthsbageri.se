@@ -41,6 +41,11 @@ suite('product details routes', () => {
     t.assert.strictEqual(createResponse.statusCode, 201)
     t.assert.strictEqual(createDeserialized.name, productDetails.name)
     t.assert.strictEqual(
+      Number.isInteger(createDeserialized.id),
+      true,
+      'valid id should be returned',
+    )
+    t.assert.strictEqual(
       createDeserialized.description.length <= DESCRIPTION_LENGTH,
       true,
     )
