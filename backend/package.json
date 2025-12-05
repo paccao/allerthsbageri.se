@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "node --env-file=.env --watch src/server.ts",
-    "lint": "prettier --check .",
+    "lint": "prettier --check . --log-level warn",
     "format": "prettier --write .",
     "db": "drizzle-kit",
     "db:seed": "node --env-file=.env src/db/dev-seed.ts",
