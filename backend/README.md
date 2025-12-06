@@ -151,31 +151,33 @@ This section describes how the backend is structured, and some of the reasoning 
 
 ### Dependency injection (DI)
 
-In order to decouple various parts of the backend, we use a minimal DI implementation to manage dependencies with enough flexibility for our needs. If we need more advanced features in the future, we could use the built-in features of Fastify, or switch to a DI framework. But for now, it's good to minimise the number of dependencies and avoid unnecessary complexity.
+In order to decouple various parts of the backend, we use a minimal DI implementation to manage dependencies with enough flexibility for our needs. The goal is to avoid unnecessary complexity, while helping us keep the backend modules more loosely copuled to each other.
 
-In our current implementation, we create one instance of all our dependencies in the dependency container which are shared for the entire app instance by default. They can be overridden for specific modules as needed.
+In our current implementation, we create one instance of all our dependencies in the dependency container which is shared for the entire app instance by default. They can be overridden for specific modules as needed.
 
 For example, the app instance by default uses the same connection to the database, making the DB connection act like a singleton.
 
 #### Best practices
 
-When creating a function or class that expects the `DependencyContainer` as an argument, it's recommended to narrow the type with something like `Pick<DependencyContainer, 'db'>` to clearly document which dependencies are needed:
+When creating a function or class that expects something from the `DependencyContainer` as arguments, it's recommended to use positional arguments to clearly document which dependencies are needed. Positional arguments encourages us to keep a small number of dependencies, and also slightly improves runtime performance compared to destructuring, recreating and then destructuring objects just to pass in arguments.
+
+Example definitions:
 
 ```ts
-export function createSomeService({ db }: Pick<DependencyContainer, 'db'>) {
+export function createSomeController(db: DependencyContainer['db']) {
   // ...
 }
 
 // or
 
 export class SomeService {
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     // ...
   }
 }
 ```
 
-By narrowing the type, and destructuring the expected dependencies, the code clearly communicates what it depends on. This also makes it possible to call the function or instantiate the class with partial dependencies, with TypeScript checking that we provide the expected dependencies.
+Register modules in `di-container.ts`, and use the resolver functions to pass in the expected dependencies. TypeScript will ensure both that modules are registered in the correct order, and with the right dependencies.
 
 ---
 
