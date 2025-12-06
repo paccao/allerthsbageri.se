@@ -4,10 +4,12 @@ import type { TestContext } from 'node:test'
 import startApp from '#src/app.ts'
 import {
   createDependencyContainer,
+  type Dependencies,
   type DependencyContainer,
 } from '#src/di-container.ts'
 import { createInMemoryTestDB } from '#db/test-db.ts'
 import apiConfig from '#config/api.ts'
+import { DIContainer, type IDIContainer } from '#lib/rsdi/index.ts'
 
 if (!apiConfig.env.TEST) {
   throw new Error('This module should only be used for tests')
@@ -16,23 +18,60 @@ if (!apiConfig.env.TEST) {
 /**
  * Create an app instance, configured for the test environment.
  *
- * @param overrides — Optionally pass in specific implementations you want to use.
+ * @param overrides Optionally pass in specific implementations you want to use.
  * @returns An app instance
  */
 export async function startTestApp(
-  overrides: Partial<DependencyContainer> = {},
+  overrides?: IDIContainer<Partial<Dependencies>>,
 ) {
-  return startApp(
-    createDependencyContainer({
-      db: await createInMemoryTestDB(),
-      ...overrides,
-    }),
-  )
+  return startApp(await getTestDeps(overrides))
+}
+
+/**
+ * Get the testing dependencies, combined with potential overrides.
+ *
+ * Will use overrides if provided, testing dependencies if defined in this function,
+ * and fall back to defaults from the dependency container.
+ *
+ * @param overrides Optionally pass in specific implementations you want to use.
+ * @returns
+ */
+async function getTestDeps(
+  overrides?: IDIContainer<Partial<Dependencies>>,
+): Promise<DependencyContainer> {
+  const testContainer = createDependencyContainer()
+
+  /** Default dependencies used for tests */
+  const testDependencyResolvers = Object.entries({
+    db: async () => {
+      const _db = await createInMemoryTestDB()
+      return () => _db
+    },
+  } as const) as [keyof Dependencies, () => Promise<(...args: any[]) => any>][]
+
+  const allTestDepsShouldBeOverridden =
+    overrides && testDependencyResolvers.every(([key]) => overrides[key])
+
+  if (allTestDepsShouldBeOverridden) {
+    return testContainer.merge(overrides)
+  }
+
+  // Combine overrides with test dependencies
+  let testDepsWithOverrides = new DIContainer<Partial<Dependencies>>()
+
+  for (const [key, getResolver] of testDependencyResolvers) {
+    // Use either overrides or the test dependencies
+    // @ts-expect-error In this case it's actually OK to add dependencies since
+    // we use the expected dependency keys.
+    testDepsWithOverrides.add(key, overrides?.[key] ?? (await getResolver()))
+  }
+
+  return testContainer.merge(testDepsWithOverrides)
 }
 
 export function getTestingUtils(app: FastifyInstance) {
   /**
-   * Verify that a given API endpoint requires authentication.
+   * Ensure that a given API endpoint requires authentication.
    */
   async function assertAuthRequired(
     opts: Omit<InjectOptions, 'cookies' | 'headers'> & {

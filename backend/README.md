@@ -13,7 +13,7 @@ This document contains several useful sections:
 
 ### Setup your development env
 
-Install [Node.js 22](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
+Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
 ```sh
 git clone https://github.com/paccao/allerthsbageri.se.git && \
@@ -151,31 +151,33 @@ This section describes how the backend is structured, and some of the reasoning 
 
 ### Dependency injection (DI)
 
-In order to decouple various parts of the backend, we use a minimal DI implementation to manage dependencies with enough flexibility for our needs. If we need more advanced features in the future, we could use the built-in features of Fastify, or switch to a DI framework. But for now, it's good to minimise the number of dependencies and avoid unnecessary complexity.
+In order to decouple various parts of the backend, we use a minimal DI implementation to manage dependencies with enough flexibility for our needs. The goal is to avoid unnecessary complexity, while helping us keep the backend modules more loosely copuled to each other.
 
-In our current implementation, we create one instance of all our dependencies in the dependency container which are shared for the entire app instance by default. They can be overridden for specific modules as needed.
+In our current implementation, we create one instance of all our dependencies in the dependency container which is shared for the entire app instance by default. They can be overridden for specific modules as needed.
 
 For example, the app instance by default uses the same connection to the database, making the DB connection act like a singleton.
 
 #### Best practices
 
-When creating a function or class that expects the `DependencyContainer` as an argument, it's recommended to narrow the type with something like `Pick<DependencyContainer, 'db'>` to clearly document which dependencies are needed:
+When creating a function or class that expects something from the `DependencyContainer` as arguments, it's recommended to use positional arguments to clearly document which dependencies are needed. Positional arguments encourages us to keep a small number of dependencies, and also slightly improves runtime performance compared to destructuring, recreating and then destructuring objects just to pass in arguments.
+
+Example definitions:
 
 ```ts
-export function createSomeService({ db }: Pick<DependencyContainer, 'db'>) {
+export function createSomeController(db: DependencyContainer['db']) {
   // ...
 }
 
 // or
 
 export class SomeService {
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     // ...
   }
 }
 ```
 
-By narrowing the type, and destructuring the expected dependencies, the code clearly communicates what it depends on. This also makes it possible to call the function or instantiate the class with partial dependencies, with TypeScript checking that we provide the expected dependencies.
+Register modules in `di-container.ts`, and use the resolver functions to pass in the expected dependencies. TypeScript will ensure both that modules are registered in the correct order, and with the right dependencies.
 
 ---
 
@@ -193,7 +195,7 @@ Modules are implemented in `src/modules/*` and contain the following types of fi
 
 - **Routes** - Where API routes are defined. These need to be registered to be used by the application. Routes added to the `public` context become available for anyone, and routes added to the `authenticated` context require valid authentication. Fine-grained permissions and other forms of authorization should be implemented by separate plugins, or more commonly, in the controllers.
 
-- **Controllers** - The business logic for responding to API requests. Try to keep them as small and simple as possible and move the database operations to the relevant services. However, for simple use cases, and when the business logic is not needed in other parts of the application, it's OK to keep the DB interactions in the controller and skip creating a dedicated service.
+- **Controllers** - The business logic for responding to API requests. Try to keep them as small and simple as possible and move the database operations to the relevant services. However, for simple use cases, and when the business logic is not needed in other parts of the application, it's OK to keep the DB interactions in the controller and skip creating a dedicated service. Due to how Fastify works, controllers are defined as functions to let Fastify use the `this` context, which otherwise would be overridden by our controller classes.
 
 - **Services** - Reusable business logic that usually interacts with external services like databases. Only needs to be created when the business logic gets too complex to stay in the controller, or when the logic is needed in multiple places in the backend. By only creating services when needed, we can avoid unnecessary abstractions, letting simple one-off controllers keep their business logic in one place instead of just being a thin (and unnecessary) wrapper for a service.
 

@@ -1,4 +1,5 @@
-import { createLogger } from './logger.ts'
+import { DIContainer, type IDIContainer } from '#lib/rsdi/index.ts'
+import { createLogger } from './utils/logger.ts'
 import { createDBConnection } from '#db/index.ts'
 import { SessionService } from '#src/modules/auth/session.service.ts'
 import { AuthService } from './modules/auth/auth.service.ts'
@@ -16,18 +17,14 @@ import { ProductService } from './modules/product/product.service.ts'
 import { createProductController } from './modules/product/product.controller.ts'
 
 /**
- * Common interfaces for dependencies, allowing loose coupling across the system.
- *
- * By defining the public APIs here, we can have several dependency containers across the system which work together.
- * For example, overriding a specific dependency for a part of the system, or even globally depending on the environment
- *
- * NOTE: The order is important as it reflects what depends on what.
+ * Common interface for dependencies, enabling loose coupling across the system.
  */
-export type DependencyContainer = {
+export type Dependencies = {
   log: ReturnType<typeof createLogger>
-  // Ideally, types should not be tied to the actual implementations but rather define the shared interfaces.
-  // However, since we want full type safety for the DB connection, we use the expected shape of the actual DB driver and DB schema.
-  // This still allows replacing the DB during testing, since we use the same DB driver and schema, although not the exact same implementation.
+  // Ideally, types should not be tied to specific implementations but rather define shared interfaces.
+  // However, we need to use the inferred type to get full type safety for our specific DB connection, driver and schema.
+  // This still allows replacing the DB during testing, since we use the same DB driver and schema,
+  // although not the exact same implementation.
   db: ReturnType<typeof createDBConnection>
 
   sessionService: SessionService
@@ -52,116 +49,81 @@ export type DependencyContainer = {
   orderController: ReturnType<typeof createOrderController>
 }
 
-// TODO: Maybe we could use a proxy to initiate dependencies the first time they are needed?
-// We could take inspiration from the implementation of get() and _inject() from here: https://github.com/claudijo/di-container/blob/master/index.js
-// This might be useful to reduce the startup time by avoiding imports of modules unless they are used.
-// Autoloading would be useful to avoid explicit imports
+/** The main container with resolved dependencies */
+export type DependencyContainer = IDIContainer<Dependencies>
 
 /**
- * Create a dependency container to encapsulate all core dependencies in one place.
+ * Create a dependency container to connect various parts of the system
+ * while still preserving a loose coupling between them.
  *
- * This minimal implementation uses the Inversion of Control (IoC) pattern and meets our current needs.
- * If we need more advanced features in the future, it will be easier to integrate a
- * third-party DI framework since we now have core pattern in place.
+ * The modules only get instantiated when they first are used.
  *
- * NOTE: Registered dependencies should not have side-effects in their modules since they get imported even if they don't get used.
+ * We can create several dependency containers across the system which work together.
+ * For example, overriding a specific dependency for a part of the system, or even globally depending on the environment
+ * Containers could also have different lifetimes, for example only during an incoming request.
+ *
+ * NOTE: Registered dependencies should not have side-effects in the top-level of their modules.
+ * This is because their modules will get imported even if they don't get used immediately.
  *
  * @param overrides Optionally pass in specific implementations you want to use.
  * @returns A complete diContainer which uses default implementations unless you override them.
  */
 export function createDependencyContainer(
-  overrides: Partial<DependencyContainer> = {},
-) {
-  // NOTE: We likely need a dependency graph for this to work.
-  // Or implement it as a getter, which resolves the module async by default
-  // TODO: Maybe if we load dependencies in the order they are requested, then it will all work out?
-  // IDEA: Review the implementation of the `awilix` framework, and create a minimal implementation only with the features we need.
-  // I wonder how they implement `container.resolve('module')` in a synchronous way?
-  // It likely works because they likely use require() internally which allows synchronous module loading.
-
-  // IDEA: These could be async functions to only import the default modules if needed.
-  // Since we could use create the container async and then create instances synchronously.
-
+  overrides?: IDIContainer<Partial<Dependencies>>,
+): DependencyContainer {
   /**
-   * Registry for all default constructors used to init the dependencies.
-   *
-   * NOTE: The order is important to ensure dependencies are available when they are needed.
+   * Register the default dependency resolvers here.
+   * This gives a good overview of which dependencies are connected.
    */
-  const registry: Record<
-    keyof DependencyContainer,
-    FunctionFactory | ClassFactory
-  > = {
-    log: createLogger,
+  const container = new DIContainer()
+    // Common dependencies
+    .add('log', () => createLogger())
+    .add('db', ({ log }) => createDBConnection(log))
+    // Sessions and Auth
+    .add('sessionService', ({ db }) => new SessionService(db))
+    .add('authService', ({ db }) => new AuthService(db))
+    .add('authController', ({ sessionService, authService }) =>
+      createAuthController(sessionService, authService),
+    )
+    // Customer
+    .add('customerService', ({ db }) => new CustomerService(db))
+    .add('customerController', ({ customerService }) =>
+      createCustomerController(customerService),
+    )
+    // Pickup Occasion
+    .add('pickupOccasionService', ({ db }) => new PickupOccasionService(db))
+    .add('pickupOccasionController', ({ pickupOccasionService }) =>
+      createPickupOccasionController(pickupOccasionService),
+    )
+    // Product Details
+    .add('productDetailsService', ({ db }) => new ProductDetailsService(db))
+    .add('productDetailsController', ({ productDetailsService }) =>
+      createProductDetailsController(productDetailsService),
+    )
+    // Product
+    .add('productService', ({ db, log }) => new ProductService(db, log))
+    .add('productController', ({ productService }) =>
+      createProductController(productService),
+    )
+    // Order Status
+    .add('orderStatusService', ({ db, log }) => new OrderStatusService(db, log))
+    // Order
+    .add('orderService', ({ db }) => new OrderService(db))
+    .add(
+      'orderController',
+      ({
+        orderService,
+        orderStatusService,
+        pickupOccasionService,
+        customerService,
+      }) =>
+        createOrderController(
+          orderService,
+          orderStatusService,
+          pickupOccasionService,
+          customerService,
+        ),
+    )
 
-    db: createDBConnection,
-
-    sessionService: SessionService,
-    authService: AuthService,
-    authController: createAuthController,
-
-    customerService: CustomerService,
-    customerController: createCustomerController,
-
-    pickupOccasionService: PickupOccasionService,
-    pickupOccasionController: createPickupOccasionController,
-
-    productDetailsService: ProductDetailsService,
-    productDetailsController: createProductDetailsController,
-
-    productService: ProductService,
-    productController: createProductController,
-
-    orderStatusService: OrderStatusService,
-
-    orderService: OrderService,
-    orderController: createOrderController,
-  }
-
-  /**
-   * Where we successively add the dependencies
-   */
-  const diContainer = {} as DependencyContainer
-
-  /**
-   * Initiates a dependency no matter if it's a factory function or a class
-   *
-   * @param Constructor The factory function or class constructor
-   * @param diContainer The dependencies so far
-   * @returns The constructed dependency
-   */
-  function init(
-    Constructor: (typeof registry)[keyof DependencyContainer],
-    diContainer: DependencyContainer,
-  ) {
-    if (Constructor.toString().startsWith('class')) {
-      return new (Constructor as ClassFactory)(diContainer)
-    } else if (Constructor.toString().startsWith('function')) {
-      return (Constructor as FunctionFactory)(diContainer)
-    }
-
-    throw new Error('Registry entries must be functions or classes')
-  }
-
-  // Successively building up the diContainer and make more dependencies available for later modules
-  // This wires everything together in a given order, without letting the implementations know about each other
-  for (const [key, Constructor] of Object.entries(registry) as [
-    keyof DependencyContainer,
-    (typeof registry)[keyof DependencyContainer],
-  ][]) {
-    // 1) Use override[key] if provided.
-    // 2) Otherwise, instantiate the dependency
-    // @ts-expect-error Unsure how to type this properly. Ideally, we could type check the partial diContainers to ensure we instantiate dependencies in the correct order
-    diContainer[key] = overrides[key] ?? init(Constructor, diContainer)
-  }
-
-  return diContainer
-
-  // IDEA: We could just load the modules first, but only instantiate them when actually requested.
-  // This way, createContainer() would be async, but after that all resolutions could be sync
-  // This would create the cleanest API
-  // Here's the magic for loading the modules: https://github.com/jeffijoe/awilix/blob/master/src/container.ts#L690-L702
-  // This means we could load modules up front, and only instantiate them when needed
+  return overrides ? container.merge(overrides) : container
 }
-
-type FunctionFactory = (diContainer: DependencyContainer) => unknown
-type ClassFactory = new (diContainer: DependencyContainer) => unknown

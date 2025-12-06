@@ -3,18 +3,12 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { CreateOrderBody } from './order.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createOrderController({
-  customerService,
-  pickupOccasionService,
-  orderStatusService,
-  orderService,
-}: Pick<
-  DependencyContainer,
-  | 'customerService'
-  | 'pickupOccasionService'
-  | 'orderStatusService'
-  | 'orderService'
->) {
+export function createOrderController(
+  orderService: DependencyContainer['orderService'],
+  orderStatusService: DependencyContainer['orderStatusService'],
+  pickupOccasionService: DependencyContainer['pickupOccasionService'],
+  customerService: DependencyContainer['customerService'],
+) {
   async function createOrderHandler(
     request: FastifyRequest<{ Body: CreateOrderBody }>,
     reply: FastifyReply,

@@ -14,7 +14,7 @@ import {
 } from './schema.ts'
 import apiConfig from '#config/api.ts'
 import env from '#config/env.ts'
-import { createLogger } from '#src/logger.ts'
+import { createLogger } from '#utils/logger.ts'
 import { createSeedingUtils, defaultOrderStatuses } from './seed.ts'
 
 if (env.NODE_ENV != 'development') {

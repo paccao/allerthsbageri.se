@@ -1,0 +1,28 @@
+export class Bar {}
+
+export class Buzz {
+  public name: string
+
+  public constructor(name: string) {
+    this.name = name
+  }
+}
+
+export class Foo {
+  public bar: Bar
+
+  public name: string
+
+  constructor(name: string, bar: Bar) {
+    this.name = name
+    if (!name) {
+      throw new Error('Name is missing')
+    }
+
+    if (!bar) {
+      throw new Error('Bar is missing')
+    }
+
+    this.bar = bar
+  }
+}

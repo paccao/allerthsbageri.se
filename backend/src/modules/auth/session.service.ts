@@ -22,7 +22,7 @@ const DAY = 1000 * 60 * 60 * 24
 export class SessionService {
   #db: DependencyContainer['db']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     this.#db = db
   }
 
