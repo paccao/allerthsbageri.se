@@ -6,8 +6,8 @@
 
 Apart from the changes that we [upstreamed in this PR](https://github.com/radzserg/rsdi3/pulls), here's what changed:
 
-- Original docs can be found in the [in the original repo](https://github.com/radzserg/rsdi3`), but were not included here.
-- TODO: describe further changes
+- Original docs are well worth reading to learn more about why and how to use this library. The docs can be found in the [in the original repo](https://github.com/radzserg/rsdi3`), but were not included here.
+- Switched test runner to `node:test` for compatibility with this codebase.
 
 ---
 
