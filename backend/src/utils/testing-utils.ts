@@ -9,7 +9,7 @@ import {
 } from '#src/di-container.ts'
 import { createInMemoryTestDB } from '#db/test-db.ts'
 import apiConfig from '#config/api.ts'
-import { DIContainer, type IDIContainer } from 'rsdi'
+import { DIContainer, type IDIContainer } from '#lib/rsdi/index.ts'
 
 if (!apiConfig.env.TEST) {
   throw new Error('This module should only be used for tests')

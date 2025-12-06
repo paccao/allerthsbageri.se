@@ -1,4 +1,4 @@
-import { DIContainer, type IDIContainer } from 'rsdi'
+import { DIContainer, type IDIContainer } from '#lib/rsdi/index.ts'
 import { createLogger } from './logger.ts'
 import { createDBConnection } from '#db/index.ts'
 import { SessionService } from '#src/modules/auth/session.service.ts'
