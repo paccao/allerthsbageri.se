@@ -13,7 +13,7 @@ This document contains several useful sections:
 
 ### Setup your development env
 
-Install [Node.js 22](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
+Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
 ```sh
 git clone https://github.com/paccao/allerthsbageri.se.git && \
