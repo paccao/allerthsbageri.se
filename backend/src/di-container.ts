@@ -71,9 +71,6 @@ export type DependencyContainer = IDIContainer<Dependencies>
 export function createDependencyContainer(
   overrides?: IDIContainer<Partial<Dependencies>>,
 ): DependencyContainer {
-  // TODO: Update constructors and factories to explicitly declare the dependencies that they need
-  // TODO: Use regular positional arguments to reduce the runtime overhead of creating and unwrapping objects several times
-
   /**
    * Register the default dependency resolvers here.
    * This gives a good overview of which dependencies are connected.
@@ -81,54 +78,51 @@ export function createDependencyContainer(
   const container = new DIContainer()
     // Common dependencies
     .add('log', () => createLogger())
-    .add('db', ({ log }) => createDBConnection({ log }))
+    .add('db', ({ log }) => createDBConnection(log))
     // Sessions and Auth
-    .add('sessionService', ({ db }) => new SessionService({ db }))
-    .add('authService', ({ db }) => new AuthService({ db }))
+    .add('sessionService', ({ db }) => new SessionService(db))
+    .add('authService', ({ db }) => new AuthService(db))
     .add('authController', ({ sessionService, authService }) =>
-      createAuthController({ sessionService, authService }),
+      createAuthController(sessionService, authService),
     )
     // Customer
-    .add('customerService', ({ db }) => new CustomerService({ db }))
+    .add('customerService', ({ db }) => new CustomerService(db))
     .add('customerController', ({ customerService }) =>
-      createCustomerController({ customerService }),
+      createCustomerController(customerService),
     )
     // Pickup Occasion
-    .add('pickupOccasionService', ({ db }) => new PickupOccasionService({ db }))
+    .add('pickupOccasionService', ({ db }) => new PickupOccasionService(db))
     .add('pickupOccasionController', ({ pickupOccasionService }) =>
-      createPickupOccasionController({ pickupOccasionService }),
+      createPickupOccasionController(pickupOccasionService),
     )
     // Product Details
-    .add('productDetailsService', ({ db }) => new ProductDetailsService({ db }))
+    .add('productDetailsService', ({ db }) => new ProductDetailsService(db))
     .add('productDetailsController', ({ productDetailsService }) =>
-      createProductDetailsController({ productDetailsService }),
+      createProductDetailsController(productDetailsService),
     )
     // Product
-    .add('productService', ({ db, log }) => new ProductService({ db, log }))
+    .add('productService', ({ db, log }) => new ProductService(db, log))
     .add('productController', ({ productService }) =>
-      createProductController({ productService }),
+      createProductController(productService),
     )
     // Order Status
-    .add(
-      'orderStatusService',
-      ({ db, log }) => new OrderStatusService({ db, log }),
-    )
+    .add('orderStatusService', ({ db, log }) => new OrderStatusService(db, log))
     // Order
-    .add('orderService', ({ db }) => new OrderService({ db }))
+    .add('orderService', ({ db }) => new OrderService(db))
     .add(
       'orderController',
       ({
         orderService,
         orderStatusService,
-        customerService,
         pickupOccasionService,
+        customerService,
       }) =>
-        createOrderController({
+        createOrderController(
           orderService,
           orderStatusService,
-          customerService,
           pickupOccasionService,
-        }),
+          customerService,
+        ),
     )
 
   return overrides ? container.merge(overrides) : container

@@ -4,9 +4,7 @@ import apiConfig from '#config/api.ts'
 import * as schema from '#db/schema.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createDBConnection({
-  log: _log,
-}: Pick<DependencyContainer, 'log'>) {
+export function createDBConnection(_log: DependencyContainer['log']) {
   return drizzle({
     connection: { source: apiConfig.dbConnection },
     casing: 'snake_case',

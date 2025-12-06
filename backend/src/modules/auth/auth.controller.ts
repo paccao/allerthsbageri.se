@@ -3,10 +3,10 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import type { SignInBody, SignUpBody } from './auth.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createAuthController({
-  sessionService,
-  authService,
-}: Pick<DependencyContainer, 'sessionService' | 'authService'>) {
+export function createAuthController(
+  sessionService: DependencyContainer['sessionService'],
+  authService: DependencyContainer['authService'],
+) {
   async function signUpHandler(
     request: FastifyRequest<{ Body: SignUpBody }>,
     reply: FastifyReply,

@@ -4,9 +4,9 @@ import type { IdParams } from '#utils/common.schemas.ts'
 import type { CreateProductBody, UpdateProductBody } from './product.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createProductController({
-  productService,
-}: Pick<DependencyContainer, 'productService'>) {
+export function createProductController(
+  productService: DependencyContainer['productService'],
+) {
   async function getProductByIdHandler(
     request: FastifyRequest<{ Params: IdParams }>,
     reply: FastifyReply,

@@ -26,7 +26,7 @@ function rollbackWithError(tx: Transaction, error: Error): never {
 export class OrderService {
   #db: DependencyContainer['db']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     this.#db = db
   }
 
