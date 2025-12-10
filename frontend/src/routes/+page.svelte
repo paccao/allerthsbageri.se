@@ -27,7 +27,7 @@
   import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
   import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
 
-  const bakingCourseDate = new Date('2025-11-23').toLocaleString('sv-SE', {
+  const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
 </script>
@@ -479,7 +479,7 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  I november, januari blir det nya kurser i hur du bakar
+                  I januari blir det nya kurser i hur du bakar
                   surdegsbröd på enbart ekologiskt och kravmärkt mjöl. Vi lär
                   oss mata surdegen, forma och snitta bröd. Sätta en ny deg som
                   du kan grädda hemma nästa dag.
@@ -509,7 +509,7 @@
                 <p class="my-2">
                   <span class="font-bold">När:</span>
                   <span class="capitalize">{bakingCourseDate}</span>
-                  <span> 13.30 - 17.30 eller tills vi känner oss klara.</span>
+                  <span> 09.30 - 13.30 eller tills vi känner oss klara.</span>
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kursavgift: </span> 1200 kr, betalas via
