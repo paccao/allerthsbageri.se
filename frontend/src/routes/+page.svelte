@@ -479,7 +479,7 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  I januari blir det nya kurser i hur du bakar
+                  I januari blir det ny kurs i hur du bakar
                   surdegsbröd på enbart ekologiskt och kravmärkt mjöl. Vi lär
                   oss mata surdegen, forma och snitta bröd. Sätta en ny deg som
                   du kan grädda hemma nästa dag.
