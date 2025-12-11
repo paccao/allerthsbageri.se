@@ -417,17 +417,13 @@
               <h2 class="mb-4 text-center font-display text-4xl font-bold">
                 Saxofonmeditation
               </h2>
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  Den 21/9 blir det återigen saxofonmeditation i skogen, fast
-                  denna gång närmare sjö än skog.
-                </p>
-              </div>
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                <p class="my-2">Nästa saxofonmeditation blir den 4/1 kl 16.</p>
 
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  Vid alltför dåligt väder är vi inomhus. Efteråt fikar vi
-                  tillsammans surdegsmacka från <a
+                <p class="my-2">Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer flyttar meditationen ut i skogen igen.</p>
+
+                <p class="my-2">
+                  Efteråt fikar vi tillsammans, surdegsmacka från <a
                     href={instagramProfileLink}
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
@@ -441,8 +437,8 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  21/9 2025. Kommande meditiationer: 19/10, 2/11, 16/11,
-                  <span class="font-bold">7/12</span>
+                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12,
+                  <span class="font-bold"> 4/1</span>
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -455,7 +451,7 @@
                 </p>
 
                 <p class="text-center font-bold">
-                  Välkommen med din anmälan till:
+                  ✨ Välkommen med din anmälan till:
                 </p>
                 <div class="flex justify-center text-center">
                   <EncryptedEmail />
