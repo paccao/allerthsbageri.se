@@ -12,7 +12,7 @@ export class ProductService {
   #db: DependencyContainer['db']
   log: DependencyContainer['log']
 
-  constructor({ db, log }: Pick<DependencyContainer, 'db' | 'log'>) {
+  constructor(db: DependencyContainer['db'], log: DependencyContainer['log']) {
     this.#db = db
     this.log = log
   }

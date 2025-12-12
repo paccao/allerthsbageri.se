@@ -10,7 +10,7 @@ import type { DependencyContainer } from '#src/di-container.ts'
 export class ProductDetailsService {
   #db: DependencyContainer['db']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     this.#db = db
   }
 
