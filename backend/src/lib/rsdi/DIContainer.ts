@@ -86,12 +86,12 @@ export class DIContainer<
    */
   public clone(): DIContainer<ContainerResolvers> {
     const {
-      resolvedDependencies: newresolvedDependencies,
+      resolvedDependencies: newResolvedDependencies,
       resolvers: newResolvers,
     } = this.export()
     const newContainer = new ClonedDiContainer(
       newResolvers,
-      newresolvedDependencies,
+      newResolvedDependencies,
     )
 
     return newContainer as DIContainer<ContainerResolvers>
@@ -174,7 +174,7 @@ export class DIContainer<
     otherContainer: DIContainer<OtherContainerResolvers>,
   ): IDIContainer<ContainerResolvers & OtherContainerResolvers> {
     const {
-      resolvedDependencies: newresolvedDependencies,
+      resolvedDependencies: newResolvedDependencies,
       resolvers: newResolvers,
     } = otherContainer.export()
 
@@ -185,7 +185,7 @@ export class DIContainer<
 
     const resolvedDependencies = {
       ...this.resolvedDependencies,
-      ...newresolvedDependencies,
+      ...newResolvedDependencies,
     }
 
     this.resolvers = resolvers
