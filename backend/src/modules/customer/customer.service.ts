@@ -17,7 +17,7 @@ import type { DependencyContainer } from '#src/di-container.ts'
 export class CustomerService {
   #db: DependencyContainer['db']
 
-  constructor({ db }: Pick<DependencyContainer, 'db'>) {
+  constructor(db: DependencyContainer['db']) {
     this.#db = db
   }
 

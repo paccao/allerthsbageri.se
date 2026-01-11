@@ -7,9 +7,9 @@ import type {
 } from './product-details.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createProductDetailsController({
-  productDetailsService,
-}: Pick<DependencyContainer, 'productDetailsService'>) {
+export function createProductDetailsController(
+  productDetailsService: DependencyContainer['productDetailsService'],
+) {
   async function getProductDetailsHandler(
     request: FastifyRequest<{ Params: IdParams }>,
     reply: FastifyReply,

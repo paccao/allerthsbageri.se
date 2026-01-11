@@ -6,7 +6,6 @@ if (apiConfig.env.DEV) {
 
 // Perform the main imports after we have validated the environment
 import startApp from './app.ts'
-import openAPIConfig from '#config/openapi.ts'
 import { createDependencyContainer } from './di-container.ts'
 
 const app = await startApp(createDependencyContainer())
@@ -20,6 +19,7 @@ async function main() {
     })
 
     if (apiConfig.env.DEV) {
+      const openAPIConfig = (await import('#config/openapi.ts')).default
       app.log.info(
         `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${openAPIConfig.prefix}`,
       )

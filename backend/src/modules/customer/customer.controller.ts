@@ -7,9 +7,9 @@ import {
 import type { IdParams } from '#utils/common.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createCustomerController({
-  customerService,
-}: Pick<DependencyContainer, 'customerService'>) {
+export function createCustomerController(
+  customerService: DependencyContainer['customerService'],
+) {
   async function createCustomerHandler(
     request: FastifyRequest<{ Body: CreateCustomerBody }>,
     reply: FastifyReply,

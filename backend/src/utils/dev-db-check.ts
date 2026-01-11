@@ -18,7 +18,7 @@ import { execSync } from 'node:child_process'
  * 3) If the DEV DB is missing: Create it with the latest schema, add seeding data ans start the backend normally.
  *    This handles several scenarios like the first time setup and after perhaps removing/renaming the local dev DB.
  */
-async function ensureCorrectDatabaseState() {
+function ensureCorrectDatabaseState() {
   console.log('[dev]: Checking DB schema for changes...')
 
   // If DB does not exist _before_ pushing the DB schema

@@ -5,9 +5,9 @@ import type { IdParams } from '#utils/common.schemas.ts'
 import type { UpdatePickupOccasionBody } from './pickup-occasion.schemas.ts'
 import type { DependencyContainer } from '#src/di-container.ts'
 
-export function createPickupOccasionController({
-  pickupOccasionService,
-}: Pick<DependencyContainer, 'pickupOccasionService'>) {
+export function createPickupOccasionController(
+  pickupOccasionService: DependencyContainer['pickupOccasionService'],
+) {
   async function listPickupOccasionsHandler(
     request: FastifyRequest,
     reply: FastifyReply,
