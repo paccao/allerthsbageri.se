@@ -26,6 +26,7 @@
   import leaderSjuharad from '$assets/leader-sjuharad.png?enhanced'
   import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
   import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
+  import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
 
   const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
     dateStyle: 'full',
@@ -280,7 +281,7 @@
 
               <ul class="list-inside list-disc space-y-2 px-4 xs:pl-0">
                 <li>
-                  Torsdagar från kl 09.00 finns färskt surdegsbröd vid Tolkabro
+                  Torsdagar från kl 09.30 finns färskt surdegsbröd vid Tolkabro
                   handel. Kolla instagram för eventuella ändringar <a
                     href={instagramProfileLink}
                     target="_blank"
@@ -288,17 +289,6 @@
                     >@allerthsbageri</a
                   >
                 </li>
-                <li>
-                  20 september Marknad i Götseredsstugan, Sandhult. Kl 11.00 -
-                  16.00 eller tills det är slutsålt
-                </li>
-                <li>11 oktober kl 11.00 Bogastugan Hökerum</li>
-                <li>Konstrundan Toarp 11.00</li>
-                <li>
-                  Från och med 2 oktober finns bageriet åter med vid rekoringen
-                  Borås, Ulricehamn, eventuellt Fristad i framtiden också
-                </li>
-                <li>Handelsplats Od från och med 18 oktober</li>
               </ul>
             </article>
           </section>
@@ -316,19 +306,13 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm text-2xl">
-                  SAXOFONRETREAT 20/12 kl 9.30 - ca 17.00
+                  SAXOFONRETREAT 14/3 kl 9.30 - ca 17.00
                 </p>
               </div>
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  Ge dej själv den bästa julklappen - kreativ tid för din själ
-                </p>
-              </div>
-
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  Välkommen till en magisk dag där du får chans att släppa
+                  Välkommen till en kravlös och magisk dag där du får chans att släppa
                   vardagens stress och måsten och istället påbörja din inre resa
                   mot ett sannare jag.
                 </p>
@@ -343,7 +327,7 @@
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
                   I denna endagsretreat får du nya insikter, du får möta andra
-                  likasinnade och om du själv vill så öppnas nya dörrar för dej,
+                  likasinnade och om du själv vill så öppnas nya dörrar för dig,
                   du får växa som människa.
                 </p>
               </div>
@@ -352,9 +336,8 @@
                 <p class="my-2 max-w-screen-sm">
                   Maggan Allerth heter jag som leder dagen. Du får del av mina
                   saxofoners rogivande toners musik, kristallskålarnas milda
-                  mjuka helande, läkande sång, dikter och rörelse. Du får med
-                  dej nya verktyg hem som du kan använda i din vardag såsom
-                  färgövning, andning bland annat. Ett yogapass med Lotta
+                  mjuka helande, läkande sång, tuning och rörelse. Du får med
+                  dig nya verktyg hem som du kan använda i din vardag. Ett yogapass med Lotta
                   Andersson som yogainstruktör och gongspel ingår också.
                 </p>
               </div>
@@ -364,10 +347,19 @@
                 src={saxophoneRetreatBread}
                 alt="Bild på bröd vid saxofonretreat"
               />
+
               <div class="mx-auto mb-2 max-w-screen-sm">
-                Min intention med dagen är att du ska få ta emot, få vila i dej
+                Vi kommer jobba med Tuning-vårdande ljud, som är som näring för rösten. Vilket också kan påbörja en läkningsprocess i din kropp. Jag utgår ifrån Marie Bergmans metod.
+              </div>
+
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                Denna dag är för dig som vill uppnå en djupare avslappning. Vi jobbar med ärkeänglarna, bland annat med avslappning på cellnivå.
+              </div>
+
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                Min intention med dagen är att du ska få ta emot, få vila i dig
                 själv, känna glädje och stilla ro mitt i allt det du står i just
-                nu och upptäcka nya sidor hos dej själv.
+                nu och upptäcka nya sidor hos dig själv.
               </div>
 
               <div class="mx-auto my-2 max-w-screen-sm">
@@ -377,15 +369,15 @@
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
-                  > står för surdegsbröd till lunch & även något gott till eftermiddagsfikat.
+                  > står för surdegsbröd till lunchen & även något gott till eftermiddagsfikat.
                 </p>
                 <p>
-                  Investeringen i dej själv kostar 2222 kr, anmälan senast den
-                  16/12 kl 18.00.
+                  Investeringen i dig själv kostar 1990 kr, anmälan senast den
+                  11/3 kl 18.00.
                 </p>
                 <p>
-                  Det finns möjlighet till boka tidigt rabatt 1990 kr senast
-                  30/11.
+                  Det finns möjlighet till boka tidigt rabatt 1700 kr senast
+                  1/2.
                 </p>
               </div>
 
@@ -399,7 +391,12 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">Var:</span>
-                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad
+                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad.
+                </p>
+
+                <p class="my-2">
+                  <span class="font-bold">Att ta med:</span>
+                  Yogamatta eller liggunderlag. Kudde och mjuka kläder.
                 </p>
 
                 <p class="text-center font-bold">
@@ -418,7 +415,7 @@
                 Saxofonmeditation
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
-                <p class="my-2">Nästa saxofonmeditation blir den 4/1 kl 16.</p>
+                <p class="my-2">Nästa saxofonmeditation blir den 1/2 kl 16.</p>
 
                 <p class="my-2">Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer flyttar meditationen ut i skogen igen.</p>
 
@@ -437,8 +434,7 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12,
-                  <span class="font-bold"> 4/1</span>
+                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12, 4/1, 1/2, 1/3, 29/3
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -452,6 +448,35 @@
 
                 <p class="text-center font-bold">
                   ✨ Välkommen med din anmälan till:
+                </p>
+                <div class="flex justify-center text-center">
+                  <EncryptedEmail />
+                </div>
+              </div>
+            </section>
+
+            <Divider />
+
+            <section>
+              <h2 class="mb-4 text-center font-display text-4xl font-bold">
+                Sacred sound session
+              </h2>
+              <div class="mx-auto max-w-screen-sm">
+
+                <div class="mx-auto mb-2 max-w-screen-sm">
+                  <p class="my-2">Jag erbjuder 1-on-1 träffar med läkande sång, tuning och avslappning till kristallskålarnas vibrationer.</p>
+                </div>
+
+                <enhanced:img
+                  class="mx-auto my-8 h-auto w-full max-w-[350px] object-cover"
+                  src={crystalBowlsTuning}
+                  alt="Bild på Maggan som spelar på kristallskålar"
+                />
+
+                <p class="text-center">Det finns också möjlighet att boka en boka en träff för en liten grupp.</p>
+
+                <p class="text-center">
+                  Tycker du det låter intressant, hör av dig med frågor till:
                 </p>
                 <div class="flex justify-center text-center">
                   <EncryptedEmail />
@@ -537,7 +562,7 @@
               </h2>
               <div class="flex justify-center">
                 <p class="max-w-screen-sm">
-                  Kom med och lär dej om våra vanligaste örter/läkeväxter. Hur
+                  Kom med och lär dig om våra vanligaste örter/läkeväxter. Hur
                   bereds de? Hur använder du dem på bästa sätt i din matlagning
                   eller som läkeväxt.
                 </p>
@@ -598,6 +623,9 @@
               </h3>
               <ul class="list-inside list-disc space-y-2">
                 <li>
+                  Torsdagar från cirka 09:30 finns det färskt bröd vid Handlarn Tolkabro
+                </li>
+                <li>
                   Vissa lördagar säljer jag mitt hantverksbröd direkt vid
                   bageriet, för exakt info om försäljningen följ på instagram <a
                     href={instagramProfileLink}
@@ -605,25 +633,7 @@
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
                   >. Ett surdegsbröd bakat på kultursäd, så som Emmer och
-                  vetemjöl special. Du kan beställa via <EncryptedEmail />
-                </li>
-                <li>
-                  Levererar örter och bröd till Grovare Event & kafé, Marie
-                  Arturéns härliga och mysiga kafé i Grovare.
-                </li>
-                <li>
-                  Musik i sommarkväll med Sanna Moberg-sång/piano & Maggan
-                  Allerth-saxofon
-                  <p>- 17 juni kl 19.00 Brämhults kyrka, Borås</p>
-                  <p>- 29 juli kl 19.00 Hakarps kyrka, Huskvarna</p>
-                  <p>- 17 augusti kl 18.00 Ljushults kyrka, Aplared</p>
-                </li>
-                <li>
-                  Kören FREKVENS startar 15/9 kl 18:00. Lokal meddelas senare. <a
-                    href="#frekvens"
-                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
-                    ><span class="whitespace-nowrap">Läs mer</span></a
-                  >
+                  vetemjöl special. Du kan beställa via <EncryptedEmail />.
                 </li>
               </ul>
             </section>
@@ -686,10 +696,10 @@
               du andra likasinnade.
             </p>
             <p class="mx-auto px-4 py-2">
-              Kören FREKVENS träffas varannan måndag kl 18.00-19.30. Start 15/9.
+              Kören FREKVENS träffas varannan måndag kl 18.00-19.30.
               Lokal meddelas senare.
             </p>
-            <p class="mx-auto px-4 py-2">Anmälningsavgift 500kr.</p>
+            <p class="mx-auto px-4 py-2">Anmälningsavgift.</p>
 
             <p class="mx-auto px-4 py-4">
               Kontakta Maggan om du vill veta mer och anmäla dig:
