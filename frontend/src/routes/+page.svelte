@@ -316,19 +316,19 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm text-2xl">
-                  SAXOFONRETREAT 20/12 kl 9.30 - ca 17.00
+                  SAXOFONRETREAT 14/3 kl 9.30 - ca 17.00
                 </p>
               </div>
-
+<!--
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
                   Ge dej själv den bästa julklappen - kreativ tid för din själ
                 </p>
-              </div>
+              </div> -->
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  Välkommen till en magisk dag där du får chans att släppa
+                  Välkommen till en kravlös och magisk dag där du får chans att släppa
                   vardagens stress och måsten och istället påbörja din inre resa
                   mot ett sannare jag.
                 </p>
@@ -352,9 +352,8 @@
                 <p class="my-2 max-w-screen-sm">
                   Maggan Allerth heter jag som leder dagen. Du får del av mina
                   saxofoners rogivande toners musik, kristallskålarnas milda
-                  mjuka helande, läkande sång, dikter och rörelse. Du får med
-                  dej nya verktyg hem som du kan använda i din vardag såsom
-                  färgövning, andning bland annat. Ett yogapass med Lotta
+                  mjuka helande, läkande sång, tuning och rörelse. Du får med
+                  dej nya verktyg hem som du kan använda i din vardag. Ett yogapass med Lotta
                   Andersson som yogainstruktör och gongspel ingår också.
                 </p>
               </div>
@@ -364,6 +363,15 @@
                 src={saxophoneRetreatBread}
                 alt="Bild på bröd vid saxofonretreat"
               />
+
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                Vi kommer jobba med Tuning-vårdande ljud, som är som näring för rösten. Vilket också kan påbörja en läkningsprocess i din kropp. Jag utgår ifrån Marie Bergmans metod.
+              </div>
+
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                Denna dag är för dej som vill uppnå en djupare avslappning. Vi jobbar med ärkeänglarna, bland annat med avslappning på cellnivå.
+              </div>
+
               <div class="mx-auto mb-2 max-w-screen-sm">
                 Min intention med dagen är att du ska få ta emot, få vila i dej
                 själv, känna glädje och stilla ro mitt i allt det du står i just
@@ -377,15 +385,15 @@
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
-                  > står för surdegsbröd till lunch & även något gott till eftermiddagsfikat.
+                  > står för surdegsbröd till lunchen & även något gott till eftermiddagsfikat.
                 </p>
                 <p>
-                  Investeringen i dej själv kostar 2222 kr, anmälan senast den
-                  16/12 kl 18.00.
+                  Investeringen i dej själv kostar 1990 kr, anmälan senast den
+                  11/3 kl 18.00.
                 </p>
                 <p>
-                  Det finns möjlighet till boka tidigt rabatt 1990 kr senast
-                  30/11.
+                  Det finns möjlighet till boka tidigt rabatt 1700 kr senast
+                  1/2.
                 </p>
               </div>
 
@@ -399,7 +407,12 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">Var:</span>
-                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad
+                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad.
+                </p>
+
+                <p class="my-2">
+                  <span class="font-bold">Att ta med:</span>
+                  Yogamatta eller liggunderlag. Kudde och mjuka kläder.
                 </p>
 
                 <p class="text-center font-bold">
