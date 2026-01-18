@@ -431,7 +431,7 @@
                 Saxofonmeditation
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
-                <p class="my-2">Nästa saxofonmeditation blir den 4/1 kl 16.</p>
+                <p class="my-2">Nästa saxofonmeditation blir den 1/2 kl 16.</p>
 
                 <p class="my-2">Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer flyttar meditationen ut i skogen igen.</p>
 
@@ -450,8 +450,7 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12,
-                  <span class="font-bold"> 4/1</span>
+                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12, 4/1, 1/2, 1/3, 29/3
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
