@@ -376,8 +376,7 @@
                   11/3 kl 18.00.
                 </p>
                 <p>
-                  Det finns möjlighet till boka tidigt rabatt 1700 kr senast
-                  1/2.
+                  Det finns möjlighet till rabatt vid tidig bokning, senast 1/2. Priset blir då 1700kr.
                 </p>
               </div>
 
