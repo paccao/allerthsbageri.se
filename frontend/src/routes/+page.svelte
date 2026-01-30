@@ -27,6 +27,8 @@
   import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
   import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
   import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
+  import hantverksbrod1 from '$assets/hantverksbrod-1.jpeg?enhanced'
+  import hantverksbrod2 from '$assets/hantverksbrod-2.jpeg?enhanced'
 
   const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
     dateStyle: 'full',
@@ -94,6 +96,7 @@
     loading="eager"
     fetchpriority="high"
   />
+
   <section class="relative">
     <section id="main-content">
       <section class="flex items-center justify-center">
@@ -155,8 +158,9 @@
             <p class="mt-4">
               Min mormor och morfar, Sven och <span class="whitespace-nowrap"
                 >Maj-Britt</span
-              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som skapade
-              minnen för livet. Det var fyllt med generationer av kunskap och engagemang.
+              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som
+              skapade minnen för livet. Det var fyllt med generationer av kunskap
+              och engagemang.
             </p>
             <p class="mt-4">
               Nu kommer morfars brödlådor med telefonnummer 14 till användning
@@ -241,6 +245,29 @@
 
             <Divider />
 
+            <p class="mt-8 px-4 text-center font-bold">
+              Erbjudande:
+            </p>
+
+            <p class="mt-8 px-4 text-center">
+              Skulle du vilja ha en unik gåva att ge till den där, du vet, som "redan har allt". Vad ska vi ge som present? Ett exklusivt hantverksbröd, designat för just den/de personerna kan vara något alldeles extra att ge till dina vänner.
+            </p>
+
+            <div class="mt-8 grid grid-cols-2">
+              <enhanced:img
+                class="aspect-square rounded-l-md h-full w-full object-cover shadow-md"
+                src={hantverksbrod2}
+                alt="Ett specielt hantverksbröd"
+              />
+              <enhanced:img
+                class="h-auto w-full rounded-r-md object-cover shadow-md"
+                src={hantverksbrod1}
+                alt="Ett specielt hantverksbröd"
+              />
+            </div>
+
+            <Divider />
+
             <p class="mt-8 px-4 text-center">
               Allerths bageri har tilldelats ett microstöd från Leader Sjuhärad
               "förstudie i entreprenörskap" för att kunna utöka bageriets
@@ -254,17 +281,6 @@
                 alt="Logotyp Leader Sjuhärad"
               />
             </div>
-
-            <Divider />
-
-            <p class="px-4 text-center">
-              Nyhet! Du kan också beställa vårt bröd via REKOringen.
-            </p>
-            <p class="mt-8 px-4 text-center">Leverans:</p>
-            <ul class="list-inside list-['-_'] space-y-2 text-center">
-              <li>Jämna veckor - Ulricehamn</li>
-              <li>Ojämna veckor - Borås & Fristad</li>
-            </ul>
 
             <Divider />
 
@@ -289,6 +305,21 @@
                     >@allerthsbageri</a
                   >
                 </li>
+                <li>
+                  REKO-ringen Ulricehamn - jämna veckor
+                </li>
+                <li>
+                  REKO-ringen Borås - ojämna veckor
+                </li>
+                <li>
+                  7/2 Alboga blommor & jord i Od kl 10-14
+                </li>
+                <li>
+                  28/3 Vårmarknad Bogastugan Hökerum
+                </li>
+                <li>
+                  11/4 Vårmarknad Västanå, Varnum
+                </li>
               </ul>
             </article>
           </section>
@@ -312,9 +343,9 @@
 
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm">
-                  Välkommen till en kravlös och magisk dag där du får chans att släppa
-                  vardagens stress och måsten och istället påbörja din inre resa
-                  mot ett sannare jag.
+                  Välkommen till en kravlös och magisk dag där du får chans att
+                  släppa vardagens stress och måsten och istället påbörja din
+                  inre resa mot ett sannare jag.
                 </p>
               </div>
 
@@ -337,8 +368,9 @@
                   Maggan Allerth heter jag som leder dagen. Du får del av mina
                   saxofoners rogivande toners musik, kristallskålarnas milda
                   mjuka helande, läkande sång, tuning och rörelse. Du får med
-                  dig nya verktyg hem som du kan använda i din vardag. Ett yogapass med Lotta
-                  Andersson som yogainstruktör och gongspel ingår också.
+                  dig nya verktyg hem som du kan använda i din vardag. Ett
+                  yogapass med Lotta Andersson som yogainstruktör och gongspel
+                  ingår också.
                 </p>
               </div>
 
@@ -349,11 +381,15 @@
               />
 
               <div class="mx-auto mb-2 max-w-screen-sm">
-                Vi kommer jobba med Tuning-vårdande ljud, som är som näring för rösten. Vilket också kan påbörja en läkningsprocess i din kropp. Jag utgår ifrån Marie Bergmans metod.
+                Vi kommer jobba med Tuning-vårdande ljud, som är som näring för
+                rösten. Vilket också kan påbörja en läkningsprocess i din kropp.
+                Jag utgår ifrån Marie Bergmans metod.
               </div>
 
               <div class="mx-auto mb-2 max-w-screen-sm">
-                Denna dag är för dig som vill uppnå en djupare avslappning. Vi jobbar med ärkeänglarna, bland annat med avslappning på cellnivå.
+                Denna dag är för dig som vill uppnå en djupare avslappning. Vi
+                jobbar med ärkeänglarna, bland annat med avslappning på
+                cellnivå.
               </div>
 
               <div class="mx-auto mb-2 max-w-screen-sm">
@@ -376,7 +412,8 @@
                   11/3 kl 18.00.
                 </p>
                 <p>
-                  Det finns möjlighet till rabatt vid tidig bokning, senast 1/2. Priset blir då 1700kr.
+                  Det finns möjlighet till rabatt vid tidig bokning, senast 1/2.
+                  Priset blir då 1700kr.
                 </p>
               </div>
 
@@ -416,7 +453,10 @@
               <div class="mx-auto mb-2 max-w-screen-sm">
                 <p class="my-2">Nästa saxofonmeditation blir den 1/2 kl 16.</p>
 
-                <p class="my-2">Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer flyttar meditationen ut i skogen igen.</p>
+                <p class="my-2">
+                  Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer
+                  flyttar meditationen ut i skogen igen.
+                </p>
 
                 <p class="my-2">
                   Efteråt fikar vi tillsammans, surdegsmacka från <a
@@ -433,7 +473,8 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12, 4/1, 1/2, 1/3, 29/3
+                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12, 4/1, 1/2,
+                  1/3, 29/3
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Kostnad:</span>
@@ -461,9 +502,11 @@
                 Sacred sound session
               </h2>
               <div class="mx-auto max-w-screen-sm">
-
                 <div class="mx-auto mb-2 max-w-screen-sm">
-                  <p class="my-2">Jag erbjuder 1-on-1 träffar med läkande sång, tuning och avslappning till kristallskålarnas vibrationer.</p>
+                  <p class="my-2">
+                    Jag erbjuder 1-on-1 träffar med läkande sång, tuning och
+                    avslappning till kristallskålarnas vibrationer.
+                  </p>
                 </div>
 
                 <enhanced:img
@@ -472,7 +515,10 @@
                   alt="Bild på Maggan som spelar på kristallskålar"
                 />
 
-                <p class="text-center">Det finns också möjlighet att boka en boka en träff för en liten grupp.</p>
+                <p class="text-center">
+                  Det finns också möjlighet att boka en boka en träff för en
+                  liten grupp.
+                </p>
 
                 <p class="text-center">
                   Tycker du det låter intressant, hör av dig med frågor till:
@@ -621,7 +667,8 @@
               </h3>
               <ul class="list-inside list-disc space-y-2">
                 <li>
-                  Torsdagar från cirka 09:30 finns det färskt bröd vid Handlarn Tolkabro
+                  Torsdagar från cirka 09:30 finns det färskt bröd vid Handlarn
+                  Tolkabro
                 </li>
                 <li>
                   Vissa lördagar säljer jag mitt hantverksbröd direkt vid
@@ -694,8 +741,8 @@
               du andra likasinnade.
             </p>
             <p class="mx-auto px-4 py-2">
-              Kören FREKVENS träffas varannan måndag kl 18.00-19.30.
-              Lokal meddelas senare.
+              Kören FREKVENS träffas varannan måndag kl 18.00-19.30. Lokal
+              meddelas senare.
             </p>
             <p class="mx-auto px-4 py-2">Anmälningsavgift.</p>
 
