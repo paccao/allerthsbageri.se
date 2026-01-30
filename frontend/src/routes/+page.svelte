@@ -109,6 +109,12 @@
               purpurvete. Emmer började odlas för 8000 år sedan och är en
               korsning mellan enkorn och vildgräs.
             </p>
+            <p class="pt-4">
+              Erbjuder <span class="font-bold">sacred sound session</span> 1:1 coaching där du genom ljud får möjlighet att släppa på trycket och hjälpa ditt nervsystem att slappna av. Just nu "provapåpris".
+            </p>
+            <p class="pt-4">
+              Kontakta mig för mer info
+            </p>
           </div>
           <Divider class="my-8" />
 
@@ -251,6 +257,10 @@
 
             <p class="mt-8 px-4 text-center">
               Skulle du vilja ha en unik gåva att ge till den där, du vet, som "redan har allt". Vad ska vi ge som present? Ett exklusivt hantverksbröd, designat för just den/de personerna kan vara något alldeles extra att ge till dina vänner.
+            </p>
+
+            <p class="mt-8 px-4 text-center">
+              Jag specialdesignar gärna ditt bröd med det utseende vi kommer fram till tillsammans. Hör av dig via mail så tar vi det därifrån: <EncryptedEmail />
             </p>
 
             <div class="mt-8 grid grid-cols-2">
