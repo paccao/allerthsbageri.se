@@ -61,14 +61,14 @@
     /** The intitial phone number */
     defaultValue: string
     /** Will be called with the updated number in E164 format (e.g. starting with the +46 country code) */
-    onChange: (newNumber: string) => void
+    onInput: (newNumber: string) => void
     /** CSS classes applied to the container element that wraps the input */
     containerClasses?: ClassValue
   }
 
   let {
     defaultValue,
-    onChange,
+    onInput,
     class: className,
     containerClasses,
     ...restProps
@@ -178,7 +178,7 @@
   {...restProps}
   oninput={ready
     ? () => {
-        onChange(iti.getNumber(intlTelInput.utils?.numberFormat.E164))
+        onInput(iti.getNumber(intlTelInput.utils?.numberFormat.E164))
         phoneError = iti.isValidNumber()
           ? undefined
           : errorMap[iti.getValidationError()]

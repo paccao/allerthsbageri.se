@@ -76,7 +76,7 @@
       <PhoneInput
         id="phone"
         defaultValue={ctx.customer.phone}
-        onChange={(newNumber) => (ctx.customer.phone = newNumber)}
+        onInput={(newNumber) => (ctx.customer.phone = newNumber)}
         class={inputClasses}
         containerClasses="**:outline-none [&_input]:h-10 [&_button]:!rounded-md transition-[color,box-shadow] ring-offset-background border-input **:focus-visible:border-ring **:focus-visible:ring-ring/50 **:focus-visible:ring-[3px]"
       />
