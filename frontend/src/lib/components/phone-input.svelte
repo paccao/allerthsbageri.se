@@ -117,8 +117,6 @@
       strictMode: true,
       autoPlaceholder: 'aggressive',
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
-      // NOTE: Maybe add preloading for this library already when the order form starts up
-      // IDEA: Use modulepreload to improve performance https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/modulepreload
       loadUtils: () => import('intl-tel-input/utils'),
     })
 
