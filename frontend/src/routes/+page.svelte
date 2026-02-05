@@ -27,8 +27,7 @@
   import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
   import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
   import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
-  import hantverksbrod1 from '$assets/hantverksbrod-1.jpeg?enhanced'
-  import hantverksbrod2 from '$assets/hantverksbrod-2.jpeg?enhanced'
+  import specialdesignatBrod from '$assets/specialdesignat-brod.jpeg?enhanced'
 
   const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
     dateStyle: 'full',
@@ -110,11 +109,11 @@
               korsning mellan enkorn och vildgräs.
             </p>
             <p class="pt-4">
-              Erbjuder <span class="font-bold">sacred sound session</span> 1:1 coaching där du genom ljud får möjlighet att släppa på trycket och hjälpa ditt nervsystem att slappna av. Just nu "provapåpris".
+              Erbjuder <span class="font-bold">sacred sound session</span> 1 on 1
+              coaching. Genom tuning, ljud så kan vi reglera vårt nervsystem och påbörja
+              vår förändring till ett större välbefinnande och lugn. Just nu "provapåpris".
             </p>
-            <p class="pt-4">
-              Kontakta mig för mer info
-            </p>
+            <p class="pt-4">Kontakta mig för mer info</p>
           </div>
           <Divider class="my-8" />
 
@@ -164,9 +163,8 @@
             <p class="mt-4">
               Min mormor och morfar, Sven och <span class="whitespace-nowrap"
                 >Maj-Britt</span
-              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som
-              skapade minnen för livet. Det var fyllt med generationer av kunskap
-              och engagemang.
+              > Allerth hade ett fantastiskt väldoftande och välfyllt bageri som skapade
+              minnen för livet. Det var fyllt med generationer av kunskap och engagemang.
             </p>
             <p class="mt-4">
               Nu kommer morfars brödlådor med telefonnummer 14 till användning
@@ -251,30 +249,26 @@
 
             <Divider />
 
-            <p class="mt-8 px-4 text-center font-bold">
-              Erbjudande:
+            <p class="mt-8 px-4 text-center font-bold">Erbjudande:</p>
+
+            <p class="mt-8 px-4 text-center">
+              Skulle du vilja ha en unik gåva att ge till den där, du vet, som
+              "redan har allt". Vad ska vi ge som present? Ett exklusivt
+              hantverksbröd, designat för just den/de personerna kan vara något
+              alldeles extra att ge till dina vänner.
             </p>
 
             <p class="mt-8 px-4 text-center">
-              Skulle du vilja ha en unik gåva att ge till den där, du vet, som "redan har allt". Vad ska vi ge som present? Ett exklusivt hantverksbröd, designat för just den/de personerna kan vara något alldeles extra att ge till dina vänner.
+              Jag specialdesignar gärna ditt bröd med det utseende vi kommer
+              fram till tillsammans. Hör av dig via mail så tar vi det därifrån: <EncryptedEmail
+              />
             </p>
 
-            <p class="mt-8 px-4 text-center">
-              Jag specialdesignar gärna ditt bröd med det utseende vi kommer fram till tillsammans. Hör av dig via mail så tar vi det därifrån: <EncryptedEmail />
-            </p>
-
-            <div class="mt-8 grid grid-cols-2">
-              <enhanced:img
-                class="aspect-square rounded-l-md h-full w-full object-cover shadow-md"
-                src={hantverksbrod2}
-                alt="Ett specielt hantverksbröd"
-              />
-              <enhanced:img
-                class="h-auto w-full rounded-r-md object-cover shadow-md"
-                src={hantverksbrod1}
-                alt="Ett specielt hantverksbröd"
-              />
-            </div>
+            <enhanced:img
+              class="mx-auto my-8 mt-8 h-auto w-full max-w-[500px] object-cover"
+              src={specialdesignatBrod}
+              alt="En bild på mitt specialdesignade bröd som du kan beställa"
+            />
 
             <Divider />
 
@@ -315,21 +309,11 @@
                     >@allerthsbageri</a
                   >
                 </li>
-                <li>
-                  REKO-ringen Ulricehamn - jämna veckor
-                </li>
-                <li>
-                  REKO-ringen Borås - ojämna veckor
-                </li>
-                <li>
-                  7/2 Alboga blommor & jord i Od kl 10-14
-                </li>
-                <li>
-                  28/3 Vårmarknad Bogastugan Hökerum
-                </li>
-                <li>
-                  11/4 Vårmarknad Västanå, Varnum
-                </li>
+                <li>REKO-ringen Ulricehamn - jämna veckor</li>
+                <li>REKO-ringen Borås - ojämna veckor</li>
+                <li>7/2 Alboga blommor & jord i Od kl 10-14</li>
+                <li>28/3 Vårmarknad Bogastugan Hökerum</li>
+                <li>11/4 Vårmarknad Västanå, Varnum</li>
               </ul>
             </article>
           </section>
@@ -461,7 +445,7 @@
                 Saxofonmeditation
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
-                <p class="my-2">Nästa saxofonmeditation blir den 1/2 kl 16.</p>
+                <p class="my-2">Nästa saxofonmeditation blir den 1/3 kl 16.</p>
 
                 <p class="my-2">
                   Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer
@@ -526,8 +510,8 @@
                 />
 
                 <p class="text-center">
-                  Det finns också möjlighet att boka en boka en träff för en
-                  liten grupp.
+                  Det finns också möjlighet att boka en träff för en liten
+                  grupp.
                 </p>
 
                 <p class="text-center">
