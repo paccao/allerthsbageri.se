@@ -1,4 +1,5 @@
 import { z } from 'zod'
+// import { PersistedState } from '$lib/persisted-state.svelte'
 import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './order-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
@@ -6,17 +7,37 @@ import { weekdayAndDate } from '$lib/datetime'
 import { browser } from '$app/environment'
 import { replaceState } from '$app/navigation'
 import { tick } from 'svelte'
+import { jsonCodec } from '$lib/persisted-state.svelte'
 
+/**
+ * Less strict schema used for saving the customer data to localStorage.
+ * This enables partial input by allowing empty strings and less strict rules.
+ * Should be used in combination with the actual customerSchema.
+ */
+const persistedCustomerSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  phone: z.string(),
+})
+
+/**
+ * Actual rules for parsing customer data in a consistent format.
+ * This should be used to validate customer data before submitting the order.
+ */
 const customerSchema = z.object({
   name: z.string().trim(),
   email: z.email().trim(),
   phone: z.e164(),
 })
 
-export type Order = {
-  pickupOccasionId: number | null
-  items: Record<Product['id'], number>
-}
+const productId = z.number()
+
+const orderSchema = z.object({
+  pickupOccasionId: z.number().nullable(),
+  items: z.record(productId, z.number()),
+})
+
+export type Order = z.infer<typeof orderSchema>
 
 const orderedSteps = [
   { id: 'varor', title: 'Välj upphämtningstillfälle och produkter' },
@@ -54,16 +75,29 @@ function clearHash() {
   })
 }
 
+function createSerializer<T extends z.core.$ZodType>(schema: T) {
+  const { encode: serialize, decode: deserialize } = jsonCodec(schema)
+  return { serialize, deserialize }
+}
+
 export class OrderState {
-  #order = new PersistedState<Order>('order', {
-    pickupOccasionId: null,
-    items: {},
-  })
-  #customer = new PersistedState('customer', {
-    name: '',
-    email: '',
-    phone: '',
-  })
+  #order = new PersistedState(
+    'order',
+    {
+      pickupOccasionId: null,
+      items: {},
+    } as z.infer<typeof orderSchema>,
+    { serializer: createSerializer(orderSchema) },
+  )
+  #customer = new PersistedState(
+    'customer',
+    {
+      name: '',
+      email: '',
+      phone: '',
+    },
+    { serializer: createSerializer(persistedCustomerSchema) },
+  )
 
   /**
    * If set, a confirmation dialog will be shown to prompt the user
@@ -85,10 +119,6 @@ export class OrderState {
   get confirmDialog() {
     return this.#confirmDialog
   }
-
-  pickupOccasions: PickupOccasion[]
-  /** Currently selected pickupOccasion */
-  pickupOccasion?: PickupOccasion
 
   #validators: Record<StepId, () => boolean> = {
     varor: () =>
@@ -123,10 +153,28 @@ export class OrderState {
   nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
+  // IDEA: Could pickupOccasion be turned into a getter?
+  // get pickupOccasions(): PickupOccasion[] {}
+  // get pickupOccasion(): PickupOccasion | null {
+  //   const id = this.#order.current.pickupOccasionId
+  // }
+
+  pickupOccasions: PickupOccasion[]
+  /** Currently selected pickupOccasion */
+  // pickupOccasion?: PickupOccasion
+
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
-    this.pickupOccasion = $derived(
-      pickupOccasions.find(({ id }) => id === this.order.pickupOccasionId),
+    // this.pickupOccasion = $derived(
+    //   pickupOccasions.find(
+    //     ({ id }) => id === this.#order.current.pickupOccasionId,
+    //   ),
+    // )
+  }
+
+  get pickupOccasion() {
+    return this.pickupOccasions.find(
+      ({ id }) => id === this.#order.current.pickupOccasionId,
     )
   }
 

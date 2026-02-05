@@ -11,6 +11,8 @@
 
   const ctx = getOrderContext()
 
+  $inspect(ctx.pickupOccasion, localStorage.order)
+
   const orderItems = $derived(
     Object.entries(ctx.order.items).reduce<(Product & { count: number })[]>(
       (orderItems, [productId, count]) => {
@@ -46,7 +48,17 @@
     minute: '2-digit',
   })
 
-  const pickup = $derived(ctx.pickupOccasion!)
+  // BUG: pickupOccasion is undefined when order-summary is shown.
+  // Question: what determines that the order summary should be shown?
+  //
+  // Reproduction:
+  // 1) select products
+  // 2) continue to order summary
+  // 3) reload without changing the customer info in any way
+  // 4) the console logs a warning about ctx.pickupOccasion not being defined.
+  //
+  // We should likely save the pickup occasion to localStorage as soon as it has been selected to get back to the same step in the order form
+  const pickup = $derived(ctx.pickupOccasion)
   const dateTime = $derived(
     dateTimeFormatter.formatRange(pickup.startTime, pickup.endTime),
   )
@@ -85,20 +97,20 @@
 
   <div class="w-full max-w-md grow self-center px-0 2xs:px-4">
     <Card.Root class="h-min gap-4 pb-0">
-      <Card.Header class="gap-4">
-        <Card.Title class="text-lg font-bold">Varukorg</Card.Title>
+      {#if pickup}
+        <Card.Header class="gap-4">
+          <Card.Title class="text-lg font-bold">Varukorg</Card.Title>
 
-        <p
-          class="grid grid-cols-[max-content_1fr] rounded-md bg-accent p-2 text-sm shadow-sm"
-        >
-          <span class="font-bold">Upphämtning:</span>
-          <span class="text-right">{dateTime}</span>
-          <span class="font-bold">Plats:</span>
-          <span class="text-right">{pickup.location}</span>
-        </p>
-      </Card.Header>
+          <p
+            class="grid grid-cols-[max-content_1fr] rounded-md bg-accent p-2 text-sm shadow-sm"
+          >
+            <span class="font-bold">Upphämtning:</span>
+            <span class="text-right">{dateTime}</span>
+            <span class="font-bold">Plats:</span>
+            <span class="text-right">{pickup.location}</span>
+          </p>
+        </Card.Header>
 
-      {#if ctx.pickupOccasion}
         <Card.Content>
           {#if orderItems.length}
             <ul class="grid gap-4 font-bold">
