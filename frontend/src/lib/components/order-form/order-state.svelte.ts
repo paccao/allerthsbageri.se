@@ -105,9 +105,7 @@ export class OrderState {
   visibleSteps = orderedSteps.slice(0, -1)
 
   /** Stores a boolean for each step, indicating which steps are valid */
-  #validatedSteps = $derived(
-    orderedSteps.map(({ id }) => this.#validators[id]()),
-  )
+  #validSteps = $derived(orderedSteps.map(({ id }) => this.#validators[id]()))
   /** Maps stepIds to a boolean, indicating which steps are enabled */
   #enabledSteps = $derived(
     orderedSteps.reduce(
@@ -164,7 +162,7 @@ export class OrderState {
 
       // Abort as soon as we find a step that is not yet valid.
       // By returning false, we disable all the following steps.
-      if (!this.#validatedSteps[i]) return false
+      if (!this.#validSteps[i]) return false
     }
 
     throw new Error(`Failed step validation for stepId ${id}`)
