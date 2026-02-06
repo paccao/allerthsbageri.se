@@ -29,7 +29,7 @@
   import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
   import specialdesignatBrod from '$assets/specialdesignat-brod.jpeg?enhanced'
 
-  const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
+  const bakingCourseDate = new Date('2026-03-21').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
 </script>
