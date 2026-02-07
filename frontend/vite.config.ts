@@ -1,8 +1,13 @@
+import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
+import { keystatic } from 'keystatic-sveltekit'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { enhancedImages } from '@sveltejs/enhanced-img'
-import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [tailwindcss(), enhancedImages(), sveltekit()],
+  plugins: [tailwindcss(), keystatic(), enhancedImages(), sveltekit()],
+  // Ensure the SvelteKit app is running on 127.0.0.1 to be consistent with Keystatic
+  // For production, we want the host to be determined by the runtime instead
+  server:
+    process.env.NODE_ENV === 'development' ? { host: '127.0.0.1' } : undefined,
 })

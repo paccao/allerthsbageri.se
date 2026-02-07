@@ -5,10 +5,10 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 const config: Config = {
   preprocess: vitePreprocess(),
 
-  // TODO: Add existing ui components
-  // TODO: make it work
-
   kit: {
+    experimental: {
+      remoteFunctions: true,
+    },
     adapter: adapter(),
     alias: {
       $components: './src/lib/components',
@@ -19,6 +19,7 @@ const config: Config = {
       '$layouts/*': './src/lib/layouts/*',
     },
   },
+  compilerOptions: { experimental: { async: true } },
 }
 
 export default config
