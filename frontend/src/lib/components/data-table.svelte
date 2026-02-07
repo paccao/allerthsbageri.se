@@ -107,17 +107,6 @@
     renderComponent,
     renderSnippet,
   } from '$components/ui/data-table/index.js'
-  import LayoutColumnsIcon from '@tabler/icons-svelte/icons/layout-columns'
-  import GripVerticalIcon from '@tabler/icons-svelte/icons/grip-vertical'
-  import ChevronDownIcon from '@tabler/icons-svelte/icons/chevron-down'
-  import PlusIcon from '@tabler/icons-svelte/icons/plus'
-  import ChevronsLeftIcon from '@tabler/icons-svelte/icons/chevrons-left'
-  import ChevronLeftIcon from '@tabler/icons-svelte/icons/chevron-left'
-  import ChevronRightIcon from '@tabler/icons-svelte/icons/chevron-right'
-  import ChevronsRightIcon from '@tabler/icons-svelte/icons/chevrons-right'
-  import CircleCheckFilledIcon from '@tabler/icons-svelte/icons/circle-check-filled'
-  import LoaderIcon from '@tabler/icons-svelte/icons/loader'
-  import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical'
   import { toast } from 'svelte-sonner'
   import DataTableCheckbox from './data-table-checkbox.svelte'
   import DataTableCellViewer from './data-table-cell-viewer.svelte'
@@ -264,10 +253,10 @@
         <DropdownMenu.Trigger>
           {#snippet child({ props })}
             <Button variant="outline" size="sm" {...props}>
-              <LayoutColumnsIcon />
+              <span class="i-[tabler--layout-columns] size-4"></span>
               <span class="hidden lg:inline">Customize Columns</span>
               <span class="lg:hidden">Columns</span>
-              <ChevronDownIcon />
+              <span class="i-[tabler--chevron-down] size-4"></span>
             </Button>
           {/snippet}
         </DropdownMenu.Trigger>
@@ -286,7 +275,7 @@
         </DropdownMenu.Content>
       </DropdownMenu.Root>
       <Button variant="outline" size="sm">
-        <PlusIcon />
+        <span class="i-[tabler--plus] size-4"></span>
         <span class="hidden lg:inline">Add Section</span>
       </Button>
     </div>
@@ -377,7 +366,7 @@
             disabled={!table.getCanPreviousPage()}
           >
             <span class="sr-only">Go to first page</span>
-            <ChevronsLeftIcon />
+            <span class="i-[tabler--chevron-left] size-4"></span>
           </Button>
           <Button
             variant="outline"
@@ -387,7 +376,7 @@
             disabled={!table.getCanPreviousPage()}
           >
             <span class="sr-only">Go to previous page</span>
-            <ChevronLeftIcon />
+            <span class="i-[tabler--chevron-left] size-4"></span>
           </Button>
           <Button
             variant="outline"
@@ -397,7 +386,7 @@
             disabled={!table.getCanNextPage()}
           >
             <span class="sr-only">Go to next page</span>
-            <ChevronRightIcon />
+            <span class="size-4 i-[tabler--chvron-right]"></span>
           </Button>
           <Button
             variant="outline"
@@ -407,7 +396,7 @@
             disabled={!table.getCanNextPage()}
           >
             <span class="sr-only">Go to last page</span>
-            <ChevronsRightIcon />
+            <span class="i-[tabler--chevron-right] size-4"></span>
           </Button>
         </div>
       </div>
@@ -481,9 +470,11 @@
 {#snippet DataTableStatus({ row }: { row: Row<Schema> })}
   <Badge variant="outline" class="px-1.5 text-muted-foreground">
     {#if row.original.status === 'Done'}
-      <CircleCheckFilledIcon class="fill-green-500 dark:fill-green-400" />
+      <span
+        class="i-[tabler--circle-filled] size-4 fill-green-500 dark:fill-green-400"
+      ></span>
     {:else}
-      <LoaderIcon />
+      <span class="i-[tabler--loader] size-4"></span>
     {/if}
     {row.original.status}
   </Badge>
@@ -496,7 +487,7 @@
     >
       {#snippet child({ props })}
         <Button variant="ghost" size="icon" {...props}>
-          <DotsVerticalIcon />
+          <span class="i-[tabler--dots-vertical] size-4"></span>
           <span class="sr-only">Open menu</span>
         </Button>
       {/snippet}
@@ -542,7 +533,8 @@
     size="icon"
     class="size-7 text-muted-foreground hover:bg-transparent"
   >
-    <GripVerticalIcon class="size-3 text-muted-foreground" />
+    <span class="size-3 text-muted-foreground i-[tabler--grip-vertical-icon]"
+    ></span>
     <span class="sr-only">Drag to reorder</span>
   </Button>
 {/snippet}
