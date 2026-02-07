@@ -121,6 +121,9 @@ importers:
       '@iconify-json/lucide':
         specifier: ^1.2.89
         version: 1.2.89
+      '@iconify-json/tabler':
+        specifier: ^1.2.26
+        version: 1.2.26
       '@iconify/tailwind4':
         specifier: ^1.2.1
         version: 1.2.1(tailwindcss@4.1.18)
@@ -903,6 +906,9 @@ packages:
 
   '@iconify-json/lucide@1.2.89':
     resolution: {integrity: sha512-9rZaJZn8VBls1KZnGaFTnqqZrUkd++XB3vy9WYIMgmHHgLxQMEZXg3V+oJSEeit0kCNr/OfDBmrDwuGl/LZulA==}
+
+  '@iconify-json/tabler@1.2.26':
+    resolution: {integrity: sha512-92G+ZD70AZgeJf07JfQzH+isnai6DwPcMBuF/qL1F+xAxdXCJzGd3w2RmsRvOmB+w1ImmWEEDms50QivQIjd6g==}
 
   '@iconify/tailwind4@1.2.1':
     resolution: {integrity: sha512-Hd7k8y7uzT3hk8ltw0jGku0r0wA8sc3d2iMvVTYv/9tMxBb+frZtWZGD9hDMU3EYuE+lMn58wi2lS8R2ZbwFcQ==}
@@ -4918,6 +4924,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/lucide@1.2.89':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/tabler@1.2.26':
     dependencies:
       '@iconify/types': 2.0.0
 

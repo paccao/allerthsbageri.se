@@ -1,18 +1,13 @@
 <script lang="ts">
   import CameraIcon from '@tabler/icons-svelte/icons/camera'
-  import ChartBarIcon from '@tabler/icons-svelte/icons/chart-bar'
-  import DashboardIcon from '@tabler/icons-svelte/icons/dashboard'
   import DatabaseIcon from '@tabler/icons-svelte/icons/database'
   import FileAiIcon from '@tabler/icons-svelte/icons/file-ai'
   import FileDescriptionIcon from '@tabler/icons-svelte/icons/file-description'
   import FileWordIcon from '@tabler/icons-svelte/icons/file-word'
-  import FolderIcon from '@tabler/icons-svelte/icons/folder'
   import HelpIcon from '@tabler/icons-svelte/icons/help'
-  import ListDetailsIcon from '@tabler/icons-svelte/icons/list-details'
   import ReportIcon from '@tabler/icons-svelte/icons/report'
   import SearchIcon from '@tabler/icons-svelte/icons/search'
   import SettingsIcon from '@tabler/icons-svelte/icons/settings'
-  import UsersIcon from '@tabler/icons-svelte/icons/users'
   import NavDocuments from './nav-documents.svelte'
   import NavMain from './nav-main.svelte'
   import NavSecondary from './nav-secondary.svelte'
@@ -32,27 +27,27 @@
       {
         title: 'Dashboard',
         url: '#',
-        icon: DashboardIcon,
+        icon: 'i-[tabler--dashboard]',
       },
       {
         title: 'Lifecycle',
         url: '#',
-        icon: ListDetailsIcon,
+        icon: 'i-[tabler--list-details]',
       },
       {
         title: 'Analytics',
         url: '#',
-        icon: ChartBarIcon,
+        icon: 'i-[tabler--chart-bar]',
       },
       {
         title: 'Projects',
         url: '#',
-        icon: FolderIcon,
+        icon: 'i-[tabler--folder]',
       },
       {
         title: 'Team',
         url: '#',
-        icon: UsersIcon,
+        icon: 'i-[tabler--users]',
       },
     ],
     navClouds: [

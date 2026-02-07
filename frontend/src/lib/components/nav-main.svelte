@@ -3,9 +3,8 @@
   import MailIcon from '@tabler/icons-svelte/icons/mail'
   import { Button } from '$components/ui/button/index.js'
   import * as Sidebar from '$components/ui/sidebar/index.js'
-  import type { Icon } from '@tabler/icons-svelte'
 
-  let { items }: { items: { title: string; url: string; icon?: Icon }[] } =
+  let { items }: { items: { title: string; url: string; icon?: string }[] } =
     $props()
 </script>
 
@@ -35,7 +34,7 @@
         <Sidebar.MenuItem>
           <Sidebar.MenuButton tooltipContent={item.title}>
             {#if item.icon}
-              <item.icon />
+              <span class={item.icon}></span>
             {/if}
             <span>{item.title}</span>
           </Sidebar.MenuButton>
