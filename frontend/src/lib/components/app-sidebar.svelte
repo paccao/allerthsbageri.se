@@ -8,7 +8,6 @@
   import FileWordIcon from '@tabler/icons-svelte/icons/file-word'
   import FolderIcon from '@tabler/icons-svelte/icons/folder'
   import HelpIcon from '@tabler/icons-svelte/icons/help'
-  import InnerShadowTopIcon from '@tabler/icons-svelte/icons/inner-shadow-top'
   import ListDetailsIcon from '@tabler/icons-svelte/icons/list-details'
   import ReportIcon from '@tabler/icons-svelte/icons/report'
   import SearchIcon from '@tabler/icons-svelte/icons/search'
@@ -19,7 +18,11 @@
   import NavSecondary from './nav-secondary.svelte'
   import NavUser from './nav-user.svelte'
   import * as Sidebar from '$components/ui/sidebar/index.js'
+  import { getSettings } from '$lib/data/settings.remote'
   import type { ComponentProps } from 'svelte'
+  import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg?enhanced'
+
+  const { siteName } = await getSettings()
 
   const data = {
     user: {
@@ -148,8 +151,12 @@
         <Sidebar.MenuButton class="data-[slot=sidebar-menu-button]:p-1.5!">
           {#snippet child({ props })}
             <a href="##" {...props}>
-              <InnerShadowTopIcon class="size-5!" />
-              <span class="text-base font-semibold">Acme Inc.</span>
+              <enhanced:img
+                src={allerthsBageriLogo}
+                alt="logotyp"
+                class="mr-2 inline-block size-5 rounded-full object-cover shadow-md"
+              />
+              <span class="text-base font-semibold">{siteName}</span>
             </a>
           {/snippet}
         </Sidebar.MenuButton>
