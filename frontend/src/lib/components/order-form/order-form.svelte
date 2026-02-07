@@ -1,60 +1,64 @@
 <script lang="ts" module>
   import { OrderState } from './order-state.svelte'
 
-  const pickupOccasions = [
-    {
-      id: 1,
-      name: 'REKO-ringen Borås',
-      location: 'Bäckängsgymnasiet',
-      startTime: new Date('2025-08-23T08:00:00.000Z'),
-      endTime: new Date('2025-08-23T13:30:00.000Z'),
-      products: [
-        {
-          id: 1,
-          stock: 50,
-          price: 6900n,
-          pickupOccasionId: 1,
-          name: 'Ekologiskt Surdegsbröd',
-          description:
-            'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
-        },
-        {
-          id: 2,
-          stock: 25,
-          price: 6500n,
-          pickupOccasionId: 1,
-          name: 'Ekologiskt Rågsurdegsbröd',
-          description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'REKO-ringen Ulricehamn',
-      location: 'Nya torget väveriet',
-      startTime: new Date('2025-08-24T07:00:00.000Z'),
-      endTime: new Date('2025-08-24T15:30:00.000Z'),
-      products: [
-        {
-          id: 3,
-          stock: 50,
-          price: 6900n,
-          pickupOccasionId: 2,
-          name: 'Ekologiskt Surdegsbröd',
-          description:
-            'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
-        },
-        {
-          id: 4,
-          stock: 25,
-          price: 6500n,
-          pickupOccasionId: 2,
-          name: 'Ekologiskt Rågsurdegsbröd',
-          description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
-        },
-      ],
-    },
-  ]
+  // const pickupOccasions = [
+  //   {
+  //     id: 1,
+  //     name: 'REKO-ringen Borås',
+  //     location: 'Bäckängsgymnasiet',
+  //     startTime: new Date('2025-08-23T08:00:00.000Z'),
+  //     endTime: new Date('2025-08-23T13:30:00.000Z'),
+  //     products: [
+  //       {
+  //         id: 1,
+  //         stock: 50,
+  //         price: 6900n,
+  //         pickupOccasionId: 1,
+  //         name: 'Ekologiskt Surdegsbröd',
+  //         description:
+  //           'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
+  //       },
+  //       {
+  //         id: 2,
+  //         stock: 25,
+  //         price: 6500n,
+  //         pickupOccasionId: 1,
+  //         name: 'Ekologiskt Rågsurdegsbröd',
+  //         description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     name: 'REKO-ringen Ulricehamn',
+  //     location: 'Nya torget väveriet',
+  //     startTime: new Date('2025-08-24T07:00:00.000Z'),
+  //     endTime: new Date('2025-08-24T15:30:00.000Z'),
+  //     products: [
+  //       {
+  //         id: 3,
+  //         stock: 50,
+  //         price: 6900n,
+  //         pickupOccasionId: 2,
+  //         name: 'Ekologiskt Surdegsbröd',
+  //         description:
+  //           'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
+  //       },
+  //       {
+  //         id: 4,
+  //         stock: 25,
+  //         price: 6500n,
+  //         pickupOccasionId: 2,
+  //         name: 'Ekologiskt Rågsurdegsbröd',
+  //         description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
+  //       },
+  //     ],
+  //   },
+  // ]
+  export type PickupOccasion = Awaited<
+    ReturnType<typeof getPickupOccasionsWithDetails>
+  >[number]
+  export type Product = PickupOccasion['products'][number]
 </script>
 
 <script lang="ts">
@@ -73,10 +77,10 @@
 </script>
 
 <!--
-This allows navigating to a specific step by clicking anchor links.
-The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
-NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
-IDEA: Maybe we could simplify the state management with the steps
+    This allows navigating to a specific step by clicking anchor links.
+    The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
+    NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
+    IDEA: Maybe we could simplify the state management with the steps
 -->
 <svelte:window
   onhashchange={ctx.isLastStep

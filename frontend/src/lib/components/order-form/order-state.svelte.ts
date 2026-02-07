@@ -42,7 +42,7 @@ const steps = orderedSteps.reduce(
 
 function getConfirmDialogTexts(next: PickupOccasion) {
   return {
-    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.startTime).replace('.', '')}?`,
+    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.pickupStart).replace('.', '')}?`,
     description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
   }
 }
@@ -158,7 +158,7 @@ export class OrderState {
       // When we find the given step id, we can be sure that all previous steps are valid.
       // If we have reached the desired step, we don't need to validate either this step or any later steps.
       // This way, we always enable the first step, and potentially also one more step that still needs to be completed.
-      if (orderedSteps[i].id === id) {
+      if (orderedSteps[i]!.id === id) {
         return true
       }
 

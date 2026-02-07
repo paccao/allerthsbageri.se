@@ -28,10 +28,7 @@
   )
 
   const totalPrice = $derived(
-    orderItems.reduce(
-      (total, { price, count }) => total + price * BigInt(count),
-      0n,
-    ),
+    orderItems.reduce((total, { price, count }) => total + price * count, 0),
   )
 
   const totalCount = $derived(
@@ -103,7 +100,7 @@
           {#if orderItems.length}
             <ul class="grid gap-4 font-bold">
               {#each orderItems as { id, name, count, price } (id)}
-                {@const productTotalPrice = toSEKString(BigInt(count) * price)}
+                {@const productTotalPrice = toSEKString(count * price)}
                 <li
                   class="grid items-center gap-4 pb-4 not-last:border-b xs:grid-cols-[1fr_max-content] xs:gap-0"
                 >

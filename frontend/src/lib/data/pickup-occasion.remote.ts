@@ -7,7 +7,6 @@ export const getPickupOccasionsWithDetails = query(async () => {
     client.GET('/api/products/'),
     client.GET('/api/product-details/'),
   ])
-
   if (pickupOccasions.error) {
     console.error(pickupOccasions.error)
   }
@@ -39,6 +38,13 @@ export const getPickupOccasionsWithDetails = query(async () => {
         return { ...product, ...details }
       })
 
-    return { ...pickupOccasion, products: mergedProducts }
+    return {
+      ...pickupOccasion,
+      orderStart: new Date(pickupOccasion.orderStart),
+      orderEnd: new Date(pickupOccasion.orderEnd),
+      pickupStart: new Date(pickupOccasion.pickupStart),
+      pickupEnd: new Date(pickupOccasion.pickupEnd),
+      products: mergedProducts,
+    }
   })
 })
