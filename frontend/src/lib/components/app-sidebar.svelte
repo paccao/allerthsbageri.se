@@ -1,13 +1,4 @@
 <script lang="ts">
-  import CameraIcon from '@tabler/icons-svelte/icons/camera'
-  import DatabaseIcon from '@tabler/icons-svelte/icons/database'
-  import FileAiIcon from '@tabler/icons-svelte/icons/file-ai'
-  import FileDescriptionIcon from '@tabler/icons-svelte/icons/file-description'
-  import FileWordIcon from '@tabler/icons-svelte/icons/file-word'
-  import HelpIcon from '@tabler/icons-svelte/icons/help'
-  import ReportIcon from '@tabler/icons-svelte/icons/report'
-  import SearchIcon from '@tabler/icons-svelte/icons/search'
-  import SettingsIcon from '@tabler/icons-svelte/icons/settings'
   import NavDocuments from './nav-documents.svelte'
   import NavMain from './nav-main.svelte'
   import NavSecondary from './nav-secondary.svelte'
@@ -53,7 +44,7 @@
     navClouds: [
       {
         title: 'Capture',
-        icon: CameraIcon,
+        icon: 'i-[tabler--camera]',
         isActive: true,
         url: '#',
         items: [
@@ -69,7 +60,7 @@
       },
       {
         title: 'Proposal',
-        icon: FileDescriptionIcon,
+        icon: 'i-[tabler--file-description]',
         url: '#',
         items: [
           {
@@ -84,7 +75,7 @@
       },
       {
         title: 'Prompts',
-        icon: FileAiIcon,
+        icon: 'i-[tabler--file-ai]',
         url: '#',
         items: [
           {
@@ -102,34 +93,34 @@
       {
         title: 'Settings',
         url: '#',
-        icon: SettingsIcon,
+        icon: 'i-[tabler--settings]',
       },
       {
         title: 'Get Help',
         url: '#',
-        icon: HelpIcon,
+        icon: 'i-[tabler--help]',
       },
       {
         title: 'Search',
         url: '#',
-        icon: SearchIcon,
+        icon: 'i-[tabler--search]',
       },
     ],
     documents: [
       {
         name: 'Data Library',
         url: '#',
-        icon: DatabaseIcon,
+        icon: 'i-[tabler--database]',
       },
       {
         name: 'Reports',
         url: '#',
-        icon: ReportIcon,
+        icon: 'i-[tabler--report]',
       },
       {
         name: 'Word Assistant',
         url: '#',
-        icon: FileWordIcon,
+        icon: 'i-[tabler--file-word]',
       },
     ],
   }
