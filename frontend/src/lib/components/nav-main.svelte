@@ -1,6 +1,4 @@
 <script lang="ts">
-  import CirclePlusFilledIcon from '@tabler/icons-svelte/icons/circle-plus-filled'
-  import MailIcon from '@tabler/icons-svelte/icons/mail'
   import { Button } from '$components/ui/button/index.js'
   import * as Sidebar from '$components/ui/sidebar/index.js'
 
@@ -16,7 +14,7 @@
           class="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
           tooltipContent="Quick create"
         >
-          <CirclePlusFilledIcon />
+          <span class="i-[tabler--circle-plus-filled] size-4"></span>
           <span>Quick Create</span>
         </Sidebar.MenuButton>
         <Button
@@ -24,7 +22,7 @@
           class="size-8 group-data-[collapsible=icon]:opacity-0"
           variant="outline"
         >
-          <MailIcon />
+          <span class="i-[tabler--mail] size-4"></span>
           <span class="sr-only">Inbox</span>
         </Button>
       </Sidebar.MenuItem>
