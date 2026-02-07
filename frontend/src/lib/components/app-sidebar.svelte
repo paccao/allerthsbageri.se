@@ -41,54 +41,6 @@
         icon: 'i-[tabler--users]',
       },
     ],
-    navClouds: [
-      {
-        title: 'Capture',
-        icon: 'i-[tabler--camera]',
-        isActive: true,
-        url: '#',
-        items: [
-          {
-            title: 'Active Proposals',
-            url: '#',
-          },
-          {
-            title: 'Archived',
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: 'Proposal',
-        icon: 'i-[tabler--file-description]',
-        url: '#',
-        items: [
-          {
-            title: 'Active Proposals',
-            url: '#',
-          },
-          {
-            title: 'Archived',
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: 'Prompts',
-        icon: 'i-[tabler--file-ai]',
-        url: '#',
-        items: [
-          {
-            title: 'Active Proposals',
-            url: '#',
-          },
-          {
-            title: 'Archived',
-            url: '#',
-          },
-        ],
-      },
-    ],
     navSecondary: [
       {
         title: 'Settings',
