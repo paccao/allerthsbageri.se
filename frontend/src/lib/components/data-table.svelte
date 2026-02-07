@@ -386,7 +386,7 @@
             disabled={!table.getCanNextPage()}
           >
             <span class="sr-only">Go to next page</span>
-            <span class="size-4 i-[tabler--chvron-right]"></span>
+            <span class="i-[tabler--chevron-right] size-4"></span>
           </Button>
           <Button
             variant="outline"
@@ -533,8 +533,7 @@
     size="icon"
     class="size-7 text-muted-foreground hover:bg-transparent"
   >
-    <span class="size-3 text-muted-foreground i-[tabler--grip-vertical-icon]"
-    ></span>
+    <span class="i-[tabler--grip-vertical] size-3 text-muted-foreground"></span>
     <span class="sr-only">Drag to reorder</span>
   </Button>
 {/snippet}
