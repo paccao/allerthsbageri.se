@@ -110,10 +110,10 @@ importers:
         specifier: ^0.1.6
         version: 0.1.6(svelte@5.49.1)
       '@dnd-kit/abstract':
-        specifier: ^0.1.21
+        specifier: 0.1.21
         version: 0.1.21
       '@dnd-kit/helpers':
-        specifier: ^0.1.21
+        specifier: 0.1.21
         version: 0.1.21
       '@iconify-json/game-icons':
         specifier: ^1.2.3
