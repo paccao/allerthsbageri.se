@@ -1,9 +1,4 @@
 <script lang="ts">
-  import CreditCardIcon from '@tabler/icons-svelte/icons/credit-card'
-  import DotsVerticalIcon from '@tabler/icons-svelte/icons/dots-vertical'
-  import LogoutIcon from '@tabler/icons-svelte/icons/logout'
-  import NotificationIcon from '@tabler/icons-svelte/icons/notification'
-  import UserCircleIcon from '@tabler/icons-svelte/icons/user-circle'
   import * as Avatar from '$components/ui/avatar/index.js'
   import * as DropdownMenu from '$components/ui/dropdown-menu/index.js'
   import * as Sidebar from '$components/ui/sidebar/index.js'
@@ -34,7 +29,7 @@
                 {user.email}
               </span>
             </div>
-            <DotsVerticalIcon class="ms-auto size-4" />
+            <span class="i-[tabler--dots-vertical] size-4"></span>
           </Sidebar.MenuButton>
         {/snippet}
       </DropdownMenu.Trigger>
@@ -61,21 +56,21 @@
         <DropdownMenu.Separator />
         <DropdownMenu.Group>
           <DropdownMenu.Item>
-            <UserCircleIcon />
+            <span class="i-[tabler--user-circle] size-4"></span>
             Account
           </DropdownMenu.Item>
           <DropdownMenu.Item>
-            <CreditCardIcon />
+            <span class="i-[tabler--credit-card] size-4"></span>
             Billing
           </DropdownMenu.Item>
           <DropdownMenu.Item>
-            <NotificationIcon />
+            <span class="i-[tabler--notification] size-4"></span>
             Notifications
           </DropdownMenu.Item>
         </DropdownMenu.Group>
         <DropdownMenu.Separator />
         <DropdownMenu.Item>
-          <LogoutIcon />
+          <span class="i-[tabler--logout] size-4"></span>
           Log out
         </DropdownMenu.Item>
       </DropdownMenu.Content>

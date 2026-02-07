@@ -1,6 +1,4 @@
 <script lang="ts">
-  import TrendingDownIcon from '@tabler/icons-svelte/icons/trending-down'
-  import TrendingUpIcon from '@tabler/icons-svelte/icons/trending-up'
   import { Badge } from '$components/ui/badge/index.js'
   import * as Card from '$components/ui/card/index.js'
 </script>
@@ -18,14 +16,15 @@
       </Card.Title>
       <Card.Action>
         <Badge variant="outline">
-          <TrendingUpIcon />
+          <span class="i-[tabler--trending-up] size-4"></span>
           +12.5%
         </Badge>
       </Card.Action>
     </Card.Header>
     <Card.Footer class="flex-col items-start gap-1.5 text-sm">
       <div class="line-clamp-1 flex gap-2 font-medium">
-        Trending up this month <TrendingUpIcon class="size-4" />
+        Trending up this month
+        <span class="i-[tabler--trending-down] size-4"></span>
       </div>
       <div class="text-muted-foreground">Visitors for the last 6 months</div>
     </Card.Footer>
@@ -40,14 +39,15 @@
       </Card.Title>
       <Card.Action>
         <Badge variant="outline">
-          <TrendingDownIcon />
+          <span class="i-[tabler--trending-down] size-4"></span>
           -20%
         </Badge>
       </Card.Action>
     </Card.Header>
     <Card.Footer class="flex-col items-start gap-1.5 text-sm">
       <div class="line-clamp-1 flex gap-2 font-medium">
-        Down 20% this period <TrendingDownIcon class="size-4" />
+        Down 20% this period <span class="i-[tabler--trending-down] size-4"
+        ></span>
       </div>
       <div class="text-muted-foreground">Acquisition needs attention</div>
     </Card.Footer>
@@ -62,14 +62,15 @@
       </Card.Title>
       <Card.Action>
         <Badge variant="outline">
-          <TrendingUpIcon />
+          <span class="i-[tabler--trending-up] size-4"></span>
           +12.5%
         </Badge>
       </Card.Action>
     </Card.Header>
     <Card.Footer class="flex-col items-start gap-1.5 text-sm">
       <div class="line-clamp-1 flex gap-2 font-medium">
-        Strong user retention <TrendingUpIcon class="size-4" />
+        Strong user retention <span class="i-[tabler--trending-up] size-4"
+        ></span>
       </div>
       <div class="text-muted-foreground">Engagement exceed targets</div>
     </Card.Footer>
@@ -84,14 +85,15 @@
       </Card.Title>
       <Card.Action>
         <Badge variant="outline">
-          <TrendingUpIcon />
+          <span class="i-[tabler--trending-up] size-4"></span>
           +4.5%
         </Badge>
       </Card.Action>
     </Card.Header>
     <Card.Footer class="flex-col items-start gap-1.5 text-sm">
       <div class="line-clamp-1 flex gap-2 font-medium">
-        Steady performance increase <TrendingUpIcon class="size-4" />
+        Steady performance increase <span class="i-[tabler--trending-up] size-4"
+        ></span>
       </div>
       <div class="text-muted-foreground">Meets growth projections</div>
     </Card.Footer>
