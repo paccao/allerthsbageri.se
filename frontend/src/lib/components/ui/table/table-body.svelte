@@ -7,14 +7,14 @@
     class: className,
     children,
     ...restProps
-  }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props()
+  }: WithElementRef<HTMLAttributes<HTMLTableSectionElement>> = $props()
 </script>
 
-<div
+<tbody
   bind:this={ref}
-  data-slot="card-footer"
-  class={cn('flex items-center px-6 [.border-t]:pt-6', className)}
+  data-slot="table-body"
+  class={cn('[&_tr:last-child]:border-0', className)}
   {...restProps}
 >
   {@render children?.()}
-</div>
+</tbody>

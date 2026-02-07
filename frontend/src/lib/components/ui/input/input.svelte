@@ -1,20 +1,3 @@
-<script lang="ts" module>
-  const baseClasses =
-    'border-input selection:bg-primary selection:text-primary-foreground ring-offset-background placeholder:text-muted-foreground shadow-xs flex h-10 w-full min-w-0 rounded-md border px-3 dark:bg-input/30 outline-none transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50'
-  const focusClasses =
-    'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]'
-  const ariaClasses =
-    'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive'
-
-  const fileInputClasses = 'bg-transparent pt-1.5 text-sm font-medium'
-  export const inputClasses = [
-    'bg-background py-1 text-base md:text-sm',
-    baseClasses,
-    focusClasses,
-    ariaClasses,
-  ].join(' ')
-</script>
-
 <script lang="ts">
   import type {
     HTMLInputAttributes,
@@ -48,10 +31,9 @@
     bind:this={ref}
     data-slot={dataSlot}
     class={cn(
-      fileInputClasses,
-      baseClasses,
-      focusClasses,
-      ariaClasses,
+      'flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 pt-1.5 text-sm font-medium shadow-xs ring-offset-background transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30',
+      'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
+      'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
       className,
     )}
     type="file"
@@ -63,7 +45,12 @@
   <input
     bind:this={ref}
     data-slot={dataSlot}
-    class={cn(inputClasses, className)}
+    class={cn(
+      'flex h-9 w-full min-w-0 rounded-md border border-input bg-background px-3 py-1 text-base shadow-xs ring-offset-background transition-[color,box-shadow] outline-none selection:bg-primary selection:text-primary-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30',
+      'focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50',
+      'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
+      className,
+    )}
     {type}
     bind:value
     {...restProps}

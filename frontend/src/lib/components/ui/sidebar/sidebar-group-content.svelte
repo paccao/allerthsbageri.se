@@ -12,8 +12,9 @@
 
 <div
   bind:this={ref}
-  data-slot="card-footer"
-  class={cn('flex items-center px-6 [.border-t]:pt-6', className)}
+  data-slot="sidebar-group-content"
+  data-sidebar="group-content"
+  class={cn('w-full text-sm', className)}
   {...restProps}
 >
   {@render children?.()}
