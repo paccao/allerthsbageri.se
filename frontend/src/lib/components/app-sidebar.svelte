@@ -22,8 +22,6 @@
   import type { ComponentProps } from 'svelte'
   import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg?enhanced'
 
-  const { siteName } = await getSettings()
-
   const data = {
     user: {
       name: 'shadcn',
@@ -142,6 +140,7 @@
   }
 
   let { ...restProps }: ComponentProps<typeof Sidebar.Root> = $props()
+  const { siteName } = await getSettings()
 </script>
 
 <Sidebar.Root collapsible="offcanvas" {...restProps}>
