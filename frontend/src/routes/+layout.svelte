@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { SITE_NAME } from '$lib/constants'
+  import { getSettings } from '$lib/data/settings.remote'
   import '@fontsource/italianno'
   import '@fontsource/quattrocento'
   import '../app.css'
 
+  const { siteName } = await getSettings()
   let { children } = $props()
 </script>
 
 <svelte:head>
-  <title>{SITE_NAME}</title>
+  <title>{siteName}</title>
 </svelte:head>
 
 {@render children?.()}
