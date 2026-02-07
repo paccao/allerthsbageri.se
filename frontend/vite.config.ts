@@ -8,5 +8,6 @@ export default defineConfig({
   plugins: [tailwindcss(), keystatic(), enhancedImages(), sveltekit()],
   // Ensure the SvelteKit app is running on 127.0.0.1 to be consistent with Keystatic
   // For production, we want the host to be determined by the runtime instead
-  server: import.meta.env.DEV ? { host: '127.0.0.1' } : undefined,
+  server:
+    process.env.NODE_ENV === 'development' ? { host: '127.0.0.1' } : undefined,
 })
