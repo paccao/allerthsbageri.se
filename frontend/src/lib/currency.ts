@@ -16,7 +16,7 @@ export function toSEKString(total: number) {
   const kronor = total / 100
   const ören = total % 100
 
-  if (ören === 0n) {
+  if (ören === 0) {
     return currencyFormatEvenNumbers.format(kronor)
   }
 
