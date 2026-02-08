@@ -23,7 +23,7 @@ if (env.NODE_ENV != 'development') {
   )
 }
 
-const db = createDBConnection({ log: createLogger() })
+const db = createDBConnection(createLogger())
 
 /**
  * This seed file is used for testing data in the development environment only.
