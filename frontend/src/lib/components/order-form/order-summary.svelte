@@ -43,7 +43,16 @@
     minute: '2-digit',
   })
 
-  const pickup = $derived(ctx.pickupOccasion!)
+  const pickup = $derived.by(() => {
+    // The pickup occasion should be defined when showing the order summary
+    // But let's error out if that isn't the case.
+    if (!ctx.pickupOccasion) {
+      throw new Error(
+        'Pickup occasion missing when attempting to show order summary',
+      )
+    }
+    return ctx.pickupOccasion
+  })
   const dateTime = $derived(
     dateTimeFormatter.formatRange(pickup.pickupStart, pickup.pickupEnd),
   )
