@@ -109,9 +109,13 @@ export class OrderState {
     return this.#confirmDialog
   }
 
-  pickupOccasions: PickupOccasion[]
+  pickupOccasions: PickupOccasion[] = $state([])
   /** Currently selected pickupOccasion */
-  pickupOccasion?: PickupOccasion
+  pickupOccasion?: PickupOccasion = $derived(
+    this.pickupOccasions.find(
+      ({ id }) => id === this.#order.current.pickupOccasionId,
+    ),
+  )
 
   #validators: Record<StepId, () => boolean> = {
     varor: () =>
@@ -150,9 +154,6 @@ export class OrderState {
 
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
-    this.pickupOccasion = $derived(
-      pickupOccasions.find(({ id }) => id === this.order.pickupOccasionId),
-    )
   }
 
   getStepIdFromHash(hash: string) {
