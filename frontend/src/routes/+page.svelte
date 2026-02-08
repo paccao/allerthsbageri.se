@@ -35,6 +35,26 @@
   const bakingCourseDate = new Date('2026-03-21').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
+
+  /** Map of event HTML ids to event titles */
+  const events = {
+    saxofonretreat: {
+      title: 'Saxofonretreat',
+      id: 'event-saxofonretreat',
+    },
+    saxofonmeditation: {
+      title: 'Saxofonmeditation',
+      id: 'event-saxofonmeditation',
+    },
+    soundSession: {
+      title: 'Sacred sound session',
+      id: 'event-sound-session',
+    },
+    kursSurdegsbrod: {
+      title: 'Kurs: Lär dig baka surdegsbröd',
+      id: 'event-kurs-surdegsbrod',
+    },
+  }
 </script>
 
 <Layout class="max-w-3xl xs:px-4" footer>
@@ -105,7 +125,7 @@
         <div class="mx-auto w-full">
           <Divider class="my-8" />
           <div class="mx-auto max-w-sm text-center text-balance" id="intro">
-            <p class="font-display text-3xl font-bold">Hantverksbröd</p>
+            <h2 class="font-display text-3xl font-bold">Hantverksbröd</h2>
             <p class="pt-4">
               Jag bakar med färskmalen kultursäd - exempelvis emmer eller
               purpurvete. Emmer började odlas för 8000 år sedan och är en
@@ -120,16 +140,34 @@
           </div>
           <Divider class="my-8" />
 
-          <section class="mb-8 flex flex-col gap-5">
+          <section class="mb-8 flex flex-col">
             <a
               href="#news"
-              class="px-6 py-2 text-center font-display text-4xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >Se <span class="whitespace-nowrap">nyheter</span></a
             >
+            <h2 class="mt-8 text-center font-display text-3xl font-bold">
+              Kommande event
+            </h2>
             <a
-              href="#event"
-              class="px-6 py-2 text-center font-display text-4xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
-              >Se <span class="whitespace-nowrap">kommande event</span></a
+              href="#{events['saxofonretreat'].id}"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >{events['saxofonretreat'].title}</a
+            >
+            <a
+              href="#{events['saxofonmeditation'].id}"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >{events['saxofonmeditation'].title}</a
+            >
+            <a
+              href="#{events['soundSession'].id}"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >{events['soundSession'].title}</a
+            >
+            <a
+              href="#{events['kursSurdegsbrod'].id}"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >{events['kursSurdegsbrod'].title}</a
             >
             <p class="text-center text-2xl text-gray-200">♫</p>
             <EncryptedEmail />
@@ -252,7 +290,9 @@
 
             <Divider />
 
-            <p class="mt-8 px-4 text-center font-bold">Erbjudande:</p>
+            <p class="mt-8 px-4 text-center font-display text-3xl font-bold">
+              Erbjudande: Designade hantverksbröd
+            </p>
 
             <p class="mt-8 px-4 text-center">
               Skulle du vilja ha en unik gåva att ge till den där, du vet, som
@@ -329,7 +369,10 @@
             </h4>
 
             <section>
-              <h2 class="mb-4 text-center font-display text-4xl font-bold">
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.saxofonretreat.id}
+              >
                 Är du redo för positiv förändring?
               </h2>
               <div class="flex justify-center">
@@ -444,8 +487,11 @@
             <Divider />
 
             <section>
-              <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                Saxofonmeditation
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.saxofonmeditation.id}
+              >
+                {events.saxofonmeditation.title}
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
                 <p class="my-2">Nästa saxofonmeditation blir den 1/3 kl 16.</p>
@@ -495,8 +541,11 @@
             <Divider />
 
             <section>
-              <h2 class="mb-4 text-center font-display text-4xl font-bold">
-                Sacred sound session
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.soundSession.id}
+              >
+                {events.soundSession.title}
               </h2>
               <div class="mx-auto max-w-screen-sm">
                 <div class="mx-auto mb-2 max-w-screen-sm">
@@ -537,7 +586,10 @@
                 />
               </div>
 
-              <h2 class="mb-4 text-center font-display text-4xl font-bold">
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.kursSurdegsbrod.id}
+              >
                 Nu kan du anmäla dig till kurs i surdegsbakning
               </h2>
               <div class="flex justify-center">
