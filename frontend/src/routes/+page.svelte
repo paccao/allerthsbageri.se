@@ -169,9 +169,9 @@
               class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >{events['kursSurdegsbrod'].title}</a
             >
-            <p class="text-center text-2xl text-gray-200">♫</p>
+            <p class="py-4 text-center text-2xl text-gray-200">♫</p>
             <EncryptedEmail />
-            <ul class="flex justify-center">
+            <ul class="flex justify-center pt-4">
               <li>
                 <enhanced:img
                   src={allerthsBageriLogo}
