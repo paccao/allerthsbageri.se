@@ -1,5 +1,6 @@
 import { client } from './api-client'
 import { query } from '$app/server'
+import { omit } from '$lib/utils'
 
 export const getPickupOccasionsWithDetails = query(async () => {
   const [pickupOccasions, products, productDetails] = await Promise.all([
@@ -30,12 +31,16 @@ export const getPickupOccasionsWithDetails = query(async () => {
         const details = productDetails.data.find(
           (detail) => detail.id === product.productDetailsId,
         )
-        if (!details)
+        if (!details) {
           throw new Error(
             'Oväntat fel, vi jobbar på det. Saknar productdetaljer för produktID: ' +
               product.id,
           )
-        return { ...product, ...details }
+        }
+
+        // Simplify structure of products by merging with details.
+        // NOTE: It's important to omit the product details ID to avoid overwriting the product ID.
+        return { ...product, ...omit(details, new Set(['id'])) }
       })
 
     return {
