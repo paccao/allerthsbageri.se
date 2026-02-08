@@ -17,8 +17,12 @@
   "dependencies": {
     "@fontsource/italianno": "^5.2.8",
     "@fontsource/quattrocento": "^5.2.8",
+    "@keystatic/core": "^0.5.48",
     "intl-tel-input": "^26.1.1",
     "openapi-fetch": "^0.15.0",
+    "keystatic-sveltekit": "^1.0.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "runed": "^0.37.1",
     "zod": "^4.3.6"
   },

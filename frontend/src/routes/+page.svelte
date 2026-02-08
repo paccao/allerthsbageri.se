@@ -2,7 +2,7 @@
   import Layout from '$layouts/main-layout.svelte'
 
   import EncryptedEmail from '$components/encrypted-email.svelte'
-  import { SITE_NAME, instagramProfileLink } from '$lib/constants'
+  import { instagramProfileLink } from '$lib/constants'
   import Divider from '$components/divider.svelte'
   import { cn } from '$lib/utils'
   import { buttonVariants } from '$components/ui/button'
@@ -28,8 +28,11 @@
   import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
   import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
   import specialdesignatBrod from '$assets/specialdesignat-brod.jpeg?enhanced'
+  import { getSettings } from '$lib/data/settings.remote'
 
-  const bakingCourseDate = new Date('2026-01-11').toLocaleString('sv-SE', {
+  const { siteName } = await getSettings()
+
+  const bakingCourseDate = new Date('2026-03-21').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
 </script>
@@ -55,7 +58,7 @@
           <h1
             class="inline-flex pt-2 font-display text-2xl font-bold 2xs:text-3xl xs:text-4xl sm:text-5xl md:text-6xl"
           >
-            {SITE_NAME}
+            {siteName}
           </h1>
         </div>
         <nav class="flex flex-col justify-center">
@@ -81,7 +84,7 @@
           <h1
             class="inline-flex pt-2 font-display text-4xl font-bold sm:text-6xl"
           >
-            {SITE_NAME}
+            {siteName}
           </h1>
         </div>
       </div>

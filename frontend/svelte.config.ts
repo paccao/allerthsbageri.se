@@ -5,9 +5,6 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 const config: Config = {
   preprocess: vitePreprocess(),
 
-  // TODO: Add existing ui components
-  // TODO: make it work
-
   kit: {
     experimental: {
       remoteFunctions: true,

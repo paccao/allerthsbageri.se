@@ -1,7 +1,8 @@
 <script lang="ts">
   import EncryptedEmail from '$components/encrypted-email.svelte'
   import allerthsBageriLogo from '$assets/allerths-bageri-logo.jpeg?enhanced'
-  import { SITE_NAME } from '$lib/constants'
+  import { getSettings } from '$lib/data/settings.remote'
+  const { siteName } = await getSettings()
 </script>
 
 <footer class="mt-8 border-t border-stone-400 px-4 py-8">
@@ -65,7 +66,7 @@
   <div class="mx-auto mt-8 max-w-5xl pt-4 text-center">
     <p>
       © <span id="year">{new Date().getFullYear().toString()}</span>
-      {SITE_NAME}
+      {siteName}
     </p>
   </div>
 </footer>
