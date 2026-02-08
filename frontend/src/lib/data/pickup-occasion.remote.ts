@@ -1,4 +1,4 @@
-import { client } from './api'
+import { client } from './api-client'
 import { query } from '$app/server'
 
 export const getPickupOccasionsWithDetails = query(async () => {
