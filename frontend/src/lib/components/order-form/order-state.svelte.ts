@@ -55,14 +55,37 @@ function clearHash() {
 }
 
 export class OrderState {
-  #order = new PersistedState<Order>('order', {
-    pickupOccasionId: null,
-    items: {},
+  // TODO: Investigate why the persisted state doesn't work as expected
+  // Check out the branch https://github.com/paccao/allerthsbageri.se/tree/fix/persisted-order-state
+  // for a potential workaround by using a custom implementation for persisting the state
+  // Alternatively, we could store the order state in a cookie to allow server side rendering. That would prevent the initial flash of the wrong state
+  // though this only matters when server side rendering after a page refresh, before the client has been hydrated and read localStorage.
+  //
+  // #order = new PersistedState<Order>('order', {
+  //   pickupOccasionId: null,
+  //   items: {},
+  // })
+  // #customer = new PersistedState('customer', {
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  // })
+  //
+  // NOTE: These state runes use an additional `current` property to allow minimal code changes between persisted and memory state
+  // The data could be moved to the root of each object instead.
+  // Though, we will need to use `current` for persisted state in the future.
+  #order = $state<{ current: Order }>({
+    current: {
+      pickupOccasionId: null,
+      items: {},
+    },
   })
-  #customer = new PersistedState('customer', {
-    name: '',
-    email: '',
-    phone: '',
+  #customer = $state({
+    current: {
+      name: '',
+      email: '',
+      phone: '',
+    },
   })
 
   /**
