@@ -1,8 +1,10 @@
 import type { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 
-import type { User } from '#db/schema.ts'
+import { userTable, type User } from '#db/schema.ts'
 import apiConfig from '#config/api.ts'
+import env from '#config/env.ts'
+import { eq } from 'drizzle-orm'
 
 declare module 'fastify' {
   export interface FastifyRequest {
@@ -26,6 +28,7 @@ declare module 'fastify' {
  * Automatically set the signed in user based on the session cookie.
  */
 export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
+  let bffServiceUserId: { id: number } | undefined
   app.addHook('onRequest', async (request, reply) => {
     // CSRF protection
     if (!apiConfig.env.DEV && !apiConfig.env.TEST) {
@@ -33,6 +36,37 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
       // The Origin could also be compared against the Host or X-Forwarded-Host header.
       if (!origin || !apiConfig.allowedOrigins.includes(origin)) {
         return reply.code(403).send({ message: 'Unexpected origin' })
+      }
+    }
+
+    const bffApiKey = request.headers['bff_api_key']
+
+    if (bffApiKey) {
+      if (bffApiKey !== env.BFF_API_KEY) {
+        return reply.code(401)
+      }
+
+      // The frontend server authenticates via an api key
+      // We have a special service account for the frontend server created in db seed
+      if (bffApiKey === env.BFF_API_KEY) {
+        if (!bffServiceUserId) {
+          const serviceUsers = await app.diContainer.db
+            .select({
+              id: userTable.id,
+            })
+            .from(userTable)
+            .where(eq(userTable.username, env.BFF_ADMIN_USERNAME))
+          if (serviceUsers.length === 1) {
+            bffServiceUserId = serviceUsers[0]
+          } else {
+            throw new Error(
+              'Unexpected amount of BFF service account users ' + serviceUsers,
+            )
+          }
+        } else {
+          request.user = bffServiceUserId
+        }
+        return
       }
     }
 

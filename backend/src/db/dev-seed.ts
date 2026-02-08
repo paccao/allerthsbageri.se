@@ -1,7 +1,3 @@
-import type {
-  SQLiteTableWithColumns,
-  TableConfig,
-} from 'drizzle-orm/sqlite-core'
 import { hash } from '@node-rs/argon2'
 
 import { createDBConnection } from '#db/index.ts'
@@ -113,6 +109,11 @@ const defaultUsers = await Promise.all(
       name: 'Admin',
       username: 'seed_admin1',
       password: '123456',
+    },
+    {
+      name: 'bffAdmin',
+      username: env.BFF_ADMIN_USERNAME,
+      password: env.BFF_ADMIN_USERNAME,
     },
   ].map(async (u) => {
     const hashedPassword = await hash(
