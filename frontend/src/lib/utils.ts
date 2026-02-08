@@ -22,5 +22,5 @@ export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
 export function omit<T extends {}>(obj: T, exclude: Set<keyof T>) {
   return Object.fromEntries(
     Object.entries(obj).filter(([prop]) => !exclude.has(prop as keyof T)),
-  )
+  ) as Omit<T, keyof typeof exclude>
 }
