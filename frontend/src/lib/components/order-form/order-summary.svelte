@@ -45,7 +45,7 @@
 
   const pickup = $derived(ctx.pickupOccasion!)
   const dateTime = $derived(
-    dateTimeFormatter.formatRange(pickup.startTime, pickup.endTime),
+    dateTimeFormatter.formatRange(pickup.pickupStart, pickup.pickupEnd),
   )
 </script>
 
