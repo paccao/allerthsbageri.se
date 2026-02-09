@@ -1,11 +1,12 @@
 import { z } from 'zod'
-import { PersistedState } from 'runed'
+// import { PersistedState } from 'runed'
 import type { PickupOccasion, Product } from './order-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
 import { weekdayAndDate } from '$lib/datetime'
 import { browser } from '$app/environment'
 import { replaceState } from '$app/navigation'
 import { tick } from 'svelte'
+import { submitOrder } from '$lib/data/order.remote'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -88,6 +89,8 @@ export class OrderState {
     },
   })
 
+  #createdOrder = $state<Awaited<ReturnType<typeof submitOrder>>>()
+
   /**
    * If set, a confirmation dialog will be shown to prompt the user
    * before proceeding with actions that otherwise might cause data loss.
@@ -168,7 +171,35 @@ export class OrderState {
   }
 
   setStepIdFromHash(hash: string) {
-    this.stepId = this.getStepIdFromHash(hash)
+    // TODO: It would be much better to handle the order submission in the button for the specific step, and prevent navigating to the final step before a successful submission
+    let nextId = hash.slice(1)
+    console.log(this.stepId, nextId)
+    if (this.stepId === 'order' && this.#enabledSteps.tack) {
+      // IDEA: show loading spinner while creating the order
+      submitOrder({
+        orderItems: Object.entries(this.order.items).map(
+          ([productId, count]) => ({ productId: parseInt(productId), count }),
+        ),
+        customer: this.customer,
+        pickupOccasionId: this.order.pickupOccasionId!,
+      })
+        .then((order) => {
+          this.#createdOrder = order
+          this.stepId = this.getStepIdFromHash(hash)
+        })
+        .catch((err) => {
+          // TODO: if order creation fails, show a good error message
+          console.error(err)
+
+          // Remain on the order step before proceeding
+          if (this.prevStepId) {
+            this.stepId = this.prevStepId
+          }
+        })
+      // TODO: If loading spinner is added, hide it in .finally()
+    } else {
+      this.stepId = this.getStepIdFromHash(hash)
+    }
   }
 
   /**

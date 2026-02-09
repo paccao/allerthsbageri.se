@@ -116,6 +116,7 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
       <div
         class="products-grid mx-auto flex w-full max-w-(--breakpoint-2xl) flex-wrap justify-center py-2"
       >
+        <!-- TODO: Cap product count to proruct.maxPerCustomer, and don't allow adding more than that. Disable add button and make it  -->
         <!-- IDEA: Allow opening a modal to see product details like ingredients -->
         {#each pickup.products as { id, name, description, price } (id)}
           <Card.Root class="product">
@@ -132,6 +133,7 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
             </Card.Content>
             <Card.Footer>
               {#if ctx.getProductCount(id) > 0}
+                <!-- TODO: Add `max` property to prevent adding more than maxPerCustomer -->
                 <ProductCount productId={id} size="lg" />
               {:else}
                 <Button

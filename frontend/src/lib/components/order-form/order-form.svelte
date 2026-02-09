@@ -35,12 +35,7 @@
     : ({ newURL }) => ctx.setStepIdFromHash(new URL(newURL).hash)}
 />
 
-<!-- TODO: Step 2: show customer form -->
-<!-- TODO: Step 2: confirm order before submitting. list products and make it possible to adjust amounts -->
-
 <!-- TODO: Step 3: show order confirmation after sucessfully submitted order  -->
-<!-- TODO: Step 3: describe payment methods: swish and cash  -->
-<!-- TODO: Step 3: show date, time and location -->
 <!-- TODO: Step 3: Maybe add notice about cancellation and/or changes -->
 <!--
   TODO: Step 3: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
