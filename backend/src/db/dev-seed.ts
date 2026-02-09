@@ -113,7 +113,7 @@ const defaultUsers = await Promise.all(
     {
       name: 'bffAdmin',
       username: env.BFF_ADMIN_USERNAME,
-      password: env.BFF_ADMIN_USERNAME,
+      password: env.BFF_ADMIN_PASSWORD,
     },
   ].map(async (u) => {
     const hashedPassword = await hash(
