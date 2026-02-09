@@ -40,10 +40,8 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
     }
 
     const bffApiKey = request.headers['bff_api_key']
-    console.dir(request.headers)
 
     if (bffApiKey) {
-      console.log('env API KEY', env.BFF_API_KEY)
       if (bffApiKey !== env.BFF_API_KEY) {
         return reply.code(401)
       }
