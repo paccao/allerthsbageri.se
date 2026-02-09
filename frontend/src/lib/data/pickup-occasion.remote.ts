@@ -1,6 +1,7 @@
 import { client } from './api-client'
 import { query } from '$app/server'
 import { omit } from '$lib/utils'
+import { env } from '$env/dynamic/private'
 
 export const getPickupOccasionsWithDetails = query(async () => {
   const [pickupOccasions, products, productDetails] = await Promise.all([
@@ -9,13 +10,13 @@ export const getPickupOccasionsWithDetails = query(async () => {
     client.GET('/api/product-details/'),
   ])
   if (pickupOccasions.error) {
-    console.error(pickupOccasions.error)
+    console.error('Failed to fetch pickupOccasions', pickupOccasions.error)
   }
   if (products.error) {
-    console.error(products.error)
+    console.error('Failed to fetch products', products.error)
   }
   if (productDetails.error) {
-    console.error(productDetails.error)
+    console.error('Failed to fetch productDetails', productDetails.error)
   }
 
   if (!pickupOccasions.data || !products.data || !productDetails.data) {
