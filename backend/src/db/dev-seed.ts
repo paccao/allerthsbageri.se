@@ -25,22 +25,31 @@ const db = createDBConnection(createLogger())
  * This seed file is used for testing data in the development environment only.
  */
 
+/**
+ * Add a number of days to the testing data
+ */
+function addDays(days: number, date: Date = new Date()) {
+  const result = date
+  result.setDate(result.getDate() + days)
+  return result
+}
+
 const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
   {
     name: 'Brödbakarnas dag',
     location: 'Stora torget, Borås',
-    orderStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
-    orderEnd: new Date('2025-08-28T17:00:00.000Z').toISOString(),
-    pickupStart: new Date('2025-08-29T09:00:00.000Z').toISOString(),
-    pickupEnd: new Date('2025-08-29T15:30:00.000Z').toISOString(),
+    orderStart: new Date().toISOString(),
+    orderEnd: addDays(14).toISOString(),
+    pickupStart: addDays(18).toISOString(),
+    pickupEnd: addDays(19).toISOString(),
   },
   {
     name: 'Bäckängsgymnasiets marknad',
     location: 'Lokal marknad på gården utanför Bäckängsgymnasiet',
-    orderStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
-    orderEnd: new Date('2025-09-17T23:59:59.999Z').toISOString(),
-    pickupStart: new Date('2025-09-07T10:30:00.000Z').toISOString(),
-    pickupEnd: new Date('2025-09-07T16:30:00.000Z').toISOString(),
+    orderStart: new Date().toISOString(),
+    orderEnd: addDays(20).toISOString(),
+    pickupStart: addDays(23).toISOString(),
+    pickupEnd: addDays(24).toISOString(),
   },
 ]
 
