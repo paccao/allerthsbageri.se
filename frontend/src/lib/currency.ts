@@ -12,11 +12,11 @@ const currencyFormatFractions = new Intl.NumberFormat('sv-SE', {
   maximumFractionDigits: 2,
 })
 
-export function toSEKString(total: bigint) {
-  const kronor = total / 100n
-  const ören = total % 100n
+export function toSEKString(total: number) {
+  const kronor = total / 100
+  const ören = total % 100
 
-  if (ören === 0n) {
+  if (ören === 0) {
     return currencyFormatEvenNumbers.format(kronor)
   }
 

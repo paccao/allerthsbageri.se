@@ -5,11 +5,20 @@ import type {
 import type { drizzle } from 'drizzle-orm/better-sqlite3'
 
 import * as schema from './schema.ts'
+import env from '#config/env.ts'
 
 /**
  * This seed file is used for data that should always be in the database.
  * For example configuration for the application.
  */
+
+export const defaultBFFaccount: (typeof schema.userTable.$inferInsert)[] = [
+  {
+    name: 'bffAdmin',
+    username: env.BFF_ADMIN_USERNAME,
+    password: env.BFF_ADMIN_USERNAME,
+  },
+]
 
 // Only 1 isDefault should be set to true
 export const defaultOrderStatuses: (typeof schema.orderStatusTable.$inferInsert)[] =
@@ -62,4 +71,5 @@ export async function addSeedingData(
 ) {
   const { seedIfEmpty } = createSeedingUtils(db)
   await seedIfEmpty(schema.orderStatusTable, defaultOrderStatuses)
+  await seedIfEmpty(schema.userTable, defaultBFFaccount)
 }

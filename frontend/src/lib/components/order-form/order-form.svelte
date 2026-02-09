@@ -1,85 +1,10 @@
 <script lang="ts" module>
   import { OrderState } from './order-state.svelte'
 
-  const pickupOccasions = [
-    {
-      id: 1,
-      name: 'REKO-ringen Borås',
-      location: 'Bäckängsgymnasiet',
-      startTime: new Date('2025-08-23T08:00:00.000Z'),
-      endTime: new Date('2025-08-23T13:30:00.000Z'),
-      products: [
-        {
-          id: 1,
-          stock: 50,
-          price: 6900n,
-          pickupOccasionId: 1,
-          name: 'Ekologiskt Surdegsbröd',
-          description:
-            'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
-        },
-        {
-          id: 2,
-          stock: 25,
-          price: 6500n,
-          pickupOccasionId: 1,
-          name: 'Ekologiskt Rågsurdegsbröd',
-          description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: 'REKO-ringen Ulricehamn',
-      location: 'Nya torget väveriet',
-      startTime: new Date('2025-08-24T07:00:00.000Z'),
-      endTime: new Date('2025-08-24T15:30:00.000Z'),
-      products: [
-        {
-          id: 3,
-          stock: 50,
-          price: 6900n,
-          pickupOccasionId: 2,
-          name: 'Ekologiskt Surdegsbröd',
-          description:
-            'Bakat med färskmalen ekologisk emmer som är ett kultursädesslag som började odlas för 8 000 år sedan och är en korsning mellan enkorn och vildgräs.',
-        },
-        {
-          id: 4,
-          stock: 25,
-          price: 6500n,
-          pickupOccasionId: 2,
-          name: 'Ekologiskt Rågsurdegsbröd',
-          description: 'Bakat med färskmalet ekologiskt fullkornsrågmjöl.',
-        },
-      ],
-    },
-  ]
-
-  // NOTE: This function is used for TMP testing data with many faked pickup occasions
-  function randomInteger(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-  }
-
-  // NOTE: This function is used for TMP testing data with many faked pickup occasions
-  function addDays(date: Date, days: number) {
-    var result = new Date(date)
-    result.setDate(result.getDate() + days)
-    return result
-  }
-
-  const randomPickups = [pickupOccasions, pickupOccasions, pickupOccasions]
-    .flat()
-    .map((x, i) => ({
-      ...x,
-      products: x.products.map((p) => ({ ...p, id: randomInteger(1, 9999) })),
-      id: randomInteger(1, 9999),
-      startTime: addDays(x.startTime, i * 12),
-      endTime: addDays(x.endTime, i * 12),
-    }))
-
-  export type PickupOccasion = (typeof pickupOccasions)[number]
-  export type Product = (typeof pickupOccasions)[number]['products'][number]
+  export type PickupOccasion = Awaited<
+    ReturnType<typeof getPickupOccasionsWithDetails>
+  >[number]
+  export type Product = PickupOccasion['products'][number]
 </script>
 
 <script lang="ts">
@@ -89,23 +14,20 @@
   import OrderFooter from './order-footer.svelte'
   import Products from './products.svelte'
   import OrderSummary from './order-summary.svelte'
+  import { getPickupOccasionsWithDetails } from '$lib/data/pickup-occasion.remote'
 
-  const ctx = setOrderContext(new OrderState(randomPickups))
-
-  // NOTE: Temoporary for testing
-  if (!randomPickups.some((p) => p.id === ctx.order.pickupOccasionId)) {
-    ctx.order.pickupOccasionId = null
-    ctx.order.items = {}
-  }
+  // Workaround for https://github.com/sveltejs/svelte/issues/17015
+  const ctx = setOrderContext(new OrderState([]))
+  ctx.pickupOccasions = await getPickupOccasionsWithDetails()
 
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>
 
 <!--
-This allows navigating to a specific step by clicking anchor links.
-The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
-NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
-IDEA: Maybe we could simplify the state management with the steps
+    This allows navigating to a specific step by clicking anchor links.
+    The hash routing is disabled on the last step to prevent navigating back again after the order form has been submitted.
+    NOTE: The edge case for the last step routing might not be needed if we redirect to another page (which could be the order confirmation page)
+    IDEA: Maybe we could simplify the state management with the steps
 -->
 <svelte:window
   onhashchange={ctx.isLastStep

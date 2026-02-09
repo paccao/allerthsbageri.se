@@ -31,8 +31,8 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
   {#each ctx.pickupOccasions as pickup (pickup.id)}
     {@const isSelected = ctx.order.pickupOccasionId === pickup.id}
     {@const ariaLabel = `Välj upphämtningstillfälle ${dateTimeFormatter.formatRange(
-      pickup.startTime,
-      pickup.endTime,
+      pickup.pickupStart,
+      pickup.pickupEnd,
     )}`}
     <div class="grid w-full">
       <div class="sticky top-0 z-50 w-full border-y bg-background">
@@ -51,17 +51,20 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
               class="grid grid-cols-[max-content_max-content] place-items-center content-center border-black text-base font-bold xs:row-span-2 xs:mr-6 xs:grid-cols-1 xs:border-r xs:pr-6 xs:text-2xl sm:mr-8 sm:pr-8"
             >
               <span
-                >{weekdayShort.format(pickup.startTime)}<span class="xs:hidden"
-                  >&nbsp;</span
+                >{weekdayShort.format(pickup.pickupStart)}<span
+                  class="xs:hidden">&nbsp;</span
                 ></span
               >
-              <span>{shortDate.format(pickup.startTime).slice(0, -1)}</span>
+              <span>{shortDate.format(pickup.pickupStart).slice(0, -1)}</span>
             </span>
             <h2 class="flex items-center">
               <span class="mr-2 i-[lucide--clock] size-4"></span>
               <span class="pr-1">Upphämtning:</span>
               <span>
-                {timeFormat.formatRange(pickup.startTime, pickup.endTime)}</span
+                {timeFormat.formatRange(
+                  pickup.pickupStart,
+                  pickup.pickupEnd,
+                )}</span
               >
             </h2>
             <p class="flex items-center">

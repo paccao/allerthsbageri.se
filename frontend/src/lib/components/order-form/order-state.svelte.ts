@@ -42,7 +42,7 @@ const steps = orderedSteps.reduce(
 
 function getConfirmDialogTexts(next: PickupOccasion) {
   return {
-    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.startTime).replace('.', '')}?`,
+    title: `Vill du byta upphämtningstillfälle till ${weekdayAndDate.format(next.pickupStart).replace('.', '')}?`,
     description: `Om du vill ha produkter från flera upphämtningstillfällen så är du varmt välkommen att göra flera separata beställningar.`,
   }
 }
@@ -55,14 +55,37 @@ function clearHash() {
 }
 
 export class OrderState {
-  #order = new PersistedState<Order>('order', {
-    pickupOccasionId: null,
-    items: {},
+  // TODO: Investigate why the persisted state doesn't work as expected
+  // Check out the branch https://github.com/paccao/allerthsbageri.se/tree/fix/persisted-order-state
+  // for a potential workaround by using a custom implementation for persisting the state
+  // Alternatively, we could store the order state in a cookie to allow server side rendering. That would prevent the initial flash of the wrong state
+  // though this only matters when server side rendering after a page refresh, before the client has been hydrated and read localStorage.
+  //
+  // #order = new PersistedState<Order>('order', {
+  //   pickupOccasionId: null,
+  //   items: {},
+  // })
+  // #customer = new PersistedState('customer', {
+  //   name: '',
+  //   email: '',
+  //   phone: '',
+  // })
+  //
+  // NOTE: These state runes use an additional `current` property to allow minimal code changes between persisted and memory state
+  // The data could be moved to the root of each object instead.
+  // Though, we will need to use `current` for persisted state in the future.
+  #order = $state<{ current: Order }>({
+    current: {
+      pickupOccasionId: null,
+      items: {},
+    },
   })
-  #customer = new PersistedState('customer', {
-    name: '',
-    email: '',
-    phone: '',
+  #customer = $state({
+    current: {
+      name: '',
+      email: '',
+      phone: '',
+    },
   })
 
   /**
@@ -86,9 +109,13 @@ export class OrderState {
     return this.#confirmDialog
   }
 
-  pickupOccasions: PickupOccasion[]
+  pickupOccasions: PickupOccasion[] = $state([])
   /** Currently selected pickupOccasion */
-  pickupOccasion?: PickupOccasion
+  pickupOccasion?: PickupOccasion = $derived(
+    this.pickupOccasions.find(
+      ({ id }) => id === this.#order.current.pickupOccasionId,
+    ),
+  )
 
   #validators: Record<StepId, () => boolean> = {
     varor: () =>
@@ -127,9 +154,6 @@ export class OrderState {
 
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
-    this.pickupOccasion = $derived(
-      pickupOccasions.find(({ id }) => id === this.order.pickupOccasionId),
-    )
   }
 
   getStepIdFromHash(hash: string) {
@@ -158,7 +182,7 @@ export class OrderState {
       // When we find the given step id, we can be sure that all previous steps are valid.
       // If we have reached the desired step, we don't need to validate either this step or any later steps.
       // This way, we always enable the first step, and potentially also one more step that still needs to be completed.
-      if (orderedSteps[i].id === id) {
+      if (orderedSteps[i]!.id === id) {
         return true
       }
 

@@ -15,3 +15,12 @@ export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & {
   ref?: U | null
 }
+
+/**
+ * Return a new object without the `excluded` properties.
+ */
+export function omit<T extends {}>(obj: T, exclude: Set<keyof T>) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([prop]) => !exclude.has(prop as keyof T)),
+  ) as Omit<T, keyof typeof exclude>
+}

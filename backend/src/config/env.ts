@@ -7,6 +7,9 @@ const envSchema = z.object({
   DATABASE_URL: z.string().default('data.db'),
   SESSION_COOKIE_NAME: z.string().default('session'),
   OPENAPI_PREFIX: z.string().min(1).default('api/docs'),
+  BFF_ADMIN_USERNAME: z.string().min(1),
+  BFF_ADMIN_PASSWORD: z.string().min(1),
+  BFF_API_KEY: z.string().min(1).max(64),
 })
 
 const env = envSchema.parse(process.env)
