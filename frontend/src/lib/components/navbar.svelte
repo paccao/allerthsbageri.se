@@ -26,7 +26,7 @@
       <li>
         <a
           href="/order"
-          class={cn([buttonVariants({ variant: 'outline', size: 'lg' })])}
+          class={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
         >
           Beställ ditt bröd!
         </a>
