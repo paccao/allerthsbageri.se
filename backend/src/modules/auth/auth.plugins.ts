@@ -28,7 +28,7 @@ declare module 'fastify' {
  * Automatically set the signed in user based on the session cookie.
  */
 export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
-  let bffServiceUserId: { id: number } | undefined
+  let bffServiceUser: { id: number } | undefined
   app.addHook('onRequest', async (request, reply) => {
     // CSRF protection
     if (!apiConfig.env.DEV && !apiConfig.env.TEST) {
@@ -40,8 +40,10 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
     }
 
     const bffApiKey = request.headers['bff_api_key']
+    console.dir(request.headers)
 
     if (bffApiKey) {
+      console.log('env API KEY', env.BFF_API_KEY)
       if (bffApiKey !== env.BFF_API_KEY) {
         return reply.code(401)
       }
@@ -49,23 +51,23 @@ export const sessionPlugin: FastifyPluginAsync = fp(async (app) => {
       // The frontend server authenticates via an api key
       // We have a special service account for the frontend server created in db seed
       if (bffApiKey === env.BFF_API_KEY) {
-        if (!bffServiceUserId) {
+        if (!bffServiceUser) {
           const serviceUsers = await app.diContainer.db
-            .select({
-              id: userTable.id,
-            })
+            .select({ id: userTable.id })
             .from(userTable)
             .where(eq(userTable.username, env.BFF_ADMIN_USERNAME))
           if (serviceUsers.length === 1) {
-            bffServiceUserId = serviceUsers[0]
+            bffServiceUser = serviceUsers[0]
           } else {
             throw new Error(
               'Unexpected amount of BFF service account users ' + serviceUsers,
             )
           }
-        } else {
-          request.user = bffServiceUserId
         }
+
+        request.user = bffServiceUser
+
+        // Exit early to prevent other auth logic
         return
       }
     }
