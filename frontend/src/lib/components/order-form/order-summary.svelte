@@ -161,6 +161,7 @@
         <p>Betalning sker på plats med Swish eller kontant.</p>
         <!-- TODO: Add checkbox for accepting terms of service and privacy policy -->
         <!-- TODO: Add ToS and privacy policy pages -->
+        <!-- TODO: Add notice about cancellation and/or changes -->
       </div>
     {/if}
   </div>

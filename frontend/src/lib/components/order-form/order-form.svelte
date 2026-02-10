@@ -8,13 +8,12 @@
 </script>
 
 <script lang="ts">
-  import { buttonVariants } from '$components/ui/button'
-  import { cn } from '$lib/utils'
   import { setOrderContext } from './context'
   import OrderFooter from './order-footer.svelte'
   import Products from './products.svelte'
   import OrderSummary from './order-summary.svelte'
   import { getPickupOccasionsWithDetails } from '$lib/data/pickup-occasion.remote'
+  import OrderConfirmation from './order-confirmation.svelte'
 
   // Workaround for https://github.com/sveltejs/svelte/issues/17015
   const ctx = setOrderContext(new OrderState([]))
@@ -35,13 +34,6 @@
     : ({ newURL }) => ctx.setStepIdFromHash(new URL(newURL).hash)}
 />
 
-<!-- TODO: Step 3: show order confirmation after sucessfully submitted order  -->
-<!-- TODO: Step 3: Maybe add notice about cancellation and/or changes -->
-<!--
-  TODO: Step 3: Thank you for your order! If you want to order from other pickup occasions as well, you can do that [here](link to start page).
-  We could also show a button to go back to the start page and order from other pickup occasions.
--->
-
 <section class="grid w-full justify-items-center">
   <header class="w-full border-t">
     <div class="relative bg-background p-4">
@@ -61,13 +53,7 @@
     {:else if ctx.stepId === 'order'}
       <OrderSummary />
     {:else if ctx.isLastStep}
-      <a
-        href="/"
-        class={cn([
-          'mt-8 flex items-center gap-2 place-self-center',
-          buttonVariants({ variant: 'default', size: 'lg' }),
-        ])}>Till startsidan</a
-      >
+      <OrderConfirmation />
     {/if}
   </div>
 

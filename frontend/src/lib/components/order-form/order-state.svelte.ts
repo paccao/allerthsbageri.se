@@ -90,7 +90,7 @@ export class OrderState {
     },
   })
 
-  #createdOrder = $state<Awaited<ReturnType<typeof createOrder>>>()
+  createdOrder = $state<Awaited<ReturnType<typeof createOrder>>>()
 
   /**
    * If set, a confirmation dialog will be shown to prompt the user
@@ -304,7 +304,7 @@ export class OrderState {
       pickupOccasionId: this.order.pickupOccasionId!,
     })
       .then((order) => {
-        this.#createdOrder = order
+        this.createdOrder = order
         return ok(order)
       })
       .catch((error) => {
