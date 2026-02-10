@@ -4,6 +4,21 @@
   import { getOrderContext } from './context'
 
   const ctx = getOrderContext()
+
+  async function handleSubmitOrder(event: MouseEvent) {
+    event.preventDefault()
+    // IDEA: Show loading spinner after 500 ms while creating the order
+    const response = await ctx.submitOrder()
+    // IDEA: If loading spinner is added, hide it in .finally()
+
+    if (response.ok) {
+      // Proceed to order confirmation
+      ctx.setStepIdFromHash(`#${ctx.nextStepId}`)
+    } else {
+      console.error(response.error)
+      // NOTE: Maybe update validation and enabled steps here if necessary
+    }
+  }
 </script>
 
 <footer
@@ -62,6 +77,7 @@
           'justify-self-end',
           buttonVariants({ variant: 'default', size: 'lg' }),
         ])}
+        onclick={ctx.canSubmitOrder ? handleSubmitOrder : undefined}
         aria-disabled={!enabled}
       >
         {#if ctx.step.nextButtonLabel}

@@ -24,8 +24,7 @@ const createOrderBodySchema = z.object({
     .min(1, 'Must contain at least one order item'),
 })
 
-export const submitOrder = command(createOrderBodySchema, async (order) => {
-  // verify if the data was correct, and forward errors if it failed
+export const createOrder = command(createOrderBodySchema, async (order) => {
   const response = await client.POST('/api/orders/', {
     body: order,
   })

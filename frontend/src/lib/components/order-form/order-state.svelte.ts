@@ -6,7 +6,8 @@ import { weekdayAndDate } from '$lib/datetime'
 import { browser } from '$app/environment'
 import { replaceState } from '$app/navigation'
 import { tick } from 'svelte'
-import { submitOrder } from '$lib/data/order.remote'
+import { createOrder } from '$lib/data/order.remote'
+import { ok, err, type Result } from '$lib/result'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -83,13 +84,13 @@ export class OrderState {
   })
   #customer = $state({
     current: {
-      name: '',
-      email: '',
-      phone: '',
+      name: 'Någon Testar',
+      email: 'nagon@testar.se',
+      phone: '+46701234567',
     },
   })
 
-  #createdOrder = $state<Awaited<ReturnType<typeof submitOrder>>>()
+  #createdOrder = $state<Awaited<ReturnType<typeof createOrder>>>()
 
   /**
    * If set, a confirmation dialog will be shown to prompt the user
@@ -155,6 +156,10 @@ export class OrderState {
   nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
+  get canSubmitOrder() {
+    return this.stepId === 'order' && this.#enabledSteps.tack
+  }
+
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
   }
@@ -171,35 +176,7 @@ export class OrderState {
   }
 
   setStepIdFromHash(hash: string) {
-    // TODO: It would be much better to handle the order submission in the button for the specific step, and prevent navigating to the final step before a successful submission
-    let nextId = hash.slice(1)
-    console.log(this.stepId, nextId)
-    if (this.stepId === 'order' && this.#enabledSteps.tack) {
-      // IDEA: show loading spinner while creating the order
-      submitOrder({
-        orderItems: Object.entries(this.order.items).map(
-          ([productId, count]) => ({ productId: parseInt(productId), count }),
-        ),
-        customer: this.customer,
-        pickupOccasionId: this.order.pickupOccasionId!,
-      })
-        .then((order) => {
-          this.#createdOrder = order
-          this.stepId = this.getStepIdFromHash(hash)
-        })
-        .catch((err) => {
-          // TODO: if order creation fails, show a good error message
-          console.error(err)
-
-          // Remain on the order step before proceeding
-          if (this.prevStepId) {
-            this.stepId = this.prevStepId
-          }
-        })
-      // TODO: If loading spinner is added, hide it in .finally()
-    } else {
-      this.stepId = this.getStepIdFromHash(hash)
-    }
+    this.stepId = this.getStepIdFromHash(hash)
   }
 
   /**
@@ -314,5 +291,24 @@ export class OrderState {
     } else {
       this.#order.current.items[id] = 0
     }
+  }
+
+  async submitOrder(): Promise<
+    Result<Awaited<ReturnType<typeof createOrder>>, Error>
+  > {
+    return createOrder({
+      orderItems: Object.entries(this.order.items).map(
+        ([productId, count]) => ({ productId: parseInt(productId), count }),
+      ),
+      customer: this.customer,
+      pickupOccasionId: this.order.pickupOccasionId!,
+    })
+      .then((order) => {
+        this.#createdOrder = order
+        return ok(order)
+      })
+      .catch((error) => {
+        throw err(error)
+      })
   }
 }
