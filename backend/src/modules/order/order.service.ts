@@ -122,7 +122,7 @@ export class OrderService {
           return rollbackWithError(
             tx,
             new Error(
-              `Unable to order because total count of orders, ${totalCount}, exceeds max per customer limit: ${product.maxPerCustomer}`,
+              `Unable to order because the customer total order items count (${totalCount}) exceeds maxPerCustomer (${product.maxPerCustomer}) for productId (${product.id})`,
               { cause: { status: 400, details: { productId: product.id } } },
             ),
           )
