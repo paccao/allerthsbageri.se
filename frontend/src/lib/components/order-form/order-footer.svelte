@@ -6,8 +6,6 @@
   const ctx = getOrderContext()
 
   async function handleSubmitOrder(event: MouseEvent) {
-    // TODO: Prevent sending another order if one is already being processed
-    // Set internal state to track order submission and use it to disable the submit button and this function
     event.preventDefault()
     // IDEA: Show loading spinner after 500 ms while creating the order
     const response = await ctx.submitOrder()
@@ -72,7 +70,8 @@
     </div>
 
     {#if ctx.nextStepId}
-      {@const enabled = ctx.canNavigateToStep(ctx.nextStepId)}
+      {@const enabled =
+        ctx.canNavigateToStep(ctx.nextStepId) && !ctx.isSubmitting}
       <a
         href={enabled ? `#${ctx.nextStepId}` : 'javascript:void(0)'}
         class={cn([

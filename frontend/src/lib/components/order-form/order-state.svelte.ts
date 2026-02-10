@@ -90,6 +90,12 @@ export class OrderState {
     },
   })
 
+  #isSubmitting = $state(false)
+
+  get isSubmitting() {
+    return this.#isSubmitting
+  }
+
   createdOrder = $state<Awaited<ReturnType<typeof createOrder>>>()
 
   /**
@@ -157,7 +163,9 @@ export class OrderState {
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
   get canSubmitOrder() {
-    return this.stepId === 'order' && this.#enabledSteps.tack
+    return (
+      this.stepId === 'order' && this.#enabledSteps.tack && !this.isSubmitting
+    )
   }
 
   constructor(pickupOccasions: PickupOccasion[]) {
@@ -296,6 +304,7 @@ export class OrderState {
   async submitOrder(): Promise<
     Result<Awaited<ReturnType<typeof createOrder>>, Error>
   > {
+    this.#isSubmitting = true
     return createOrder({
       orderItems: Object.entries(this.order.items).map(
         ([productId, count]) => ({ productId: parseInt(productId), count }),
@@ -309,6 +318,9 @@ export class OrderState {
       })
       .catch((error) => {
         throw err(error)
+      })
+      .finally(() => {
+        this.#isSubmitting = false
       })
   }
 }
