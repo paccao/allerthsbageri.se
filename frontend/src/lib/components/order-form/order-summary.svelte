@@ -130,7 +130,7 @@
           {:else}
             <div class="grid place-content-center text-center">
               <p>Här var det tomt.</p>
-              <p class="pb-6">Dags att lägga till lite varor!</p>
+              <p class="pb-6">Kanske dags att testa något nytt?</p>
 
               <a
                 class={buttonVariants({ size: 'lg' })}
