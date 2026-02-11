@@ -14,7 +14,7 @@ import env from '#config/env.ts'
 
 export const defaultBFFaccount: (typeof schema.userTable.$inferInsert)[] = [
   {
-    name: 'bffAdmin',
+    name: 'bff_admin',
     username: env.BFF_ADMIN_USERNAME,
     password: env.BFF_ADMIN_USERNAME,
   },

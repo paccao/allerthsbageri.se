@@ -29,9 +29,8 @@ const db = createDBConnection(createLogger())
  * Add a number of days to the testing data
  */
 function addDays(days: number, date: Date = new Date()) {
-  const result = date
-  result.setDate(result.getDate() + days)
-  return result
+  date.setDate(date.getDate() + days)
+  return date
 }
 
 const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
@@ -50,6 +49,14 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
     orderEnd: addDays(20).toISOString(),
     pickupStart: addDays(23).toISOString(),
     pickupEnd: addDays(24).toISOString(),
+  },
+  {
+    name: 'Ulricehamns marknad',
+    location: 'Nya torget, väveriet',
+    orderStart: new Date().toISOString(),
+    orderEnd: addDays(26).toISOString(),
+    pickupStart: addDays(29).toISOString(),
+    pickupEnd: addDays(33).toISOString(),
   },
 ]
 
@@ -97,9 +104,9 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     productDetailsId: 1,
   },
   {
-    stock: 3,
+    stock: 5,
     price: 7000,
-    maxPerCustomer: 1,
+    maxPerCustomer: 2,
     pickupOccasionId: 2,
     productDetailsId: 2,
   },
@@ -108,6 +115,20 @@ const defaultProducts: (typeof productTable.$inferInsert)[] = [
     price: 8900,
     maxPerCustomer: 2,
     pickupOccasionId: 2,
+    productDetailsId: 3,
+  },
+  {
+    stock: 10,
+    price: 7000,
+    maxPerCustomer: 2,
+    pickupOccasionId: 3,
+    productDetailsId: 2,
+  },
+  {
+    stock: 22,
+    price: 8900,
+    maxPerCustomer: 2,
+    pickupOccasionId: 3,
     productDetailsId: 3,
   },
 ]
@@ -120,7 +141,7 @@ const defaultUsers = await Promise.all(
       password: '123456',
     },
     {
-      name: 'bffAdmin',
+      name: 'bff_admin',
       username: env.BFF_ADMIN_USERNAME,
       password: env.BFF_ADMIN_PASSWORD,
     },
