@@ -11,7 +11,7 @@ ENV PATH=${NPM_GLOBAL}/bin:${PATH}
 ENV PNPM_VERSION=10.28.2
 
 RUN \
-    apt-get update && apt-get -y install --no-install-recommends curl
+    apt-get update && apt-get -y install --no-install-recommends curl ca-certificates
 
 RUN \
     # Configure global npm install location, use group to adapt to UID/GID changes
