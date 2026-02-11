@@ -1,6 +1,5 @@
 import { z } from 'zod'
 // import { PersistedState } from 'runed'
-import type { PickupOccasion, Product } from './order-form.svelte'
 import type { ConfirmDialogState } from './confirm-dialog.svelte'
 import { weekdayAndDate } from '$lib/datetime'
 import { browser } from '$app/environment'
@@ -15,6 +14,11 @@ const customerSchema = z.object({
   email: z.email().trim(),
   phone: z.e164(),
 })
+
+export type PickupOccasion = Awaited<
+  ReturnType<typeof getPickupOccasionsWithDetails>
+>[number]
+export type Product = PickupOccasion['products'][number]
 
 export type Order = {
   pickupOccasionId: number | null

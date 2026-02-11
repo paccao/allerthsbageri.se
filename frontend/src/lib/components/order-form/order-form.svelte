@@ -1,10 +1,5 @@
 <script lang="ts" module>
   import { OrderState } from './order-state.svelte'
-
-  export type PickupOccasion = Awaited<
-    ReturnType<typeof getPickupOccasionsWithDetails>
-  >[number]
-  export type Product = PickupOccasion['products'][number]
 </script>
 
 <script lang="ts">
@@ -12,7 +7,6 @@
   import OrderFooter from './order-footer.svelte'
   import Products from './products.svelte'
   import OrderSummary from './order-summary.svelte'
-  import { getPickupOccasionsWithDetails } from '$lib/data/pickup-occasion.remote'
   import OrderConfirmation from './order-confirmation.svelte'
 
   // Workaround for https://github.com/sveltejs/svelte/issues/17015

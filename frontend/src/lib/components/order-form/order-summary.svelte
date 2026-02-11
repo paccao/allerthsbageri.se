@@ -2,7 +2,7 @@
   import * as Card from '$components/ui/card'
   import { getOrderContext } from './context'
   import { toSEKString } from '$lib/currency'
-  import type { Product } from './order-form.svelte'
+  import type { Product } from './order-state.svelte'
   import ProductCount from './product-count.svelte'
   import { buttonVariants } from '$components/ui/button'
   import PhoneInput from '$components/phone-input.svelte'

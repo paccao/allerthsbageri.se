@@ -2,7 +2,7 @@
   import { Button } from '$components/ui/button'
 
   import { getOrderContext } from './context'
-  import type { Product } from './order-form.svelte'
+  import type { Product } from './order-state.svelte'
   import { inputClasses } from '$components/ui/input/input.svelte'
   import { cn } from '$lib/utils'
 
