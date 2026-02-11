@@ -4,8 +4,8 @@
   import '@fontsource/quattrocento'
   import '../app.css'
 
-  const { siteName } = await getSettings()
   let { children } = $props()
+  const { siteName } = await getSettings()
 </script>
 
 <svelte:head>
