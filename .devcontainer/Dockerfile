@@ -5,13 +5,19 @@ FROM node:24-trixie-slim
 ARG USERNAME=node
 ARG NPM_GLOBAL=/usr/local/share/npm-global
 
-# Add NPM global to PATH.
+# Fixes random errors with debconf and installing packages
+ARG DEBIAN_FRONTEND=noninteractive
+ARG TZ=Europe/Amsterdam
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+
+# Add NPM global to PATH
 ENV PATH=${NPM_GLOBAL}/bin:${PATH}
-ENV PNPM_VERSION=10.28.2
+ENV PNPM_VERSION=10.29.2
 
 # Install additional OS packages.
-RUN \
-    apt-get update && apt-get -y install --no-install-recommends curl ca-certificates
+# RUN \
+#     apt-get update && apt-get -y install --no-install-recommends curl ca-certificates
 
 RUN \
     # Configure global npm install location, use group to adapt to UID/GID changes
@@ -24,7 +30,13 @@ RUN \
     && chmod g+s ${NPM_GLOBAL} \
     && npm config -g set prefix ${NPM_GLOBAL} \
     && su ${USERNAME} -c "npm config -g set prefix ${NPM_GLOBAL}" \
-    && curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+    && su ${USERNAME} -c "umask 0002 && npm install -g pnpm@${PNPM_VERSION}" \
+    && export ENV="$HOME/.bashrc" && export SHELL="$(which bash)" \
+    && pnpm setup \
+    && pnpm add -g playwright \
+    && playwright install --with-deps chromium firefox webkit
+
+# && curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
 
 # Cleanup
-RUN apt-get remove -y curl
+# RUN apt-get remove -y curl
