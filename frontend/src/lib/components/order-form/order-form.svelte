@@ -16,8 +16,8 @@
   import OrderConfirmation from './order-confirmation.svelte'
 
   // Workaround for https://github.com/sveltejs/svelte/issues/17015
-  const ctx = setOrderContext(new OrderState([]))
-  ctx.pickupOccasions = await getPickupOccasionsWithDetails()
+  const ctx = setOrderContext(new OrderState())
+  await ctx.init()
 
   // TODO: Remove persisted form state once the order has been submitted. This way, the next order will start fresh.
 </script>

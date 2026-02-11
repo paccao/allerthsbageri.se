@@ -8,6 +8,7 @@ import { replaceState } from '$app/navigation'
 import { tick } from 'svelte'
 import { createOrder } from '$lib/data/order.remote'
 import { ok, err, type Result } from '$lib/result'
+import { getPickupOccasionsWithDetails } from '$lib/data/pickup-occasion.remote'
 
 const customerSchema = z.object({
   name: z.string().trim(),
@@ -172,8 +173,8 @@ export class OrderState {
     !this.#isSubmitting && this.stepId === 'order' && this.#enabledSteps.tack,
   )
 
-  constructor(pickupOccasions: PickupOccasion[]) {
-    this.pickupOccasions = pickupOccasions
+  async init() {
+    this.pickupOccasions = await getPickupOccasionsWithDetails()
   }
 
   getStepIdFromHash(hash: string) {
