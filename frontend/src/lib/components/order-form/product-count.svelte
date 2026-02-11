@@ -25,8 +25,9 @@
     productId: Product['id']
     size?: keyof typeof sizes
     class?: string
+    max: number
   }
-  let { productId, size = 'lg', class: className }: Props = $props()
+  let { productId, size = 'lg', class: className, max }: Props = $props()
   let count = $derived(ctx.getProductCount(productId))
   const counterId = $props.id()
 </script>
@@ -50,6 +51,7 @@
     id={counterId}
     type="number"
     min="0"
+    {max}
     onfocusin={(event) => event.currentTarget.select()}
     value={count}
     onbeforeinput={(event) => {
@@ -88,6 +90,8 @@
   <Button
     size="icon"
     class={sizes[size].button}
+    disabled={count >= max}
+    aria-disabled={count >= max}
     onclick={() => ctx.addProduct(productId, 1)}
     aria-label="Lägg till 1"
     ><span class="i-[lucide--plus] {sizes[size].icon}"></span></Button
