@@ -7,9 +7,7 @@
 
   async function handleSubmitOrder(event: MouseEvent) {
     event.preventDefault()
-    // IDEA: Show loading spinner after 500 ms while creating the order
     const response = await ctx.submitOrder()
-    // IDEA: If loading spinner is added, hide it in .finally()
 
     if (response.ok) {
       // Proceed to order confirmation
@@ -29,13 +27,13 @@
   ></div>
 
   <nav
-    class="grid w-full max-w-(--breakpoint-sm) grid-cols-[1fr_max-content_1fr] items-center gap-2 px-4 py-2"
+    class="grid w-full max-w-(--breakpoint-sm) grid-cols-[1fr_max-content_1fr] items-center gap-2 p-2 xs:px-4"
   >
     {#if ctx.prevStepId}
       <a
         href={`#${ctx.prevStepId}`}
         class={cn([
-          'justify-self-start',
+          'w-full max-w-31 justify-self-start',
           buttonVariants({ variant: 'outline', size: 'lg' }),
         ])}
         ><span class="i-[lucide--chevron-left] size-4"></span><span
@@ -75,13 +73,16 @@
       <a
         href={enabled ? `#${ctx.nextStepId}` : 'javascript:void(0)'}
         class={cn([
-          'justify-self-end',
           buttonVariants({ variant: 'default', size: 'lg' }),
+          'w-full max-w-31 justify-self-end',
+          ctx.isDelayed && 'px-4',
         ])}
         onclick={ctx.canSubmitOrder ? handleSubmitOrder : undefined}
         aria-disabled={!enabled}
       >
-        {#if ctx.step.nextButtonLabel}
+        {#if ctx.isDelayed}
+          <span class="spinner"></span>
+        {:else if ctx.step.nextButtonLabel}
           <span>{ctx.step.nextButtonLabel}</span>
         {:else}
           <span>Gå vidare</span><span class="i-[lucide--chevron-right] size-4"
@@ -93,3 +94,22 @@
     {/if}
   </nav>
 </footer>
+
+<style>
+  .spinner {
+    pointer-events: none;
+    width: 1.3em;
+    height: 1.3em;
+    border: 2px solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>

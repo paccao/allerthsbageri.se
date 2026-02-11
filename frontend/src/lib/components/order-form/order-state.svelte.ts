@@ -91,9 +91,15 @@ export class OrderState {
   })
 
   #isSubmitting = $state(false)
+  #isDelayed = $state(false)
 
+  /** A boolean indicating if the order is being submitted */
   get isSubmitting() {
     return this.#isSubmitting
+  }
+  /** A boolean indicating if the order submission is delayed. Useful to show loading states */
+  get isDelayed() {
+    return this.#isDelayed
   }
 
   createdOrder = $state<Awaited<ReturnType<typeof createOrder>>>()
@@ -162,11 +168,9 @@ export class OrderState {
   nextStepId = $derived(orderedSteps[this.stepIndex + 1]?.id)
   isLastStep = $derived(this.stepId === orderedSteps.at(-1)!.id)
 
-  get canSubmitOrder() {
-    return (
-      this.stepId === 'order' && this.#enabledSteps.tack && !this.isSubmitting
-    )
-  }
+  canSubmitOrder = $derived(
+    !this.#isSubmitting && this.stepId === 'order' && this.#enabledSteps.tack,
+  )
 
   constructor(pickupOccasions: PickupOccasion[]) {
     this.pickupOccasions = pickupOccasions
@@ -304,7 +308,11 @@ export class OrderState {
   async submitOrder(): Promise<
     Result<Awaited<ReturnType<typeof createOrder>>, Error>
   > {
+    // TODO: Add integration test to ensure clicking multiple times will only create one order
     this.#isSubmitting = true
+    const timeout = setTimeout(() => {
+      this.#isDelayed = true
+    }, 1000)
     return createOrder({
       orderItems: Object.entries(this.order.items).map(
         ([productId, count]) => ({ productId: parseInt(productId), count }),
@@ -316,11 +324,11 @@ export class OrderState {
         this.createdOrder = order
         return ok(order)
       })
-      .catch((error) => {
-        throw err(error)
-      })
+      .catch((error) => err(error))
       .finally(() => {
+        clearTimeout(timeout)
         this.#isSubmitting = false
+        this.#isDelayed = false
       })
   }
 }
