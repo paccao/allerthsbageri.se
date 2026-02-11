@@ -7,7 +7,7 @@ export function parse(string: string) {
 export function stringify(data: Uint8Array) {
   let str = ''
   for (let i = 0; i < data.length; i++) {
-    str += String.fromCharCode(data[i])
+    str += String.fromCharCode(data[i]!)
   }
   return btoa(str)
 }
