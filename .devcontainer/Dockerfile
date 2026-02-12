@@ -1,6 +1,7 @@
 # Based on https://github.com/devcontainers/images/blob/main/src/javascript-node/.devcontainer/Dockerfile # MIT License
 
 FROM node:24-trixie-slim
+SHELL ["/usr/bin/bash", "-c"]
 
 ARG USERNAME=node
 ARG NPM_GLOBAL=/usr/local/share/npm-global
@@ -13,11 +14,20 @@ ENV LC_ALL=C.UTF-8
 
 # Add NPM global to PATH
 ENV PATH=${NPM_GLOBAL}/bin:${PATH}
+ENV HOME="/home/$USERNAME"
+ENV ENV="$HOME/.bashrc"
 ENV PNPM_VERSION=10.29.2
+ENV PNPM_HOME="$HOME/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
 # Install additional OS packages.
-# RUN \
-#     apt-get update && apt-get -y install --no-install-recommends curl ca-certificates
+RUN \
+    apt-get update \
+    && apt-get -y install --no-install-recommends \
+    # base system. ssh is for git
+    net-tools openssh-client \
+    # dev tools
+    git jq
 
 RUN \
     # Configure global npm install location, use group to adapt to UID/GID changes
@@ -25,18 +35,36 @@ RUN \
     && usermod -a -G npm ${USERNAME} \
     && umask 0002 \
     && mkdir -p ${NPM_GLOBAL} \
-    && touch /usr/local/etc/npmrc \
-    && chown ${USERNAME}:npm ${NPM_GLOBAL} /usr/local/etc/npmrc \
+    && touch $HOME/.npmrc \
+    && chown ${USERNAME}:npm ${NPM_GLOBAL} $HOME/.npmrc \
     && chmod g+s ${NPM_GLOBAL} \
     && npm config -g set prefix ${NPM_GLOBAL} \
-    && su ${USERNAME} -c "npm config -g set prefix ${NPM_GLOBAL}" \
-    && su ${USERNAME} -c "umask 0002 && npm install -g pnpm@${PNPM_VERSION}" \
-    && export ENV="$HOME/.bashrc" && export SHELL="$(which bash)" \
-    && pnpm setup \
-    && pnpm add -g playwright \
+    && chown ${USERNAME} -c "/home/$USERNAME/.npm/" \
+    && npm config set ignore-scripts true \
+    && npm i -g npm@latest
+
+RUN \
+    npm i -g corepack \
+    && corepack enable \
+    && corepack prepare pnpm@${PNPM_VERSION} --activate
+# && pnpm prune
+
+RUN \
+    su $USERNAME -c "pnpm add -g playwright" \
     && playwright install --with-deps chromium firefox webkit
 
-# && curl -fsSL https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+USER $USERNAME
 
-# Cleanup
-# RUN apt-get remove -y curl
+# Extra config
+RUN \
+    echo 'alias l="ls --group-directories-first -AlhF"' >> $ENV \
+    # setup node as $USERNAME user
+    && npm config set ignore-scripts true \
+    # setup git
+    && git config --global push.autoSetupRemote true \
+    && git config --global init.defaultBranch main
+
+WORKDIR $HOME
+
+# COPY --from=root-dir pnpm-lock.yaml .
+# COPY --from=root-dir package.json .

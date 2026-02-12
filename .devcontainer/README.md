@@ -16,32 +16,17 @@ docker build --progress=plain --no-cache -t latest .
 docker run latest
 ```
 
-### One-liners for debugging
+## Build, run and enter container
 ```bash
-# Open bash in container for debugging
-docker run -dit latest bash
-
-# Build with cache and run
+# With cache
 docker build -t latest . && docker exec -it `docker run -dit latest bash` bash
 
-# Build without cache and run
-docker build --progress=plain --no-cache -t latest . && docker exec -it `docker run -dit latest bash` bash
-
-# Run without building
-docker exec -it `docker run -dit latest bash` bash
+# Without cache
+docker build --no-cache -t latest . && docker exec -it `docker run -dit latest bash` bash
 ```
 
-## Stop running containers
-
+## Stop all running containers
 ```bash
 # Stop ALL running containers (careful)
 docker container stop `docker ps | awk 'NR>1 {print $1}'`
-```
-
-## Free disk space
-```bash
-# Images
-docker image prune
-# Containers
-docker container prune
 ```
