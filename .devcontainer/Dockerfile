@@ -24,10 +24,10 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN \
     apt-get update \
     && apt-get -y install --no-install-recommends \
-    # base system. ssh is for git
-    net-tools openssh-client \
+    # base system
+    net-tools \
     # dev tools
-    git jq
+    git
 
 RUN \
     # Configure global npm install location, use group to adapt to UID/GID changes
@@ -49,6 +49,7 @@ RUN \
     && corepack prepare pnpm@${PNPM_VERSION} --activate
 # && pnpm prune
 
+# install playwright
 RUN \
     su $USERNAME -c "pnpm add -g playwright" \
     && playwright install --with-deps chromium firefox webkit
