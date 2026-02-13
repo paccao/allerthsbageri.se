@@ -5,12 +5,11 @@
   import SiteHeader from '$components/site-header.svelte'
   import SectionCards from '$components/section-cards.svelte'
   import ChartAreaInteractive from '$components/chart-area-interactive.svelte'
-  import DataTable from '$components/data-table.svelte'
+  import DataTable from '$components/data-table-better.svelte'
 </script>
 
 <Sidebar.Provider
   style="--sidebar-width: calc(var(--spacing) * 72); --header-height: calc(var(--spacing) * 12);"
-  class="dark"
 >
   <AppSidebar variant="inset" />
   <Sidebar.Inset>
