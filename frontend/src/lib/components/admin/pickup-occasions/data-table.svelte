@@ -47,7 +47,7 @@
     type Row,
     type VisibilityState,
   } from '@tanstack/table-core'
-  import type { PickupOccasion } from './schemas-better.js'
+  import type { PickupOccasion } from './schemas.js'
   import { createSvelteTable } from '$components/ui/data-table/data-table.svelte.js'
   import * as Tabs from '$components/ui/tabs/index.js'
   import * as Table from '$components/ui/table/index.js'
@@ -61,7 +61,7 @@
     renderComponent,
     renderSnippet,
   } from '$components/ui/data-table/index.js'
-  import DataTableCellViewer from './data-table-cell-viewer-better.svelte'
+  import DataTableCellViewer from './data-table-cell-viewer.svelte'
 
   let { data }: { data: PickupOccasion[] } = $props()
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 })
@@ -319,7 +319,7 @@
 
 {#snippet DataTableLocation({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
-    <Badge variant="outline" class="px-1.5 text-muted-foreground">
+    <Badge variant="outline" class="px-1.5">
       {row.original.location}
     </Badge>
   </div>

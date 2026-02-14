@@ -11,7 +11,7 @@
   import { Input } from '$components/ui/input/index.js'
   import * as Select from '$components/ui/select/index.js'
   import { Separator } from '$components/ui/separator/index.js'
-  import type { PickupOccasion } from './schemas-better.js'
+  import type { PickupOccasion } from './schemas.js'
 
   const chartData = [
     { date: new Date('2024-01-01'), desktop: 186, mobile: 80 },
@@ -37,12 +37,12 @@
 
   let { item }: { item: PickupOccasion } = $props()
 
-  let name = $state(item.name)
-  let location = $state(item.location)
-  let orderStart = $state(item.orderStart)
-  let orderEnd = $state(item.orderEnd)
-  let pickupStart = $state(item.pickupStart)
-  let pickupEnd = $state(item.pickupEnd)
+  // let name = $state(item.name)
+  // let location = $state(item.location)
+  // let orderStart = $state(item.orderStart)
+  // let orderEnd = $state(item.orderEnd)
+  // let pickupStart = $state(item.pickupStart)
+  // let pickupEnd = $state(item.pickupEnd)
 </script>
 
 <Drawer.Root direction={isMobile.current ? 'bottom' : 'right'}>
