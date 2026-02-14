@@ -62,15 +62,16 @@
     renderSnippet,
   } from '$components/ui/data-table/index.js'
   import DataTableCellViewer from './data-table-cell-viewer.svelte'
+  import { weekdayAndDateAndTime } from '$lib/datetime.js'
 
-  let { data }: { data: PickupOccasion[] } = $props()
+  let { pickupOccasions }: { pickupOccasions: PickupOccasion[] } = $props()
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 })
   let columnFilters = $state<ColumnFiltersState>([])
   let columnVisibility = $state<VisibilityState>({})
 
   const table = createSvelteTable({
     get data() {
-      return data
+      return pickupOccasions
     },
     columns,
     state: {
@@ -318,7 +319,7 @@
 </Tabs.Root>
 
 {#snippet DataTableLocation({ row }: { row: Row<PickupOccasion> })}
-  <div class="w-32">
+  <div class="word-wrap">
     <Badge variant="outline" class="px-1.5">
       {row.original.location}
     </Badge>
@@ -328,7 +329,7 @@
 {#snippet DataTableOrderStart({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {row.original.orderStart}
+      {weekdayAndDateAndTime.format(row.original.orderStart)}
     </p>
   </div>
 {/snippet}
@@ -336,7 +337,7 @@
 {#snippet DataTableOrderEnd({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {row.original.orderEnd}
+      {weekdayAndDateAndTime.format(row.original.orderEnd)}
     </p>
   </div>
 {/snippet}
@@ -344,7 +345,7 @@
 {#snippet DataTablePickupStart({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {row.original.pickupStart}
+      {weekdayAndDateAndTime.format(row.original.pickupStart)}
     </p>
   </div>
 {/snippet}
@@ -352,7 +353,7 @@
 {#snippet DataTablePickupEnd({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {row.original.pickupEnd}
+      {weekdayAndDateAndTime.format(row.original.pickupEnd)}
     </p>
   </div>
 {/snippet}
