@@ -1,5 +1,5 @@
 <script lang="ts">
-  import data from './data.js'
+  import data from './data-better.js'
   import * as Sidebar from '$components/ui/sidebar/index.js'
   import AppSidebar from '$components/app-sidebar.svelte'
   import SiteHeader from '$components/site-header.svelte'

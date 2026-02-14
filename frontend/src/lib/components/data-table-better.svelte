@@ -1,70 +1,36 @@
 <script lang="ts" module>
-  export const columns: ColumnDef<Schema>[] = [
+  export const columns: ColumnDef<PickupOccasion>[] = [
     {
-      id: 'select',
-      header: ({ table }) =>
-        renderComponent(DataTableCheckbox, {
-          checked: table.getIsAllPageRowsSelected(),
-          indeterminate:
-            table.getIsSomePageRowsSelected() &&
-            !table.getIsAllPageRowsSelected(),
-          onCheckedChange: (value) => table.toggleAllPageRowsSelected(!!value),
-          'aria-label': 'Select all',
-        }),
-      cell: ({ row }) =>
-        renderComponent(DataTableCheckbox, {
-          checked: row.getIsSelected(),
-          onCheckedChange: (value) => row.toggleSelected(!!value),
-          'aria-label': 'Select row',
-        }),
-      enableSorting: false,
-      enableHiding: false,
-    },
-    {
-      accessorKey: 'header',
-      header: 'Header',
+      accessorKey: 'name',
+      header: 'Upphämtningstillfälle',
       cell: ({ row }) =>
         renderComponent(DataTableCellViewer, { item: row.original }),
       enableHiding: false,
     },
     {
-      accessorKey: 'type',
-      header: 'Section Type',
-      cell: ({ row }) => renderSnippet(DataTableType, { row }),
+      accessorKey: 'location',
+      header: 'Plats',
+      cell: ({ row }) => renderSnippet(DataTableLocation, { row }),
     },
     {
-      accessorKey: 'status',
-      header: 'Status',
-      cell: ({ row }) => renderSnippet(DataTableStatus, { row }),
+      accessorKey: 'orderStart',
+      header: 'Order Start',
+      cell: ({ row }) => renderSnippet(DataTableOrderStart, { row }),
     },
     {
-      accessorKey: 'target',
-      header: () =>
-        renderSnippet(
-          createRawSnippet(() => ({
-            render: () => '<div class="w-full text-end">Target</div>',
-          })),
-        ),
-      cell: ({ row }) => renderSnippet(DataTableTarget, { row }),
+      accessorKey: 'orderEnd',
+      header: 'Order Avslut',
+      cell: ({ row }) => renderSnippet(DataTableOrderEnd, { row }),
     },
     {
-      accessorKey: 'limit',
-      header: () =>
-        renderSnippet(
-          createRawSnippet(() => ({
-            render: () => '<div class="w-full text-end">Limit</div>',
-          })),
-        ),
-      cell: ({ row }) => renderSnippet(DataTableLimit, { row }),
+      accessorKey: 'pickupStart',
+      header: 'Upphämtning Start',
+      cell: ({ row }) => renderSnippet(DataTablePickupStart, { row }),
     },
     {
-      accessorKey: 'reviewer',
-      header: 'Reviewer',
-      cell: ({ row }) => renderComponent(DataTableReviewer, { row }),
-    },
-    {
-      id: 'actions',
-      cell: () => renderSnippet(DataTableActions),
+      accessorKey: 'pickupEnd',
+      header: 'Upphämtning Avslut',
+      cell: ({ row }) => renderSnippet(DataTablePickupEnd, { row }),
     },
   ]
 </script>
@@ -74,20 +40,14 @@
     getCoreRowModel,
     getFacetedRowModel,
     getFacetedUniqueValues,
-    getFilteredRowModel,
     getPaginationRowModel,
-    getSortedRowModel,
     type ColumnDef,
     type ColumnFiltersState,
     type PaginationState,
     type Row,
-    type RowSelectionState,
-    type SortingState,
     type VisibilityState,
   } from '@tanstack/table-core'
-  import type { Schema } from './schemas.js'
-  import type { Attachment } from 'svelte/attachments'
-  import { RestrictToVerticalAxis } from '@dnd-kit/abstract/modifiers'
+  import type { PickupOccasion } from './schemas-better.js'
   import { createSvelteTable } from '$components/ui/data-table/data-table.svelte.js'
   import * as Tabs from '$components/ui/tabs/index.js'
   import * as Table from '$components/ui/table/index.js'
@@ -96,24 +56,16 @@
   import * as Select from '$components/ui/select/index.js'
   import { Label } from '$components/ui/label/index.js'
   import { Badge } from '$components/ui/badge/index.js'
-  import { Input } from '$components/ui/input/index.js'
   import {
     FlexRender,
     renderComponent,
     renderSnippet,
   } from '$components/ui/data-table/index.js'
-  import { toast } from 'svelte-sonner'
-  import DataTableCheckbox from './data-table-checkbox.svelte'
-  import DataTableCellViewer from './data-table-cell-viewer.svelte'
-  import { createRawSnippet } from 'svelte'
-  import DataTableReviewer from './data-table-reviewer.svelte'
-  import { useSortable } from '@dnd-kit-svelte/svelte/sortable'
+  import DataTableCellViewer from './data-table-cell-viewer-better.svelte'
 
-  let { data }: { data: Schema[] } = $props()
+  let { data }: { data: PickupOccasion[] } = $props()
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 })
-  let sorting = $state<SortingState>([])
   let columnFilters = $state<ColumnFiltersState>([])
-  let rowSelection = $state<RowSelectionState>({})
   let columnVisibility = $state<VisibilityState>({})
 
   const table = createSvelteTable({
@@ -125,39 +77,20 @@
       get pagination() {
         return pagination
       },
-      get sorting() {
-        return sorting
-      },
       get columnVisibility() {
         return columnVisibility
       },
-      get rowSelection() {
-        return rowSelection
-      },
-      get columnFilters() {
-        return columnFilters
-      },
     },
     getRowId: (row) => row.id.toString(),
-    enableRowSelection: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
-    getFilteredRowModel: getFilteredRowModel(),
     onPaginationChange: (updater) => {
       if (typeof updater === 'function') {
         pagination = updater(pagination)
       } else {
         pagination = updater
-      }
-    },
-    onSortingChange: (updater) => {
-      if (typeof updater === 'function') {
-        sorting = updater(sorting)
-      } else {
-        sorting = updater
       }
     },
     onColumnFiltersChange: (updater) => {
@@ -174,45 +107,33 @@
         columnVisibility = updater
       }
     },
-    onRowSelectionChange: (updater) => {
-      if (typeof updater === 'function') {
-        rowSelection = updater(rowSelection)
-      } else {
-        rowSelection = updater
-      }
-    },
   })
 
   let views = [
     {
-      id: 'outline',
-      label: 'Outline',
+      id: 'previous',
+      label: 'Föregående',
       badge: 0,
     },
     {
-      id: 'past-performance',
-      label: 'Past Performance',
-      badge: 3,
+      id: 'current',
+      label: 'Nuvarande',
+      badge: 0,
     },
     {
-      id: 'key-personnel',
-      label: 'Key Personnel',
-      badge: 2,
-    },
-    {
-      id: 'focus-documents',
-      label: 'Focus Documents',
+      id: 'future',
+      label: 'Framtida',
       badge: 0,
     },
   ]
 
-  let view = $state('outline')
+  let view = $state('current')
   let viewLabel = $derived(
     views.find((v) => view === v.id)?.label ?? 'Select a view',
   )
 </script>
 
-<Tabs.Root value="outline" class="w-full flex-col justify-start gap-6">
+<Tabs.Root value="current" class="w-full flex-col justify-start gap-6">
   <div class="flex items-center justify-between px-4 lg:px-6">
     <Label for="view-selector" class="sr-only">View</Label>
     <Select.Root type="single" bind:value={view}>
@@ -247,7 +168,7 @@
           {#snippet child({ props })}
             <Button variant="outline" size="sm" {...props}>
               <span class="i-[tabler--layout-columns] size-4"></span>
-              <span class="hidden lg:inline">Customize Columns</span>
+              <span class="hidden lg:inline">Visa/Dölj Kolumner</span>
               <span class="lg:hidden">Columns</span>
               <span class="i-[tabler--chevron-down] size-4"></span>
             </Button>
@@ -267,14 +188,10 @@
           {/each}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
-      <Button variant="outline" size="sm">
-        <span class="i-[tabler--plus] size-4"></span>
-        <span class="hidden lg:inline">Add Section</span>
-      </Button>
     </div>
   </div>
   <Tabs.Content
-    value="outline"
+    value="current"
     class="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
   >
     <div class="overflow-hidden rounded-lg border">
@@ -303,7 +220,7 @@
           {:else}
             <Table.Row>
               <Table.Cell colspan={columns.length} class="h-24 text-center">
-                No results.
+                Kunde inte hitta några upphämtningstillfällen.
               </Table.Cell>
             </Table.Row>
           {/if}
@@ -311,10 +228,6 @@
       </Table.Root>
     </div>
     <div class="flex items-center justify-between px-4">
-      <div class="hidden flex-1 text-sm text-muted-foreground lg:flex">
-        {table.getFilteredSelectedRowModel().rows.length} of
-        {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
       <div class="flex w-full items-center gap-8 lg:w-fit">
         <div class="hidden items-center gap-2 lg:flex">
           <Label for="rows-per-page" class="text-sm font-medium"
@@ -404,94 +317,48 @@
   </Tabs.Content>
 </Tabs.Root>
 
-{#snippet DataTableLimit({ row }: { row: Row<Schema> })}
-  <form
-    onsubmit={(e) => {
-      e.preventDefault()
-      toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-        loading: `Saving ${row.original.header}`,
-        success: 'Done',
-        error: 'Error',
-      })
-    }}
-  >
-    <Label for="{row.original.id}-limit" class="sr-only">Limit</Label>
-    <Input
-      class="h-8 w-16 border-transparent bg-transparent text-end shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:hover:bg-input/30 dark:focus-visible:bg-input/30"
-      value={row.original.limit}
-      id="{row.original.id}-limit"
-    />
-  </form>
-{/snippet}
-
-{#snippet DataTableTarget({ row }: { row: Row<Schema> })}
-  <form
-    onsubmit={(e) => {
-      e.preventDefault()
-      toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-        loading: `Saving ${row.original.header}`,
-        success: 'Done',
-        error: 'Error',
-      })
-    }}
-  >
-    <Label for="{row.original.id}-target" class="sr-only">Target</Label>
-    <Input
-      class="h-8 w-16 border-transparent bg-transparent text-end shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background dark:bg-transparent dark:hover:bg-input/30 dark:focus-visible:bg-input/30"
-      value={row.original.target}
-      id="{row.original.id}-target"
-    />
-  </form>
-{/snippet}
-
-{#snippet DataTableType({ row }: { row: Row<Schema> })}
+{#snippet DataTableLocation({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <Badge variant="outline" class="px-1.5 text-muted-foreground">
-      {row.original.type}
+      {row.original.location}
     </Badge>
   </div>
 {/snippet}
 
-{#snippet DataTableStatus({ row }: { row: Row<Schema> })}
-  <Badge variant="outline" class="px-1.5 text-muted-foreground">
-    {#if row.original.status === 'Done'}
-      <span
-        class="i-[tabler--circle-filled] size-4 fill-green-500 dark:fill-green-400"
-      ></span>
-    {:else}
-      <span class="i-[tabler--loader] size-4"></span>
-    {/if}
-    {row.original.status}
-  </Badge>
+{#snippet DataTableOrderStart({ row }: { row: Row<PickupOccasion> })}
+  <div class="w-32">
+    <p class="px-1.5 text-muted-foreground">
+      {row.original.orderStart}
+    </p>
+  </div>
 {/snippet}
 
-{#snippet DataTableActions()}
-  <DropdownMenu.Root>
-    <DropdownMenu.Trigger
-      class="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
-    >
-      {#snippet child({ props })}
-        <Button variant="ghost" size="icon" {...props}>
-          <span class="i-[tabler--dots-vertical] size-4"></span>
-          <span class="sr-only">Open menu</span>
-        </Button>
-      {/snippet}
-    </DropdownMenu.Trigger>
-    <DropdownMenu.Content align="end" class="w-32">
-      <DropdownMenu.Item>Edit</DropdownMenu.Item>
-      <DropdownMenu.Item>Make a copy</DropdownMenu.Item>
-      <DropdownMenu.Item>Favorite</DropdownMenu.Item>
-      <DropdownMenu.Separator />
-      <DropdownMenu.Item variant="destructive">Delete</DropdownMenu.Item>
-    </DropdownMenu.Content>
-  </DropdownMenu.Root>
+{#snippet DataTableOrderEnd({ row }: { row: Row<PickupOccasion> })}
+  <div class="w-32">
+    <p class="px-1.5 text-muted-foreground">
+      {row.original.orderEnd}
+    </p>
+  </div>
 {/snippet}
 
-{#snippet TableRow({ row, index }: { row: Row<Schema>; index: number })}
-  <Table.Row
-    data-state={row.getIsSelected() && 'selected'}
-    class="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
-  >
+{#snippet DataTablePickupStart({ row }: { row: Row<PickupOccasion> })}
+  <div class="w-32">
+    <p class="px-1.5 text-muted-foreground">
+      {row.original.pickupStart}
+    </p>
+  </div>
+{/snippet}
+
+{#snippet DataTablePickupEnd({ row }: { row: Row<PickupOccasion> })}
+  <div class="w-32">
+    <p class="px-1.5 text-muted-foreground">
+      {row.original.pickupEnd}
+    </p>
+  </div>
+{/snippet}
+
+{#snippet TableRow({ row, index }: { row: Row<PickupOccasion>; index: number })}
+  <Table.Row data-state={row.getIsSelected() && 'selected'} class="relative ">
     {#each row.getVisibleCells() as cell (cell.id)}
       <Table.Cell>
         <FlexRender
