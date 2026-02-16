@@ -15,6 +15,18 @@ pnpm i && \
 pnpm dev
 ```
 
+## Docker build steps
+
+First `cd` to the root of the git repo. Then:
+
+```bash
+docker build -t frontend -f frontend/Dockerfile .
+# or add the --pull flag to `docker build` to pull the latest base image of the container
+docker build --pull -t frontend -f frontend/Dockerfile .
+# Then to run the container, provide the .env file from your localhost to run it locally
+docker run -p 3000:3000 --env-file=frontend/.env frontend
+```
+
 ## Upgrade dependencies
 
 For general dependencies, these commands are helpful to check versions and make updates. Be careful to review release notes, changelogs and git diffs.
