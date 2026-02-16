@@ -6,7 +6,8 @@ ENV PNPM_HOME="$APP_PATH/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN \
     apt-get update \
-    && apt-get upgrade -y --no-install-recommends
+    && apt-get upgrade -y --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 RUN \
     npm config set ignore-scripts true \
     && npm i -g npm@latest \
@@ -27,11 +28,13 @@ RUN pnpm build
 FROM base AS app
 WORKDIR $APP_PATH
 COPY --from=builder --chown=node:node $APP_PATH/frontend/build build/
-COPY --from=builder $APP_PATH/frontend/package.json ./
-COPY --from=builder $APP_PATH/pnpm-lock.yaml ./
+COPY --from=builder --chown=node:node $APP_PATH/frontend/package.json ./
+COPY --from=builder --chown=node:node $APP_PATH/pnpm-lock.yaml ./
 RUN pnpm install --prod
 RUN corepack disable \
-    && npm uninstall -g corepack
+    && npm uninstall -g corepack \
+    && rm -rf pnpm/ \
+    && chown -R node:node node_modules/
 ENV NODE_ENV=production
 # Origin is required for sveltekit fetch to work
 ENV ORIGIN=http://localhost:3000
