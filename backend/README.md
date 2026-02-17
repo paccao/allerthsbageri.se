@@ -146,7 +146,12 @@ docker build -t backend -f backend/Dockerfile .
 docker build --pull -t backend -f backend/Dockerfile .
 pnpm run db:prod # Set up db locally, it uses the backend/.env file, make sure to update it accordingly
 # Then to run the container, provide the .env file from your localhost to run it locally
-docker run -p 4000:4000 --env-file=backend/.env --mount type=volume,src=dev.db,dst=/app/backend backend
+# It will mount prod.db into the container from the backend/data dir.
+# Debug with bash
+docker run --rm -it -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/backend/data" backend bash
+
+# Run the server ()
+docker run -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/backend/data" backend
 ```
 
 ---

@@ -20,14 +20,15 @@ ENV CI=true
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/backend/
-COPY backend/. ./
+# COPY backend/src/ backend/static/ backend/drizzle.config.ts/ backend/package.json/ backend/tsconfig.json/ ./
+COPY backend .
 WORKDIR $APP_PATH
 RUN pnpm --filter=backend install --prod
+# TEMP FIX: better-sqlite3 doesnt build properly. https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715
+COPY node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build /app/node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build
 RUN \
-    # Cleanup
-    && rm -rf pnpm/ \
     # Change ownership to non-root
-    && chown -R node:node ./*
+    chown -R node:node ./*
 
 ENV NODE_ENV=production
 USER $USERNAME
