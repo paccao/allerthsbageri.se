@@ -150,8 +150,8 @@ pnpm run db:prod # Set up db locally, it uses the backend/.env file, make sure t
 # Debug with bash
 docker run --rm -it -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/backend/data" backend bash
 
-# Run the server ()
-docker run -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/backend/data" backend
+# Run the server
+docker run -d -p 4000:4000 --env-file=backend/.env -v "./backend/data":"/app/backend/data" backend
 ```
 
 ---

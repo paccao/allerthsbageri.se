@@ -20,7 +20,6 @@ ENV CI=true
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/backend/
-# COPY backend/src/ backend/static/ backend/drizzle.config.ts/ backend/package.json/ backend/tsconfig.json/ ./
 COPY backend .
 WORKDIR $APP_PATH
 RUN pnpm --filter=backend install --prod
@@ -28,9 +27,8 @@ RUN pnpm --filter=backend install --prod
 COPY node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build /app/node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build
 RUN \
     # Change ownership to non-root
-    chown -R node:node ./*
+    chown -R node:node ./
 
-ENV NODE_ENV=production
 USER $USERNAME
-EXPOSE 3000
+EXPOSE 4000
 CMD [ "node", "backend/src/server.ts"]

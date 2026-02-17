@@ -3,6 +3,8 @@ pnpm-debug.log*
 .DS_Store
 
 .env
+**/.env.prod
+**/*.db
 
 # Python
 **/.venv
