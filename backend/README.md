@@ -55,6 +55,8 @@ To start the interactive schema migration:
 pnpm run db push
 ```
 
+If you get the error "Could not locate the bindings file" message by drizzle-kit see issue https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715 for a temporary fix.
+
 > [!NOTE]
 > In the future, this workflow will be replaced by proper DB migrations, stored in Git together with the code and automatically run before app startup.
 
