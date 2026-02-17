@@ -1,0 +1,7 @@
+**/*Dockerfile
+**/*.dockerignore
+**/*README.md
+**/*.db
+**/*.prettier*
+**/*node_modules
+**/*.env*

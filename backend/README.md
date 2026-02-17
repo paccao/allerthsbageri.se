@@ -136,6 +136,19 @@ pnpm up
 
 Before committing, test the changes locally and ensure everything works well. It's OK to update multiple dependencies in the same commit, but it's a good practice to review and install them one by one.
 
+### Docker
+
+First `cd` to the root of the git repo. Then:
+
+```bash
+docker build -t backend -f backend/Dockerfile .
+# or add the --pull flag to `docker build` to pull the latest base image of the container
+docker build --pull -t backend -f backend/Dockerfile .
+pnpm run db:prod # Set up db locally, it uses the backend/.env file, make sure to update it accordingly
+# Then to run the container, provide the .env file from your localhost to run it locally
+docker run -p 4000:4000 --env-file=backend/.env --mount type=volume,src=dev.db,dst=/app/backend backend
+```
+
 ---
 
 ## 2. Documentation
