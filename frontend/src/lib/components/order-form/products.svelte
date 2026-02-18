@@ -129,6 +129,9 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
               <p class="font-black">
                 {toSEKString(price)}
               </p>
+              {#if stock < 5}
+                <p class="pt-2 text-sm text-muted-foreground">{stock} kvar</p>
+              {/if}
             </Card.Content>
             <Card.Footer>
               {#if ctx.getProductCount(id) > 0}
