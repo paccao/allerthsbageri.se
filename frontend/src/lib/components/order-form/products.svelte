@@ -116,7 +116,12 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
       <div
         class="products-grid mx-auto flex w-full max-w-(--breakpoint-2xl) flex-wrap justify-center py-2"
       >
-        <!-- IDEA: Allow opening a modal to see product details like ingredients -->
+        <!--
+            IDEA: Allow opening a modal to see product details like ingredients.
+            Maybe by pressing the card anywhere except the ProductCount, and showing the description with ellipsis "..."
+            Or, maybe an info icon button in the top right
+            Or, maybe "läs mer" as a link-styled button
+        -->
         {#each pickup.products as { id, name, description, price, maxPerCustomer, stock } (id)}
           <Card.Root class="product">
             <Card.Header>
@@ -126,9 +131,7 @@ Or rather than anchor links, clicking the links scrolls the page using JS since 
               <Card.Description class="text-black/85"
                 >{description}</Card.Description
               >
-              <p class="font-black">
-                {toSEKString(price)}
-              </p>
+              <p class="font-black">{toSEKString(price)}</p>
               {#if stock < 5}
                 <p class="pt-2 text-sm text-muted-foreground">{stock} kvar</p>
               {/if}
