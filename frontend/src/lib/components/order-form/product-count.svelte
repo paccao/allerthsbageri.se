@@ -61,7 +61,7 @@
       }
     }}
     oninput={(event) => {
-      const val = parseInt(event.currentTarget.value)
+      const val = parseInt(event.currentTarget.value, 10)
 
       // 1) Only update state for numeric values to allow clearing
       //    the input with the keyboard and then typing something else.
@@ -69,7 +69,8 @@
       //    This prevents accidentally removing the last item when decreasing
       //    the amount with the down arrow key.
       if (Number.isInteger(val) && val !== 0) {
-        ctx.setProductCount(productId, val)
+        // Cap to the max value
+        ctx.setProductCount(productId, val > max ? max : val)
       }
     }}
     onblur={(event) => {
@@ -79,7 +80,13 @@
         event.currentTarget.value = count.toString()
       } else if (event.currentTarget.value === '0') {
         // Only set the count to 0 when leaving the input
-        ctx.setProductCount(productId, parseInt(event.currentTarget.value))
+        ctx.setProductCount(productId, parseInt(event.currentTarget.value, 10))
+      }
+
+      // Cap to the max value if a higher value was entered
+      if (parseInt(event.currentTarget.value, 10) > max) {
+        ctx.setProductCount(productId, max)
+        event.currentTarget.value = max.toString()
       }
     }}
     class={cn([
