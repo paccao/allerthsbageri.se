@@ -42,6 +42,22 @@ const defaultPickups: (typeof pickupOccasionTable.$inferInsert)[] = [
     pickupStart: new Date('2025-09-07T10:30:00.000Z').toISOString(),
     pickupEnd: new Date('2025-09-07T16:30:00.000Z').toISOString(),
   },
+  {
+    name: 'Nuvarande',
+    location: '1',
+    orderStart: new Date('2025-08-23T08:00:00.000Z').toISOString(),
+    orderEnd: new Date('2025-08-28T17:00:00.000Z').toISOString(),
+    pickupStart: new Date('2026-02-19T09:00:00.000Z').toISOString(),
+    pickupEnd: new Date('2100-08-30T15:30:00.000Z').toISOString(),
+  },
+  {
+    name: 'Framtiden',
+    location: '2',
+    orderStart: new Date('2025-09-07T00:00:00.000Z').toISOString(),
+    orderEnd: new Date('2025-09-17T23:59:59.999Z').toISOString(),
+    pickupStart: new Date('2100-02-20T10:30:00.000Z').toISOString(),
+    pickupEnd: new Date('2700-05-07T16:30:00.000Z').toISOString(),
+  },
 ]
 
 const defaultProductDetails: (typeof productDetailsTable.$inferInsert)[] = [
