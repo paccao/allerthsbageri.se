@@ -65,13 +65,58 @@
   import { weekdayAndDateAndTime } from '$lib/datetime.js'
 
   let { pickupOccasions }: { pickupOccasions: PickupOccasion[] } = $props()
+
   let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 10 })
   let columnFilters = $state<ColumnFiltersState>([])
   let columnVisibility = $state<VisibilityState>({})
 
+  let views = [
+    {
+      id: 'previous',
+      label: 'Föregående',
+      badge: 0,
+    },
+    {
+      id: 'current',
+      label: 'Nuvarande',
+      badge: 0,
+    },
+    {
+      id: 'future',
+      label: 'Framtida',
+      badge: 0,
+    },
+  ]
+
+  let view = $state('current')
+  let viewLabel = $derived(
+    views.find((v) => view === v.id)?.label ?? 'Select a view',
+  )
+
+  let now = $state(new Date())
+
+  let filterPickupOccasionsByView = $derived.by(() => {
+    const currentDate = now
+
+    if (view === 'previous') {
+      return pickupOccasions.filter((p) => new Date(p.pickupEnd) < currentDate)
+    } else if (view === 'current') {
+      return pickupOccasions.filter(
+        (p) =>
+          new Date(p.pickupStart) <= currentDate &&
+          currentDate <= new Date(p.pickupEnd),
+      )
+    } else if (view === 'future') {
+      return pickupOccasions.filter(
+        (p) => new Date(p.pickupStart) > currentDate,
+      )
+    }
+    return pickupOccasions
+  })
+
   const table = createSvelteTable({
     get data() {
-      return pickupOccasions
+      return filterPickupOccasionsByView
     },
     columns,
     state: {
@@ -109,29 +154,6 @@
       }
     },
   })
-
-  let views = [
-    {
-      id: 'previous',
-      label: 'Föregående',
-      badge: 0,
-    },
-    {
-      id: 'current',
-      label: 'Nuvarande',
-      badge: 0,
-    },
-    {
-      id: 'future',
-      label: 'Framtida',
-      badge: 0,
-    },
-  ]
-
-  let view = $state('current')
-  let viewLabel = $derived(
-    views.find((v) => view === v.id)?.label ?? 'Select a view',
-  )
 </script>
 
 <Tabs.Root value="current" class="w-full flex-col justify-start gap-6">
