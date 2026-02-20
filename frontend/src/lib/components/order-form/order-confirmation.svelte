@@ -26,6 +26,8 @@
       <span class="text-right">{dateTime}</span>
       <span class="font-bold">Plats:</span>
       <span class="text-right">{pickup.location}</span>
+      <span class="font-bold">Betalning:</span>
+      <span class="text-right">Swish eller kontant på plats</span>
     </p>
   </div>
 
