@@ -366,7 +366,7 @@
 {/snippet}
 
 {#snippet TableRow({ row, index }: { row: Row<PickupOccasion>; index: number })}
-  <Table.Row data-state={row.getIsSelected() && 'selected'} class="relative ">
+  <Table.Row class="relative">
     {#each row.getVisibleCells() as cell (cell.id)}
       <Table.Cell>
         <FlexRender
