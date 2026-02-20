@@ -19,7 +19,7 @@
   </p>
 
   <div
-    class="rouded-md mt-8 space-y-2 bg-accent p-2 text-sm shadow-sm xs:text-base"
+    class="rouded-md mt-8 space-y-2 rounded-md bg-accent p-2 text-sm shadow-sm xs:text-base"
   >
     <p class="grid grid-cols-[max-content_1fr]">
       <span class="font-bold">Upphämtning:</span>
