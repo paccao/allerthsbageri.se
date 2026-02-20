@@ -156,7 +156,7 @@
   })
 </script>
 
-<Tabs.Root value="current" class="w-full flex-col justify-start gap-6">
+<Tabs.Root bind:value={view} class="w-full flex-col justify-start gap-6">
   <div class="flex items-center justify-between px-4 lg:px-6">
     <Label for="view-selector" class="sr-only">View</Label>
     <Select.Root type="single" bind:value={view}>
@@ -214,7 +214,7 @@
     </div>
   </div>
   <Tabs.Content
-    value="current"
+    value={view}
     class="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6"
   >
     <div class="overflow-hidden rounded-lg border">
