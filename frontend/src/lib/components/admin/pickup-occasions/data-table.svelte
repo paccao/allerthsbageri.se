@@ -191,8 +191,8 @@
           {#snippet child({ props })}
             <Button variant="outline" size="sm" {...props}>
               <span class="i-[tabler--layout-columns] size-4"></span>
-              <span class="hidden lg:inline">Visa/Dölj Kolumner</span>
-              <span class="lg:hidden">Columns</span>
+              <span class="hidden lg:inline">Visa/Dölj kolumner</span>
+              <span class="lg:hidden">Kolumner</span>
               <span class="i-[tabler--chevron-down] size-4"></span>
             </Button>
           {/snippet}
@@ -254,7 +254,7 @@
       <div class="flex w-full items-center gap-8 lg:w-fit">
         <div class="hidden items-center gap-2 lg:flex">
           <Label for="rows-per-page" class="text-sm font-medium"
-            >Rows per page</Label
+            >Rader per sida</Label
           >
           <Select.Root
             type="single"
