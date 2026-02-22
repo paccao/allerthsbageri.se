@@ -44,6 +44,7 @@ export const getPickupOccasionsWithDetails = query(async () => {
         return { ...product, ...omit(details, new Set(['id'])) }
       })
 
+    // TODO: Try parseZonedDateTime() instead of new Date()
     return {
       ...pickupOccasion,
       orderStart: new Date(pickupOccasion.orderStart),
