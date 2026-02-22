@@ -50,16 +50,14 @@
           <Input id="name" value={item.name} />
           <Label for="location">Plats</Label>
           <Input id="location" value={item.location} />
-          <Label for="orderStart">Order Start/Avslut</Label>
-          <DateTimePicker
-            orderStart={item.orderStart}
-            orderEnd={item.orderEnd}
-          />
-          <Label for="pickupStart">Upphämtning Start/Avslut</Label>
-          <DateTimePicker
-            pickupStart={item.pickupStart}
-            pickupEnd={item.pickupEnd}
-          />
+          <!-- <Label for="orderStart">Beställning öppnar</Label>
+          <DateTimePicker value={item.orderStart} />
+          <Label for="orderEnd">Beställning stänger</Label>
+          <DateTimePicker value={item.orderEnd} />
+          <Label for="pickupStart">Upphämtning Start</Label>
+          <DateTimePicker value={item.pickupStart} />
+          <Label for="pickupEnd">Upphämtning End</Label>
+          <DateTimePicker value={item.pickupEnd} /> -->
         </div>
       </form>
     </div>

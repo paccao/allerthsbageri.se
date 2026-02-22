@@ -1,40 +1,17 @@
 <script lang="ts">
-  import RangeCalendar from '$lib/components/admin/pickup-occasions/calendar/range-calendar.svelte'
-  import * as Popover from '$lib/components/admin/pickup-occasions/popover/index.js'
+  import * as Popover from '$lib/components/ui/popover/index.js'
   import { Button } from '$lib/components/ui/button/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
-  // import ChevronDownIcon from '@lucide/svelte/icons/chevron-down'
   import { getLocalTimeZone } from '@internationalized/date'
   import type { CalendarDate } from '@internationalized/date'
+  import { Calendar } from '$components/ui/calendar'
 
-  type PickupProps = {
-    pickupStart: Date
-    pickupEnd: Date
-    orderStart?: null
-    orderEnd?: null
+  type Props = {
+    value?: CalendarDate
   }
 
-  type OrderProps = {
-    pickupStart?: null
-    pickupEnd?: null
-    orderStart: Date
-    orderEnd: Date
-  }
-
-  const {
-    pickupStart = null,
-    pickupEnd = null,
-    orderStart = null,
-    orderEnd = null,
-  }: PickupProps | OrderProps = $props()
-
-  if (!pickupStart && !orderStart) {
-    throw new Error(
-      'At least one of pickupStart or orderStart must be provided.',
-    )
-  }
-
+  let { value = $bindable() }: Props = $props()
   const id = $props.id()
   let open = $state(false)
 </script>
@@ -53,12 +30,19 @@
             {value
               ? value.toDate(getLocalTimeZone()).toLocaleDateString()
               : 'Select date'}
-            <!-- <ChevronDownIcon /> -->
+            <span class="i-[lucide--chevron-down] size-4"></span>
           </Button>
         {/snippet}
       </Popover.Trigger>
       <Popover.Content class="w-auto overflow-hidden p-0" align="start">
-        <RangeCalendar bind:value class="rounded-md border" />
+        <Calendar
+          type="single"
+          bind:value
+          onValueChange={() => {
+            open = false
+          }}
+          captionLayout="dropdown"
+        />
       </Popover.Content>
     </Popover.Root>
   </div>
