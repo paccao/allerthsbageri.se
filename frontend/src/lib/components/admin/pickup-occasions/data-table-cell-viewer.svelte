@@ -8,7 +8,6 @@
   import { Separator } from '$components/ui/separator/index.js'
   import DateTimePicker from './date-time-picker.svelte'
   import type { PickupOccasion } from './schemas.js'
-  import { parseZonedDateTime, ZonedDateTime } from '@internationalized/date'
 
   const isMobile = new IsMobile()
 
@@ -52,7 +51,7 @@
           <Label for="location">Plats</Label>
           <Input id="location" value={item.location} />
           <Label for="orderStart">Beställning öppnar</Label>
-          <DateTimePicker value={parseZonedDateTime(item.orderStart)} />
+          <DateTimePicker value={item.orderStart} />
           <Label for="orderEnd">Beställning stänger</Label>
           <DateTimePicker value={item.orderEnd} />
           <Label for="pickupStart">Upphämtning Start</Label>

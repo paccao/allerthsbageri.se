@@ -1,7 +1,7 @@
 import { client } from './api-client'
 import { query } from '$app/server'
 import { omit } from '$lib/utils'
-import { env } from '$env/dynamic/private'
+import { parseDateTime, parseAbsoluteToLocal } from '@internationalized/date'
 
 export const getPickupOccasionsWithDetails = query(async () => {
   const [pickupOccasions, products, productDetails] = await Promise.all([
@@ -44,13 +44,12 @@ export const getPickupOccasionsWithDetails = query(async () => {
         return { ...product, ...omit(details, new Set(['id'])) }
       })
 
-    // TODO: Try parseZonedDateTime() instead of new Date()
     return {
       ...pickupOccasion,
-      orderStart: new Date(pickupOccasion.orderStart),
-      orderEnd: new Date(pickupOccasion.orderEnd),
-      pickupStart: new Date(pickupOccasion.pickupStart),
-      pickupEnd: new Date(pickupOccasion.pickupEnd),
+      orderStart: parseAbsoluteToLocal(pickupOccasion.orderStart),
+      orderEnd: parseAbsoluteToLocal(pickupOccasion.orderEnd),
+      pickupStart: parseAbsoluteToLocal(pickupOccasion.pickupStart),
+      pickupEnd: parseAbsoluteToLocal(pickupOccasion.pickupEnd),
       products: mergedProducts,
     }
   })

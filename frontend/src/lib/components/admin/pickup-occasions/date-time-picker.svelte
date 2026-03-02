@@ -3,18 +3,28 @@
   import { Button } from '$lib/components/ui/button/index.js'
   import { Label } from '$lib/components/ui/label/index.js'
   import { Input } from '$lib/components/ui/input/index.js'
-  import type { ZonedDateTime, CalendarDate } from '@internationalized/date'
+  import {
+    parseDate,
+    parseTime,
+    parseAbsoluteToLocal,
+    ZonedDateTime,
+    Time,
+  } from '@internationalized/date'
   import { Calendar } from '$components/ui/calendar'
+  import { isoDate } from '$lib/datetime'
 
   type Props = {
-    value?: Date
+    /** Combined date and time */
+    value?: ZonedDateTime
   }
 
-  // convert JS Date into ZonedDateTime and use it as the bindable value prop
-  // read date into Calendar.value, and read
-  // Add on:change={() => {}} handlers to the Calendar and Input to write back
-
   let { value = $bindable() }: Props = $props()
+
+  /** Separate the date to make it editable */
+  let date = $derived(value ? value : undefined)
+  /** Separate the time to make it editable */
+  let time = $derived(value ? new Time(value.hour, value.minute) : undefined)
+
   const id = $props.id()
   let open = $state(false)
 
@@ -32,17 +42,29 @@
             variant="outline"
             class="w-32 justify-between font-normal"
           >
-            {value ? value.toDateString() : 'Välj datum'}
+            {value ? isoDate.format(value.toDate()) : 'Välj datum'}
             <span class="i-[lucide--chevron-down] size-4"></span>
           </Button>
         {/snippet}
       </Popover.Trigger>
       <Popover.Content class="w-auto overflow-hidden p-0" align="start">
-        <!-- value: DateValue -->
         <Calendar
           type="single"
-          bind:value
-          onValueChange={() => {
+          weekdayFormat="short"
+          value={date}
+          onValueChange={(newValue) => {
+            const timeZone = parseAbsoluteToLocal(new Date().toISOString())
+            value = newValue
+              ? new ZonedDateTime(
+                  newValue.year,
+                  newValue.month,
+                  newValue.day,
+                  timeZone.timeZone,
+                  timeZone.offset,
+                  time?.hour,
+                  time?.minute,
+                )
+              : value
             open = false
           }}
           captionLayout="dropdown"
@@ -52,12 +74,25 @@
   </div>
   <div class="flex flex-col gap-3">
     <Label for="{id}-time" class="px-1">Tid</Label>
-    <!-- TODO: figure out what to use for value. Ideally bind to the value, but  -->
     <Input
       type="time"
       id="{id}-time"
       step="1"
-      {value}
+      value={time}
+      onchange={(event) => {
+        const timeZone = parseAbsoluteToLocal(new Date().toISOString())
+        const d = date ?? parseDate(new Date().toISOString())
+        const newTime = parseTime(event.currentTarget.value)
+        value = new ZonedDateTime(
+          d.year,
+          d.month,
+          d.day,
+          timeZone.timeZone,
+          timeZone.offset,
+          newTime.hour,
+          newTime.minute,
+        )
+      }}
       class="appearance-none bg-background [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
     />
   </div>

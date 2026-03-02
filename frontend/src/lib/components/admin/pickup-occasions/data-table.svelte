@@ -63,6 +63,7 @@
   } from '$components/ui/data-table/index.js'
   import DataTableCellViewer from './data-table-cell-viewer.svelte'
   import { weekdayAndDateAndTime } from '$lib/datetime.js'
+  import { parseAbsoluteToLocal, type DateValue } from '@internationalized/date'
 
   let { pickupOccasions }: { pickupOccasions: PickupOccasion[] } = $props()
 
@@ -93,23 +94,38 @@
     views.find((v) => view === v.id)?.label ?? 'Select a view',
   )
 
-  let now = $state(new Date())
+  /**
+   * Returns true if `date1` is before `date2`
+   */
+  function isBefore(date1: DateValue, date2: DateValue) {
+    return date1.compare(date2) < 0
+  }
+
+  /**
+   * Returns true if `d1` is between `start` and `end`
+   */
+  function isBetween(date: DateValue, start: DateValue, end: DateValue) {
+    return start.compare(date) <= 0 && date.compare(end) <= 0
+  }
+
+  /**
+   * Returns true if `date1` is after `date2`
+   */
+  function isAfter(date1: DateValue, date2: DateValue) {
+    return date1.compare(date2) > 0
+  }
 
   let filterPickupOccasionsByView = $derived.by(() => {
-    const currentDate = now
+    const currentDate = parseAbsoluteToLocal(new Date().toISOString())
 
     if (view === 'previous') {
-      return pickupOccasions.filter((p) => new Date(p.pickupEnd) < currentDate)
+      return pickupOccasions.filter((p) => isBefore(p.pickupEnd, currentDate))
     } else if (view === 'current') {
-      return pickupOccasions.filter(
-        (p) =>
-          new Date(p.pickupStart) <= currentDate &&
-          currentDate <= new Date(p.pickupEnd),
+      return pickupOccasions.filter((p) =>
+        isBetween(currentDate, p.pickupStart, p.pickupEnd),
       )
     } else if (view === 'future') {
-      return pickupOccasions.filter(
-        (p) => new Date(p.pickupStart) > currentDate,
-      )
+      return pickupOccasions.filter((p) => isAfter(p.pickupStart, currentDate))
     }
     return pickupOccasions
   })
@@ -336,7 +352,7 @@
 {#snippet DataTableOrderStart({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {weekdayAndDateAndTime.format(row.original.orderStart)}
+      {weekdayAndDateAndTime.format(row.original.orderStart.toDate())}
     </p>
   </div>
 {/snippet}
@@ -344,7 +360,7 @@
 {#snippet DataTableOrderEnd({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {weekdayAndDateAndTime.format(row.original.orderEnd)}
+      {weekdayAndDateAndTime.format(row.original.orderEnd.toDate())}
     </p>
   </div>
 {/snippet}
@@ -352,7 +368,7 @@
 {#snippet DataTablePickupStart({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {weekdayAndDateAndTime.format(row.original.pickupStart)}
+      {weekdayAndDateAndTime.format(row.original.pickupStart.toDate())}
     </p>
   </div>
 {/snippet}
@@ -360,7 +376,7 @@
 {#snippet DataTablePickupEnd({ row }: { row: Row<PickupOccasion> })}
   <div class="w-32">
     <p class="px-1.5 text-muted-foreground">
-      {weekdayAndDateAndTime.format(row.original.pickupEnd)}
+      {weekdayAndDateAndTime.format(row.original.pickupEnd.toDate())}
     </p>
   </div>
 {/snippet}
