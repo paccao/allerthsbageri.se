@@ -9,7 +9,7 @@ export const dateTimeFormatter = new Intl.DateTimeFormat(LOCALE, {
 })
 
 export const isoDate = new Intl.DateTimeFormat(LOCALE, {
-  year: '2-digit',
+  year: 'numeric',
   month: '2-digit',
   day: '2-digit',
 })
