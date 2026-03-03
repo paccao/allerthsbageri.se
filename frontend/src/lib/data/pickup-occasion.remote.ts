@@ -1,4 +1,4 @@
-import { client } from './api-client'
+import { client } from './api-client.server'
 import { query } from '$app/server'
 import { omit } from '$lib/utils'
 import { env } from '$env/dynamic/private'

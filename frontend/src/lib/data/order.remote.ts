@@ -1,7 +1,7 @@
 import { command } from '$app/server'
 import { error } from '@sveltejs/kit'
 import z from 'zod'
-import { client } from './api-client'
+import { client } from './api-client.server'
 
 const nameMaxLength = 200
 const createCustomerBodySchema = z.object({

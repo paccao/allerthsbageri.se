@@ -11,6 +11,9 @@ const authMiddleware: Middleware = {
   },
 }
 
+/**
+ * This API client should only be used on the server side, for example in remote functions.
+ */
 export const client = createClient<paths>({
   baseUrl: env.BACKEND_API_URL,
 })
