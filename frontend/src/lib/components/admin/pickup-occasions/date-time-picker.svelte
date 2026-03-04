@@ -6,14 +6,15 @@
   import {
     parseDate,
     parseTime,
-    parseAbsolute,
     ZonedDateTime,
     Time,
-    parseAbsolute,
-    getLocalTimeZone,
   } from '@internationalized/date'
   import { Calendar } from '$components/ui/calendar'
   import { isoDate } from '$lib/datetime'
+
+  // TODO: improve this, it should not be hardcoded but it works for now
+  const TIMEZONE = 'Europe/Stockholm'
+  const TZ_OFFSET = 7200000
 
   type Props = {
     /** Combined date and time. This one will be edited if the parent component binds to this value. */
@@ -56,14 +57,13 @@
           type="single"
           value={date}
           onValueChange={(newValue) => {
-            const timeZone = parseAbsolute(new Date().toISOString())
             value = newValue
               ? new ZonedDateTime(
                   newValue.year,
                   newValue.month,
                   newValue.day,
-                  timeZone.timeZone,
-                  timeZone.offset,
+                  TIMEZONE,
+                  TZ_OFFSET,
                   time?.hour,
                   time?.minute,
                   time?.second,
@@ -86,15 +86,14 @@
       step="60"
       value={time}
       onchange={(event) => {
-        const timeZone = parseAbsolute(new Date().toISOString())
         const d = date ?? parseDate(new Date().toISOString())
         const newTime = parseTime(event.currentTarget.value)
         value = new ZonedDateTime(
           d.year,
           d.month,
           d.day,
-          timeZone.timeZone,
-          timeZone.offset,
+          TIMEZONE,
+          TZ_OFFSET,
           newTime.hour,
           newTime.minute,
           newTime?.second,
