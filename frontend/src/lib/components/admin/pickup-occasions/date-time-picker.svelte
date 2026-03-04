@@ -32,8 +32,6 @@
 
   const id = $props.id()
   let open = $state(false)
-
-  $inspect(value)
 </script>
 
 <div class="flex gap-4">
