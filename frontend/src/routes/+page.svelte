@@ -377,7 +377,7 @@
               </h2>
               <div class="flex justify-center">
                 <p class="my-2 max-w-screen-sm text-2xl">
-                  SAXOFONRETREAT 14/3 kl 9.30 - ca 17.00
+                  SAXOFONRETREAT 27:e Juni kl 9.30 - 17.00
                 </p>
               </div>
 
@@ -448,12 +448,12 @@
                   > står för surdegsbröd till lunchen & även något gott till eftermiddagsfikat.
                 </p>
                 <p>
-                  Investeringen i dig själv kostar 1990 kr, anmälan senast den
-                  11/3 kl 18.00.
+                  Investeringen i dig själv kostar 1900 kr, anmälan senast den
+                  24:e Juni kl 20.00.
                 </p>
                 <p>
-                  Det finns möjlighet till rabatt vid tidig bokning, senast 1/2.
-                  Priset blir då 1700kr.
+                  Det finns möjlighet till rabatt vid tidig bokning, senast 30:e
+                  Maj. Priset blir då 1700kr.
                 </p>
               </div>
 
@@ -472,7 +472,7 @@
 
                 <p class="my-2">
                   <span class="font-bold">Att ta med:</span>
-                  Yogamatta eller liggunderlag. Kudde och mjuka kläder.
+                  Yogamatta eller liggunderlag. Liten kudde och mjuka kläder.
                 </p>
 
                 <p class="text-center font-bold">
