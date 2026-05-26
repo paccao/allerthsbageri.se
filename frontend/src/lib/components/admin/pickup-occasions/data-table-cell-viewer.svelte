@@ -8,17 +8,12 @@
   import { Separator } from '$components/ui/separator/index.js'
   import DateTimePicker from './date-time-picker.svelte'
   import type { PickupOccasion } from './schemas.js'
+  import { updatePickupOccasion } from '$lib/data/pickup-occasion.remote.js'
+  import { parseDate, parseZonedDateTime } from '@internationalized/date'
 
   const isMobile = new IsMobile()
 
   let { item }: { item: PickupOccasion } = $props()
-
-  // let name = $state(item.name)
-  // let location = $state(item.location)
-  // let orderStart = $state(item.orderStart)
-  // let orderEnd = $state(item.orderEnd)
-  // let pickupStart = $state(item.pickupStart)
-  // let pickupEnd = $state(item.pickupEnd)
 </script>
 
 <Drawer.Root direction={isMobile.current ? 'bottom' : 'right'}>
@@ -62,7 +57,29 @@
       </form>
     </div>
     <Drawer.Footer>
-      <Button>Bekräfta</Button>
+      <Button
+        onclick={() => {
+          console.log({
+            id: item.id,
+            name: item.name,
+            location: item.location,
+            orderStart: parseDate(item.orderStart.toString()).toString(),
+            orderEnd: parseDate(item.orderEnd.toString()).toString(),
+            pickupStart: parseDate(item.pickupStart.toString()).toString(),
+            pickupEnd: parseDate(item.pickupEnd.toString()).toString(),
+          })
+
+          updatePickupOccasion({
+            id: item.id,
+            name: item.name,
+            location: item.location,
+            orderStart: parseDate(item.orderStart.toString()).toString(),
+            orderEnd: parseDate(item.orderEnd.toString()).toString(),
+            pickupStart: parseDate(item.pickupStart.toString()).toString(),
+            pickupEnd: parseDate(item.pickupEnd.toString()).toString(),
+          })
+        }}>Bekräfta</Button
+      >
       <Drawer.Close>
         {#snippet child({ props })}
           <Button variant="outline" {...props}>Avbryt</Button>

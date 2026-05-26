@@ -1,7 +1,8 @@
 import { client } from './api-client'
 import { query } from '$app/server'
 import { omit } from '$lib/utils'
-import { parseDateTime, parseAbsoluteToLocal } from '@internationalized/date'
+import { parseAbsoluteToLocal } from '@internationalized/date'
+import z from 'zod'
 
 export const getPickupOccasionsWithDetails = query(async () => {
   const [pickupOccasions, products, productDetails] = await Promise.all([
@@ -54,3 +55,33 @@ export const getPickupOccasionsWithDetails = query(async () => {
     }
   })
 })
+
+export const updatePickupOccasion = query(
+  z.object({
+    id: z.number(),
+    name: z.string().max(200),
+    location: z.string().max(150),
+    orderStart: z.string(),
+    orderEnd: z.string(),
+    pickupStart: z.string(),
+    pickupEnd: z.string(),
+  }),
+  async ({
+    id,
+    name,
+    location,
+    orderStart,
+    orderEnd,
+    pickupStart,
+    pickupEnd,
+  }) => {
+    return await client.PATCH('/api/pickup-occasions/{id}', {
+      params: {
+        path: {
+          id,
+        },
+      },
+      body: { name, location, orderStart, orderEnd, pickupStart, pickupEnd },
+    })
+  },
+)
