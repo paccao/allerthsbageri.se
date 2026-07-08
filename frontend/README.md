@@ -29,7 +29,7 @@ podman build \
       --build-arg EMAIL="<copy_from_dotenv>" \
       -f frontend/Dockerfile .
 # or add the --pull flag to `docker build` to pull the latest base image of the container
-podman build --pull -t allerthsbageri-frontend:latest --secret id=env,src=frontend/.env -f frontend/Dockerfile .
+
 # Then to run the container, provide the .env file from your localhost to run it locally
 podman run -p 3000:3000 --env-file=frontend/.env allerthsbageri-frontend
 ```
