@@ -33,14 +33,15 @@ RUN pnpm build
 
 FROM base AS app
 WORKDIR $APP_PATH
-COPY --from=builder --chown=node:node $APP_PATH/frontend/build build/
-COPY --from=builder --chown=node:node $APP_PATH/frontend/package.json ./
-COPY --from=builder --chown=node:node $APP_PATH/pnpm-lock.yaml ./
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/frontend/build build/
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/frontend/package.json ./
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/frontend/.env ./
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/pnpm-lock.yaml ./
 RUN pnpm install --prod
 RUN corepack disable \
     && npm uninstall -g corepack \
     && rm -rf pnpm/ \
-    && chown -R node:node node_modules/
+    && chown -R $USERNAME:$USERNAME node_modules/
 ENV NODE_ENV=production
 # Origin is required for sveltekit fetch to work
 ENV ORIGIN=http://localhost:3000
