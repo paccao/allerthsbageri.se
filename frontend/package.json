@@ -19,7 +19,7 @@
     "@fontsource/quattrocento": "^5.2.8",
     "@keystatic/core": "^0.5.48",
     "intl-tel-input": "^26.1.1",
-    "keystatic-sveltekit": "^1.0.0",
+    "keystatic-sveltekit": "^1.2.0",
     "openapi-fetch": "^0.16.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
