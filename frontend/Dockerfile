@@ -17,13 +17,19 @@ RUN \
 
 FROM base AS builder
 ENV CI=true
+ARG PUBLIC_PASSWORD
+ARG PUBLIC_PAYLOAD
+ARG EMAIL
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/frontend
 COPY frontend/package.json ./
 RUN pnpm --filter=frontend install --frozen-lockfile --engine-strict
 COPY frontend .
-RUN --mount=type=secret,id=env cat /run/secrets/env > .env && pnpm build
+RUN echo "EMAIL=${EMAIL}" >> .env \
+    echo "PUBLIC_PASSWORD=${PUBLIC_PASSWORD}" >> .env \
+    echo "PUBLIC_PAYLOAD=${PUBLIC_PAYLOAD}" >> .env
+RUN pnpm build
 
 FROM base AS app
 WORKDIR $APP_PATH

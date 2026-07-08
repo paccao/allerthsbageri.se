@@ -22,7 +22,12 @@ Make sure you have a .env file setup, including the email spam protection variab
 Run from root directory of the repo:
 
 ```bash
-podman build -t allerthsbageri-frontend:latest --secret id=env,src=frontend/.env -f frontend/Dockerfile .
+podman build \
+      -t allerthsbageri-frontend:latest \
+      --build-arg PUBLIC_PAYLOAD="<copy_from_dotenv>" \
+      --build-arg PUBLIC_PASSWORD="<copy_from_dotenv>" \
+      --build-arg EMAIL="<copy_from_dotenv>" \
+      -f frontend/Dockerfile .
 # or add the --pull flag to `docker build` to pull the latest base image of the container
 podman build --pull -t allerthsbageri-frontend:latest --secret id=env,src=frontend/.env -f frontend/Dockerfile .
 # Then to run the container, provide the .env file from your localhost to run it locally
