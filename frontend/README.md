@@ -17,14 +17,16 @@ pnpm dev
 
 ## Docker build steps
 
-First `cd` to the root of the git repo. Then:
+Make sure you have a .env file setup, including the email spam protection variables.
+
+Run from root directory of the repo:
 
 ```bash
-docker build -t frontend -f frontend/Dockerfile .
+podman build -t frontend:latest --secret id=env,src=frontend/.env -f frontend/Dockerfile .
 # or add the --pull flag to `docker build` to pull the latest base image of the container
-docker build --pull -t frontend -f frontend/Dockerfile .
+podman build --pull -t frontend:latest --secret id=env,src=frontend/.env -f frontend/Dockerfile .
 # Then to run the container, provide the .env file from your localhost to run it locally
-docker run -p 3000:3000 --env-file=frontend/.env frontend
+podman run -p 3000:3000 --env-file=frontend/.env frontend
 ```
 
 ## Upgrade dependencies
@@ -35,6 +37,8 @@ For general dependencies, these commands are helpful to check versions and make 
 pnpm outdated
 pnpm up
 ```
+
+Do periodically check outdated pnpm and base image version in `Dockerfile`
 
 ### Updating `shadcn-svelte` components
 
@@ -61,3 +65,20 @@ pnpm format
 3. Add a strong random password to encrypt/decrypt your email to `PUBLIC_PASSWORD` in `.env`.
 4. Open a terminal and run `pnpm encrypt:email`. Then copy the output (make sure you get every character) and add it to `PUBLIC_PAYLOAD` in `.env`.
 5. Now, the email should be accessible in the `<EncryptedEmail />` component. Easily available for users, but most basic spam bots will not be able to extract the email.
+
+## Common issues
+
+`podman build` gives the error:
+```sh
+Error: configure storage: kernel does not support overlay fs: 'overlay' is not supported over extfs at "/var/lib/containers/storage/overlay": backing file system is unsupported for this graph driver
+```
+
+This is because podman isn't configured by default to support btrfs file systems.
+
+Solution:
+
+[configure btrfs with podman](https://www.jwillikers.com/podman-with-btrfs-and-zfs)
+
+I had to reboot my pc, your mileage may vary.
+
+Check status of podman in `systemctl` or run `podman info` to verify.

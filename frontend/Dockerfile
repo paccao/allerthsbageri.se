@@ -11,19 +11,19 @@ RUN \
 RUN \
     npm config set ignore-scripts true \
     && npm i -g npm@latest \
-    && npm i -g corepack \
+    && npm i -g corepack@latest \
     && corepack enable \
-    && corepack prepare pnpm --activate
+    && corepack use pnpm@10.34.4
 
 FROM base AS builder
 ENV CI=true
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
-WORKDIR $APP_PATH/frontend/
-COPY frontend/.npmrc frontend/package.json ./
-RUN pnpm --filter=frontend install --frozen-lockfile
-COPY frontend/. .
-RUN pnpm build
+WORKDIR $APP_PATH/frontend
+COPY frontend/package.json ./
+RUN pnpm --filter=frontend install --frozen-lockfile --engine-strict
+COPY frontend .
+RUN --mount=type=secret,id=env cat /run/secrets/env > .env && pnpm build
 
 FROM base AS app
 WORKDIR $APP_PATH
