@@ -1,5 +1,5 @@
-import { DIContainer } from '../DIContainer.ts'
-import { Bar, Foo } from './__helpers__/fakeClasses.ts'
+import { DIContainer } from '../DIContainer.js'
+import { Bar, Foo } from './__helpers__/fakeClasses.js'
 import { suite, test, type TestContext } from 'node:test'
 
 suite('DIContainer extend functions', () => {

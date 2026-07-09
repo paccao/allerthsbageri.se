@@ -1,7 +1,7 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
-import type { GetProductDetails } from './product-details.schemas.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.js'
+import type { GetProductDetails } from './product-details.schemas.js'
 
 const app = await startTestApp()
 

@@ -1,11 +1,11 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type { IdParams } from '#utils/common.schemas.ts'
+import type { IdParams } from '#utils/common.schemas.js'
 import type {
   CreateProductDetailsBody,
   UpdateProductDetailsBody,
-} from './product-details.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+} from './product-details.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createProductDetailsController(
   productDetailsService: DependencyContainer['productDetailsService'],

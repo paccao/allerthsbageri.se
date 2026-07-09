@@ -1,11 +1,11 @@
 import { type RunResult } from 'better-sqlite3'
 import { eq, and, inArray, sql, type SQL } from 'drizzle-orm'
 
-import { orderTable, orderItemTable, productTable } from '#db/schema.ts'
-import type { Product } from '../product/product.schemas.ts'
-import type { OrderItem } from '../order-item/order-item.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
-import type { Transaction } from '#db/index.ts'
+import { orderTable, orderItemTable, productTable } from '#db/schema.js'
+import type { Product } from '../product/product.schemas.js'
+import type { OrderItem } from '../order-item/order-item.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
+import type { Transaction } from '#db/index.js'
 
 type OrderedProduct = Omit<Product, 'productDetailsId'>
 

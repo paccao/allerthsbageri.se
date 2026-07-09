@@ -1,7 +1,7 @@
 import { type Options } from '@node-rs/argon2'
 import type { LoggerOptions } from 'pino'
 
-import env, { DEV, TEST } from './env.ts'
+import env, { DEV, TEST } from './env.js'
 
 const baseLoggerOptions: LoggerOptions = {
   // TODO: Redact all sensitive data

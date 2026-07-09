@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 
-import { pickupOccasionTable } from '#db/schema.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import { pickupOccasionTable } from '#db/schema.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export class PickupOccasionService {
   #db: DependencyContainer['db']

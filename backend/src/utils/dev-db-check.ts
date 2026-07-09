@@ -1,4 +1,4 @@
-import apiConfig from '#config/api.ts'
+import apiConfig from '#config/api.js'
 
 if (!apiConfig.env.DEV) {
   throw new Error('This module should only be imported during development')

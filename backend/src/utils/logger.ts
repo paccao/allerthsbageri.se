@@ -1,6 +1,6 @@
 import type { FastifyBaseLogger } from 'fastify'
 import pino from 'pino'
-import apiConfig from '#config/api.ts'
+import apiConfig from '#config/api.js'
 
 export function createLogger() {
   // Override to fix type error due to ESM import

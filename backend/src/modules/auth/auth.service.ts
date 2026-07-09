@@ -1,9 +1,9 @@
 import { hash, verify } from '@node-rs/argon2'
 import { eq } from 'drizzle-orm'
 
-import { userTable } from '#db/schema.ts'
-import apiConfig from '#config/api.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import { userTable } from '#db/schema.js'
+import apiConfig from '#config/api.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export class AuthService {
   #db: DependencyContainer['db']

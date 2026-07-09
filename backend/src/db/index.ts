@@ -1,8 +1,8 @@
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 
-import apiConfig from '#config/api.ts'
-import * as schema from '#db/schema.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import apiConfig from '#config/api.js'
+import * as schema from '#db/schema.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createDBConnection(_log: DependencyContainer['log']) {
   return drizzle({

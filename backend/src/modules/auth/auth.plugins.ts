@@ -1,9 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 
-import { userTable, type User } from '#db/schema.ts'
-import apiConfig from '#config/api.ts'
-import env from '#config/env.ts'
+import { userTable, type User } from '#db/schema.js'
+import apiConfig from '#config/api.js'
+import env from '#config/env.js'
 import { eq } from 'drizzle-orm'
 
 declare module 'fastify' {

@@ -1,4 +1,4 @@
-import { type DIContainer } from './DIContainer.ts'
+import { type DIContainer } from './DIContainer.js'
 
 export type DenyInputKeys<T, Disallowed> = T &
   (T extends Disallowed ? never : T)

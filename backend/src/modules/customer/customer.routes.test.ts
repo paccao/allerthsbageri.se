@@ -1,7 +1,7 @@
 import { before, suite, test, type TestContext } from 'node:test'
 
-import type { Customer } from '#db/schema.ts'
-import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
+import type { Customer } from '#db/schema.js'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.js'
 
 const app = await startTestApp()
 const { assertAuthRequired, createAdminUser } = getTestingUtils(app)

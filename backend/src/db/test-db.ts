@@ -1,9 +1,9 @@
 import { drizzle } from 'drizzle-orm/better-sqlite3'
 import { pushSQLiteSchema } from 'drizzle-kit/api'
 
-import apiConfig from '#config/api.ts'
-import * as schema from '#db/schema.ts'
-import { addSeedingData } from './seed.ts'
+import apiConfig from '#config/api.js'
+import * as schema from '#db/schema.js'
+import { addSeedingData } from './seed.js'
 
 if (!apiConfig.env.TEST) {
   throw new Error('This module should only be used for tests')

@@ -2,7 +2,7 @@ import {
   DenyOverrideDependencyError,
   DependencyIsMissingError,
   ForbiddenNameError,
-} from './errors.ts'
+} from './errors.js'
 import {
   type DenyInputKeys,
   type Factory,
@@ -11,7 +11,7 @@ import {
   type ResolvedDependencyValue,
   type Resolvers,
   type StringLiteral,
-} from './types.ts'
+} from './types.js'
 
 const containerMethods = new Set([
   'add',

@@ -1,11 +1,11 @@
 import { before, suite, test, type TestContext } from 'node:test'
 import z from 'zod'
 
-import { getTestingUtils, startTestApp } from '#utils/testing-utils.ts'
-import type { CreateOrderBody } from './order.schemas.ts'
-import type { CreateProductBody, Product } from '../product/product.schemas.ts'
-import type { CreateProductDetailsBody } from '../product-details/product-details.schemas.ts'
-import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.ts'
+import { getTestingUtils, startTestApp } from '#utils/testing-utils.js'
+import type { CreateOrderBody } from './order.schemas.js'
+import type { CreateProductBody, Product } from '../product/product.schemas.js'
+import type { CreateProductDetailsBody } from '../product-details/product-details.schemas.js'
+import type { GetPickupOccasion } from '../pickup-occasion/pickup-occasion.schemas.js'
 
 const app = await startTestApp()
 

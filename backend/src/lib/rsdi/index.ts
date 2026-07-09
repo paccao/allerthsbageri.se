@@ -1,2 +1,2 @@
-export { DIContainer } from './DIContainer.ts'
-export { type IDIContainer } from './types.ts'
+export { DIContainer } from './DIContainer.js'
+export { type IDIContainer } from './types.js'

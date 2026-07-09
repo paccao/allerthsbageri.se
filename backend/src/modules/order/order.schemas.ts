@@ -1,9 +1,9 @@
 import { z } from 'zod'
 import { createSelectSchema } from 'drizzle-zod'
 
-import { createCustomerBodySchema } from '../customer/customer.schemas.ts'
-import { createOrderItemBodySchema } from '../order-item/order-item.schemas.ts'
-import { orderTable } from '#db/schema.ts'
+import { createCustomerBodySchema } from '../customer/customer.schemas.js'
+import { createOrderItemBodySchema } from '../order-item/order-item.schemas.js'
+import { orderTable } from '#db/schema.js'
 
 export const getOrderSchema = createSelectSchema(orderTable)
 

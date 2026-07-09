@@ -7,13 +7,13 @@ import {
   listPickupOccasionsSchema,
   type UpdatePickupOccasionBody,
   updatePickupOccasionBodySchema,
-} from './pickup-occasion.schemas.ts'
-import { getTags } from '#config/openapi.ts'
+} from './pickup-occasion.schemas.js'
+import { getTags } from '#config/openapi.js'
 import {
   getErrorResponseSchemas,
   idParamsSchema,
   type IdParams,
-} from '#utils/common.schemas.ts'
+} from '#utils/common.schemas.js'
 
 const tags = getTags('pickups')
 

@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 
-import { orderStatusTable } from '#db/schema.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import { orderStatusTable } from '#db/schema.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export class OrderStatusService {
   #db: DependencyContainer['db']

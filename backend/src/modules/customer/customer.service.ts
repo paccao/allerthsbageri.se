@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm'
 
-import { customerTable } from '#db/schema.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import { customerTable } from '#db/schema.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 // IDEA: Maybe rename methods to follow a common pattern like the following?
 // customerService.create(data)

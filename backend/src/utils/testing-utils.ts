@@ -1,15 +1,15 @@
 import type { FastifyInstance, InjectOptions } from 'fastify'
 import type { TestContext } from 'node:test'
 
-import startApp from '#src/app.ts'
+import startApp from '#src/app.js'
 import {
   createDependencyContainer,
   type Dependencies,
   type DependencyContainer,
-} from '#src/di-container.ts'
-import { createInMemoryTestDB } from '#db/test-db.ts'
-import apiConfig from '#config/api.ts'
-import { DIContainer, type IDIContainer } from '#lib/rsdi/index.ts'
+} from '#src/di-container.js'
+import { createInMemoryTestDB } from '#db/test-db.js'
+import apiConfig from '#config/api.js'
+import { DIContainer, type IDIContainer } from '#lib/rsdi/index.js'
 
 if (!apiConfig.env.TEST) {
   throw new Error('This module should only be used for tests')

@@ -4,9 +4,9 @@ import {
   type CreateOrderBody,
   createOrderBodySchema,
   getOrderSchema,
-} from './order.schemas.ts'
-import { getTags } from '#config/openapi.ts'
-import { getErrorResponseSchemas } from '#utils/common.schemas.ts'
+} from './order.schemas.js'
+import { getTags } from '#config/openapi.js'
+import { getErrorResponseSchemas } from '#utils/common.schemas.js'
 
 const tags = getTags('orders')
 

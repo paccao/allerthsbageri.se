@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type { CreateOrderBody } from './order.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import type { CreateOrderBody } from './order.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createOrderController(
   orderService: DependencyContainer['orderService'],

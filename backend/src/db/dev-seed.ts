@@ -1,17 +1,17 @@
 import { hash } from '@node-rs/argon2'
 
-import { createDBConnection } from '#db/index.ts'
+import { createDBConnection } from '#db/index.js'
 import {
   orderStatusTable,
   pickupOccasionTable,
   productDetailsTable,
   productTable,
   userTable,
-} from './schema.ts'
-import apiConfig from '#config/api.ts'
-import env from '#config/env.ts'
-import { createLogger } from '#utils/logger.ts'
-import { createSeedingUtils, defaultOrderStatuses } from './seed.ts'
+} from './schema.js'
+import apiConfig from '#config/api.js'
+import env from '#config/env.js'
+import { createLogger } from '#utils/logger.js'
+import { createSeedingUtils, defaultOrderStatuses } from './seed.js'
 
 if (env.NODE_ENV != 'development') {
   throw new Error(

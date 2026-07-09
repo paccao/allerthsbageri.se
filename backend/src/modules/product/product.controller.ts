@@ -1,8 +1,8 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type { IdParams } from '#utils/common.schemas.ts'
-import type { CreateProductBody, UpdateProductBody } from './product.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import type { IdParams } from '#utils/common.schemas.js'
+import type { CreateProductBody, UpdateProductBody } from './product.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createProductController(
   productService: DependencyContainer['productService'],

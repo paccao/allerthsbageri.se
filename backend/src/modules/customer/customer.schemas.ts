@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { createSelectSchema } from 'drizzle-zod'
 
-import { zPhone } from '#utils/zod.ts'
-import { customerTable } from '#db/schema.ts'
+import { zPhone } from '#utils/zod.js'
+import { customerTable } from '#db/schema.js'
 
 const nameMaxLength = 200
 

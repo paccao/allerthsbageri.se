@@ -7,14 +7,14 @@ import {
   listCustomersSchema,
   type UpdateCustomerBody,
   updateCustomerBodySchema,
-} from './customer.schemas.ts'
-import { getTags } from '#config/openapi.ts'
+} from './customer.schemas.js'
+import { getTags } from '#config/openapi.js'
 import {
   emptyBodySchema,
   getErrorResponseSchemas,
   idParamsSchema,
   type IdParams,
-} from '#utils/common.schemas.ts'
+} from '#utils/common.schemas.js'
 
 const tags = getTags('customers')
 

@@ -1,7 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type { SignInBody, SignUpBody } from './auth.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import type { SignInBody, SignUpBody } from './auth.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createAuthController(
   sessionService: DependencyContainer['sessionService'],
