@@ -22,6 +22,9 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/backend/
 COPY backend/package.json ./
 RUN pnpm --filter=backend install --frozen-lockfile --engine-strict
+RUN cd node_modules/better-sqlite3 && \
+    pnpm build-release && \
+    cd -
 COPY backend ./
 RUN pnpm build
 
@@ -30,10 +33,17 @@ WORKDIR $APP_PATH
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/dist dist/
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/node_modules ./node_modules
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/package.json ./
-COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/pnpm-lock.yaml ./
-RUN pnpm --filter=backend install --prod
-# TEMP FIX: better-sqlite3 doesnt build properly. https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715
-# COPY node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build /app/node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/data/prod.db ./data/prod.db
+# TEMP FIX: Save the better-sqlite3 build directory before pruning
+# See: https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715
+COPY --from=builder --chown=$USERNAME:$USERNAME \
+     $APP_PATH/backend/node_modules/better-sqlite3/build \
+     /tmp/better-sqlite3-build
+RUN npm prune --omit=dev
+# Restore the better-sqlite3 build directory
+RUN mkdir -p node_modules/better-sqlite3 && \
+    cp -r /tmp/better-sqlite3-build node_modules/better-sqlite3/build && \
+    rm -rf /tmp/better-sqlite3-build
 RUN corepack disable \
     && npm uninstall -g corepack \
     && rm -rf pnpm/ \

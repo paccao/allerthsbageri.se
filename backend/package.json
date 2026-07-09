@@ -43,11 +43,26 @@
     "vitest": "^4.0.18"
   },
   "imports": {
-    "#config/*": "./src/config/*",
-    "#utils/*": "./src/utils/*",
-    "#db/*": "./src/db/*",
-    "#src/*": "./src/*",
-    "#lib/*": "./src/lib/*"
+    "#config/*": {
+      "development": "./src/config/*",
+      "default": "./dist/config/*"
+    },
+    "#utils/*": {
+      "development": "./src/utils/*",
+      "default": "./dist/utils/*"
+    },
+    "#db/*": {
+      "development": "./src/db/*",
+      "default": "./dist/db/*"
+    },
+    "#src/*": {
+      "development": "./src/*",
+      "default": "./dist/*"
+    },
+    "#lib/*": {
+      "development": "./src/lib/*",
+      "default": "./dist/lib/*"
+    }
   },
   "prettier": {
     "singleQuote": true,
