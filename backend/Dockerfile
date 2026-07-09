@@ -7,6 +7,9 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN \
     apt-get update \
     && apt-get upgrade -y --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
+        python3 \
+        build-essential \
     && rm -rf /var/lib/apt/lists/*
 RUN \
     npm config set ignore-scripts true \
@@ -17,16 +20,24 @@ RUN \
 
 FROM base AS builder
 ENV CI=true
+ARG BFF_ADMIN_USERNAME
+ARG BFF_ADMIN_PASSWORD
+ARG BFF_API_KEY
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/backend/
-COPY backend/package.json ./
+COPY backend/package.json backend/drizzle.config.ts ./
 RUN pnpm --filter=backend install --frozen-lockfile --engine-strict
 RUN cd node_modules/better-sqlite3 && \
     pnpm build-release && \
     cd -
 COPY backend ./
 RUN pnpm build
+RUN echo "BFF_ADMIN_USERNAME=${BFF_ADMIN_USERNAME}" >> .env \
+    echo "BFF_ADMIN_PASSWORD=${BFF_ADMIN_PASSWORD}" >> .env \
+    echo "BFF_API_KEY=${BFF_API_KEY}" >> .env
+RUN mkdir -p /app/data && \
+    pnpm run db:prod
 
 FROM base as app
 WORKDIR $APP_PATH
@@ -48,7 +59,10 @@ RUN corepack disable \
     && npm uninstall -g corepack \
     && rm -rf pnpm/ \
     && chown -R $USERNAME:$USERNAME node_modules/
+COPY --chown=$USERNAME:$USERNAME backend/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 ENV NODE_ENV=production
 USER $USERNAME
 EXPOSE 4000
-CMD [ "node", "server.ts"]
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+CMD [ "node", "dist/server.js" ]
