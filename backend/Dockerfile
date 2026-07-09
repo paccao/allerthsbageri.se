@@ -11,24 +11,34 @@ RUN \
 RUN \
     npm config set ignore-scripts true \
     && npm i -g npm@latest \
-    && npm i -g corepack \
+    && npm i -g corepack@latest \
     && corepack enable \
-    && corepack prepare pnpm --activate
+    && corepack use pnpm@10.34.4
 
-FROM base AS app
+FROM base AS builder
 ENV CI=true
 WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
 WORKDIR $APP_PATH/backend/
-COPY backend .
+COPY backend/package.json ./
+RUN pnpm --filter=backend install --frozen-lockfile --engine-strict
+COPY backend ./
+RUN pnpm build
+
+FROM base as app
 WORKDIR $APP_PATH
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/dist dist/
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/node_modules ./node_modules
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/package.json ./
+COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/pnpm-lock.yaml ./
 RUN pnpm --filter=backend install --prod
 # TEMP FIX: better-sqlite3 doesnt build properly. https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715
-COPY node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build /app/node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build
-RUN \
-    # Change ownership to non-root
-    chown -R node:node ./
-
+# COPY node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build /app/node_modules/.pnpm/better-sqlite3@12.6.2/node_modules/better-sqlite3/build
+RUN corepack disable \
+    && npm uninstall -g corepack \
+    && rm -rf pnpm/ \
+    && chown -R $USERNAME:$USERNAME node_modules/
+ENV NODE_ENV=production
 USER $USERNAME
 EXPOSE 4000
-CMD [ "node", "backend/src/server.ts"]
+CMD [ "node", "server.ts"]

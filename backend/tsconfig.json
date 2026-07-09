@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "ES2022",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext",
     "strict": true,
-    "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -14,7 +14,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "useUnknownInCatchVariables": true,
-    "allowImportingTsExtensions": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,
@@ -23,7 +22,9 @@
     "noImplicitThis": true,
     "verbatimModuleSyntax": true,
     "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+      "@/*": ["./src/*"],
+    },
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "src/lib/rsdi/__tests__"],
 }
