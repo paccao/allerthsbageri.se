@@ -33,18 +33,12 @@ RUN cd node_modules/better-sqlite3 && \
     cd -
 COPY backend ./
 RUN pnpm build
-RUN echo "BFF_ADMIN_USERNAME=${BFF_ADMIN_USERNAME}" >> .env \
-    echo "BFF_ADMIN_PASSWORD=${BFF_ADMIN_PASSWORD}" >> .env \
-    echo "BFF_API_KEY=${BFF_API_KEY}" >> .env
-RUN mkdir -p /app/data && \
-    pnpm run db:prod
 
 FROM base as app
 WORKDIR $APP_PATH
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/dist dist/
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/node_modules ./node_modules
 COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/package.json ./
-COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/data/prod.db ./data/prod.db
 # TEMP FIX: Save the better-sqlite3 build directory before pruning
 # See: https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715
 COPY --from=builder --chown=$USERNAME:$USERNAME \

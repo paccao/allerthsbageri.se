@@ -1,13 +1,11 @@
 #!/bin/sh
 set -e
 
-# Only run migrations/seed if the database doesn't exist
-if [ ! -f /app/data/prod.db ]; then
-  echo "Database not found. Initializing..."
-  npm run db:prod
-else
-  echo "Database found. Skipping initialization."
+if [ ! -d "/app/data" ]; then
+    mkdir -p /app/data
 fi
+
+node dist/db/seed.js
 
 # Start the app
 exec "$@"
