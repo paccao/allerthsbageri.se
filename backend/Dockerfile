@@ -58,5 +58,5 @@ RUN chmod +x /docker-entrypoint.sh
 ENV NODE_ENV=production
 USER $USERNAME
 EXPOSE 4000
-ENTRYPOINT [ "/docker-entrypoint.sh" ]
+
 CMD [ "node", "dist/server.js" ]
