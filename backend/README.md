@@ -29,6 +29,7 @@ pnpm i
 #### Run the backend
 
 ```sh
+pnpm db push
 pnpm dev
 ```
 
