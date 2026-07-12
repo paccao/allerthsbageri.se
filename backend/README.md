@@ -11,7 +11,7 @@ This document contains several useful sections:
 
 ## 1. Development instructions
 
-### Setup your development env
+### Setup your development environment
 
 Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
@@ -34,8 +34,6 @@ pnpm dev
 ```
 
 You can now find the OpenAPI documentation at <http://localhost:3000/api/docs>, which is guaranteed to match the actual implementation thanks to our schema-based request and response validation.
-
-Great job, you're now ready to start developing!
 
 ---
 
@@ -103,7 +101,7 @@ pnpm test:only --watch
 
 ### Test GitHub workflow locally
 
-1. Install [Docker rootless](https://docs.docker.com/engine/security/rootless/)
+1. Install [Podman](https://podman.io/get-started) or [Docker rootless](https://docs.docker.com/engine/security/rootless/)
 2. Install [nektos/act](https://github.com/nektos/act)
 3. Run `act` to test GitHub workflows locally:
 
@@ -137,22 +135,24 @@ pnpm up
 
 Before committing, test the changes locally and ensure everything works well. It's OK to update multiple dependencies in the same commit, but it's a good practice to review and install them one by one.
 
-### Docker
-
-First `cd` to the root of the git repo. Then:
+### Build and run
 
 ```bash
-docker build -t backend -f backend/Dockerfile .
-# or add the --pull flag to `docker build` to pull the latest base image of the container
-docker build --pull -t backend -f backend/Dockerfile .
-pnpm run db:prod # Set up db locally, it uses the backend/.env file, make sure to update it accordingly
-# Then to run the container, provide the .env file from your localhost to run it locally
-# It will mount prod.db into the container from the backend/data dir.
-# Debug with bash
-docker run --rm -it -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/backend/data" backend bash
+podman build \
+      -t allerthsbageri-backend:latest \
+      --build-arg BFF_ADMIN_USERNAME="<copy_from_.env.prod>" \
+      --build-arg BFF_ADMIN_PASSWORD="<copy_from_.env.prod>" \
+      --build-arg BFF_API_KEY="<copy_from_.env.prod>" \
+      -f backend/Dockerfile .
+
+# Sets up production db locally, it uses the backend/.env.prod file, make sure to update it accordingly
+pnpm run db:prod
 
 # Run the server
-docker run -d -p 4000:4000 --env-file=backend/.env -v "./backend/data":"/app/backend/data" backend
+podman run --rm -d -p 4000:4000 --env-file=backend/.env.prod -v "/backend/data":"/app/data" allerthsbageri-backend
+
+# Debug with bash
+docker run --rm -it -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/data" allerthsbageri-backend bash
 ```
 
 ---

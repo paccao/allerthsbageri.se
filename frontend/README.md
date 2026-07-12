@@ -15,7 +15,7 @@ pnpm i && \
 pnpm dev
 ```
 
-## Docker build steps
+## Build and run
 
 Make sure you have a .env file setup, including the email spam protection variables.
 
