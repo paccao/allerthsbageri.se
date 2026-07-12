@@ -9,7 +9,7 @@
     "lint": "prettier --check . --log-level warn",
     "format": "prettier -l --write .",
     "db": "drizzle-kit",
-    "db:seed": "node --env-file=.env src/db/dev-seed.ts",
+    "db:dev-seed": "node --env-file=.env src/db/dev-seed.ts",
     "db:prod": "drizzle-kit push && NODE_ENV=production tsx --env-file=.env src/db/seed.ts",
     "test:setup": "node --env-file=.env.test ./src/test.setup.ts",
     "test": "node --env-file=.env.test --test --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
