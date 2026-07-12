@@ -19,18 +19,21 @@ RUN \
     && corepack use pnpm@10.34.4
 
 FROM base AS builder
+WORKDIR $APP_PATH
 ENV CI=true
 ARG BFF_ADMIN_USERNAME
 ARG BFF_ADMIN_PASSWORD
 ARG BFF_API_KEY
-WORKDIR $APP_PATH
 COPY pnpm-lock.yaml pnpm-workspace.yaml package.json ./
+
 WORKDIR $APP_PATH/backend/
 COPY backend/package.json backend/drizzle.config.ts ./
+
 RUN pnpm --filter=backend install --frozen-lockfile --engine-strict
 RUN cd node_modules/better-sqlite3 && \
     pnpm build-release && \
     cd -
+
 COPY backend ./
 RUN pnpm build
 
@@ -44,7 +47,9 @@ COPY --from=builder --chown=$USERNAME:$USERNAME $APP_PATH/backend/package.json .
 COPY --from=builder --chown=$USERNAME:$USERNAME \
      $APP_PATH/backend/node_modules/better-sqlite3/build \
      /tmp/better-sqlite3-build
+
 RUN npm prune --omit=dev
+
 # Restore the better-sqlite3 build directory
 RUN mkdir -p node_modules/better-sqlite3 && \
     cp -r /tmp/better-sqlite3-build node_modules/better-sqlite3/build && \
@@ -53,10 +58,9 @@ RUN corepack disable \
     && npm uninstall -g corepack \
     && rm -rf pnpm/ \
     && chown -R $USERNAME:$USERNAME node_modules/
-COPY --chown=$USERNAME:$USERNAME backend/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-ENV NODE_ENV=production
+
 USER $USERNAME
+VOLUME [ "/app/data" ]
 EXPOSE 4000
 
 CMD [ "node", "dist/server.js" ]
