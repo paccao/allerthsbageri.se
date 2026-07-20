@@ -9,16 +9,18 @@ const baseLoggerOptions: LoggerOptions = {
 }
 
 const getLoggerOptions = (): LoggerOptions => {
+  const transport = { target: 'pino-pretty' }
+
   if (DEV && process.stdout.isTTY) {
     return {
       level: 'trace',
-      transport: { target: 'pino-pretty' },
+      ...transport,
       ...baseLoggerOptions,
     }
   } else if (TEST) {
     return {
       level: 'info',
-      transport: { target: 'pino-pretty' },
+      ...transport,
       ...baseLoggerOptions,
     }
   }
