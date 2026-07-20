@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm'
-import cookie from 'cookie'
+import { parseCookie } from 'cookie'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
 import {
@@ -42,7 +42,7 @@ export class SessionService {
   }
 
   parseSessionTokenFromCookie(request: FastifyRequest) {
-    const cookies = cookie.parse(
+    const cookies = parseCookie(
       (request.headers['cookie'] as string | undefined) ?? '',
     )
     return cookies[apiConfig.sessionCookieName]
