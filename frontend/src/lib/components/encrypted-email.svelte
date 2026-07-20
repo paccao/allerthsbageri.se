@@ -1,6 +1,6 @@
 <script lang="ts" module>
   import { parse } from '$lib/base64'
-  import { PUBLIC_PASSWORD, PUBLIC_PAYLOAD } from '$env/static/public'
+  import { PUBLIC_PASSWORD, PUBLIC_PAYLOAD } from '$app/env/public'
 
   let decrypted: Promise<string> | undefined = undefined
 

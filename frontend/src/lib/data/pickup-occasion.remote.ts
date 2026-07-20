@@ -1,7 +1,6 @@
 import { client } from './api-client.server'
 import { query } from '$app/server'
 import { omit } from '$lib/utils'
-import { env } from '$env/dynamic/private'
 
 export const getPickupOccasionsWithDetails = query(async () => {
   const [pickupOccasions, products, productDetails] = await Promise.all([

@@ -8,6 +8,7 @@ const config = {
   kit: {
     experimental: {
       remoteFunctions: true,
+      explicitEnvironmentVariables: true,
     },
     adapter: adapter(),
     alias: {
