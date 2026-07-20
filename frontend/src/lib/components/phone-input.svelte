@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte'
-  import intlTelInput, { type Iti } from 'intl-tel-input'
-  import 'intl-tel-input/build/css/intlTelInput.css'
-  import sv from 'intl-tel-input/i18n/sv'
+  import intlTelInput, { type Iti, type ValidationError } from 'intl-tel-input'
+  import 'intl-tel-input/dist/css/intlTelInput.css'
+  // @ts-expect-error The module exists in intl-tel-input@29.1.2, but the type definition is wrong
+  import sv from 'intl-tel-input/locale/sv'
   import type { ClassValue, HTMLInputAttributes } from 'svelte/elements'
   import { cn } from '$lib/utils'
 
@@ -111,20 +112,23 @@
     }
 
     iti = intlTelInput(element, {
-      i18n: sv,
+      uiTranslations: sv,
       ...(isE164Number ? {} : { initialCountry: 'se' }),
-      nationalMode: true,
+      numberDisplayFormat: 'NATIONAL',
       strictMode: true,
-      autoPlaceholder: 'aggressive',
+      placeholderNumberPolicy: 'AGGRESSIVE',
       countryOrder: ['se', 'no', 'dk', 'fi', 'de', ...EUROPEAN_COUNTRIES],
       loadUtils: () => import('intl-tel-input/utils'),
     })
 
-    if (isE164Number) {
-      iti.handleAutoCountry()
-    } else {
-      ready = true
-    }
+    ready = true
+
+    // if (isE164Number) {
+    //   // TODO: Figure out how to automatically format the phone number according to the specific country
+    //   // iti.handleAutoCountry()
+    // } else {
+    //   ready = true
+    // }
 
     element.addEventListener(
       'blur',
@@ -145,13 +149,14 @@
 
   // IDEA: Maybe simplify the error messages. Might be enough to just show if it's valid or not.
   // However, could also be helpful with more specific errors since we have them.
-  const errorMap = [
-    'Felaktigt telefonnummer',
-    'Ogiltig landskod',
-    'För kort',
-    'För långt',
-    'Felaktigt telefonnummer',
-  ]
+  const errorMap: Record<ValidationError, string> = {
+    IS_POSSIBLE: 'Felaktigt telefonnummer',
+    INVALID_COUNTRY_CODE: 'Ogiltig landskod',
+    TOO_SHORT: 'För kort',
+    TOO_LONG: 'För långt',
+    IS_POSSIBLE_LOCAL_ONLY: 'Felaktigt telefonnummer',
+    INVALID_LENGTH: 'Felaktig längd',
+  }
 
   onDestroy(() => {
     try {
@@ -178,10 +183,9 @@
   {...restProps}
   oninput={ready
     ? () => {
-        onChange(iti.getNumber(intlTelInput.utils?.numberFormat.E164))
-        phoneError = iti.isValidNumber()
-          ? undefined
-          : errorMap[iti.getValidationError()]
+        onChange(iti.getNumber('E164'))
+        const error = !iti.isValidNumber() && iti.getValidationError()
+        phoneError = error ? errorMap[error] : undefined
       }
     : null}
   placeholder="070-123 45 67"
