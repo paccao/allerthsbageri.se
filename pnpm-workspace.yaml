@@ -9,3 +9,4 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - '@keystatic/core@0.6.0'
+  - keystatic-sveltekit@1.3.0
