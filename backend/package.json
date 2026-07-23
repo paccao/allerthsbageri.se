@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.2",
-    "better-sqlite3": "^12.11.1",
+    "better-sqlite3": "^13.0.1",
     "cookie": "^2.0.1",
     "drizzle-orm": "^0.45.2",
     "drizzle-zod": "^0.8.3",
