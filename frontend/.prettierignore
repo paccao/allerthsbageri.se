@@ -7,3 +7,6 @@ bun.lockb
 
 # Miscellaneous
 /static/
+
+# Generated OpenAPI schema
+src/lib/data/openapi-schema.ts

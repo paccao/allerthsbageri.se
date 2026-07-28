@@ -51,10 +51,16 @@ export function createSeedingUtils(
   async function seedIfEmpty<T extends TableConfig>(
     table: SQLiteTableWithColumns<T>,
     seedingData: {
-      [K in keyof {
-        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-      }]: {
-        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+      [
+        K in keyof {
+          [
+            Key in keyof SQLiteTableWithColumns<T>['$inferInsert']
+          ]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+        }
+      ]: {
+        [
+          Key in keyof SQLiteTableWithColumns<T>['$inferInsert']
+        ]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
       }[K]
     }[],
   ) {

@@ -128,9 +128,7 @@ export function MyDbProviderUserRepository(db: DbConnection): UserRepository {
 }
 
 export function buildDbConnection(): DbConnection {
-  return connectToDb({
-    /* db credentials */
-  })
+  return connectToDb({/* db credentials */})
 }
 ```
 
