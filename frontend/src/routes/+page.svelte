@@ -127,12 +127,6 @@
               purpurvete. Emmer började odlas för 8000 år sedan och är en
               korsning mellan enkorn och vildgräs.
             </p>
-            <p class="pt-4">
-              Erbjuder <span class="font-bold">sacred sound session</span> 1 on 1
-              coaching. Genom tuning, ljud så kan vi reglera vårt nervsystem och påbörja
-              vår förändring till ett större välbefinnande och lugn. Just nu "provapåpris".
-            </p>
-            <p class="pt-4">Kontakta mig för mer info</p>
           </div>
           <Divider class="my-8" />
 
