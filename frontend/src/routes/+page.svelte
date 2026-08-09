@@ -339,9 +339,11 @@
                 </li>
                 <li>REKO-ringen Ulricehamn - jämna veckor</li>
                 <li>REKO-ringen Borås - ojämna veckor</li>
-                <li>7/2 Alboga blommor & jord i Od kl 10-14</li>
-                <li>28/3 Vårmarknad Bogastugan Hökerum</li>
-                <li>11/4 Vårmarknad Västanå, Varnum</li>
+                <li>Surdegsbröd i samband med loppis hos Grovare evenemang och kafé: {new Date('2026-08-15').toLocaleString('sv-SE', {
+                  dateStyle: 'long',
+                })} och {new Date('2026-08-29').toLocaleString('sv-SE', {
+                  dateStyle: 'long',
+                })} - båda tillfällena klockan 11.00.</li>
               </ul>
             </article>
           </section>
