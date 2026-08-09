@@ -32,7 +32,7 @@
 
   const { siteName } = await getSettings()
 
-  const bakingCourseDate = new Date('2026-03-21').toLocaleString('sv-SE', {
+  const bakingCourseDate = new Date('2026-09-12').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
 
