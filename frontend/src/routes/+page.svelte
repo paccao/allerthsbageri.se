@@ -38,17 +38,13 @@
 
   /** Map of event HTML ids to event titles */
   const events = {
-    saxofonretreat: {
-      title: 'Saxofonretreat',
-      id: 'event-saxofonretreat',
-    },
     saxofonmeditation: {
       title: 'Saxofonmeditation',
-      id: 'event-saxofonmeditation',
+      id: 'event',
     },
-    soundSession: {
-      title: 'Sacred sound session',
-      id: 'event-sound-session',
+    sacredvardamusic: {
+      title: 'Saxofonretreat & Sacred sound session',
+      id: 'event-sacredvardamusic',
     },
     kursSurdegsbrod: {
       title: 'Kurs: Lär dig baka surdegsbröd',
@@ -150,19 +146,14 @@
               Kommande event
             </h2>
             <a
-              href="#{events['saxofonretreat'].id}"
-              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
-              >{events['saxofonretreat'].title}</a
-            >
-            <a
               href="#{events['saxofonmeditation'].id}"
               class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >{events['saxofonmeditation'].title}</a
             >
             <a
-              href="#{events['soundSession'].id}"
+              href="#{events['sacredvardamusic'].id}"
               class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
-              >{events['soundSession'].title}</a
+              >{events['sacredvardamusic'].title}</a
             >
             <a
               href="#{events['kursSurdegsbrod'].id}"
@@ -371,124 +362,6 @@
             <section>
               <h2
                 class="mb-4 text-center font-display text-4xl font-bold"
-                id={events.saxofonretreat.id}
-              >
-                Är du redo för positiv förändring?
-              </h2>
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm text-2xl">
-                  SAXOFONRETREAT 27:e Juni kl 9.30 - 17.00
-                </p>
-              </div>
-
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  Välkommen till en kravlös och magisk dag där du får chans att
-                  släppa vardagens stress och måsten och istället påbörja din
-                  inre resa mot ett sannare jag.
-                </p>
-              </div>
-
-              <enhanced:img
-                class="mx-auto my-8 mt-8 h-auto w-full max-w-[500px] object-cover"
-                src={saxophoneRetreat}
-                alt="Välkommen till en saxofonretreat"
-              />
-
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  I denna endagsretreat får du nya insikter, du får möta andra
-                  likasinnade och om du själv vill så öppnas nya dörrar för dig,
-                  du får växa som människa.
-                </p>
-              </div>
-
-              <div class="flex justify-center">
-                <p class="my-2 max-w-screen-sm">
-                  Maggan Allerth heter jag som leder dagen. Du får del av mina
-                  saxofoners rogivande toners musik, kristallskålarnas milda
-                  mjuka helande, läkande sång, tuning och rörelse. Du får med
-                  dig nya verktyg hem som du kan använda i din vardag. Ett
-                  yogapass med Lotta Andersson som yogainstruktör och gongspel
-                  ingår också.
-                </p>
-              </div>
-
-              <enhanced:img
-                class="mx-auto my-8 h-auto w-full max-w-[350px] object-cover"
-                src={saxophoneRetreatBread}
-                alt="Bild på bröd vid saxofonretreat"
-              />
-
-              <div class="mx-auto mb-2 max-w-screen-sm">
-                Vi kommer jobba med Tuning-vårdande ljud, som är som näring för
-                rösten. Vilket också kan påbörja en läkningsprocess i din kropp.
-                Jag utgår ifrån Marie Bergmans metod.
-              </div>
-
-              <div class="mx-auto mb-2 max-w-screen-sm">
-                Denna dag är för dig som vill uppnå en djupare avslappning. Vi
-                jobbar med ärkeänglarna, bland annat med avslappning på
-                cellnivå.
-              </div>
-
-              <div class="mx-auto mb-2 max-w-screen-sm">
-                Min intention med dagen är att du ska få ta emot, få vila i dig
-                själv, känna glädje och stilla ro mitt i allt det du står i just
-                nu och upptäcka nya sidor hos dig själv.
-              </div>
-
-              <div class="mx-auto my-2 max-w-screen-sm">
-                <p>
-                  Denna heldag inkluderar mat, <a
-                    href={instagramProfileLink}
-                    target="_blank"
-                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
-                    >@allerthsbageri</a
-                  > står för surdegsbröd till lunchen & även något gott till eftermiddagsfikat.
-                </p>
-                <p>
-                  Investeringen i dig själv kostar 1900 kr, anmälan senast den
-                  24:e Juni kl 20.00.
-                </p>
-                <p>
-                  Det finns möjlighet till rabatt vid tidig bokning, senast 30:e
-                  Maj. Priset blir då 1700kr.
-                </p>
-              </div>
-
-              <Divider class="my-5" />
-
-              <div class="mx-auto my-2 max-w-screen-sm">
-                <p>Betalning sker vid ankomst. Swish eller kontant.</p>
-                <p>Meddela gärna allergier i god tid.</p>
-              </div>
-
-              <div class="mx-auto max-w-screen-sm">
-                <p class="my-2">
-                  <span class="font-bold">Var:</span>
-                  Hällstads bygdegård. HÄLLSTAD 142, 523 95 Älmestad.
-                </p>
-
-                <p class="my-2">
-                  <span class="font-bold">Att ta med:</span>
-                  Yogamatta eller liggunderlag. Liten kudde och mjuka kläder.
-                </p>
-
-                <p class="text-center font-bold">
-                  Välkommen med din anmälan eller frågor till:
-                </p>
-                <div class="flex justify-center text-center">
-                  <EncryptedEmail />
-                </div>
-              </div>
-            </section>
-
-            <Divider />
-
-            <section>
-              <h2
-                class="mb-4 text-center font-display text-4xl font-bold"
                 id={events.saxofonmeditation.id}
               >
                 {events.saxofonmeditation.title}
@@ -543,42 +416,26 @@
             <section>
               <h2
                 class="mb-4 text-center font-display text-4xl font-bold"
-                id={events.soundSession.id}
+                id={events.sacredvardamusic.id}
               >
-                {events.soundSession.title}
+                  Saxofonretreat & Sacred sound session
               </h2>
-              <div class="mx-auto max-w-screen-sm">
-                <div class="mx-auto mb-2 max-w-screen-sm">
-                  <p class="my-2">
-                    Jag erbjuder 1-on-1 träffar med läkande sång, tuning och
-                    avslappning till kristallskålarnas vibrationer.
-                  </p>
-                </div>
-
-                <enhanced:img
-                  class="mx-auto my-8 h-auto w-full max-w-[350px] object-cover"
-                  src={crystalBowlsTuning}
-                  alt="Bild på Maggan som spelar på kristallskålar"
-                />
-
-                <p class="text-center">
-                  Det finns också möjlighet att boka en träff för en liten
-                  grupp.
+              <div class="flex justify-center flex-col">
+                <p class="my-2 max-w-screen-sm text-center">
+                    Informationen om dessa har blivit flyttade till sin egen hemsida: <a href="https://www.sacredvardamusic.se/" target="_blank"
+                      class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
+                      >sacredvardamusic.com</a
+                    >.
                 </p>
-
-                <p class="text-center">
-                  Tycker du det låter intressant, hör av dig med frågor till:
-                </p>
-                <div class="flex justify-center text-center">
-                  <EncryptedEmail />
-                </div>
+                <p class="my-2 max-w-screen-sm mx-auto"> Välkommen!</p>
               </div>
+
             </section>
 
             <Divider />
 
             <section>
-              <div class="my-8 grid justify-center" id="event">
+              <div class="my-8 grid justify-center">
                 <enhanced:img
                   class="h-auto w-full rounded-md object-cover shadow-md"
                   src={kursinbjudan}
