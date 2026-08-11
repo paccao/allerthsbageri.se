@@ -363,20 +363,31 @@
                 {events.saxofonmeditation.title}
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
-                <p class="my-2">Nästa saxofonmeditation blir den 1/3 kl 16.</p>
-
                 <p class="my-2">
-                  Vintertid är vi i Equmeniakyrkan i Hökerum. När våren kommer
-                  flyttar meditationen ut i skogen igen.
+                    Nästa saxofonmeditation blir även den i samarbete med föreningen Kulturgläntan.
+                    {new Date('2026-09-6').toLocaleString('sv-SE', {
+                      dateStyle: 'long',
+                    })}, kl 15.00 Olofstorp, Fänneslunda. <a
+                        href="https://kulturglantan.se/Start/Kalendarium/"
+                        target="_blank"
+                        class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                    >Länk till Kulturgläntans hemsida.</a>
                 </p>
 
                 <p class="my-2">
-                  Efteråt fikar vi tillsammans, surdegsmacka från <a
+                  Bageriet står för surdegsmacka & örtte i samband med detta. <a
                     href={instagramProfileLink}
                     target="_blank"
                     class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
                     >@allerthsbageri</a
-                  > och örtte.
+                  >
+                </p>
+                <p class="mx-auto my-4 max-w-screen-sm italic">
+                  🤍 "Att använda den egna rösten förstärker upplevelsen av frid
+                  och lugn vid saxofonmeditationen." /Lars
+                </p>
+                <p class="mx-auto my-4 max-w-screen-sm italic">
+                  🤍 "En helt fantastisk upplevelse av ljud som bara tog tag i en!" /Egon
                 </p>
               </div>
 
@@ -385,20 +396,19 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  Kommande meditiationer: 21/9, 19/10, 2/11, 16/11, 7/12, 4/1, 1/2,
-                  1/3, 29/3
-                </p>
-                <p class="my-2">
-                  <span class="font-bold">Kostnad:</span>
-                  220 kr
+                  {new Date('2026-09-6').toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })}, kl 15.00
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span>
-                  Grovare Spången 101, utanför Hökerum.
-                  <span class="font-bold">Vintertid:</span> Equmeniakyrkan, Hökerum.
+                  Olofstorp, Fänneslunda eller Rångedala hembygdsgård
                 </p>
-
-                <p class="text-center font-bold">
+                <p class="my-2">
+                  <span class="font-bold">Investering:</span>
+                  220 kr
+                </p>
+                <p class="mt-2 text-center font-bold">
                   ✨ Välkommen med din anmälan till:
                 </p>
                 <div class="flex justify-center text-center">
