@@ -11,7 +11,7 @@ This document contains several useful sections:
 
 ## 1. Development instructions
 
-### Setup your development env
+### Setup your development environment
 
 Install [Node.js 24](https://nodejs.org/) and [pnpm 10](https://pnpm.io/).
 
@@ -29,12 +29,11 @@ pnpm i
 #### Run the backend
 
 ```sh
+pnpm db push
 pnpm dev
 ```
 
 You can now find the OpenAPI documentation at <http://localhost:3000/api/docs>, which is guaranteed to match the actual implementation thanks to our schema-based request and response validation.
-
-Great job, you're now ready to start developing!
 
 ---
 
@@ -54,6 +53,8 @@ To start the interactive schema migration:
 ```sh
 pnpm run db push
 ```
+
+If you get the error "Could not locate the bindings file" message by drizzle-kit see issue https://github.com/WiseLibs/better-sqlite3/issues/1378#issuecomment-3912716715 for a temporary fix.
 
 > [!NOTE]
 > In the future, this workflow will be replaced by proper DB migrations, stored in Git together with the code and automatically run before app startup.
@@ -100,7 +101,7 @@ pnpm test:only --watch
 
 ### Test GitHub workflow locally
 
-1. Install [Docker rootless](https://docs.docker.com/engine/security/rootless/)
+1. Install [Podman](https://podman.io/get-started) or [Docker rootless](https://docs.docker.com/engine/security/rootless/)
 2. Install [nektos/act](https://github.com/nektos/act)
 3. Run `act` to test GitHub workflows locally:
 
@@ -133,6 +134,26 @@ pnpm up
 ```
 
 Before committing, test the changes locally and ensure everything works well. It's OK to update multiple dependencies in the same commit, but it's a good practice to review and install them one by one.
+
+### Build and run
+
+```bash
+podman build \
+      -t allerthsbageri-backend:latest \
+      --build-arg BFF_ADMIN_USERNAME="<copy_from_.env.prod>" \
+      --build-arg BFF_ADMIN_PASSWORD="<copy_from_.env.prod>" \
+      --build-arg BFF_API_KEY="<copy_from_.env.prod>" \
+      -f backend/Dockerfile .
+
+# Sets up production db locally, it uses the backend/.env.prod file, make sure to update it accordingly
+pnpm run db:prod
+
+# Run the server
+podman run --rm -d -p 4000:4000 --env-file=backend/.env.prod -v "/backend/data":"/app/data" allerthsbageri-backend
+
+# Debug with bash
+docker run --rm -it -p 4000:4000 --env-file=backend/.env -v "`pwd`/backend/data":"/app/data" allerthsbageri-backend bash
+```
 
 ---
 

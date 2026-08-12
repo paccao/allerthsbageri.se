@@ -1,0 +1,13 @@
+[project]
+name = "infra"
+version = "0.1.0"
+description = "Infrastructure provisioning and configuration of allerthsbageri"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ansible==13.3.0"
+]
+[project.optional-dependencies]
+cli = [
+    "ansible-lint==26.1.1"
+]

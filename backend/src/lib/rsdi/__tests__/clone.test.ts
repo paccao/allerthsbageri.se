@@ -1,5 +1,5 @@
-import { DIContainer } from '../DIContainer.ts'
-import { Buzz } from './__helpers__/fakeClasses.ts'
+import { DIContainer } from '../DIContainer.js'
+import { Buzz } from './__helpers__/fakeClasses.js'
 import { suite, test, type TestContext } from 'node:test'
 
 suite('DIContainer merge containers', () => {

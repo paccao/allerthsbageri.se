@@ -1,4 +1,4 @@
-import { DIContainer } from '../DIContainer.ts'
+import { DIContainer } from '../DIContainer.js'
 import { suite, test, type TestContext } from 'node:test'
 
 suite('DIContainer hasResolvedDependency', () => {

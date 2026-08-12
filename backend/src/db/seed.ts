@@ -4,8 +4,8 @@ import type {
 } from 'drizzle-orm/sqlite-core'
 import type { drizzle } from 'drizzle-orm/better-sqlite3'
 
-import * as schema from './schema.ts'
-import env from '#config/env.ts'
+import * as schema from './schema.js'
+import env from '#config/env.js'
 
 /**
  * This seed file is used for data that should always be in the database.
@@ -51,10 +51,16 @@ export function createSeedingUtils(
   async function seedIfEmpty<T extends TableConfig>(
     table: SQLiteTableWithColumns<T>,
     seedingData: {
-      [K in keyof {
-        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
-      }]: {
-        [Key in keyof SQLiteTableWithColumns<T>['$inferInsert']]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+      [
+        K in keyof {
+          [
+            Key in keyof SQLiteTableWithColumns<T>['$inferInsert']
+          ]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
+        }
+      ]: {
+        [
+          Key in keyof SQLiteTableWithColumns<T>['$inferInsert']
+        ]: SQLiteTableWithColumns<T>['$inferInsert'][Key]
       }[K]
     }[],
   ) {

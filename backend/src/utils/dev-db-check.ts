@@ -1,4 +1,4 @@
-import apiConfig from '#config/api.ts'
+import apiConfig from '#config/api.js'
 
 if (!apiConfig.env.DEV) {
   throw new Error('This module should only be imported during development')
@@ -49,7 +49,7 @@ function ensureCorrectDatabaseState() {
   // or after resetting the dev DB.
   if (shouldAddSeedingData) {
     console.log('[dev]: No DB found. Creating a new one with seeding data.')
-    execSync('node --run db:seed')
+    execSync('node --run db:dev-seed')
   }
 }
 

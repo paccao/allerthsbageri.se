@@ -7,13 +7,13 @@ import {
   updateProductBodySchema,
   type CreateProductBody,
   type UpdateProductBody,
-} from './product.schemas.ts'
-import { getTags } from '#config/openapi.ts'
+} from './product.schemas.js'
+import { getTags } from '#config/openapi.js'
 import {
   getErrorResponseSchemas,
   idParamsSchema,
   type IdParams,
-} from '#utils/common.schemas.ts'
+} from '#utils/common.schemas.js'
 
 const tags = getTags('products')
 

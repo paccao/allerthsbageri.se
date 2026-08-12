@@ -6,18 +6,18 @@ import {
   type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 
-import apiConfig from './config/api.ts'
+import apiConfig from './config/api.js'
 import {
   sessionPlugin,
   authenticationRequiredPlugin,
-} from './modules/auth/auth.plugins.ts'
-import { authRoutes } from './modules/auth/auth.routes.ts'
-import { pickupOccasionRoutes } from './modules/pickup-occasion/pickup-occasion.routes.ts'
-import { customerRoutes } from './modules/customer/customer.routes.ts'
-import { orderRoutes } from './modules/order/order.routes.ts'
-import { productRoutes } from './modules/product/product.routes.ts'
-import { productDetailsRoutes } from './modules/product-details/product-details.routes.ts'
-import type { DependencyContainer } from './di-container.ts'
+} from './modules/auth/auth.plugins.js'
+import { authRoutes } from './modules/auth/auth.routes.js'
+import { pickupOccasionRoutes } from './modules/pickup-occasion/pickup-occasion.routes.js'
+import { customerRoutes } from './modules/customer/customer.routes.js'
+import { orderRoutes } from './modules/order/order.routes.js'
+import { productRoutes } from './modules/product/product.routes.js'
+import { productDetailsRoutes } from './modules/product-details/product-details.routes.js'
+import type { DependencyContainer } from './di-container.js'
 
 declare module 'fastify' {
   export interface FastifyInstance {
@@ -40,7 +40,7 @@ async function startApp(diContainer: DependencyContainer) {
   app.register(sessionPlugin)
 
   if (apiConfig.env.DEV) {
-    const developmentContext = (await import('./utils/development-context.ts'))
+    const developmentContext = (await import('./utils/development-context.js'))
       .default
 
     app.register(fp(developmentContext))

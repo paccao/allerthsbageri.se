@@ -1,7 +1,7 @@
 import { createSelectSchema } from 'drizzle-zod'
 import { z } from 'zod'
 
-import { orderItemTable } from '#db/schema.ts'
+import { orderItemTable } from '#db/schema.js'
 
 export const getOrderItemSchema = createSelectSchema(orderItemTable)
 export type OrderItem = z.infer<typeof getOrderItemSchema>

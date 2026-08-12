@@ -1,0 +1,23 @@
+# Shared
+**/Dockerfile
+**/*.md
+**/.env*
+**/.git
+**/node_modules
+**/.vscode
+
+# Frontend
+**/.eslintrc.cjs
+**/.graphqlrc
+**/.editorconfig
+**/build
+**/.npmrc
+**/.prettier*
+**/.svelte-kit
+**/package
+
+# Backend
+**/*.db
+
+# Skip ignore for tempfix, see backend/README.md for info
+!node_modules/.pnpm/better-sqlite3@*

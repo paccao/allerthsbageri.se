@@ -7,9 +7,9 @@ import {
   sessionTable as sessionTable,
   type User,
   type Session,
-} from '#db/schema.ts'
-import apiConfig from '#config/api.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+} from '#db/schema.js'
+import apiConfig from '#config/api.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 const DAY = 1000 * 60 * 60 * 24
 

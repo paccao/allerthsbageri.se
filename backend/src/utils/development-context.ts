@@ -5,7 +5,7 @@ import fastifySwaggerUI from '@fastify/swagger-ui'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
 
-import openAPIConfig from '#config/openapi.ts'
+import openAPIConfig from '#config/openapi.js'
 
 /**
  * This context wraps all logic that should only be available during development

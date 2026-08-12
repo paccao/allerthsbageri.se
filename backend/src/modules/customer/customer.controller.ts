@@ -3,9 +3,9 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import {
   type CreateCustomerBody,
   type UpdateCustomerBody,
-} from './customer.schemas.ts'
-import type { IdParams } from '#utils/common.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+} from './customer.schemas.js'
+import type { IdParams } from '#utils/common.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createCustomerController(
   customerService: DependencyContainer['customerService'],

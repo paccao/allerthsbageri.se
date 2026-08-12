@@ -1,9 +1,9 @@
 import type { FastifyReply, FastifyRequest } from 'fastify'
 
-import type { CreatePickupOccasionBody } from './pickup-occasion.schemas.ts'
-import type { IdParams } from '#utils/common.schemas.ts'
-import type { UpdatePickupOccasionBody } from './pickup-occasion.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import type { CreatePickupOccasionBody } from './pickup-occasion.schemas.js'
+import type { IdParams } from '#utils/common.schemas.js'
+import type { UpdatePickupOccasionBody } from './pickup-occasion.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export function createPickupOccasionController(
   pickupOccasionService: DependencyContainer['pickupOccasionService'],

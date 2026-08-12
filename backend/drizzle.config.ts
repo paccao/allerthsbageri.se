@@ -1,5 +1,5 @@
 import { defineConfig } from 'drizzle-kit'
-import apiConfig from './src/config/api.ts'
+import apiConfig from './src/config/api.js'
 
 export default defineConfig({
   dialect: 'sqlite',

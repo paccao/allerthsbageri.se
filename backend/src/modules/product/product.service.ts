@@ -4,9 +4,9 @@ import {
   pickupOccasionTable,
   productDetailsTable,
   productTable,
-} from '#db/schema.ts'
-import { type CreateProductBody } from './product.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+} from '#db/schema.js'
+import { type CreateProductBody } from './product.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 export class ProductService {
   #db: DependencyContainer['db']

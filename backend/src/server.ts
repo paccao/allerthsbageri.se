@@ -1,12 +1,12 @@
-import apiConfig from './config/api.ts'
+import apiConfig from './config/api.js'
 
 if (apiConfig.env.DEV) {
-  await import('#src/utils/dev-db-check.ts')
+  await import('#src/utils/dev-db-check.js')
 }
 
 // Perform the main imports after we have validated the environment
-import startApp from './app.ts'
-import { createDependencyContainer } from './di-container.ts'
+import startApp from './app.js'
+import { createDependencyContainer } from './di-container.js'
 
 const app = await startApp(createDependencyContainer())
 
@@ -19,7 +19,7 @@ async function main() {
     })
 
     if (apiConfig.env.DEV) {
-      const openAPIConfig = (await import('#config/openapi.ts')).default
+      const openAPIConfig = (await import('#config/openapi.js')).default
       app.log.info(
         `OpenAPI docs served at http://${apiConfig.host}:${apiConfig.port}/${openAPIConfig.prefix}`,
       )

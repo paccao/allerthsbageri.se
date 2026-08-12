@@ -5,10 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "node --env-file=.env --watch src/server.ts",
+    "build": "tsc",
     "lint": "prettier --check . --log-level warn",
     "format": "prettier -l --write .",
     "db": "drizzle-kit",
-    "db:seed": "node --env-file=.env src/db/dev-seed.ts",
+    "db:dev-seed": "node --env-file=.env src/db/dev-seed.ts",
+    "db:prod": "drizzle-kit push && tsx --env-file=.env.prod src/db/seed.ts",
     "test:setup": "node --env-file=.env.test ./src/test.setup.ts",
     "test": "node --env-file=.env.test --test --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
     "test:only": "node --env-file=.env.test --test --test-only --experimental-test-module-mocks --disable-warning=ExperimentalWarning --test-reporter ./src/utils/test-reporter.ts",
@@ -36,15 +38,31 @@
     "@types/node": "^25.2.2",
     "drizzle-kit": "^0.31.9",
     "prettier": "^3.8.1",
+    "tsx": "^4.23.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
   "imports": {
-    "#config/*": "./src/config/*",
-    "#utils/*": "./src/utils/*",
-    "#db/*": "./src/db/*",
-    "#src/*": "./src/*",
-    "#lib/*": "./src/lib/*"
+    "#config/*": {
+      "development": "./src/config/*",
+      "default": "./dist/config/*"
+    },
+    "#utils/*": {
+      "development": "./src/utils/*",
+      "default": "./dist/utils/*"
+    },
+    "#db/*": {
+      "development": "./src/db/*",
+      "default": "./dist/db/*"
+    },
+    "#src/*": {
+      "development": "./src/*",
+      "default": "./dist/*"
+    },
+    "#lib/*": {
+      "development": "./src/lib/*",
+      "default": "./dist/lib/*"
+    }
   },
   "prettier": {
     "singleQuote": true,

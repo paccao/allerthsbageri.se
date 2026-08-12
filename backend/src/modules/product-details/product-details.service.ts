@@ -1,8 +1,8 @@
 import { eq } from 'drizzle-orm'
 
-import { productDetailsTable } from '#db/schema.ts'
-import type { CreateProductDetailsBody } from './product-details.schemas.ts'
-import type { DependencyContainer } from '#src/di-container.ts'
+import { productDetailsTable } from '#db/schema.js'
+import type { CreateProductDetailsBody } from './product-details.schemas.js'
+import type { DependencyContainer } from '#src/di-container.js'
 
 // IDEA: Rename service methods to use common names like `get()`, `list()` and similar.
 // Since we always call the methods for the service, we can make the code shorter without losing information.

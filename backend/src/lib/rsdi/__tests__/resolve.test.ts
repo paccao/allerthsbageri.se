@@ -1,10 +1,10 @@
-import { DIContainer } from '../DIContainer.ts'
+import { DIContainer } from '../DIContainer.js'
 import {
   DenyOverrideDependencyError,
   DependencyIsMissingError,
   ForbiddenNameError,
-} from '../errors.ts'
-import { Bar, Foo } from './__helpers__/fakeClasses.ts'
+} from '../errors.js'
+import { Bar, Foo } from './__helpers__/fakeClasses.js'
 import { suite, test, type TestContext } from 'node:test'
 
 suite('DIContainer typescript type resolution', () => {
