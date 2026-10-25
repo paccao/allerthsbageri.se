@@ -1,0 +1,20 @@
+[
+  {
+    "label": "Debug frontend",
+    "adapter": "JavaScript",
+    "request": "launch",
+    "type": "node",
+    "program": "npm",
+    "args": ["run", "dev"],
+    "cwd": "frontend"
+  },
+  {
+    "label": "Debug backend",
+    "adapter": "JavaScript",
+    "request": "launch",
+    "type": "node",
+    "program": "npm",
+    "args": ["run", "dev"],
+    "cwd": "backend"
+  }
+]
