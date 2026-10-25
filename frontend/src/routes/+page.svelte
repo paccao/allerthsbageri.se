@@ -24,9 +24,6 @@
   import breadPrenumeration from '$assets/brod-prenumeration.jpeg?enhanced'
   import breadMarket from '$assets/brod-marknad.jpeg?enhanced'
   import leaderSjuharad from '$assets/leader-sjuharad.png?enhanced'
-  import saxophoneRetreat from '$assets/saxofonretreat.jpeg?enhanced'
-  import saxophoneRetreatBread from '$assets/saxofonretreat-brod.jpeg?enhanced'
-  import crystalBowlsTuning from '$assets/crystalBowlsTuning.jpeg?enhanced'
   import specialdesignatBrod from '$assets/specialdesignat-brod.jpeg?enhanced'
   import { getSettings } from '$lib/data/settings.remote'
 
