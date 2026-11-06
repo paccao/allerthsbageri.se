@@ -640,11 +640,12 @@
               </p>
               <p class="col-span-2 px-4 pt-8 xs:text-center">
                 Ta vara på det naturen ger, både som mat och stödjande för vissa
-                symptom. Något annat som främjar din hälsa är också körsång.
+                symptom. När våren kommer och färska örter spirar då tycker jag
+                mycket om att integrera örter i surdegsbröden.
               </p>
             </div>
           </article>
-
+          <!--
           <Divider />
 
           <article class="mx-auto my-4 max-w-screen-sm" id="frekvens">
@@ -668,6 +669,7 @@
               <EncryptedEmail />
             </p>
           </article>
+           -->
         </div>
       </section>
     </section>
