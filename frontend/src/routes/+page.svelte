@@ -326,7 +326,7 @@
 
               <ul class="list-inside list-disc space-y-2 px-4 xs:pl-0">
                 <li>
-                  Torsdagar från kl 09.30 finns färskt surdegsbröd vid Tolkabro
+                  Torsdagar från kl 09.00 finns färskt surdegsbröd vid Tolkabro
                   handel. Kolla instagram för eventuella ändringar <a
                     href={instagramProfileLink}
                     target="_blank"
@@ -337,12 +337,14 @@
                 <li>REKO-ringen Ulricehamn - jämna veckor</li>
                 <li>REKO-ringen Borås - ojämna veckor</li>
                 <li>
-                  Surdegsbröd i samband med loppis hos Grovare evenemang och
-                  kafé: {new Date('2026-08-15').toLocaleString('sv-SE', {
-                    dateStyle: 'long',
-                  })} och {new Date('2026-08-29').toLocaleString('sv-SE', {
-                    dateStyle: 'long',
-                  })} - båda tillfällena klockan 11.00.
+                  {new Date('2026-11-22').toLocaleString('sv-SE', {
+                    dateStyle: 'short',
+                  })} Brunns hembygdsförening kl 10-13.
+                </li>
+                <li>
+                  {new Date('2026-12-13').toLocaleString('sv-SE', {
+                    dateStyle: 'short',
+                  })} Götseredsstugan kl 11-15.
                 </li>
               </ul>
             </article>
