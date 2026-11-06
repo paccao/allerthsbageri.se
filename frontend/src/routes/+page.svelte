@@ -29,7 +29,7 @@
 
   const { siteName } = await getSettings()
 
-  const bakingCourseDate = new Date('2026-09-12').toLocaleString('sv-SE', {
+  const bakingCourseDate = new Date('2027-01-23').toLocaleString('sv-SE', {
     dateStyle: 'full',
   })
 
@@ -400,7 +400,7 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  <span class="capitalize">{bakingCourseDate}</span>
+                  <span class="capitalize">{bakingCourseDate}, </span>
                   <span> 09.30 - 13.30 eller tills vi känner oss klara.</span>
                 </p>
                 <p class="my-2">
