@@ -35,17 +35,17 @@
 
   /** Map of event HTML ids to event titles */
   const events = {
+    kursSurdegsbrod: {
+      title: 'Kurs: Lär dig baka surdegsbröd',
+      id: 'event-kurs-surdegsbrod',
+    },
     saxofonmeditation: {
       title: 'Saxofonmeditation',
-      id: 'event',
+      id: 'event-meditation',
     },
     sacredvardamusic: {
       title: 'Saxofonretreat & Sacred sound session',
       id: 'event-sacredvardamusic',
-    },
-    kursSurdegsbrod: {
-      title: 'Kurs: Lär dig baka surdegsbröd',
-      id: 'event-kurs-surdegsbrod',
     },
   }
 </script>
@@ -137,6 +137,11 @@
               Kommande event
             </h2>
             <a
+              href="#event"
+              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
+              >{events['kursSurdegsbrod'].title}</a
+            >
+            <a
               href="#{events['saxofonmeditation'].id}"
               class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >{events['saxofonmeditation'].title}</a
@@ -145,11 +150,6 @@
               href="#{events['sacredvardamusic'].id}"
               class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
               >{events['sacredvardamusic'].title}</a
-            >
-            <a
-              href="#{events['kursSurdegsbrod'].id}"
-              class="px-6 py-2 text-center text-xl text-green-500 underline underline-offset-2 hover:underline focus:text-green-500 focus:underline"
-              >{events['kursSurdegsbrod'].title}</a
             >
             <p class="py-4 text-center text-2xl text-gray-200">♫</p>
             <EncryptedEmail />
@@ -336,11 +336,14 @@
                 </li>
                 <li>REKO-ringen Ulricehamn - jämna veckor</li>
                 <li>REKO-ringen Borås - ojämna veckor</li>
-                <li>Surdegsbröd i samband med loppis hos Grovare evenemang och kafé: {new Date('2026-08-15').toLocaleString('sv-SE', {
-                  dateStyle: 'long',
-                })} och {new Date('2026-08-29').toLocaleString('sv-SE', {
-                  dateStyle: 'long',
-                })} - båda tillfällena klockan 11.00.</li>
+                <li>
+                  Surdegsbröd i samband med loppis hos Grovare evenemang och
+                  kafé: {new Date('2026-08-15').toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })} och {new Date('2026-08-29').toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })} - båda tillfällena klockan 11.00.
+                </li>
               </ul>
             </article>
           </section>
@@ -351,89 +354,6 @@
             <h4 class="mb-4 text-center font-display text-2xl">
               Kommande event:
             </h4>
-
-            <section>
-              <h2
-                class="mb-4 text-center font-display text-4xl font-bold"
-                id={events.saxofonmeditation.id}
-              >
-                {events.saxofonmeditation.title}
-              </h2>
-              <div class="mx-auto mb-2 max-w-screen-sm">
-                <p class="my-2">
-                    Nästa saxofonmeditation blir den
-                    {new Date('2026-11-8').toLocaleString('sv-SE', {
-                      dateStyle: 'long',
-                    })}, kl 16.00 i Haganäs 105, Tvärred. Därefter blir det den {new Date('2026-12-6').toLocaleString('sv-SE', {
-                      dateStyle: 'long',
-                    })}, på samma plats.
-                </p>
-
-                <p class="my-2">
-                  Bageriet står för surdegsmacka & örtte i samband med detta. <a
-                    href={instagramProfileLink}
-                    target="_blank"
-                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
-                    >@allerthsbageri</a
-                  >
-                </p>
-                <p class="mx-auto my-4 max-w-screen-sm italic">
-                  🤍 "Att använda den egna rösten förstärker upplevelsen av frid
-                  och lugn vid saxofonmeditationen." /Lars
-                </p>
-                <p class="mx-auto my-4 max-w-screen-sm italic">
-                  🤍 "En helt fantastisk upplevelse av ljud som bara tog tag i en!" /Egon
-                </p>
-              </div>
-
-              <Divider class="my-5" />
-
-              <div class="mx-auto max-w-screen-sm">
-                <p class="my-2">
-                  <span class="font-bold">När:</span>
-                  {new Date('2026-11-8').toLocaleString('sv-SE', {
-                    dateStyle: 'long',
-                  })}, kl 16.00
-                </p>
-                <p class="my-2">
-                  <span class="font-bold">Var: </span>
-                  Haganäs 105, Tvärred
-                </p>
-                <p class="my-2">
-                  <span class="font-bold">Investering:</span>
-                  220 kr
-                </p>
-                <p class="mt-2 text-center font-bold">
-                  ✨ Välkommen med din anmälan till:
-                </p>
-                <div class="flex justify-center text-center">
-                  <EncryptedEmail />
-                </div>
-              </div>
-            </section>
-
-            <Divider />
-
-            <section>
-              <h2
-                class="mb-4 text-center font-display text-4xl font-bold"
-                id={events.sacredvardamusic.id}
-              >
-                  Saxofonretreat & Sacred sound session
-              </h2>
-              <div class="flex justify-center flex-col">
-                <p class="my-2 max-w-screen-sm text-center">
-                    Informationen om dessa har blivit flyttade till sin egen hemsida: <a href="https://www.sacredvardamusic.se/" target="_blank"
-                      class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
-                      >sacredvardamusic.com</a
-                    >.
-                </p>
-                <p class="my-2 max-w-screen-sm mx-auto"> Välkommen!</p>
-              </div>
-
-            </section>
-
-            <Divider />
 
             <section>
               <div class="my-8 grid justify-center">
@@ -503,6 +423,94 @@
                 src={sourdoughBowlForBakingCourse}
                 alt="Kulturbröd uppställt för försäljning"
               />
+            </section>
+
+            <Divider />
+
+            <section>
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.saxofonmeditation.id}
+              >
+                {events.saxofonmeditation.title}
+              </h2>
+              <div class="mx-auto mb-2 max-w-screen-sm">
+                <p class="my-2">
+                  Nästa saxofonmeditation blir den
+                  {new Date('2026-11-8').toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })}, kl 16.00 i Haganäs 105, Tvärred. Därefter blir det den {new Date(
+                    '2026-12-6',
+                  ).toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })}, på samma plats.
+                </p>
+
+                <p class="my-2">
+                  Bageriet står för surdegsmacka & örtte i samband med detta. <a
+                    href={instagramProfileLink}
+                    target="_blank"
+                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
+                    >@allerthsbageri</a
+                  >
+                </p>
+                <p class="mx-auto my-4 max-w-screen-sm italic">
+                  🤍 "Att använda den egna rösten förstärker upplevelsen av frid
+                  och lugn vid saxofonmeditationen." /Lars
+                </p>
+                <p class="mx-auto my-4 max-w-screen-sm italic">
+                  🤍 "En helt fantastisk upplevelse av ljud som bara tog tag i
+                  en!" /Egon
+                </p>
+              </div>
+
+              <Divider class="my-5" />
+
+              <div class="mx-auto max-w-screen-sm">
+                <p class="my-2">
+                  <span class="font-bold">När:</span>
+                  {new Date('2026-11-8').toLocaleString('sv-SE', {
+                    dateStyle: 'long',
+                  })}, kl 16.00
+                </p>
+                <p class="my-2">
+                  <span class="font-bold">Var: </span>
+                  Haganäs 105, Tvärred
+                </p>
+                <p class="my-2">
+                  <span class="font-bold">Investering:</span>
+                  220 kr
+                </p>
+                <p class="mt-2 text-center font-bold">
+                  ✨ Välkommen med din anmälan till:
+                </p>
+                <div class="flex justify-center text-center">
+                  <EncryptedEmail />
+                </div>
+              </div>
+            </section>
+
+            <Divider />
+
+            <section>
+              <h2
+                class="mb-4 text-center font-display text-4xl font-bold"
+                id={events.sacredvardamusic.id}
+              >
+                Saxofonretreat & Sacred sound session
+              </h2>
+              <div class="flex flex-col justify-center">
+                <p class="my-2 max-w-screen-sm text-center">
+                  Informationen om dessa har blivit flyttade till sin egen
+                  hemsida: <a
+                    href="https://www.sacredvardamusic.se/"
+                    target="_blank"
+                    class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:text-green-500 focus:underline"
+                    >sacredvardamusic.com</a
+                  >.
+                </p>
+                <p class="mx-auto my-2 max-w-screen-sm">Välkommen!</p>
+              </div>
             </section>
 
             <Divider />
