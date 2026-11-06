@@ -361,14 +361,12 @@
               </h2>
               <div class="mx-auto mb-2 max-w-screen-sm">
                 <p class="my-2">
-                    Nästa saxofonmeditation blir även den i samarbete med föreningen Kulturgläntan.
-                    {new Date('2026-09-6').toLocaleString('sv-SE', {
+                    Nästa saxofonmeditation blir den
+                    {new Date('2026-11-8').toLocaleString('sv-SE', {
                       dateStyle: 'long',
-                    })}, kl 15.00 Olofstorp, Fänneslunda. <a
-                        href="https://kulturglantan.se/Start/Kalendarium/"
-                        target="_blank"
-                        class="text-green-500 underline-offset-2 hover:text-green-500 hover:underline focus:underline"
-                    >Länk till Kulturgläntans hemsida.</a>
+                    })}, kl 16.00 i Haganäs 105, Tvärred. Därefter blir det den {new Date('2026-12-6').toLocaleString('sv-SE', {
+                      dateStyle: 'long',
+                    })}, på samma plats.
                 </p>
 
                 <p class="my-2">
@@ -393,13 +391,13 @@
               <div class="mx-auto max-w-screen-sm">
                 <p class="my-2">
                   <span class="font-bold">När:</span>
-                  {new Date('2026-09-6').toLocaleString('sv-SE', {
+                  {new Date('2026-11-8').toLocaleString('sv-SE', {
                     dateStyle: 'long',
-                  })}, kl 15.00
+                  })}, kl 16.00
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Var: </span>
-                  Olofstorp, Fänneslunda eller Rångedala hembygdsgård
+                  Haganäs 105, Tvärred
                 </p>
                 <p class="my-2">
                   <span class="font-bold">Investering:</span>
